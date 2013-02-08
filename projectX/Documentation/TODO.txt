@@ -1,0 +1,69 @@
+﻿Generic things:
+	Filepath should be in the .exe path not 2 levels above on release.
+
+	try cath error msg?
+	prio nästkommande turbo högtider
+	kolla gamla turbo för effekter pågår 
+	scroller olika varianter + olika fonter   pågår 
+	skrivskydda filer 
+	fixa skriv ut pågår 
+	förfina GUI DONE v0.1
+
+openGL:
+		starfield
+		flerfärgat schack
+		scrollers 3-4 olika rörelse op scroll + schack eller star bakgrund
+		bollar text  vilken text??
+		rms
+		win+linux logga + skugga
+		turbomärke (schack bakgrund + ljud )
+		DIf logga + bakrund saknar rätt bakrund
+		sune klar
+		fbk ljudstuff
+		semla done 
+		xmas pågår 
+		advent
+		lucia
+		nyår
+		häxor
+		alla hjärtansdag
+		födelsedag
+
+FrmMain:
+	Listview double click to load DONE (needs to be cleaned up)
+	Load button check so it don't crash on load if nothing is selected, display a message box telling what to do.
+	Del button ?
+	Create button - Make this a dialog DONE
+	Start ?
+	Party people button - make this a dialog DONE
+	Menus:
+		File: Set short cuts
+			Print preview - ?
+			Print - ?
+			Admin - make this a dialog DONE
+			Close - ?
+		About: Set short cuts
+			About - fix text
+	Make checks to validate usage in the right way.
+
+FrmAdmin:
+	Make this dialog okish with not show in taskbar, no min/max button DONE
+
+FrmCreate:
+	Make this dialog okish with not show in taskbar, no min/max button DONE
+	Ok button - it closes even if you get error
+	Cancel button - 
+
+FrmParticipants:
+	Make this dialog okish with not show in taskbar, no min/max button DONE
+	Print button - Change from preview to real print
+
+FrmAddParticipants:
+	Make this dialog okish with not show in taskbar, no min/max button DONE
+
+Logic:
+	Check path to be exe path
+
+XmlHandler:
+	Check path to be exe path
+
