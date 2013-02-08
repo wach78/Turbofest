@@ -170,3 +170,5 @@ pip-log.txt
 *.ogg
 *.bmp
 *.jpg
+*.png
+*.gif
