@@ -165,10 +165,9 @@
     <Content Include="XMLFiles\Scrollers\scrollers.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="XMLFiles\Scrollers\XMLFile1.xml">
+    <Content Include="XMLFiles\Sune\sune.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="XMLFiles\Sune\sune.xml" />
     <Content Include="XMLFiles\xxxx.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

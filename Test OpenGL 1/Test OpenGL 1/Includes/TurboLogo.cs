@@ -51,10 +51,11 @@ namespace OpenGL
                 moveLeft = true;
             }
 
-            OpenGL.Sound snd = new Sound();
+            //OpenGL.Sound snd = new Sound();
             
-            Sound.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.wav", "FBK");
-
+            //Sound.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.wav", "FBK");
+            //Sound.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/free.ogg", "free");
+            Sound.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.wav", "roadrunner");
             //snd.Play("FBK");
 
             moveX = 0.0025f;
@@ -99,9 +100,19 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
+        bool xx = false;
+        public void PlaySound()
+        {
+            if (!xx)
+            {
+                Sound.SetAudioBuffer("roadrunner");
+                xx = true;
+            }
+        }
 
         public void Draw()
         {
+            PlaySound();
             GL.BindTexture(TextureTarget.Texture2D, texture);
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
