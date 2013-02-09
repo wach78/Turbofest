@@ -45,14 +45,13 @@ namespace OpenGL
         {
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, image);
-
-            GL.Enable(EnableCap.Blend);        
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha); 
+            GL.Enable(EnableCap.Blend);       
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);  
 
             GL.Begin(BeginMode.Quads);
            
             // x y z
-            // alla i mitten Y-led  alla till vänster x-led
+            // alla i mitten Y-led  alla till vänster x-led //
             GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.6f+x, -0.85f+y, 1.0f); // bottom left  
             GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.0f+x, -0.85f+y, 1.0f); // bottom right 
             GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.0f+x, 0.10f+y, 1.0f);// top right
