@@ -142,7 +142,7 @@ namespace OpenGL
         {
             //player.Stop();
         }
-        public void Draw()
+        public void Draw(string Date)
         {
             moveImage();
             drawImage();

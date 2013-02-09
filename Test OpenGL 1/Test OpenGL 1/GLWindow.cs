@@ -31,6 +31,7 @@ namespace OpenGL
         Particle particle;
         SuneAnimation sune;
         Dif dif;
+        Fbk fbk;
         Christmas xmas;
         Semla s;
         Fbk f;
@@ -73,6 +74,7 @@ namespace OpenGL
             //Events
             
             // Effects
+            fbk = new Fbk(ref snd);
             sune = new SuneAnimation(ref snd);
             dif = new Dif(ref chess);
             xmas = new Christmas(ref snd);
@@ -218,7 +220,7 @@ namespace OpenGL
             }
 
             // Chess quad
-            chess.Draw();
+            //chess.Draw();
 
             if (this.blnFog) GL.Disable(EnableCap.Fog);
 
@@ -230,7 +232,7 @@ namespace OpenGL
                 GL.Disable(EnableCap.Light0);
             }
 
-            //particle.drawParticles();
+            // Draw effects and events here
             nowDate = pc.CurrentClock().ToShortDateString();
             if (nowDate != lastDate)
             {
@@ -242,20 +244,23 @@ namespace OpenGL
                 
             }
             if (nowDate == "2012-03-02")
-                sune.Draw();
-            else if (nowDate == "2012-03-01")
-                tl.Draw();
+                sune.Draw(nowDate);
+            else if (nowDate == "2012-03-03")
+                fbk.Draw(nowDate);
+            else if (nowDate == "2012-03-04")
+                sune.Draw(nowDate);
             else
-                tl.Draw();
+            {
+                //tl.toPlay(nowDate);
+                tl.Draw(nowDate);
+            }
                 //s.Draw();
             //dif.Draw();
          //   xmas.Draw();
             // 
            // f.Draw();
             
-
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
-            //Console.WriteLine(this.RenderFrequency);
         }
 
         string lastDate, nowDate;

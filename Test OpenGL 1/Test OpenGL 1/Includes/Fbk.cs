@@ -67,14 +67,18 @@ namespace OpenGL
 
         public void Play()
         {
-            //player.Play();
+            if (snd.PlayingName() != "FBK") // this will start once the last sound is done, ie looping.
+            {
+                snd.Play("FBK");
+            }
         }
         public void Stop()
         {
             //player.Stop();
         }
-        public void Draw()
+        public void Draw(string Date)
         {
+            Play();
             drawImage();
         }//Draw
 

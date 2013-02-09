@@ -123,7 +123,7 @@ namespace OpenGL
             stopSample();
         }
 
-        public void Draw()
+        public void Draw(string Date)
         {
             playSound();
             updateImages();

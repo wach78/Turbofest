@@ -35,6 +35,7 @@ namespace OpenGL
         int NowPlayingBuffer;
         string NextPlayingName;
         int NextPlayingBuffer;
+        int numPLayedBuffer;
 
         public Sound(bool StartThread)
         {
@@ -50,6 +51,7 @@ namespace OpenGL
             NowPlayingBuffer = -1;
             NextPlayingName = string.Empty;
             NextPlayingBuffer = -1;
+            numPLayedBuffer = 0; //??
             /*OpenTK.Vector3 v3 = new OpenTK.Vector3(1, 1, 1);
             AL.Source(AL.GenBuffer(), ALSource3f.Position, ref v3);*/
 

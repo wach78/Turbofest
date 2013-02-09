@@ -71,7 +71,7 @@ namespace OpenGL
             disposed = true;
         }
 
-        public void Draw()
+        public void Draw(string date)
         {
             Draw(false, true);
         }

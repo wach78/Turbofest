@@ -111,11 +111,11 @@ namespace OpenGL
              
         }//moveImage
 
-        public void Draw()
+        public void Draw(string Date)
         {   
             moveImage();
             DrawImage();
-            bakground.Draw();
+            bakground.Draw(Date);
         }//Draw
 
     }//class

@@ -10,6 +10,6 @@ namespace OpenGL
     {
         //void Dispose(bool disposing);
         //void Dispose();
-        void Draw();
+        void Draw(string Date);
     }
 }

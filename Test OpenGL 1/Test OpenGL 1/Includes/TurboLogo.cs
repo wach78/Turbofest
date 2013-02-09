@@ -18,7 +18,7 @@ namespace OpenGL
     /// The logo of the Turbo party.
     /// create a dynamic image that have the logo mirrord and triger it when bouncing the right direction and write the correct name and year on the dynamic image.
     /// </summary>
-    class TurboLogo : IEffect
+    class TurboLogo //: IEffect
     {
         #region Suppress 414 warning variable set but not used
 #pragma warning disable 414
@@ -60,8 +60,8 @@ namespace OpenGL
             snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.wav", "roadrunner");
             //snd.Play("FBK");
 
-            moveX = 0.0025f;
-            moveY = 0.0025f;
+            moveX = 0.0125f;
+            moveY = 0.0125f;
             X = Y = 0.0f;
             /*int ab = AL.GenBuffer();
             int sb = AL.GenSource();
@@ -129,19 +129,36 @@ namespace OpenGL
             disposed = true;
         }
 
-        
-        public void PlaySound()
+        int numPlayedSound = 0;
+        string LastPlayedDate = string.Empty;
+
+        /*public void toPlay(string Date)
         {
+            if (LastPlayedDate != Date)
+            {
+                LastPlayedDate = Date;
+                numPlayedSound = 0;
+            }
+        }*/
+
+        public void PlaySound(string Date)
+        {
+            if (LastPlayedDate != Date)
+            {
+                LastPlayedDate = Date;
+                numPlayedSound = 0;
+            }
             //need to keep track of how many times this have played?!
-            if (snd.PlayingName() != "roadrunner") // this will start once the last sound is done, ie looping.
+            if (snd.PlayingName() != "roadrunner" && numPlayedSound < 3) // this will start once the last sound is done, ie looping.
             {
                 snd.Play("roadrunner");
+                numPlayedSound++;
             }
         }
 
-        public void Draw()
+        public void Draw(string Date)
         {
-            PlaySound();
+            PlaySound(Date);
             GL.BindTexture(TextureTarget.Texture2D, texture);
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
@@ -161,7 +178,7 @@ namespace OpenGL
             {
                 moveLeft = true;
             }
-            if (Math.Round(Y,1) >= 1.2)
+            if (Math.Round(Y,2) >= 1.13)
             {
                 moveUp = false;
             }
