@@ -10,11 +10,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    class SuneAnimation :IDisposable
+    class SuneAnimation : IEffect
     {
-       // private int[] images;
         private int image;
-        private System.Media.SoundPlayer player;
 
         private SuneTxtHandler sh;
 
@@ -24,29 +22,23 @@ namespace OpenGL
         private long soundOldTicks;
         private int currentImage;
 
+        private Sound snd;
         private bool soundTrue = false;
         private bool soundDone = false;
+        private short soundTimes = 0;
 
-        public SuneAnimation()
+        public SuneAnimation(ref Sound sound)
         {
             ticks = 0;
             oldTicks = 0;
             soundOldTicks = 0;
             soundOldTicks = 0;
             currentImage = 0;
-           // images = new int[4];
-            player = new System.Media.SoundPlayer();
-     //       sh = new SuneTxtHandler();
-            /*
-            images[0] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\sune0.bmp");
-            images[1] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\sune1.bmp");
-            images[2] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\sune2.bmp");
-            images[3] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\sune3.bmp");
-            */
+            sh = new SuneTxtHandler();
+            snd = sound;
 
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\sune_sprite.bmp");
-
-            player.SoundLocation = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\laugh.wav";
+            snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\laugh.wav", "Sune");
             
         }
 
@@ -83,7 +75,10 @@ namespace OpenGL
                 if ((this.soundTicks - this.soundOldTicks) > 5 && soundTrue)
                 {
                     soundTrue = false;
-                    player.Stop();
+                    if (snd.PlayingName() != "Sune")
+                    {
+                        snd.Play("Sune");
+                    }
                 }// if
             }//outer if
 
@@ -118,7 +113,10 @@ namespace OpenGL
         {
             if (!soundTrue && !soundDone)
             {
-                player.PlayLooping();
+                if (snd.PlayingName() != "Sune")
+                {
+                    snd.Play("Sune");
+                }
                 soundTrue = true;
                 soundDone = true;
             }
@@ -130,7 +128,7 @@ namespace OpenGL
             playSound();
             updateImages();
             DrawImage();
-        //    sh.draw();
+            sh.draw();
         }
 
     }//class

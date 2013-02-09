@@ -70,7 +70,7 @@ namespace OpenGL
                 this.m_arrLifeOfPoint[i] = 0.0f;
             }
 
-            Console.WriteLine("in particle constructor");
+            //Console.WriteLine("in particle constructor");
         }
 
         public void updateParticles()

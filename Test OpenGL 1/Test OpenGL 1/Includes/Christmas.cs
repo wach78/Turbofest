@@ -7,11 +7,11 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    class Christmas : IDisposable
+    class Christmas : IEffect
     {
         private int image;
         private int image2;
-        private System.Media.SoundPlayer player;
+        private Sound snd;
 
         private bool leftBorder;
         private bool rightBorder;
@@ -21,10 +21,14 @@ namespace OpenGL
         private float x;
         private float y;
 
-        public Christmas()
+        
+
+        public Christmas(ref Sound sound)
         {
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\Xmas.bmp");
             image2 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\godjul.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
+
+            snd = sound;
 
             leftBorder = true;
             rightBorder = false;
@@ -34,16 +38,14 @@ namespace OpenGL
             x = 1;
             y = 0;
 
-            player = new System.Media.SoundPlayer();
-            player.SoundLocation = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.wav";
-            player.Play();
+            snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.wav", "xmas");
         }
 
         public void Dispose()
         {
             //base.Finalize();
             GL.DeleteBuffers(1, ref image);
-            player = null;
+            snd = null;
             this.image = -1;
             System.GC.SuppressFinalize(this);
         }
@@ -134,11 +136,11 @@ namespace OpenGL
         }//moveImage
         public void play()
         {
-            player.Play();
+            //player.Play();
         }
         public void Stop()
         {
-            player.Stop();
+            //player.Stop();
         }
         public void Draw()
         {

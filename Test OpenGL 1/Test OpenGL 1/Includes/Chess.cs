@@ -9,8 +9,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    public class Chess : IDisposable
+    public class Chess : IEffect
     {
+        private bool disposed = false;
         private int texture;
         private double m_scrollX;
         private double m_scrollY;
@@ -46,18 +47,36 @@ namespace OpenGL
 
         ~Chess()
         {
-            
+            Dispose(false);
         }
 
         public void Dispose()
         {
             //base.Finalize();
             //GL.DeleteBuffers(1, ref this.texture); 
-            Util.DeleteTexture(ref texture);
+            Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
-        public void Draw(bool scrollx = false, bool scrolly = true)
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                Util.DeleteTexture(ref texture);
+                texture = -1;
+            }
+            // free native resources if there are any.
+
+            disposed = true;
+        }
+
+        public void Draw()
+        {
+            Draw(false, true);
+        }
+
+        public void Draw(bool scrollx, bool scrolly)
         {
             if (scrolly) this.m_scrollY += 0.008;
             if (scrollx) this.m_scrollX += 0.008;

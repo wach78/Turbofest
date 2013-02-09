@@ -7,27 +7,45 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    class Fbk :IDisposable
+    class Fbk : IEffect
     {
+        private bool disposed = false;
         private int image;
-        private System.Media.SoundPlayer player;
+        private Sound snd;
 
-        public Fbk()
+        public Fbk(ref Sound sound)
         {
             image = 0;
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\fbk2.png");
+            snd = sound;
+            snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.wav", "FBK");
+        }
 
-            player = new System.Media.SoundPlayer();
-            player.SoundLocation = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\fbk.wav";
-            player.Play();
+        ~Fbk()
+        {
+            Dispose(false);
         }
 
         public void Dispose()
         {
-            GL.DeleteBuffers(1, ref image);
-            this.image = -1;
+            Dispose(true);
             System.GC.SuppressFinalize(this);
         }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                GL.DeleteBuffers(1, ref image);
+                this.image = -1;
+                snd = null;
+            }
+            // free native resources if there are any.
+
+            disposed = true;
+        }
+
 
         private void drawImage()
         {
@@ -49,11 +67,11 @@ namespace OpenGL
 
         public void Play()
         {
-            player.Play();
+            //player.Play();
         }
         public void Stop()
         {
-            player.Stop();
+            //player.Stop();
         }
         public void Draw()
         {

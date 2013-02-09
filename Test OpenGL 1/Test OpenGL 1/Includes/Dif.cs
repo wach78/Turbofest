@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    class Dif : IDisposable
+    class Dif : IEffect
     {
         private Chess bakground; 
         private int image;
@@ -20,9 +20,9 @@ namespace OpenGL
         private bool topBorder;
         private bool bottomBorder;
 
-        public Dif()
+        public Dif(ref Chess chess)
         {
-            bakground = new Chess();
+            bakground = chess;
             x = -1.0f;
             y = 0.0f;
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\dif2.jpg", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
@@ -37,7 +37,7 @@ namespace OpenGL
         {
             GL.DeleteBuffers(1, ref image);
             this.image = -1;
-            bakground.Dispose();
+            bakground = null;
             System.GC.SuppressFinalize(this);
         }
 

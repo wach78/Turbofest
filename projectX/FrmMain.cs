@@ -167,13 +167,17 @@ namespace projectX
             AboutBox ab = new AboutBox();
             ab.ShowDialog();
         }
-
+        OpenGL.GLWindow gw = null;
         private void btnStart_Click(object sender, EventArgs e)
         {
             XmlHandler xmlStuff = new XmlHandler(fileName, "XDoc");
-           // xmlStuff.sortXml();
-         //   Console.WriteLine(xmlStuff.getDataFromXml());
-            OpenGL.GLWindow gw = new OpenGL.GLWindow(xmlStuff.sortXml(), xmlStuff.getDataFromXml());
+            if (gw != null)
+            {
+                gw.Dispose();
+                Console.WriteLine("Starting dispose of old Gwindow.");
+                gw = null;
+            }
+            gw = new OpenGL.GLWindow(xmlStuff.sortXml(), xmlStuff.getDataFromXml());
             gw.Run();
             
         }
@@ -190,14 +194,7 @@ namespace projectX
             {
                 if (printDialog.ShowDialog() == DialogResult.OK)
                 {
-                    /*TextReader txtReader = new StringReader(logic.sort(fileName).ToString());
-                    XmlReader xmlFile = XmlReader.Create(txtReader, new XmlReaderSettings());
-                
-                    dsEvents = new DataSet("events");
-                    dsEvents.ReadXml(xmlFile);*/
-
                     printDocument.Print();
-
                 }
             }
             catch (Exception ex)

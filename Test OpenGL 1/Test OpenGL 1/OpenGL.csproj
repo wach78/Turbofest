@@ -74,6 +74,7 @@
     <Compile Include="Includes\Christmas.cs" />
     <Compile Include="Includes\Dif.cs" />
     <Compile Include="Includes\Fbk.cs" />
+    <Compile Include="Includes\IEffect.cs" />
     <Compile Include="Includes\Particle.cs" />
     <Compile Include="Includes\Semla.cs" />
     <Compile Include="Includes\Sound.cs" />

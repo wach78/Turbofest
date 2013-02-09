@@ -18,11 +18,12 @@ namespace OpenGL
     /// The logo of the Turbo party.
     /// create a dynamic image that have the logo mirrord and triger it when bouncing the right direction and write the correct name and year on the dynamic image.
     /// </summary>
-    class TurboLogo
+    class TurboLogo : IEffect
     {
         #region Suppress 414 warning variable set but not used
 #pragma warning disable 414
         #endregion
+        private bool disposed = false;
         int texture;
         bool moveUp;
         bool moveLeft;
@@ -30,8 +31,9 @@ namespace OpenGL
         float moveY;
         float X;
         float Y;
+        private Sound snd;
 
-        public TurboLogo()
+        public TurboLogo(ref Sound sound)
         {
             Random rnd = new Random();
             if (rnd.Next(0, 10) < 6)
@@ -51,11 +53,11 @@ namespace OpenGL
                 moveLeft = true;
             }
 
-            //OpenGL.Sound snd = new Sound();
+            snd = sound;
             
-            //Sound.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.wav", "FBK");
+            //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.wav", "FBK");
             //Sound.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/free.ogg", "free");
-            Sound.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.wav", "roadrunner");
+            snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.wav", "roadrunner");
             //snd.Play("FBK");
 
             moveX = 0.0025f;
@@ -100,13 +102,40 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
-        bool xx = false;
+        ~TurboLogo()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            //base.Finalize();
+            //GL.DeleteBuffers(1, ref this.texture); 
+            Dispose(true);
+            System.GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                Util.DeleteTexture(ref texture);
+                texture = -1;
+                snd = null;
+            }
+            // free native resources if there are any.
+
+            disposed = true;
+        }
+
+        
         public void PlaySound()
         {
-            if (!xx)
+            //need to keep track of how many times this have played?!
+            if (snd.PlayingName() != "roadrunner") // this will start once the last sound is done, ie looping.
             {
-                Sound.SetAudioBuffer("roadrunner");
-                xx = true;
+                snd.Play("roadrunner");
             }
         }
 
