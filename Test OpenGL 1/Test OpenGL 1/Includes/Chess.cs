@@ -17,6 +17,9 @@ namespace OpenGL
         private double m_scrollY;
         private Vector3[] m_vec;
 
+        //private string vertShader;
+        //private string fragShader;
+
         public Chess()
         {
             this.m_vec = new Vector3[4]; // well well....
@@ -43,6 +46,21 @@ namespace OpenGL
             */
             this.m_scrollX = 0.0;
             this.m_scrollY = 0.0;
+
+            /*vertShader = @"#version 130
+                void main() {			
+	                // Set the front color to the color passed through with glColor*f
+	                gl_FrontColor = gl_Color;
+	                // Set the position of the current vertex 
+	                gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+                }
+            ";
+            fragShader = @"#version 130
+                void main() {
+	                // Set the output color of our current pixel
+	                gl_FragColor = gl_Color;
+                }
+            ";*/
         }
 
         ~Chess()
@@ -64,7 +82,6 @@ namespace OpenGL
             {
                 // free managed resources
                 Util.DeleteTexture(ref texture);
-                texture = -1;
             }
             // free native resources if there are any.
 

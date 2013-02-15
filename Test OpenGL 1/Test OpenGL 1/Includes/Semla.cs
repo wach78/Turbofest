@@ -32,7 +32,7 @@ namespace OpenGL
 
         public void Dispose()
         {
-            GL.DeleteBuffers(1, ref image);
+            Util.DeleteTexture(ref image);
             this.image = -1;
             System.GC.SuppressFinalize(this);
         }

@@ -27,13 +27,14 @@ namespace OpenGL
         int texture;
         bool moveUp;
         bool moveLeft;
+        bool VTColour;
         float moveX;
         float moveY;
         float X;
         float Y;
         private Sound snd;
 
-        public TurboLogo(ref Sound sound)
+        public TurboLogo(ref Sound sound, bool VT=false)
         {
             Random rnd = new Random();
             if (rnd.Next(0, 10) < 6)
@@ -58,34 +59,47 @@ namespace OpenGL
             //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.wav", "FBK");
             //Sound.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/free.ogg", "free");
             snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.wav", "roadrunner");
-            //snd.Play("FBK");
 
-            moveX = 0.0125f;
-            moveY = 0.0125f;
+            VTColour = VT;
+
+            moveX = 0.0075f;
+            moveY = 0.0075f;
             X = Y = 0.0f;
-            /*int ab = AL.GenBuffer();
-            int sb = AL.GenSource();
-            Vector3 v3 = new Vector3(1, 1, 1);
-            AL.Source(ab, ALSource3f.Position, ref v3);*/
 
+            //Bitmaps for making the 4 different layouts
             Bitmap bitmap = new Bitmap(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/roadrunner.bmp");
+            Bitmap bmSprite = new Bitmap(bitmap.Width*2,bitmap.Height*2);
+
+            Graphics g = Graphics.FromImage(bmSprite);
+            
+            g.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
+            g.DrawImage(bitmap, 0, bitmap.Height, bitmap.Width, bitmap.Height);
+            bitmap.RotateFlip(RotateFlipType.Rotate180FlipY);
+            g.DrawImage(bitmap, bitmap.Width, 0, bitmap.Width, bitmap.Height);
+            g.DrawImage(bitmap, bitmap.Width, bitmap.Height, bitmap.Width, bitmap.Height);
+
+            //80,142
+            
+            g.DrawString("Turbophesten", new Font("Tahoma", 20.0f, FontStyle.Italic /*| FontStyle.Bold*/), Brushes.Black, 80, 142);
+            g.Dispose();
+            //End Bitmap creation and edits
+
             // change yellow (255, 214, 0) to blue and ?
-            for (int y = 0; y < bitmap.Height; y++)
+            for (int y = bitmap.Height; y < bmSprite.Height; y++)
             {
-                for (int x = 0; x < bitmap.Width; x++)
+                for (int x = 0; x < bmSprite.Width; x++)
                 {
-                    Color col = bitmap.GetPixel(x, y);
+                    Color col = bmSprite.GetPixel(x, y);
                     if (col.R == 255 && col.G == 214 && col.B == 0)
                     {
-                        //Console.WriteLine("X:" + x + ", Y:" + y + ", " + col);
-                        bitmap.SetPixel(x, y, Color.FromArgb(0, 187, 255));
+                        bmSprite.SetPixel(x, y, Color.FromArgb(0, 187, 255));
                     }
                 }
             }
             
-            bitmap.MakeTransparent(Color.Magenta);
+            bmSprite.MakeTransparent(Color.Magenta);
 
-            BitmapData data = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+            BitmapData data = bmSprite.LockBits(new System.Drawing.Rectangle(0, 0, bmSprite.Width, bmSprite.Height),
                 ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             
             Util.GenTextureID(out texture);
@@ -97,7 +111,10 @@ namespace OpenGL
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Clamp);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Clamp);
 
-            bitmap.UnlockBits(data);
+            bmSprite.UnlockBits(data);
+            bmSprite.Dispose();
+            bitmap.Dispose();
+            
             //data = null;
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
@@ -110,7 +127,6 @@ namespace OpenGL
         public void Dispose()
         {
             //base.Finalize();
-            //GL.DeleteBuffers(1, ref this.texture); 
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
@@ -121,7 +137,6 @@ namespace OpenGL
             {
                 // free managed resources
                 Util.DeleteTexture(ref texture);
-                texture = -1;
                 snd = null;
             }
             // free native resources if there are any.
@@ -191,10 +206,10 @@ namespace OpenGL
             Y = Y + (moveUp ? 1 : -1) * moveY;
 
             //Console.WriteLine(X + ", " + Y + ", " + moveUp + ", " + moveRight);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(1.00f + X, 0.20f + Y, 1.00f); // top left
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(1.00f + X, -0.40f + Y, 1.00f); // bottom left
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(-0.30f + X, -0.40f + Y, 1.00f); // bottom right
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(-0.30f + X, 0.20f + Y, 1.00f); // top right
+            GL.TexCoord2((moveLeft ? 0.5f : 0.0f), (VTColour ? 0.5f : 0.0f)); GL.Vertex3(1.00f + X, 0.20f + Y, 1.00f); // top left
+            GL.TexCoord2((moveLeft ? 0.5f : 0.0f), (VTColour ? 1.0f : 0.5f)); GL.Vertex3(1.00f + X, -0.40f + Y, 1.00f); // bottom left
+            GL.TexCoord2((moveLeft ? 1.0f : 0.5f), (VTColour ? 1.0f : 0.5f)); GL.Vertex3(-0.30f + X, -0.40f + Y, 1.00f); // bottom right
+            GL.TexCoord2((moveLeft ? 1.0f : 0.5f), (VTColour ? 0.5f : 0.0f)); GL.Vertex3(-0.30f + X, 0.20f + Y, 1.00f); // top right
             
 
             GL.End();

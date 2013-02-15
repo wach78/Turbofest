@@ -11,14 +11,14 @@ namespace OpenGL
 {
     static class Util
     {
-        private static int maxTextures;
-        private static int maxBuffers;
-        private static int currentTextureBuffers;
+        private static int maxShaderVertexTextures; // Max combinde shader - and vertex texture.
+        private static int maxBuffers; //color buffers
+        private static int currentTextureBuffers; // the number of current generated Texture buffers created
 
         #region Constructor
         static Util()
         {
-            GL.GetInteger(GetPName.MaxCombinedTextureImageUnits, out maxTextures);
+            GL.GetInteger(GetPName.MaxCombinedTextureImageUnits, out maxShaderVertexTextures);
             GL.GetInteger(GetPName.MaxDrawBuffers, out maxBuffers);
             currentTextureBuffers = 0;
         }
@@ -65,20 +65,20 @@ namespace OpenGL
 
         public static int GenTextureID()
         {
-            if (CurrentUsedTextures >= 160)
+            /*if (CurrentUsedTextures >= 160)
             {
                 throw new Exception("To many texture buffers used!");
-            }
+            }*/
             currentTextureBuffers++;
             return GL.GenTexture();
         }
 
         public static void GenTextureID(out int tid)
         {
-            if (CurrentUsedTextures >= 160)
+            /*if (CurrentUsedTextures >= 160)
             {
                 throw new Exception("To many texture buffers used!");
-            }
+            }*/
             currentTextureBuffers++;
             GL.GenTextures(1, out tid);
         }
@@ -108,11 +108,11 @@ namespace OpenGL
             }
         }
 
-        public static int MaxTextures
+        public static int MaxCombindeTextures
         {
             get
             {
-                return maxTextures;
+                return maxShaderVertexTextures;
             }
         }
 

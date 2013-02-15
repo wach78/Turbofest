@@ -21,7 +21,6 @@ namespace OpenGL
         bool blnWireFrameDraw;
         bool blnFog;
         bool blnLight;
-        uint[] texture;
         /*double xScroll = 0.0;
         double yScroll = 0.0;*/
         PartyClock pc;
@@ -49,7 +48,7 @@ namespace OpenGL
             {
                 throw new Exception("Error in runtime, it is to short");
             }
-
+            Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             Keyboard.KeyDown += OnKeyboardKeyDown;
             Closing += OnClosing;
 
@@ -58,22 +57,20 @@ namespace OpenGL
             blnWireFrameDraw = false;
             blnFog = true;
             blnLight = false;
-            texture = new uint[3];
             m_events = Events;
             DateTime dtStart = DateTime.Parse(runtime.Substring(0, 10));
             DateTime dtEnd = DateTime.Parse(runtime.Substring(10, 10));
             TimeSpan tsDiff = dtEnd.Subtract(dtStart);
-            pc = new PartyClock(dtStart, dtEnd, int.Parse(runtime.Substring(20))/*4*/);
-            chess = new Chess();
-            text = new Text2D(100,100);
-            particle = new Particle();
-
+            
             //Sound
             snd = new Sound(true); // this starts the sound thread
-
-            //Events
+            // Clock
+            pc = new PartyClock(dtStart, dtEnd, int.Parse(runtime.Substring(20)));
             
             // Effects
+            chess = new Chess();
+            text = new Text2D(100, 100);
+            particle = new Particle();
             fbk = new Fbk(ref snd);
             sune = new SuneAnimation(ref snd);
             dif = new Dif(ref chess);
@@ -81,13 +78,24 @@ namespace OpenGL
             s = new Semla();
             f = new Fbk(ref snd);
             tl = new TurboLogo(ref snd);
-            
+
+            //Events
+            _WriteVersion();
         }
 
         public void _WriteVersion()
         {
+            int texVxShader = 0;
+            int texFragSh = 0;
+            int texFixedPipe = 0;
+            GL.GetInteger(GetPName.MaxVertexTextureImageUnits, out texVxShader);
+            GL.GetInteger(GetPName.MaxTextureImageUnits, out texFragSh);
+            GL.GetInteger(GetPName.MaxTextureUnits, out texFixedPipe);
             Console.WriteLine(GL.GetString(StringName.Version) + ", " + GL.GetString(StringName.ShadingLanguageVersion) + ", " + GL.GetString(StringName.Renderer) + ", " + GL.GetString(StringName.Extensions));
-            Console.WriteLine(Util.MaxTextures + ":" + Util.CurrentUsedTextures + ", " + Util.MaxBuffers);
+            Console.WriteLine("Max combinde textures: " + Util.MaxCombindeTextures + ", Currently using genTextures: " + Util.CurrentUsedTextures + ", Max Draw Buffers: " + Util.MaxBuffers);
+            Console.WriteLine("Max texture units in a vertex shader: " + texVxShader);
+            Console.WriteLine("Max texture units in a fragment shader: " + texFragSh);
+            Console.WriteLine("Max texture units in a fixed pipe: " + texFixedPipe);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -121,8 +129,7 @@ namespace OpenGL
             GL.Enable(EnableCap.StencilTest);
             //GL.Enable(EnableCap.VertexArray);
             // end of GL.Enable
-
-            this.VSync = OpenTK.VSyncMode.Adaptive; // this is to make it possible to run faster then refreshrate on screen...
+            VSync = OpenTK.VSyncMode.Adaptive; // this is to make it possible to run faster then refreshrate on screen...
             /*
             this.TargetRenderFrequency = 200.0; // forcing to update at 50 hz
             this.TargetUpdateFrequency = 200.0; // forcing to update at 50 hz
@@ -135,15 +142,42 @@ namespace OpenGL
         protected void OnClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
-            snd.StopThread(); 
+            snd.StopThread();
+
+            //Not clean... set to null as well if we want that
+            snd.Dispose();
+            pc.Dispose();
+            chess.Dispose();
+            text.Dispose();
+            fbk.Dispose();
+            sune.Dispose();
+            tl.Dispose();
+            f.Dispose();
+            s.Dispose();
+            xmas.Dispose();
+            dif.Dispose();
+
             GL.BindTexture(TextureTarget.Texture2D, 0);
             Console.WriteLine("Closing");
         }
 
+        /*protected override void Dispose(bool manual)
+        {
+            base.Dispose(manual);
+            if (manual)
+            {
+                
+                Console.WriteLine("After dispose textures: " + Util.CurrentUsedTextures);
+            }
+            Console.WriteLine("Disposing");
+        }*/
+
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+            Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             Console.WriteLine("Closed");
+            this.Dispose(true);
         }
 
         protected override void OnResize(EventArgs e)
@@ -243,9 +277,9 @@ namespace OpenGL
                 lastDate = nowDate;
                 
             }
-            if (nowDate == "2012-03-02")
+            if (nowDate == "2012-03-03")
                 sune.Draw(nowDate);
-            else if (nowDate == "2012-03-03")
+            else if (nowDate == "2012-03-02")
                 fbk.Draw(nowDate);
             else if (nowDate == "2012-03-04")
                 sune.Draw(nowDate);
@@ -254,11 +288,10 @@ namespace OpenGL
                 //tl.toPlay(nowDate);
                 tl.Draw(nowDate);
             }
-                //s.Draw();
+            //s.Draw();
             //dif.Draw();
-         //   xmas.Draw();
-            // 
-           // f.Draw();
+            //xmas.Draw();
+            //f.Draw();
             
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
         }

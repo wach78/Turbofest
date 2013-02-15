@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    class SuneTxtHandler
+    class SuneTxtHandler : IEffect
     {
         private static List<string> listquotes;
         private static List<int> indexList;
@@ -31,6 +31,13 @@ namespace OpenGL
             readFromXml();
             drawInit();
         }
+
+        public void Dispose()
+        {
+            //base.Finalize();
+            Util.DeleteTexture(ref textTexture);
+            System.GC.SuppressFinalize(this);
+        }
     
         public static void readFromXml()
         {
@@ -49,7 +56,6 @@ namespace OpenGL
                 listquotes.Add(x.Element("date").Value + "\n\n" + x.Element("txt").Value);
                 maxIndexValue++;
             }
-            System.Diagnostics.Debug.WriteLine(maxIndexValue); 
         }//readFromXml
 
         public string getOneRandomQuote()
@@ -106,7 +112,7 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
-        public void draw()
+        public void Draw(string Date)
         {
             GL.BindTexture(TextureTarget.Texture2D, textTexture);
             GL.Enable(EnableCap.Texture2D);

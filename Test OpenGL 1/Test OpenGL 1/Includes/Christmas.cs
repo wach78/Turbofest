@@ -44,9 +44,9 @@ namespace OpenGL
         public void Dispose()
         {
             //base.Finalize();
-            GL.DeleteBuffers(1, ref image);
+            Util.DeleteTexture(ref image);
+            Util.DeleteTexture(ref image2);
             snd = null;
-            this.image = -1;
             System.GC.SuppressFinalize(this);
         }
 

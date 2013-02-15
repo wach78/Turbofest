@@ -155,8 +155,6 @@ namespace projectX
             
         }//btnDel_Click
 
-     
-
         private void closeToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.Dispose();
@@ -167,6 +165,7 @@ namespace projectX
             AboutBox ab = new AboutBox();
             ab.ShowDialog();
         }
+
         OpenGL.GLWindow gw = null;
         private void btnStart_Click(object sender, EventArgs e)
         {

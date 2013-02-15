@@ -83,13 +83,22 @@ namespace OpenGL
             if (disposing)
             {
                 // free managed resources
-                SoundList.Clear();
-                SoundList = null;
                 if (tr.IsAlive)
                 {
                     RunSoundThread = false;
                 }
                 tr = null; // is bad if it's not stopped?
+                if (SoundSource != -1)
+                {
+                    AL.SourceStop(SoundSource);
+                    AL.DeleteSource(SoundSource);
+                }
+                foreach (var item in SoundList)
+                {
+                    AL.DeleteBuffer(item.Value);
+                }
+                SoundList.Clear();
+                SoundList = null;
             }
             // free native resources if there are any.
             disposed = true;
@@ -100,7 +109,7 @@ namespace OpenGL
         {
             int sourceState;
             context.MakeCurrent();
-            Console.WriteLine(AL.GetError());
+            Console.WriteLine("Sound thread started.");
             while (RunSoundThread)
             {
                 //Check if there is a sound to play
@@ -126,13 +135,13 @@ namespace OpenGL
                         {
                             break;
                         }
-                        if (!isPlaying)
+                        /*if (!isPlaying)
                         {
                             isPlaying = true;    
-                        }
+                        }*/
                         
                         System.Threading.Thread.Sleep(100); // let other threads run.
-                        Console.Write(".");
+                        //Console.Write(".");
                         // Get Source State
                         AL.GetSource(SoundSource, ALGetSourcei.SourceState, out sourceState);
                     } while ((ALSourceState)sourceState == ALSourceState.Playing);
@@ -143,7 +152,7 @@ namespace OpenGL
                 isPlaying = false;
                 Thread.Sleep(10); // just to let other threads run...
             }
-            Console.WriteLine("Sound thread stopped");
+            Console.WriteLine("Sound thread stopped.");
         }
 
         public void RunThread()
@@ -227,6 +236,9 @@ namespace OpenGL
             int subChunk2Size;
             byte[] data;
 
+            // OpenAL Buffer
+            int ab = AL.GenBuffer();
+
             /* WAVE
              * RIFF-header is 4x4 Bytes
              * Format is 2x4, 2x2, 2x4, 2x2 Bytes
@@ -255,20 +267,6 @@ namespace OpenGL
             ByteRate = br.ReadInt32(); //BitConverter.ToInt32(br.ReadBytes(4).Reverse().ToArray(), 0);
             ByteAlign = br.ReadInt16(); //BitConverter.ToInt16(br.ReadBytes(2).Reverse().ToArray(), 0);
             BitsPerSample = br.ReadInt16(); //BitConverter.ToInt16(br.ReadBytes(2).Reverse().ToArray(), 0);
-            // Format end
-            // DATA start
-            subChunk2ID = new string(br.ReadChars(4));
-            subChunk2Size = br.ReadInt32(); //BitConverter.ToInt32(br.ReadBytes(4).Reverse().ToArray(), 0);
-            data = new byte[br.BaseStream.Length];
-            data = br.ReadBytes((int)br.BaseStream.Length);
-            // DATA end
-            br.Close();
-            //IntPtr dataPointer = System.Runtime.InteropServices.Marshal.AllocHGlobal(data.Length);//new IntPtr();
-            //System.Runtime.InteropServices.Marshal.Copy(data,0,dataPointer, data.Length);
-            //GCHandle pinnedArray = GCHandle.Alloc(byteArray, GCHandleType.Pinned);
-            //IntPtr pointer = pinnedArray.AddrOfPinnedObject();
-            //IntPtr dataPointer = System.Runtime.InteropServices.Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
-
             ALFormat alf = 0;
             if (numChannels == 1) // mono
             {
@@ -277,7 +275,7 @@ namespace OpenGL
                     alf = ALFormat.Mono8;
                 }
                 else // say that it is 16 even if not, bad way...
-	            {
+                {
                     alf = ALFormat.Mono16;
                 }
             }
@@ -296,10 +294,26 @@ namespace OpenGL
             {
                 throw new Exception("Wrong number of channels in sound file.");
             }
+            // Format end
+            // DATA start
+            subChunk2ID = new string(br.ReadChars(4));
+            subChunk2Size = br.ReadInt32(); //BitConverter.ToInt32(br.ReadBytes(4).Reverse().ToArray(), 0);
+            data = new byte[br.BaseStream.Length];
+            data = br.ReadBytes((int)br.BaseStream.Length);
+            // DATA end
             
-            int ab = AL.GenBuffer();
+            //IntPtr dataPointer = System.Runtime.InteropServices.Marshal.AllocHGlobal(data.Length);//new IntPtr();
+            //System.Runtime.InteropServices.Marshal.Copy(data,0,dataPointer, data.Length);
+            //GCHandle pinnedArray = GCHandle.Alloc(byteArray, GCHandleType.Pinned);
+            //IntPtr pointer = pinnedArray.AddrOfPinnedObject();
+            //IntPtr dataPointer = System.Runtime.InteropServices.Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
+
             AL.BufferData(ab, alf, data, data.Length, SampleRate);
-            
+            br.Close();
+            //Add this if you don't want to have large memory allocation, as the allocation sticks to the program until gc can free it
+            /*data = new byte[1]; // force release of data
+            GC.Collect(); // well well well, bleh! this releases the memory only if it is top on heap else nothing happens...
+            */
             return ab;
         }
 
@@ -310,9 +324,11 @@ namespace OpenGL
         /// <param name="Name">Name of the buffer</param>
         public void Play(string Name)
         {
-            NextPlayingName = Name;
-            NextPlayingBuffer = SoundList[Name];
-
+            if (SoundList.ContainsKey(Name))
+            {
+                NextPlayingName = Name;
+                NextPlayingBuffer = SoundList[Name];
+            }
         }
 
         public string PlayingName()

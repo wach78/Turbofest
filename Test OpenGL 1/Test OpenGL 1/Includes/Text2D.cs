@@ -11,6 +11,7 @@ namespace OpenGL
 {
     class Text2D
     {
+        private bool _disposed = false;
         string m_strText;
         int texture;
         System.Drawing.Font m_font;
@@ -75,6 +76,36 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            //base.Finalize();
+            //GL.DeleteBuffers(2, this.m_tex); // this might bug out or?
+            //this.m_tex = null; // protects for miss use if GC haven't been collecting...
+
+            System.GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // If you need thread safety, use a lock around these  
+            // operations, as well as in your methods that use the resource. 
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (texture != -1)
+                    {
+                        GL.DeleteTexture(texture);
+                    }
+                    Console.WriteLine("Object disposed.");
+                }
+
+                // Indicate that the instance has been disposed.
+                texture = -1;
+                _disposed = true;
+            }
+        }
 
         public void Draw()
         {

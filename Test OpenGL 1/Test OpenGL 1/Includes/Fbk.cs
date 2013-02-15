@@ -37,8 +37,7 @@ namespace OpenGL
             if (disposing)
             {
                 // free managed resources
-                GL.DeleteBuffers(1, ref image);
-                this.image = -1;
+                Util.DeleteTexture(ref image);
                 snd = null;
             }
             // free native resources if there are any.

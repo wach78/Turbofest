@@ -45,8 +45,8 @@ namespace OpenGL
         public void Dispose()
         {
             //base.Finalize();
-            GL.DeleteBuffers(1, ref currentImage);
-            this.currentImage = -1;
+            Util.DeleteTexture(ref currentImage);
+            snd = null;
             System.GC.SuppressFinalize(this);
         }
 
@@ -128,7 +128,7 @@ namespace OpenGL
             playSound();
             updateImages();
             DrawImage();
-            sh.draw();
+            sh.Draw(Date);
         }
 
     }//class
