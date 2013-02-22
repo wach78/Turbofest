@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
@@ -11,6 +12,9 @@ namespace OpenGL
     {
         private int image;
         private int image2;
+        private int snowImage;
+
+        private int currentImage;
         private Sound snd;
 
         private bool leftBorder;
@@ -21,13 +25,16 @@ namespace OpenGL
         private float x;
         private float y;
 
-        
+        private SnowFlake[] sf;
+        private const int NUMBEROFFLAKES = 13;
 
         public Christmas(ref Sound sound)
         {
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\Xmas.bmp");
             image2 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\godjul.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
+            snowImage = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\snow1_db.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
 
+            currentImage = 0;
             snd = sound;
 
             leftBorder = true;
@@ -37,7 +44,34 @@ namespace OpenGL
 
             x = 1;
             y = 0;
+            Random r = new Random();
+            sf = new SnowFlake[NUMBEROFFLAKES];
 
+            for (int i = 0; i < NUMBEROFFLAKES; i++)
+            {
+
+
+
+                sf[i] = new SnowFlake((r.Next(-10, 20) * -1)/10.0f, 0.002f, 0.02f, -0.4f, 0.5f, snowImage,
+                    new Vector2[] {  new Vector2(0.0f + (currentImage * 0.2f), 1.0f),
+                                     new Vector2(0.2f + (currentImage * 0.2f), 1.0f),
+                                     new Vector2(0.2f + (currentImage * 0.2f), 0.0f),
+                                     new Vector2(0.0f + (currentImage * 0.2f), 0.0f)});
+
+
+                currentImage++;
+
+                if (currentImage == 4)
+                    currentImage = 0;
+
+                  
+            }
+                /*
+                    new Vector3[] {new Vector3(0.0f,-0.1f,1.1f),
+                                   new Vector3(-0.1f,-0.1f,1.1f),
+                                   new Vector3(0.1f,0.0f,1.1f),
+                                   new Vector3(0.0f,0.0f,1.1f)},
+                 */
             snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.wav", "xmas");
         }
 
@@ -65,9 +99,6 @@ namespace OpenGL
 
             GL.End();
             
-
-
-
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, image2);
             GL.Enable(EnableCap.Blend);      
@@ -84,6 +115,13 @@ namespace OpenGL
             GL.End();
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
+
+
+            for (int i = 0; i < NUMBEROFFLAKES; i++)
+            {
+                sf[i].Draw();
+            }
+
 
         }//DrawImage
 

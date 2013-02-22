@@ -78,6 +78,7 @@
     <Compile Include="Includes\IEffect.cs" />
     <Compile Include="Includes\Particle.cs" />
     <Compile Include="Includes\Semla.cs" />
+    <Compile Include="Includes\SnowFlake.cs" />
     <Compile Include="Includes\Sound.cs" />
     <Compile Include="Includes\SuneAnimation.cs" />
     <Compile Include="Includes\SuneTxtHandler.cs" />
@@ -164,6 +165,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\semla.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\snow1_db.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\stripes.bmp">
