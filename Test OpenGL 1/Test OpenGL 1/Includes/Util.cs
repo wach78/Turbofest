@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+using System.IO;
 
 namespace OpenGL
 {
@@ -28,7 +29,16 @@ namespace OpenGL
         public static int LoadTexture(string filename, TextureMinFilter MinFilter = TextureMinFilter.Linear, TextureMagFilter MagFilter = TextureMagFilter.Linear,
             TextureWrapMode WrapS = TextureWrapMode.Clamp, TextureWrapMode WrapT = TextureWrapMode.Clamp, Color Transparant = new Color())
         {
-            Bitmap bitmap = new Bitmap(filename);
+            Bitmap bitmap = null;
+            if (File.Exists(filename))
+            {
+                bitmap = new Bitmap(filename);
+            }
+            else
+            {
+                throw new Exception("Missing Bitmap-file!");
+            }
+            
 
             return LoadTexture(bitmap, MinFilter, MagFilter, WrapS, WrapT, Transparant);
         }//LoadTexture
@@ -44,7 +54,6 @@ namespace OpenGL
             //GL.GenTextures(1, out tex);
             //currentTextureBuffers++;
             GenTextureID(out tex);
-            
             GL.BindTexture(TextureTarget.Texture2D, tex);
 
             BitmapData data = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
@@ -54,6 +63,8 @@ namespace OpenGL
                 OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
 
             bitmap.UnlockBits(data);
+            bitmap.Dispose();
+            bitmap = null;
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)MinFilter);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)MagFilter);
@@ -89,13 +100,20 @@ namespace OpenGL
         /// <param name="Texture">If cleard this is -1</param>
         public static void DeleteTexture(ref int Texture)
         {
-            GL.DeleteTextures(1, ref Texture);
-            currentTextureBuffers--;
-            Texture = -1;
-            if (currentTextureBuffers < 0)
+            /*if (GL.IsTexture(Texture))
+            {*/
+                GL.DeleteTextures(1, ref Texture);
+                currentTextureBuffers--;
+                Texture = -1;
+                if (currentTextureBuffers < 0)
+                {
+                    throw new Exception("Can't be less then zero current textures.");
+                }
+            /*}
+            else
             {
-                throw new Exception("Can't be less then zero current textures.");
-            }
+                throw new Exception("Not a texture, so can't delete it!");
+            }*/
         }//DeleteTexture
         #endregion
 

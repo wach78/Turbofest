@@ -21,6 +21,8 @@ namespace OpenGL
         bool blnWireFrameDraw;
         bool blnFog;
         bool blnLight;
+
+        Matrix4 matLook;
         /*double xScroll = 0.0;
         double yScroll = 0.0;*/
         PartyClock pc;
@@ -193,13 +195,15 @@ namespace OpenGL
             //GL.PushMatrix();
             GL.MatrixMode(MatrixMode.Projection);
             //GL.LoadIdentity();
-            Matrix4 matProj = Matrix4.CreatePerspectiveFieldOfView(OpenTK.MathHelper.DegreesToRadians(60.0f), (float)(DisplayDevice.Default.Width / (double)DisplayDevice.Default.Height), 0.1f, 5.0f);
+            float fov = MathHelper.PiOver2;
+            float aspect = 1.6f; // (float)(DisplayDevice.Default.Width / (double)DisplayDevice.Default.Height)
+            Matrix4 matProj = Matrix4.CreatePerspectiveFieldOfView(OpenTK.MathHelper.DegreesToRadians(60.0f), aspect, 0.1f, 5.0f);
             GL.LoadMatrix(ref matProj); // need to invers this to make the camera on the right side of the object?
             
             /*Matrix4 ortho_projection = Matrix4.CreateOrthographicOffCenter(0.0f, Width, Height, 0, -1.0f, 1.0f);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref ortho_projection);*/
-            
+            /*
             GL.MatrixMode(MatrixMode.Modelview);
            // GL.PopMatrix();
             GL.LoadIdentity();
@@ -208,7 +212,7 @@ namespace OpenGL
             GL.LoadMatrix(ref matLook);
             //GL.Rotate(180, 0.0, 0.0, 1.0);
             //GL.Scale(2.0f, 2.0f, 2.0f); // scale to fit window better if z is -2.3 on eye placement
-            
+            */
         }
 
         protected override void OnUpdateFrame(OpenTK.FrameEventArgs e)
@@ -225,6 +229,11 @@ namespace OpenGL
         // The rendering for the scene happens here.
         protected override void OnRenderFrame(OpenTK.FrameEventArgs e)
         {
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            matLook = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -1.3f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f));
+            GL.LoadMatrix(ref matLook);
+
             base.OnRenderFrame(e);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.StencilBufferBit | ClearBufferMask.DepthBufferBit); // Clear the OpenGL color buffer
@@ -301,6 +310,7 @@ namespace OpenGL
         
         private void OnKeyboardKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs key)
         {
+            //OpenTK.Input.MouseDevice asd = new OpenTK.Input.MouseDevice();
             
            // RaiseKeyboardEvent(OpenTKKeyboardEventType.ButtonPressed, key.Key);
             if (key.Key == OpenTK.Input.Key.Escape)
@@ -316,16 +326,19 @@ namespace OpenGL
                 {
                     
                     OpenTK.DisplayDevice.Default.RestoreResolution();
-                    this.WindowState = OpenTK.WindowState.Normal;
+                    WindowState = OpenTK.WindowState.Normal;
+                    WindowBorder = OpenTK.WindowBorder.Resizable;
                     //GL.Viewport(this.ClientRectangle);
                     Console.WriteLine("Going to window");
+                    
                 }
                 else
                 {
                     OpenTK.DisplayDevice dev = OpenTK.DisplayDevice.Default;
                     OpenTK.DisplayDevice.Default.ChangeResolution(dev.Width, dev.Height, dev.BitsPerPixel, dev.RefreshRate);
                     //OpenTK.DisplayDevice.Default.ChangeResolution(OpenTK.DisplayDevice.Default.AvailableResolutions.Last());
-                    this.WindowState = OpenTK.WindowState.Fullscreen;
+                    WindowState = OpenTK.WindowState.Fullscreen;
+                    WindowBorder = OpenTK.WindowBorder.Hidden;
                     //GL.Viewport(this.ClientRectangle);
                     Console.WriteLine("Going to fullscreen");
                 }

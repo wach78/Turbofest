@@ -24,17 +24,19 @@ namespace OpenGL
 #pragma warning disable 414
         #endregion
         private bool disposed = false;
-        int texture;
-        bool moveUp;
-        bool moveLeft;
-        bool VTColour;
-        float moveX;
-        float moveY;
-        float X;
-        float Y;
+        private int texture;
+        private bool moveUp;
+        private bool moveLeft;
+        private bool VTColour;
+        private float moveX;
+        private float moveY;
+        private float X;
+        private float Y;
         private Sound snd;
+        private int numPlayedSound = 0;
+        private string LastPlayedDate = string.Empty;
 
-        public TurboLogo(ref Sound sound, bool VT=false)
+        public TurboLogo(ref Sound sound, bool VT=true)
         {
             Random rnd = new Random();
             if (rnd.Next(0, 10) < 6)
@@ -54,10 +56,9 @@ namespace OpenGL
                 moveLeft = true;
             }
 
+            rnd = null;
             snd = sound;
-            
-            //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.wav", "FBK");
-            //Sound.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/free.ogg", "free");
+
             snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.wav", "roadrunner");
 
             VTColour = VT;
@@ -71,19 +72,33 @@ namespace OpenGL
             Bitmap bmSprite = new Bitmap(bitmap.Width*2,bitmap.Height*2);
 
             Graphics g = Graphics.FromImage(bmSprite);
-            
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
             g.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
             g.DrawImage(bitmap, 0, bitmap.Height, bitmap.Width, bitmap.Height);
             bitmap.RotateFlip(RotateFlipType.Rotate180FlipY);
             g.DrawImage(bitmap, bitmap.Width, 0, bitmap.Width, bitmap.Height);
             g.DrawImage(bitmap, bitmap.Width, bitmap.Height, bitmap.Width, bitmap.Height);
 
-            //80,142
+            // verify that this is not missing as it will crash if not possible to find...
+            // this makes bad resolution on text, it can get distorted...
+            // top left
+            g.DrawString("Turbophesten", new Font("Tahoma", 19.0f, FontStyle.Italic | FontStyle.Bold), Brushes.Black, 75, 135);
+            g.DrawString("Örebro 2013", new Font("Tahoma", 19.0f, FontStyle.Italic | FontStyle.Bold), Brushes.Black, 72, 160);
+            // top right
+            g.DrawString("Turbophesten", new Font("Tahoma", 19.0f, FontStyle.Italic | FontStyle.Bold), Brushes.Black, bitmap.Width + 35, 135);
+            g.DrawString("Örebro 2013", new Font("Tahoma", 19.0f, FontStyle.Italic | FontStyle.Bold), Brushes.Black, bitmap.Width + 55, 160);
+            // bottom left
+            g.DrawString("Turbophesten", new Font("Tahoma", 18.0f, FontStyle.Italic | FontStyle.Bold), Brushes.Black, 75, bitmap.Height + 135);
+            g.DrawString("Örebro 2013", new Font("Tahoma", 18.0f, FontStyle.Italic | FontStyle.Bold), Brushes.Black, 72, bitmap.Height + 160);
+            //bottom right
+            g.DrawString("Turbophesten", new Font("Tahoma", 18.0f, FontStyle.Italic | FontStyle.Bold), Brushes.Black, bitmap.Width + 35, bitmap.Height + 135);
+            g.DrawString("Örebro 2013", new Font("Tahoma", 18.0f, FontStyle.Italic | FontStyle.Bold), Brushes.Black, bitmap.Width + 55, bitmap.Height + 160);
             
-            g.DrawString("Turbophesten", new Font("Tahoma", 20.0f, FontStyle.Italic /*| FontStyle.Bold*/), Brushes.Black, 80, 142);
             g.Dispose();
             //End Bitmap creation and edits
-
+            bmSprite.MakeTransparent(Color.Magenta);
             // change yellow (255, 214, 0) to blue and ?
             for (int y = bitmap.Height; y < bmSprite.Height; y++)
             {
@@ -97,8 +112,6 @@ namespace OpenGL
                 }
             }
             
-            bmSprite.MakeTransparent(Color.Magenta);
-
             BitmapData data = bmSprite.LockBits(new System.Drawing.Rectangle(0, 0, bmSprite.Width, bmSprite.Height),
                 ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             
@@ -114,9 +127,15 @@ namespace OpenGL
             bmSprite.UnlockBits(data);
             bmSprite.Dispose();
             bitmap.Dispose();
+            data = null;
+            bmSprite = null;
+            bitmap = null;
             
             //data = null;
             GL.BindTexture(TextureTarget.Texture2D, 0);
+
+           
+
         }
 
         ~TurboLogo()
@@ -140,12 +159,10 @@ namespace OpenGL
                 snd = null;
             }
             // free native resources if there are any.
-
             disposed = true;
         }
 
-        int numPlayedSound = 0;
-        string LastPlayedDate = string.Empty;
+        
 
         /*public void toPlay(string Date)
         {
@@ -173,6 +190,63 @@ namespace OpenGL
 
         public void Draw(string Date)
         {
+            /*
+            // Get bounds of view.
+            float[] viewport = new float[4];
+            float[] projectiofM = new float[16];
+            float[] modelviewfM = new float[16];
+            Matrix4 projectionM = new Matrix4();
+            Matrix4 modelviewM = new Matrix4();
+            Matrix4 projMultimodel;// = new Matrix4();
+            Matrix4 ScreenFrustum = new Matrix4(); // all 4 used
+            Vector4[] NearFarFrustum = new Vector4[2]; // only 0-1 used, 2-3 is zero
+            GL.GetFloat(GetPName.Viewport, viewport);
+            GL.GetFloat(GetPName.ProjectionMatrix, out projectionM);
+            GL.GetFloat(GetPName.ModelviewMatrix, out modelviewM);
+            projMultimodel = Matrix4.Mult(projectionM, modelviewM);
+
+            Vector4 rPlane = new Vector4(projMultimodel.Column0.W - projMultimodel.Column0.X,
+                    projMultimodel.Column1.W - projMultimodel.Column1.X,
+                    projMultimodel.Column2.W - projMultimodel.Column2.X,
+                    projMultimodel.Column3.W - projMultimodel.Column3.X); 
+            rPlane.Normalize();
+
+            Vector4 rPlaneManual = new Vector4(projMultimodel.M14 - projMultimodel.M11,
+                    projMultimodel.M24 - projMultimodel.M21,
+                    projMultimodel.M34 - projMultimodel.M31,
+                    projMultimodel.M44 - projMultimodel.M41);
+            rPlaneManual.Normalize();
+            */
+
+            /*Vector4 rPlaneManual2;
+            unsafe
+            {
+                float* clip1 = (float*)(&projMultimodel);
+                rPlaneManual2 = new Vector4(clip1[3] - clip1[0], clip1[7] - clip1[4], clip1[11] - clip1[8], clip1[15] - clip1[12]);
+                rPlaneManual2.Normalize();
+            }
+            */
+
+            /*Vector4 lPlane = new Vector4(projMultimodel.Column0.W + projMultimodel.Column0.X,
+                    projMultimodel.Column1.W + projMultimodel.Column1.X,
+                    projMultimodel.Column2.W + projMultimodel.Column2.X,
+                    projMultimodel.Column3.W + projMultimodel.Column3.X);
+            lPlane.Normalize();
+            Vector4 bPlane = new Vector4(projMultimodel.Column0.W - projMultimodel.Column0.Y,
+                    projMultimodel.Column1.W - projMultimodel.Column1.Y,
+                    projMultimodel.Column2.W - projMultimodel.Column2.Y,
+                    projMultimodel.Column3.W - projMultimodel.Column3.Y);
+            bPlane.Normalize();
+            Vector4 tPlane = new Vector4(projMultimodel.Column0.W + projMultimodel.Column0.Y,
+                    projMultimodel.Column1.W + projMultimodel.Column1.Y,
+                    projMultimodel.Column2.W + projMultimodel.Column2.Y,
+                    projMultimodel.Column3.W + projMultimodel.Column3.Y); 
+            tPlane.Normalize();
+
+            ScreenFrustum = new Matrix4(rPlane, lPlane, bPlane, tPlane);
+            */
+
+
             PlaySound(Date);
             GL.BindTexture(TextureTarget.Texture2D, texture);
             GL.Enable(EnableCap.Texture2D);
