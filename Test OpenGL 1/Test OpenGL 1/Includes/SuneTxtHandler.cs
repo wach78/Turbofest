@@ -85,7 +85,7 @@ namespace OpenGL
      
             }while(again);
 
-            return listquotes[/*index*/27]; // 60, 100 bra test för bryttningar...
+            return listquotes[index]; // 60, 100 bra test för bryttningar...
         }//getOneRandomQuote
 
 
