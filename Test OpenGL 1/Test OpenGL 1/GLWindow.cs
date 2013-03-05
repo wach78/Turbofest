@@ -27,6 +27,7 @@ namespace OpenGL
         double yScroll = 0.0;*/
         PartyClock pc;
         Chess chess;
+        Starfield sf;
         Text2D text;
 
         Particle particle;
@@ -71,10 +72,11 @@ namespace OpenGL
             
             // Effects
             chess = new Chess();
-            text = new Text2D(100, 100);
+            sf = new Starfield();
+            text = new Text2D();
             particle = new Particle();
             fbk = new Fbk(ref snd);
-            sune = new SuneAnimation(ref snd);
+            sune = new SuneAnimation(ref snd, ref text);
             dif = new Dif(ref chess);
             xmas = new Christmas(ref snd);
             s = new Semla();
@@ -82,7 +84,8 @@ namespace OpenGL
             tl = new TurboLogo(ref snd);
 
             //Events
-            _WriteVersion();
+            //_WriteVersion();
+            //text.TextureCoordinates('A', Text2D.FontName.Coolfont);
         }
 
         public void _WriteVersion()
@@ -131,7 +134,7 @@ namespace OpenGL
             GL.Enable(EnableCap.StencilTest);
             //GL.Enable(EnableCap.VertexArray);
             // end of GL.Enable
-            VSync = OpenTK.VSyncMode.Adaptive; // this is to make it possible to run faster then refreshrate on screen...
+            VSync = OpenTK.VSyncMode.On; // this is to make it possible to run faster then refreshrate on screen...
             /*
             this.TargetRenderFrequency = 200.0; // forcing to update at 50 hz
             this.TargetUpdateFrequency = 200.0; // forcing to update at 50 hz
@@ -150,6 +153,7 @@ namespace OpenGL
             snd.Dispose();
             pc.Dispose();
             chess.Dispose();
+            sf.Dispose();
             text.Dispose();
             fbk.Dispose();
             sune.Dispose();
@@ -195,9 +199,9 @@ namespace OpenGL
             //GL.PushMatrix();
             GL.MatrixMode(MatrixMode.Projection);
             //GL.LoadIdentity();
-            float fov = MathHelper.PiOver2;
+            float fov = OpenTK.MathHelper.DegreesToRadians(60.0f); // MathHelper.PiOver2;
             float aspect = 1.6f; // (float)(DisplayDevice.Default.Width / (double)DisplayDevice.Default.Height)
-            Matrix4 matProj = Matrix4.CreatePerspectiveFieldOfView(OpenTK.MathHelper.DegreesToRadians(60.0f), aspect, 0.1f, 5.0f);
+            Matrix4 matProj = Matrix4.CreatePerspectiveFieldOfView(fov, aspect, 0.1f, 5.0f);
             GL.LoadMatrix(ref matProj); // need to invers this to make the camera on the right side of the object?
             
             /*Matrix4 ortho_projection = Matrix4.CreateOrthographicOffCenter(0.0f, Width, Height, 0, -1.0f, 1.0f);
@@ -220,6 +224,7 @@ namespace OpenGL
             base.OnUpdateFrame(e);
             
             //add frame render stuff...
+            //tl.FrameUpdate(nowDate);
         }
 
 
@@ -237,10 +242,11 @@ namespace OpenGL
             base.OnRenderFrame(e);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.StencilBufferBit | ClearBufferMask.DepthBufferBit); // Clear the OpenGL color buffer
+            GL.MatrixMode(MatrixMode.Projection);
             if (!pc.EndOfRuntime())
             {
                 pc.updateClock();
-                GL.MatrixMode(MatrixMode.Modelview);
+                //GL.MatrixMode(MatrixMode.Modelview);
                 // Time
                 pc.DrawTime();
                 // Date
@@ -284,9 +290,11 @@ namespace OpenGL
                     snd.StopSound();
                 }
                 lastDate = nowDate;
-                
+                sune.NewQoute();
             }
-            if (nowDate == "2012-03-03")
+            //sf.Draw(nowDate);
+            sune.Draw(nowDate);
+            /*if (nowDate == "2012-03-03")
                 sune.Draw(nowDate);
             else if (nowDate == "2012-03-02")
                 fbk.Draw(nowDate);
@@ -296,13 +304,18 @@ namespace OpenGL
             {
                 //tl.toPlay(nowDate);
                 tl.Draw(nowDate);
-            }
+            }*/
+            text.Draw("Hej på dig!", Text2D.FontName.Coolfont, new Vector3(1.0f, 0.0f, 1.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f));
+            //text.Draw("andra raden som skall själv delas?", Text2D.FontName.CandyPink, new Vector3(1.0f, -0.4f, 1.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(2.8f, 0.10f));
+            //text.Draw("Ännu mer här !åäö? och så har vi något lång rad som inte skall få radbrytnignar om man inte\ngör en själv!", Text2D.FontName.TypeFont, new Vector3(1.6f, -0.6f, 1.5f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(0.0f, 0.0f));
             //s.Draw();
             //dif.Draw();
             //xmas.Draw();
             //f.Draw();
             
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
+            //Console.WriteLine("FPS: " + (1.0/e.Time));
+            //Console.WriteLine(RenderFrequency);
         }
 
         string lastDate, nowDate;
@@ -347,6 +360,18 @@ namespace OpenGL
             else if (key.Key == OpenTK.Input.Key.P)
             {
                 this.blnPointDraw = !this.blnPointDraw; // not active
+            }
+            else if (key.Key == OpenTK.Input.Key.V)
+            {
+                if (VSync == VSyncMode.Off)
+                {
+                    VSync = OpenTK.VSyncMode.On;
+                }
+                else
+                {
+                    VSync = OpenTK.VSyncMode.Off;
+                }
+                
             }
             else if (key.Key == OpenTK.Input.Key.W)
             {

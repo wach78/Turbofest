@@ -80,6 +80,7 @@ namespace OpenGL
             //base.Finalize();
             Util.DeleteTexture(ref image);
             Util.DeleteTexture(ref image2);
+            Util.DeleteTexture(ref snowImage);
             snd = null;
             System.GC.SuppressFinalize(this);
         }

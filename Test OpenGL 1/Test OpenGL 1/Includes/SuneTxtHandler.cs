@@ -20,16 +20,21 @@ namespace OpenGL
         private Bitmap textBmp;
         int textTexture;
         private Font font;
+        private Text2D text;
+        private string currentString;
+        private bool builtInFont;
 
-        public SuneTxtHandler()
+        public SuneTxtHandler(ref Text2D Text, bool BuiltInFont)
         {
             listquotes = new List<string>();
             indexList = new List<int>();
             rand = new Random();
             maxIndexValue = 0;
+            text = Text;
+            builtInFont = BuiltInFont;
            
             readFromXml();
-            drawInit();
+            drawInit(builtInFont);
         }
 
         public void Dispose()
@@ -80,17 +85,20 @@ namespace OpenGL
      
             }while(again);
 
-            return listquotes[index];
+            return listquotes[/*index*/60]; // 60, 100 bra test för bryttningar...
         }//getOneRandomQuote
 
 
    
-        public void drawInit()
+        public void drawInit(bool BuiltIn)
         {
+            if (BuiltIn)
+            {
             textBmp = new Bitmap(256, 300);
             font = new Font("times new roman", 20.0f, FontStyle.Bold);
 
-            textTexture = GL.GenTexture();
+            //textTexture = GL.GenTexture();
+            textTexture = Util.GenTextureID();
             GL.BindTexture(TextureTarget.Texture2D, textTexture);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
@@ -110,26 +118,38 @@ namespace OpenGL
             data = null;
             textBmp.Dispose();
             GL.BindTexture(TextureTarget.Texture2D, 0);
+            }
+            else
+            {
+                currentString = getOneRandomQuote();
+            }
         }
 
         public void Draw(string Date)
         {
-            GL.BindTexture(TextureTarget.Texture2D, textTexture);
-            GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
-          //  GL.Color3(Color.White);
-            GL.Begin(BeginMode.Quads);
+            if (builtInFont)
+            {
+                GL.BindTexture(TextureTarget.Texture2D, textTexture);
+                GL.Enable(EnableCap.Texture2D);
+                GL.Enable(EnableCap.Blend);
+                GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
+                //  GL.Color3(Color.White);
+                GL.Begin(BeginMode.Quads);
 
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(0.8f, -0.85f, 1.0f); // bottom left // x y z
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.0f, -0.85f, 1.0f); // bottom right
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.0f, 0.10f, 1.0f);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(0.8f, 0.10f, 1.0f); // top left 
+                GL.TexCoord2(0.0, 1.0); GL.Vertex3(0.8f, -0.85f, 1.0f); // bottom left // x y z
+                GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.0f, -0.85f, 1.0f); // bottom right
+                GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.0f, 0.10f, 1.0f);// top right
+                GL.TexCoord2(0.0, 0.0); GL.Vertex3(0.8f, 0.10f, 1.0f); // top left 
 
-            GL.End();
+                GL.End();
 
-            GL.Disable(EnableCap.Blend);
-            GL.Disable(EnableCap.Texture2D);
+                GL.Disable(EnableCap.Blend);
+                GL.Disable(EnableCap.Texture2D);
+            }
+            else
+            {
+                text.Draw(currentString, Text2D.FontName.TypeFont, new OpenTK.Vector3(0.8f, 0.10f, 1.0f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(2.8f, 2.0f), 1.0f);
+            }
         }
     }//class
 }//namespace

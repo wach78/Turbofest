@@ -23,19 +23,21 @@ namespace OpenGL
         private int currentImage;
 
         private Sound snd;
+        //private Text2D text;
         private bool soundTrue = false;
         private bool soundDone = false;
         private short soundTimes = 0;
 
-        public SuneAnimation(ref Sound sound)
+        public SuneAnimation(ref Sound sound, ref Text2D Text)
         {
             ticks = 0;
             oldTicks = 0;
             soundOldTicks = 0;
             soundOldTicks = 0;
             currentImage = 0;
-            sh = new SuneTxtHandler();
+            sh = new SuneTxtHandler(ref Text, false);
             snd = sound;
+            //text = Text;
 
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\sune_sprite.bmp");
             snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\laugh.wav", "Sune");
@@ -47,6 +49,7 @@ namespace OpenGL
             //base.Finalize();
             Util.DeleteTexture(ref currentImage);
             snd = null;
+            //text = null;
             System.GC.SuppressFinalize(this);
         }
 
@@ -56,10 +59,10 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, image);
             GL.Begin(BeginMode.Quads);
 
-            GL.TexCoord2(0.0 + (currentImage * 0.25), 1.0); GL.Vertex3(1.8f, -0.85f, 1.0f ); // bottom left // x y z alla i mitten Y-led 
-            GL.TexCoord2(0.25 + (currentImage * 0.25), 1.0); GL.Vertex3(1.0f, -0.85f, 1.0f); // bottom right // alla till vänster x-led
-            GL.TexCoord2(0.25 + (currentImage * 0.25), 0.0); GL.Vertex3(1.0f, 0.10f, 1.0f);// top right
-            GL.TexCoord2(0.0 + (currentImage * 0.25), 0.0); GL.Vertex3(1.8f, 0.10f, 1.0f); // top left 
+            GL.TexCoord2(0.0f + (currentImage * 0.25f), 1.0f); GL.Vertex3(2.2f, -0.85f, 1.0f ); // bottom left // x y z alla i mitten Y-led 
+            GL.TexCoord2(0.25f + (currentImage * 0.25f), 1.0f); GL.Vertex3(1.2f, -0.85f, 1.0f); // bottom right // alla till vänster x-led
+            GL.TexCoord2(0.25f + (currentImage * 0.25f), 0.0f); GL.Vertex3(1.2f, 0.10f, 1.0f);// top right
+            GL.TexCoord2(0.0f + (currentImage * 0.25f), 0.0f); GL.Vertex3(2.2f, 0.10f, 1.0f); // top left 
 
             GL.End();
             GL.Disable(EnableCap.Texture2D);
@@ -121,6 +124,11 @@ namespace OpenGL
                 soundDone = true;
             }
             stopSample();
+        }
+
+        public void NewQoute()
+        {
+            sh.drawInit(false);
         }
 
         public void Draw(string Date)
