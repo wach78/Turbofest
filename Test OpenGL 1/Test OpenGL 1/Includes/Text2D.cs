@@ -48,7 +48,7 @@ namespace OpenGL
 
             AllowedChars[0] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!?:;0123456789\"()-ÅÄÖ* ";
             AllowedChars[1] = AllowedChars[2] = AllowedChars[3] = AllowedChars[4] = AllowedChars[5] = AllowedChars[6] = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ!?- ";
-            AllowedChars[7] = " ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö0123456789()!:;.,-+\"´@&* ";
+            AllowedChars[7] = " ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö0123456789()!:;.,-+\"´@&*?";
             AllowedChars[8] = "";
 
             splitChars = new char[] { ' ', '.', '-', '\n' }; // set this to each Font as not all have them..
@@ -106,6 +106,11 @@ namespace OpenGL
             float Row = 0, Column = 0;
             int intFont = (int)Font;
 
+            if (Character == '?')
+            {
+                ;
+            }
+
             texVec[0] = texVec[1] = texVec[2] = texVec[3] = Vector2.Zero;
             if (AllowedChars[intFont].ToLower().Contains(Character) || AllowedChars[intFont].Contains(Character))
             {
@@ -120,7 +125,6 @@ namespace OpenGL
                     Row += FontSize[intFont, 1];
                     Column -= textureSize[intFont, 0];
                 }
-
 
                 // top left
                 texVec[3].X = Column / textureSize[intFont, 0];
@@ -159,7 +163,7 @@ namespace OpenGL
             }
             return texVec;
         }
-        
+
         public Vector3[] TextVertix(string Text, FontName Font, float Size, Vector3 StartPosition = new Vector3(), Vector2 WidthHeight = new Vector2())
         {
             Vector3[] TextVec = new Vector3[Text.Length*4];

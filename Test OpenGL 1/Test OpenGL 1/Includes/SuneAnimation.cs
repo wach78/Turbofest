@@ -59,9 +59,9 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, image);
             GL.Begin(BeginMode.Quads);
 
-            GL.TexCoord2(0.0f + (currentImage * 0.25f), 1.0f); GL.Vertex3(2.2f, -0.85f, 1.0f ); // bottom left // x y z alla i mitten Y-led 
-            GL.TexCoord2(0.25f + (currentImage * 0.25f), 1.0f); GL.Vertex3(1.2f, -0.85f, 1.0f); // bottom right // alla till vänster x-led
-            GL.TexCoord2(0.25f + (currentImage * 0.25f), 0.0f); GL.Vertex3(1.2f, 0.10f, 1.0f);// top right
+            GL.TexCoord2(0.0f + (currentImage * 0.25f), 1.0f); GL.Vertex3(2.2f, -1.15f, 1.0f ); // bottom left // x y z alla i mitten Y-led 
+            GL.TexCoord2(0.25f + (currentImage * 0.25f), 1.0f); GL.Vertex3(1.0f, -1.15f, 1.0f); // bottom right // alla till vänster x-led
+            GL.TexCoord2(0.25f + (currentImage * 0.25f), 0.0f); GL.Vertex3(1.0f, 0.10f, 1.0f);// top right
             GL.TexCoord2(0.0f + (currentImage * 0.25f), 0.0f); GL.Vertex3(2.2f, 0.10f, 1.0f); // top left 
 
             GL.End();
