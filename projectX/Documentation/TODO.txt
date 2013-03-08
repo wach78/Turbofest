@@ -1,5 +1,5 @@
 ﻿Generic things:
-	Filepath should be in the .exe path not 2 levels above on release.
+	Filepath should be in the .exe path not 2 levels above on release. DONE
 
 	try cath error msg?
 	prio nästkommande turbo högtider
@@ -11,13 +11,13 @@
 
 openGL:
 		starfield
-		flerfärgat schack
+		flerfärgat schack done
 		scrollers 3-4 olika rörelse op scroll + schack eller star bakgrund
 		bollar text  vilken text??
 		rms
 		win+linux logga + skugga
 		turbomärke (schack bakgrund + ljud )
-		DIf logga + bakrund saknar rätt bakrund
+		DIf logga + bakrund saknar rätt bakrund (finns)
 		sune klar
 		fbk ljudstuff
 		semla done 
@@ -32,9 +32,9 @@ openGL:
 FrmMain:
 	Listview double click to load DONE (needs to be cleaned up)
 	Load button check so it don't crash on load if nothing is selected, display a message box telling what to do.
-	Del button ?
+	Del button  DONE
 	Create button - Make this a dialog DONE
-	Start ?
+	Start DONE
 	Party people button - make this a dialog DONE
 	Menus:
 		File: Set short cuts
@@ -62,8 +62,8 @@ FrmAddParticipants:
 	Make this dialog okish with not show in taskbar, no min/max button DONE
 
 Logic:
-	Check path to be exe path
+	Check path to be exe path DONE
 
 XmlHandler:
-	Check path to be exe path
+	Check path to be exe path DONE
 

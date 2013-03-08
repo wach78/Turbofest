@@ -413,7 +413,7 @@ namespace projectX
             xmlStuff2.writeScrollerToXmlFile("hoppas ni trivs.");
             xmlStuff2.writeScrollerToXmlFile("turbophest");
             xmlStuff2.writeScrollerToXmlFile("idag händer ingenting");
-            xmlStuff2.writeScrollerToXmlFile("teknat sektionens sexmästeri");
+            xmlStuff2.writeScrollerToXmlFile("teknatsektionens sexmästeri");
             xmlStuff2.writeScrollerToXmlFile("oj vilken fin effekt");
             xmlStuff2.writeScrollerToXmlFile("hur många dagar visas turbologgan totalt?");
 
