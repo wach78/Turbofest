@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="GLWindow.cs" />
     <Compile Include="Includes\Christmas.cs" />
+    <Compile Include="Includes\Datasmurf.cs" />
     <Compile Include="Includes\Dif.cs" />
     <Compile Include="Includes\Fbk.cs" />
     <Compile Include="Includes\IEffect.cs" />
@@ -150,13 +151,13 @@
     <Content Include="gfx\coolfont_db.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="gfx\dif.bmp">
+    <Content Include="gfx\dataSmurf.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="gfx\dif2.jpg">
+    <Content Include="gfx\dif2.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="gfx\fbk2.png">
+    <Content Include="gfx\fbk2.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\godjul.bmp">
@@ -166,24 +167,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\roadrunner.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="gfx\scroller2_db_blue.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="gfx\scroller2_db_green.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="gfx\scroller2_db_grey.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="gfx\scroller2_db_pink.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="gfx\scroller2_db_purple.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="gfx\scroller2_db_yellow.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\semla.bmp">
@@ -202,6 +185,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\xmas.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\datasmurf.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\fbk.wav">

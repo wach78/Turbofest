@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,9 +7,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    class Dif : IEffect
+    class Datasmurf : IEffect
     {
-        private Chess bakground; 
+        private Sound snd;
         private int image;
         private float x;
         private float y;
@@ -20,14 +19,14 @@ namespace OpenGL
         private bool topBorder;
         private bool bottomBorder;
 
-        public Dif(ref Chess chess)
+        public Datasmurf(ref Sound sound)
         {
-            bakground = chess;
             x = -1.0f;
             y = 0.0f;
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\dif2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-           
-            leftBorder = true;
+            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\dataSmurf.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255,0,255));
+
+            snd = sound;
+            leftBorder = true; 
             rightBorder = false;
             topBorder = true;
             bottomBorder = false;
@@ -37,7 +36,7 @@ namespace OpenGL
         {
             Util.DeleteTexture(ref image);
             this.image = -1;
-            bakground = null;
+            snd = null;
             System.GC.SuppressFinalize(this);
         }
 
@@ -45,79 +44,77 @@ namespace OpenGL
         {
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, image);
-            GL.Enable(EnableCap.Blend);       
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);  
+            GL.Enable(EnableCap.Blend); //       
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha); //
 
             GL.Begin(BeginMode.Quads);
-           
+
             // x y z
-            // alla i mitten Y-led  alla till vänster x-led //
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.6f+x, -0.55f+y, 1.0f); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.0f+x, -0.55f+y, 1.0f); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.0f+x, 0.10f+y, 1.0f);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.6f+x, 0.10f+y, 1.0f); // top left 
+            // alla i mitten Y-led  alla till vänster x-led
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(2.0f + x, -0.85f + y, 1.0f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.0f + x, -0.85f + y, 1.0f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.0f + x, 0.10f + y, 1.0f);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(2.0f + x, 0.10f + y, 1.0f); // top left 
 
             GL.End();
-            GL.Disable(EnableCap.Blend);
+            GL.Disable(EnableCap.Blend);//
             GL.Disable(EnableCap.Texture2D);
 
+
         }//DrawImage
-   
+
         private void moveImage()
-        {        
-            if (Math.Round(x,2) == -2.66)
+        {
+            if (Math.Round(x, 2) == -2.66)
             {
-                rightBorder = true; 
+                rightBorder = true;
                 leftBorder = false;
             }
 
             if (Math.Round(x, 2) == 0.08)
             {
-                leftBorder = true; 
+                leftBorder = true;
                 rightBorder = false;
             }
 
-            if (Math.Round(y,2) == 1.20)
+            if (Math.Round(y, 2) == 1.20)
             {
-                topBorder = true; 
+                topBorder = true;
                 bottomBorder = false;
             }
 
             if (Math.Round(y, 2) == -0.48)
             {
-                bottomBorder = true; 
+                bottomBorder = true;
                 topBorder = false;
             }
-            
+
             if (!topBorder)
             {
-                y += 0.005f;
+                y += 0.010f;
             }
 
             if (!bottomBorder)
             {
-                y -= 0.005f;
+                y -= 0.010f;
             }
 
             if (!rightBorder)
             {
-                x -= 0.005f;
+                x -= 0.010f;
             }
 
             if (!leftBorder)
             {
-                  x += 0.005f;
-            }      
-             
-        }//moveImage
+                x += 0.010f;
+            }
 
+        }//moveImage
+     
         public void Draw(string Date)
         {
-            bakground.Draw(Date, Chess.ChessColor.BlackRed);
             moveImage();
             DrawImage();
-            
         }//Draw
-
     }//class
-}//namespace
+}//namespace 

@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    class Semla :IDisposable
+    class Semla : IEffect
     {
         private int image;
         private float x;
@@ -22,7 +22,7 @@ namespace OpenGL
         {
             x = -1.0f;
             y = 0.0f;
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\semla.bmp",TextureMinFilter.Linear,TextureMagFilter.Linear,TextureWrapMode.Clamp,TextureWrapMode.Clamp,System.Drawing.Color.White);
+            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\semla.bmp",TextureMinFilter.Linear,TextureMagFilter.Linear,TextureWrapMode.Clamp,TextureWrapMode.Clamp,System.Drawing.Color.FromArgb(255, 0, 255));
 
             leftBorder = true;
             rightBorder = false;
@@ -108,7 +108,7 @@ namespace OpenGL
 
         }//moveImage
 
-        public void Draw()
+        public void Draw(string Date)
         {
             moveImage();
             DrawImage();
