@@ -1,4 +1,36 @@
-﻿Generic things:
+﻿
+19 april vara klart 
+
+asg crash handler
+event handler
+asg	födelsedagar
+asg	2dtext
+wach	alla hjärtansdag
+asg	heeloween
+wach	xmas
+wach	sune
+wach	dif
+wach	fbk
+asg	turbologga
+asg	scrollers
+wach	se över scroll text
+asg	advent
+asg	luzia
+asg	schak
+wach	smurf
+wach	semla 
+asg	rms??
+asg starfield ??
+asg win+linux logga 
+        nyår bara bild
+wach	intro
+wach	outro
+
+openTK
+openAL
+
+
+Generic things:
 	Filepath should be in the .exe path not 2 levels above on release. DONE
 
 	try cath error msg?
@@ -19,7 +51,7 @@ openGL:
 		turbomärke (schack bakgrund + ljud )
 		DIf logga + bakrund saknar rätt bakrund (finns)
 		sune klar
-		fbk ljudstuff
+		fbk ljudstuff done
 		semla done 
 		xmas pågår 
 		advent
