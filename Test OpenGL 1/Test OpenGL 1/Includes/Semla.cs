@@ -18,6 +18,8 @@ namespace OpenGL
         private bool topBorder;
         private bool bottomBorder;
 
+        private Random random;
+
         public Semla()
         {
             x = -1.0f;
@@ -28,6 +30,8 @@ namespace OpenGL
             rightBorder = false;
             topBorder = true;
             bottomBorder = false;
+
+            random = new Random();
         }
 
         public void Dispose()
@@ -60,27 +64,29 @@ namespace OpenGL
 
         }//DrawImage
 
+   
+
         private void moveImage()
         {
-            if (Math.Round(x, 2) == -2.66)
+            if (Math.Round(x, 2) < -3.10)
             {
                 rightBorder = true;
                 leftBorder = false;
             }
 
-            if (Math.Round(x, 2) == 0.08)
+            if (Math.Round(x, 2) > 0.50)
             {
                 leftBorder = true;
                 rightBorder = false;
             }
 
-            if (Math.Round(y, 2) == 1.20)
+            if (Math.Round(y, 2) > 1.20)
             {
                 topBorder = true;
                 bottomBorder = false;
             }
 
-            if (Math.Round(y, 2) == -0.48)
+            if (Math.Round(y, 2) < 0.0 && Math.Round(y, 2) < -0.48) //-0,48
             {
                 bottomBorder = true;
                 topBorder = false;

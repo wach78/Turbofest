@@ -77,6 +77,8 @@
     <Compile Include="Includes\Dif.cs" />
     <Compile Include="Includes\Fbk.cs" />
     <Compile Include="Includes\IEffect.cs" />
+    <Compile Include="Includes\Intro.cs" />
+    <Compile Include="Includes\Outro.cs" />
     <Compile Include="Includes\Particle.cs" />
     <Compile Include="Includes\Semla.cs" />
     <Compile Include="Includes\SnowFlake.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Includes\PartyClock.cs" />
     <Compile Include="Includes\TurboLogo.cs" />
     <Compile Include="Includes\Util.cs" />
+    <Compile Include="Includes\Valentine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -121,6 +124,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="gfx\barseback3.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\BOSD.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\chess_blue.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -184,7 +193,13 @@
     <Content Include="gfx\typefont15x25.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="gfx\valentine.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\xmas.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\Blackheart.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\datasmurf.wav">
@@ -197,6 +212,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\roadrunner.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\valentine.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\xmas.wav">

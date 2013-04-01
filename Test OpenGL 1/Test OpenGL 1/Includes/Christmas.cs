@@ -14,7 +14,7 @@ namespace OpenGL
         private int image2;
         private int snowImage;
 
-        private int currentImage;
+        //private int currentImage;
         private Sound snd;
 
         private bool leftBorder;
@@ -25,8 +25,11 @@ namespace OpenGL
         private float x;
         private float y;
 
-        private SnowFlake[] sf;
-        private const int NUMBEROFFLAKES = 13;
+        /*
+         private SnowFlake[] sf;
+         private const int NUMBEROFFLAKES = 13;
+        */
+      
 
         public Christmas(ref Sound sound)
         {
@@ -34,7 +37,7 @@ namespace OpenGL
             image2 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\godjul.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snowImage = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\snow1_db.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
 
-            currentImage = 0;
+           // currentImage = 0;
             snd = sound;
             snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\datasmurf.wav", "smurf");
             leftBorder = true;
@@ -44,6 +47,7 @@ namespace OpenGL
 
             x = 1;
             y = 0;
+            /*
             Random r = new Random();
             sf = new SnowFlake[NUMBEROFFLAKES];
 
@@ -66,6 +70,7 @@ namespace OpenGL
 
                   
             }
+             */
                 /*
                     new Vector3[] {new Vector3(0.0f,-0.1f,1.1f),
                                    new Vector3(-0.1f,-0.1f,1.1f),
@@ -81,6 +86,9 @@ namespace OpenGL
             Util.DeleteTexture(ref image);
             Util.DeleteTexture(ref image2);
             Util.DeleteTexture(ref snowImage);
+            this.image = -1;
+            this.image2 = -1;
+            this.snowImage = -1;
             snd = null;
             System.GC.SuppressFinalize(this);
         }
@@ -117,36 +125,36 @@ namespace OpenGL
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
 
-
+            /*
             for (int i = 0; i < NUMBEROFFLAKES; i++)
             {
                 sf[i].Draw();
             }
-
+            */
 
         }//DrawImage
 
         private void moveImage()
         {
-            if (Math.Round(x, 2) == -0.8)
+            if (Math.Round(x, 2) < -0.8)
             {
                 rightBorder = true;
                 leftBorder = false;
             }
 
-            if (Math.Round(x, 2) == 0.8)
+            if (Math.Round(x, 2) > 0.8)
             {
                 leftBorder = true;
                 rightBorder = false;
             }
 
-            if (Math.Round(y, 2) == 1.20)
+            if (Math.Round(y, 2) > 1.20)
             {
                 topBorder = true;
                 bottomBorder = false;
             }
 
-            if (Math.Round(y, 2) == -0.48)
+            if (Math.Round(y, 2) < 0.0 && Math.Round(y, 2) < -0.48)
             {
                 bottomBorder = true;
                 topBorder = false;

@@ -94,30 +94,30 @@ namespace OpenGL
         {
             if (BuiltIn)
             {
-            textBmp = new Bitmap(256, 300);
-            font = new Font("times new roman", 20.0f, FontStyle.Bold);
+                textBmp = new Bitmap(256, 300);
+                font = new Font("times new roman", 20.0f, FontStyle.Bold);
 
-            //textTexture = GL.GenTexture();
-            textTexture = Util.GenTextureID();
-            GL.BindTexture(TextureTarget.Texture2D, textTexture);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, textBmp.Width, textBmp.Height, 0,
-            OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero); 
-            Graphics gfx = Graphics.FromImage(textBmp);
-            gfx.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+                //textTexture = GL.GenTexture();
+                textTexture = Util.GenTextureID();
+                GL.BindTexture(TextureTarget.Texture2D, textTexture);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, textBmp.Width, textBmp.Height, 0,
+                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero); 
+                Graphics gfx = Graphics.FromImage(textBmp);
+                gfx.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
-            gfx.Clear(Color.Transparent);
-            gfx.DrawString(getOneRandomQuote(), font, System.Drawing.Brushes.White, new System.Drawing.Rectangle(0, 0, textBmp.Width, textBmp.Height));
-            gfx.Dispose();
+                gfx.Clear(Color.Transparent);
+                gfx.DrawString(getOneRandomQuote(), font, System.Drawing.Brushes.White, new System.Drawing.Rectangle(0, 0, textBmp.Width, textBmp.Height));
+                gfx.Dispose();
 
-            BitmapData data = textBmp.LockBits(new Rectangle(0, 0, textBmp.Width, textBmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, 256, 300, 0,
-            OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-            textBmp.UnlockBits(data);
-            data = null;
-            textBmp.Dispose();
-            GL.BindTexture(TextureTarget.Texture2D, 0);
+                BitmapData data = textBmp.LockBits(new Rectangle(0, 0, textBmp.Width, textBmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, 256, 300, 0,
+                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+                textBmp.UnlockBits(data);
+                data = null;
+                textBmp.Dispose();
+                GL.BindTexture(TextureTarget.Texture2D, 0);
             }
             else
             {

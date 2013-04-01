@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    class Fbk : IEffect
+    class Outro : IEffect
     {
         private bool disposed;
         private int image;
         private Sound snd;
 
-        public Fbk(ref Sound sound)
+
+        public Outro(ref Sound sound)
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\fbk2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\BOSD.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snd = sound;
-            snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.wav", "FBK");
+            snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Samples\\Blackheart.wav", "Outro");
+
             disposed = false;
         }
 
-        ~Fbk()
+         ~Outro()
         {
             Dispose(false);
         }
@@ -45,6 +48,14 @@ namespace OpenGL
             disposed = true;
         }
 
+        public void Play()
+        {
+            if (snd.PlayingName() != "Outro") // this will start once the last sound is done, ie looping.
+            {
+                snd.Play("Outro");
+            }
+        }
+
 
         private void drawImage()
         {
@@ -54,32 +65,21 @@ namespace OpenGL
 
             // x y z
             // alla i mitten Y-led  alla till vänster x-led
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(0.8f, -0.8f, 1.0f); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-0.8f, -0.8f, 1.0f); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-.8f, -0.00f, 1.0f);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(0.8f, -0.00f, 1.0f); // top left 
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(2.0f, -1.2f, 0.7f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-2.0f, -1.2f, 0.7f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-2.0f, 1.20f, 0.7f);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(2.0f, 1.20f, 0.7f); // top left 
 
             GL.End();
             GL.Disable(EnableCap.Texture2D);
 
         }//DrawImage
 
-        public void Play()
-        {
-            if (snd.PlayingName() != "FBK") // this will start once the last sound is done, ie looping.
-            {
-                snd.Play("FBK");
-            }
-        }
-        public void Stop()
-        {
-            //player.Stop();
-        }
         public void Draw(string Date)
         {
             Play();
             drawImage();
-        }//Draw
 
+        }//Draw
     }//class
 }//namespace

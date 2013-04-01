@@ -39,6 +39,9 @@ namespace OpenGL
         Fbk f;
         TurboLogo tl;
         Datasmurf smurf;
+        Valentine v;
+        Outro o;
+        Intro i;
 
         // Test for sound
         Sound snd;
@@ -84,6 +87,9 @@ namespace OpenGL
             f = new Fbk(ref snd);
             tl = new TurboLogo(ref snd);
             smurf = new Datasmurf(ref snd);
+            v = new Valentine(ref snd);
+            o = new Outro(ref snd);
+            i = new Intro(ref snd, ref text);
 
             //Events
             //_WriteVersion();
@@ -164,6 +170,9 @@ namespace OpenGL
             s.Dispose();
             xmas.Dispose();
             dif.Dispose();
+            v.Dispose();
+            o.Dispose();
+            i.Dispose();
 
             GL.BindTexture(TextureTarget.Texture2D, 0);
             Console.WriteLine("Closing");
@@ -295,7 +304,7 @@ namespace OpenGL
                 sune.NewQoute();
             }
             //sf.Draw(nowDate);
-         //   sune.Draw(nowDate);
+           // sune.Draw(nowDate);
             /*if (nowDate == "2012-03-03")
                 sune.Draw(nowDate);
             else if (nowDate == "2012-03-02")
@@ -311,10 +320,14 @@ namespace OpenGL
             //text.Draw("andra raden som skall själv delas?", Text2D.FontName.CandyPink, new Vector3(1.0f, -0.4f, 1.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(2.8f, 0.10f));
             //text.Draw("Ännu mer här !åäö? och så har vi något lång rad som inte skall få radbrytnignar om man inte\ngör en själv!", Text2D.FontName.TypeFont, new Vector3(1.6f, -0.6f, 1.5f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(0.0f, 0.0f));
             //s.Draw(nowDate);
-           // dif.Draw(nowDate);
+             //dif.Draw(nowDate);
            // xmas.Draw(nowDate);
           //  f.Draw(nowDate);
-            smurf.Draw(nowDate);
+           // smurf.Draw(nowDate);
+          //  v.Draw(nowDate);
+           // o.Draw(nowDate);
+            i.Draw(nowDate);
+           
             
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
             //Console.WriteLine("FPS: " + (1.0/e.Time));

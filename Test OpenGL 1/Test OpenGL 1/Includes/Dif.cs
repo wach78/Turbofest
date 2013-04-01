@@ -52,10 +52,10 @@ namespace OpenGL
            
             // x y z
             // alla i mitten Y-led  alla till vänster x-led //
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.6f+x, -0.55f+y, 1.0f); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.0f+x, -0.55f+y, 1.0f); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.0f+x, 0.10f+y, 1.0f);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.6f+x, 0.10f+y, 1.0f); // top left 
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.6f+x, -0.55f+y, 0.8f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.0f+x, -0.55f+y, 0.8f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.0f+x, 0.10f+y, 0.8);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.6f+x, 0.10f+y, 0.8f); // top left 
 
             GL.End();
             GL.Disable(EnableCap.Blend);
@@ -65,25 +65,25 @@ namespace OpenGL
    
         private void moveImage()
         {        
-            if (Math.Round(x,2) == -2.66)
+            if (Math.Round(x,2) < -2.90)
             {
                 rightBorder = true; 
                 leftBorder = false;
             }
 
-            if (Math.Round(x, 2) == 0.08)
+            if (Math.Round(x, 2) > 0.3)
             {
                 leftBorder = true; 
                 rightBorder = false;
             }
 
-            if (Math.Round(y,2) == 1.20)
+            if (Math.Round(y,2) >1.10)
             {
                 topBorder = true; 
                 bottomBorder = false;
             }
 
-            if (Math.Round(y, 2) == -0.48)
+            if (Math.Round(y, 2) < 0.0 && Math.Round(y, 2) < -0.48)
             {
                 bottomBorder = true; 
                 topBorder = false;
@@ -91,22 +91,22 @@ namespace OpenGL
             
             if (!topBorder)
             {
-                y += 0.005f;
+                y += 0.010f;
             }
 
             if (!bottomBorder)
             {
-                y -= 0.005f;
+                y -= 0.010f;
             }
 
             if (!rightBorder)
             {
-                x -= 0.005f;
+                x -= 0.010f;
             }
 
             if (!leftBorder)
             {
-                  x += 0.005f;
+                  x += 0.010f;
             }      
              
         }//moveImage

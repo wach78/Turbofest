@@ -26,6 +26,7 @@ namespace OpenGL
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\dataSmurf.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255,0,255));
 
             snd = sound;
+            snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\datasmurf.wav", "Smurf");
             leftBorder = true; 
             rightBorder = false;
             topBorder = true;
@@ -65,25 +66,25 @@ namespace OpenGL
 
         private void moveImage()
         {
-            if (Math.Round(x, 2) == -2.66)
+            if (Math.Round(x, 2) < -3.10)
             {
                 rightBorder = true;
                 leftBorder = false;
             }
 
-            if (Math.Round(x, 2) == 0.08)
+            if (Math.Round(x, 2) > 0.0)
             {
                 leftBorder = true;
                 rightBorder = false;
             }
 
-            if (Math.Round(y, 2) == 1.20)
+            if (Math.Round(y, 2) > 1.20)
             {
                 topBorder = true;
                 bottomBorder = false;
             }
 
-            if (Math.Round(y, 2) == -0.48)
+            if (Math.Round(y, 2) < 0.0 && Math.Round(y, 2) < -0.48)
             {
                 bottomBorder = true;
                 topBorder = false;
@@ -110,9 +111,17 @@ namespace OpenGL
             }
 
         }//moveImage
-     
+
+        private void Play()
+        {
+            if (snd.PlayingName() != "Smurf") // this will start once the last sound is done, ie looping.
+            {
+                snd.Play("Smurf");
+            }
+        }
         public void Draw(string Date)
         {
+            Play();
             moveImage();
             DrawImage();
         }//Draw
