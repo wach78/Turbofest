@@ -86,10 +86,8 @@ namespace OpenGL
             Util.DeleteTexture(ref image);
             Util.DeleteTexture(ref image2);
             Util.DeleteTexture(ref snowImage);
-            this.image = -1;
-            this.image2 = -1;
-            this.snowImage = -1;
             snd = null;
+            Console.WriteLine(this.GetType().ToString() + " disposed.");
             System.GC.SuppressFinalize(this);
         }
 

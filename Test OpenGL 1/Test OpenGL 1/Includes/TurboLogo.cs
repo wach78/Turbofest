@@ -18,11 +18,8 @@ namespace OpenGL
     /// The logo of the Turbo party.
     /// create a dynamic image that have the logo mirrord and triger it when bouncing the right direction and write the correct name and year on the dynamic image.
     /// </summary>
-    class TurboLogo //: IEffect
+    class TurboLogo : IEffect
     {
-        #region Suppress 414 warning variable set but not used
-#pragma warning disable 414
-        #endregion
         private bool disposed = false;
         private int texture;
         private bool moveUp;
@@ -152,14 +149,18 @@ namespace OpenGL
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!this.disposed)
             {
-                // free managed resources
-                Util.DeleteTexture(ref texture);
-                snd = null;
+                if (disposing)
+                {
+                    // free managed resources
+                    Util.DeleteTexture(ref texture);
+                    snd = null;
+                }
+                // free native resources if there are any.
+                disposed = true;
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
             }
-            // free native resources if there are any.
-            disposed = true;
         }
 
         
@@ -188,64 +189,46 @@ namespace OpenGL
             }
         }
 
+        public void FrameUpdate(string Date)
+        {
+            if (Math.Round(X, 2) >= 1.15)
+            {
+                moveLeft = false;
+            }
+            else if (Math.Round(X, 1) <= -1.9)
+            {
+                moveLeft = true;
+            }
+            if (Math.Round(Y, 2) >= 1.13)
+            {
+                moveUp = false;
+            }
+            else if (Math.Round(Y, 1) <= -1.0)
+            {
+                moveUp = true;
+            }
+
+            X = X + (moveLeft ? 1 : -1) * moveX;
+            Y = Y + (moveUp ? 1 : -1) * moveY;
+        }
+
         public void Draw(string Date)
         {
-            /*
-            // Get bounds of view.
-            float[] viewport = new float[4];
-            float[] projectiofM = new float[16];
-            float[] modelviewfM = new float[16];
-            Matrix4 projectionM = new Matrix4();
-            Matrix4 modelviewM = new Matrix4();
-            Matrix4 projMultimodel;// = new Matrix4();
-            Matrix4 ScreenFrustum = new Matrix4(); // all 4 used
-            Vector4[] NearFarFrustum = new Vector4[2]; // only 0-1 used, 2-3 is zero
-            GL.GetFloat(GetPName.Viewport, viewport);
-            GL.GetFloat(GetPName.ProjectionMatrix, out projectionM);
-            GL.GetFloat(GetPName.ModelviewMatrix, out modelviewM);
-            projMultimodel = Matrix4.Mult(projectionM, modelviewM);
+            float[] viewport = Util.GetViewport();
+            Matrix4 mvp = Util.GetMVP();
+            // process drain....
+            Vector3 pointVTopLeft = Vector3.Transform(new Vector3(X + 0.9f, Y + 0.1f, 1.0f), mvp); // need to change this with 0.1 or so to correct the screen, done mut still small misses
+            Vector3 pointVBottomRight = Vector3.Transform(new Vector3(X - 0.2f, Y - 0.3f, 1.0f), mvp);
+            //pointV.Normalize(); //can normalize it to get the same?!
+            float screenX = ((pointVTopLeft.X / pointVTopLeft.Z) + 1) * viewport[2] / 2;
+            float screenY = ((pointVTopLeft.Y / pointVTopLeft.Z) + 1) * viewport[3] / 2;
+            Vector2 pointV2DTopLeft = new Vector2(screenX, screenY);
+            screenX = ((pointVBottomRight.X / pointVBottomRight.Z) + 1) * viewport[2] / 2;
+            screenY = ((pointVBottomRight.Y / pointVBottomRight.Z) + 1) * viewport[3] / 2;
+            Vector2 pointV2DBottomRight = new Vector2(screenX, screenY);
 
-            Vector4 rPlane = new Vector4(projMultimodel.Column0.W - projMultimodel.Column0.X,
-                    projMultimodel.Column1.W - projMultimodel.Column1.X,
-                    projMultimodel.Column2.W - projMultimodel.Column2.X,
-                    projMultimodel.Column3.W - projMultimodel.Column3.X); 
-            rPlane.Normalize();
-
-            Vector4 rPlaneManual = new Vector4(projMultimodel.M14 - projMultimodel.M11,
-                    projMultimodel.M24 - projMultimodel.M21,
-                    projMultimodel.M34 - projMultimodel.M31,
-                    projMultimodel.M44 - projMultimodel.M41);
-            rPlaneManual.Normalize();
-            */
-
-            /*Vector4 rPlaneManual2;
-            unsafe
-            {
-                float* clip1 = (float*)(&projMultimodel);
-                rPlaneManual2 = new Vector4(clip1[3] - clip1[0], clip1[7] - clip1[4], clip1[11] - clip1[8], clip1[15] - clip1[12]);
-                rPlaneManual2.Normalize();
-            }
-            */
-
-            /*Vector4 lPlane = new Vector4(projMultimodel.Column0.W + projMultimodel.Column0.X,
-                    projMultimodel.Column1.W + projMultimodel.Column1.X,
-                    projMultimodel.Column2.W + projMultimodel.Column2.X,
-                    projMultimodel.Column3.W + projMultimodel.Column3.X);
-            lPlane.Normalize();
-            Vector4 bPlane = new Vector4(projMultimodel.Column0.W - projMultimodel.Column0.Y,
-                    projMultimodel.Column1.W - projMultimodel.Column1.Y,
-                    projMultimodel.Column2.W - projMultimodel.Column2.Y,
-                    projMultimodel.Column3.W - projMultimodel.Column3.Y);
-            bPlane.Normalize();
-            Vector4 tPlane = new Vector4(projMultimodel.Column0.W + projMultimodel.Column0.Y,
-                    projMultimodel.Column1.W + projMultimodel.Column1.Y,
-                    projMultimodel.Column2.W + projMultimodel.Column2.Y,
-                    projMultimodel.Column3.W + projMultimodel.Column3.Y); 
-            tPlane.Normalize();
-
-            ScreenFrustum = new Matrix4(rPlane, lPlane, bPlane, tPlane);
-            */
-
+            //Console.WriteLine(pointV2DTopLeft.X + ", " + pointV2DTopLeft.Y);
+            
 
             PlaySound(Date);
             GL.BindTexture(TextureTarget.Texture2D, texture);
@@ -259,6 +242,25 @@ namespace OpenGL
             //X += moveX;
             //Y += moveY;
 
+            /*Vector4[] bounds = Util.GetFrustum(false);
+            Vector4[] bounds2 = Util.GetFrustum(true);
+            
+            //aspect = width/height
+            //fov_ = atan2(fov)
+            //right = near * aspect * fov_
+            //left = -right
+            //top = near * fov_
+            //bottom = -top
+            // The equation for a plane is: Ax + By + Cz + D = 0, where A, B and C define the plane's normal vector, D is the distance from the origin to the plane,
+            // and x, y and z are any points on the plane.. You can plug any point into the equation and if the result is 0 then the point lies on the plane. If the
+            // result is greater than 0 then the point is in front of the plane, and if it's negative the point is behind the plane
+            float dright = bounds[0].X * (-0.30f + X) + bounds[0].Y * (0.20f + Y) + bounds[0].Z * (1.00f) + bounds[0].W;
+            float dleft = bounds[1].X * (1.00f + X) + bounds[1].Y * (0.20f + Y) + bounds[1].Z * (1.00f) + bounds[1].W;
+            float dtop = bounds[3].X * (-0.30f + X) + bounds[3].Y * (0.20f + Y) + bounds[3].Z * (1.00f) + bounds[3].W;
+            float dbottom = bounds[2].X * (1.00f + X) + bounds[2].Y * (-0.40f + Y) + bounds[2].Z * (1.00f) + bounds[2].W;
+            */
+
+            /*
             if (Math.Round(X, 2) >= 1.15)
             {
                 moveLeft = false;
@@ -274,10 +276,29 @@ namespace OpenGL
             else if (Math.Round(Y, 1) <= -1.0)
             {
                 moveUp = true;
+            }*/
+
+            if (pointV2DBottomRight.X >= viewport[2])
+            {
+                moveLeft = true;
+            }
+            else if (pointV2DTopLeft.X <= viewport[0])
+            {
+                moveLeft = false;
+            }
+            if (pointV2DTopLeft.Y >= viewport[3])
+            {
+                moveUp = false;
+            }
+            else if (pointV2DBottomRight.Y <= viewport[1])
+            {
+                moveUp = true;
             }
 
             X = X + (moveLeft ? 1 : -1) * moveX;
             Y = Y + (moveUp ? 1 : -1) * moveY;
+            
+            //FrameUpdate(Date);
 
             //Console.WriteLine(X + ", " + Y + ", " + moveUp + ", " + moveRight);
             GL.TexCoord2((moveLeft ? 0.5f : 0.0f), (VTColour ? 0.5f : 0.0f)); GL.Vertex3(1.00f + X, 0.20f + Y, 1.00f); // top left
@@ -289,6 +310,13 @@ namespace OpenGL
             GL.End();
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
+
+            GL.PointSize(5.0f);
+            GL.Begin(BeginMode.Points);
+            GL.Vertex3(new Vector3(X + 1.0f, Y + 0.2f, 1.0f));
+            GL.Vertex3(new Vector3(X - 0.3f, Y - 0.4f, 1.0f));
+            GL.End();
+
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 

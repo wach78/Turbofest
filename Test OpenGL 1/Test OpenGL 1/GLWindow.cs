@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using OpenTK;
 //using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using System.Drawing;
 
 namespace OpenGL
 {
@@ -16,11 +17,9 @@ namespace OpenGL
         const string TITLE = "Project X";
         const int WIDTH = 1024;
         const int HEIGHT = 768;
-        bool blnFullscreen;
+
         bool blnPointDraw;
         bool blnWireFrameDraw;
-        bool blnFog;
-        bool blnLight;
 
         Matrix4 matLook;
         /*double xScroll = 0.0;
@@ -39,6 +38,7 @@ namespace OpenGL
         Fbk f;
         TurboLogo tl;
         Datasmurf smurf;
+        Halloween hw;
         Valentine v;
         Outro o;
         Intro i;
@@ -59,11 +59,8 @@ namespace OpenGL
             Keyboard.KeyDown += OnKeyboardKeyDown;
             Closing += OnClosing;
 
-            blnFullscreen = false;
             blnPointDraw = false;
             blnWireFrameDraw = false;
-            blnFog = true;
-            blnLight = false;
             m_events = Events;
             DateTime dtStart = DateTime.Parse(runtime.Substring(0, 10));
             DateTime dtEnd = DateTime.Parse(runtime.Substring(10, 10));
@@ -76,21 +73,22 @@ namespace OpenGL
             
             // Effects
             chess = new Chess();
+            sune = new SuneAnimation(ref snd, ref text);
             sf = new Starfield();
             text = new Text2D();
-            particle = new Particle();
+            //particle = new Particle();
             fbk = new Fbk(ref snd);
-            sune = new SuneAnimation(ref snd, ref text);
             dif = new Dif(ref chess);
             xmas = new Christmas(ref snd);
             s = new Semla();
             f = new Fbk(ref snd);
             tl = new TurboLogo(ref snd);
             smurf = new Datasmurf(ref snd);
+            hw = new Halloween(25);
             v = new Valentine(ref snd);
             o = new Outro(ref snd);
             i = new Intro(ref snd, ref text);
-
+            
             //Events
             //_WriteVersion();
             //text.TextureCoordinates('A', Text2D.FontName.Coolfont);
@@ -114,30 +112,32 @@ namespace OpenGL
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            
+
             // Move this GL.Enable in to the drawing method as this is only to be done in there
             //GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.DepthTest); // to enable depth but needs reconfiguring
-            GL.DepthRange(1.0, -1.0); // needed for DepthTest to show graphics
-            
+            //GL.Enable(EnableCap.DepthTest); // to enable depth but needs reconfiguring
+            //GL.DepthRange(-1.0, 1.0); // needed for DepthTest to show graphics
+
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
-            
             GL.Enable(EnableCap.CullFace);
             GL.FrontFace(FrontFaceDirection.Ccw);
             GL.ShadeModel(ShadingModel.Smooth);
             GL.Enable(EnableCap.ColorMaterial);
             GL.Enable(EnableCap.AlphaTest);
-            
-            //GL.Fog(FogParameter.FogIndex, 3.0f);
-            //GL.FogCoord();
-            
+
+            GL.Fog(FogParameter.FogMode, (float)FogMode.Linear);
+            GL.Fog(FogParameter.FogDensity, 0.95f);
+            GL.Hint(HintTarget.FogHint, HintMode.Nicest);
+            GL.Fog(FogParameter.FogStart, 4.7f);
+            GL.Fog(FogParameter.FogEnd, 5.0f);
+
             // Environment light
             //GL.Enable(EnableCap.Normalize); // if we don't use calculated normals we can use this...
             float[] lightAmbient = new float[4] { 0.5f, 0.5f, 0.5f, 1.0f };
             GL.LightModel(LightModelParameter.LightModelAmbient, lightAmbient);
             /*GL.Enable(EnableCap.Lighting);
             GL.Enable(EnableCap.Light0);*/
-            
+
 
             GL.Enable(EnableCap.StencilTest);
             //GL.Enable(EnableCap.VertexArray);
@@ -157,22 +157,7 @@ namespace OpenGL
 
             snd.StopThread();
 
-            //Not clean... set to null as well if we want that
-            snd.Dispose();
-            pc.Dispose();
-            chess.Dispose();
-            sf.Dispose();
-            text.Dispose();
-            fbk.Dispose();
-            sune.Dispose();
-            tl.Dispose();
-            f.Dispose();
-            s.Dispose();
-            xmas.Dispose();
-            dif.Dispose();
-            v.Dispose();
-            o.Dispose();
-            i.Dispose();
+            
 
             GL.BindTexture(TextureTarget.Texture2D, 0);
             Console.WriteLine("Closing");
@@ -193,7 +178,27 @@ namespace OpenGL
         {
             base.OnClosed(e);
             Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
-            Console.WriteLine("Closed");
+            //Not clean... set to null as well if we want that
+            snd.Dispose();
+            pc.Dispose(); // 2 texturer
+            sune.Dispose(); // 1-2 texturer
+            chess.Dispose(); // 7 texturer
+            sf.Dispose(); // 0 texturer
+            text.Dispose(); // 9 texturer
+            fbk.Dispose(); // 1 textur
+            dif.Dispose(); // 1 textur
+            xmas.Dispose(); // 3 texturer
+            s.Dispose(); // 1 textur
+            f.Dispose(); // 1 textur
+            tl.Dispose(); // 1 textur
+            smurf.Dispose(); // 1 textur
+            hw.Dispose(); // 1 textur
+            v.Dispose(); // 2 texturer
+            o.Dispose(); // 1 textur
+            i.Dispose(); // 1 textur
+            
+            Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
+            Console.WriteLine(this.GetType().ToString() + " closed.");
             this.Dispose(true);
         }
 
@@ -210,24 +215,26 @@ namespace OpenGL
             //GL.PushMatrix();
             GL.MatrixMode(MatrixMode.Projection);
             //GL.LoadIdentity();
-            float fov = OpenTK.MathHelper.DegreesToRadians(60.0f); // MathHelper.PiOver2;
+            /*float fov = OpenTK.MathHelper.DegreesToRadians(60.0f); // MathHelper.PiOver2;
             float aspect = 1.6f; // (float)(DisplayDevice.Default.Width / (double)DisplayDevice.Default.Height)
-            Matrix4 matProj = Matrix4.CreatePerspectiveFieldOfView(fov, aspect, 0.1f, 5.0f);
+            Matrix4 matProj = Matrix4.CreatePerspectiveFieldOfView(fov, aspect, 0.1f, 5.0f);*/
+            Matrix4 matProj = Matrix4.CreatePerspectiveFieldOfView(Util.FOV, Util.Aspect, 0.1f, 5.0f);
             GL.LoadMatrix(ref matProj); // need to invers this to make the camera on the right side of the object?
             
             /*Matrix4 ortho_projection = Matrix4.CreateOrthographicOffCenter(0.0f, Width, Height, 0, -1.0f, 1.0f);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref ortho_projection);*/
-            /*
+
             GL.MatrixMode(MatrixMode.Modelview);
-           // GL.PopMatrix();
+            // GL.PopMatrix();
             GL.LoadIdentity();
             Matrix4 matLook = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -1.3f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f));
             //Matrix4 matLook = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);
             GL.LoadMatrix(ref matLook);
             //GL.Rotate(180, 0.0, 0.0, 1.0);
             //GL.Scale(2.0f, 2.0f, 2.0f); // scale to fit window better if z is -2.3 on eye placement
-            */
+            Util.MVPChanged(true);
+            Util.ViewportChanged(true);
         }
 
         protected override void OnUpdateFrame(OpenTK.FrameEventArgs e)
@@ -245,15 +252,16 @@ namespace OpenGL
         // The rendering for the scene happens here.
         protected override void OnRenderFrame(OpenTK.FrameEventArgs e)
         {
-            GL.MatrixMode(MatrixMode.Modelview);
+            base.OnRenderFrame(e);
+            this.Title = "Project X - FPS: " + this.RenderFrequency.ToString("F2") + " Vsync: " + (VSync == OpenTK.VSyncMode.Off ? "Off" : "On");
+
+            /*GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
             matLook = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -1.3f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f));
-            GL.LoadMatrix(ref matLook);
-
-            base.OnRenderFrame(e);
+            GL.LoadMatrix(ref matLook);*/
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.StencilBufferBit | ClearBufferMask.DepthBufferBit); // Clear the OpenGL color buffer
-            GL.MatrixMode(MatrixMode.Projection);
+            //GL.MatrixMode(MatrixMode.Projection);
             if (!pc.EndOfRuntime())
             {
                 pc.updateClock();
@@ -264,33 +272,6 @@ namespace OpenGL
                 pc.DrawDate();
             }
             
-            if (this.blnFog)
-            {
-                GL.Enable(EnableCap.Fog);
-                GL.Fog(FogParameter.FogMode, (float)FogMode.Linear);
-                GL.Fog(FogParameter.FogDensity, 0.45f);
-                GL.Hint(HintTarget.FogHint, HintMode.Nicest);
-                GL.Fog(FogParameter.FogStart, 2.0f);
-                GL.Fog(FogParameter.FogEnd, 2.3f);
-            }
-            if (this.blnLight)
-            {
-                GL.Enable(EnableCap.Lighting);
-                GL.Enable(EnableCap.Light0);
-            }
-
-            // Chess quad
-            //chess.Draw();
-
-            if (this.blnFog) GL.Disable(EnableCap.Fog);
-
-            // Draw a text
-            //text.Draw();
-            if (this.blnLight)
-            {
-                GL.Disable(EnableCap.Lighting);
-                GL.Disable(EnableCap.Light0);
-            }
 
             // Draw effects and events here
             nowDate = pc.CurrentClock().ToShortDateString();
@@ -325,9 +306,9 @@ namespace OpenGL
           //  f.Draw(nowDate);
            // smurf.Draw(nowDate);
           //  v.Draw(nowDate);
-           // o.Draw(nowDate);
-            i.Draw(nowDate);
-           
+            //o.Draw(nowDate);
+            //i.Draw(nowDate);
+            //chess.Draw(nowDate);
             
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
             //Console.WriteLine("FPS: " + (1.0/e.Time));
@@ -351,7 +332,7 @@ namespace OpenGL
             }
             else if (/*key.Key == OpenTK.Input.Key.Enter && key.Key.HasFlag(OpenTK.Input.Key.AltLeft)*/ key.Key == OpenTK.Input.Key.F)
             {
-                if (this.blnFullscreen)
+                if (Util.Fullscreen)
                 {
                     
                     OpenTK.DisplayDevice.Default.RestoreResolution();
@@ -371,7 +352,7 @@ namespace OpenGL
                     //GL.Viewport(this.ClientRectangle);
                     Console.WriteLine("Going to fullscreen");
                 }
-                this.blnFullscreen = !this.blnFullscreen;
+                Util.Fullscreen = !Util.Fullscreen;
             }
             else if (key.Key == OpenTK.Input.Key.P)
             {
@@ -395,11 +376,47 @@ namespace OpenGL
             }
             else if (key.Key == OpenTK.Input.Key.O)
             {
-                this.blnFog = !this.blnFog;
+                Util.Fog = !Util.Fog;
             }
             else if (key.Key == OpenTK.Input.Key.L)
             {
-                this.blnLight = !this.blnLight;
+                Util.Lightning = !Util.Lightning;
+            }
+            else if (key.Key == OpenTK.Input.Key.F12)
+            {
+                if (OpenTK.Graphics.GraphicsContext.CurrentContext == null)
+                {
+                    throw new OpenTK.Graphics.GraphicsContextMissingException();
+                }
+                Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
+                System.Drawing.Imaging.BitmapData data = bmp.LockBits(this.ClientRectangle, System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                GL.ReadPixels(0, 0, this.ClientSize.Width, this.ClientSize.Height, PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
+                bmp.UnlockBits(data);
+                bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                // break this out so it does that check on load???
+                string[] files = System.IO.Directory.GetFiles(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "img*.bmp", System.IO.SearchOption.TopDirectoryOnly);
+                int maxFileName = 0;
+                int currentFileName = 0;
+                System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(/*@"(img([0-9]+).bmp)"*/ "([0-9]+)");
+                System.Text.RegularExpressions.Match mh = null;
+                foreach (string item in files)
+                {
+                    mh = reg.Match(item);
+                    if (mh.Captures.Count > 0)
+                    {
+                        currentFileName = int.Parse(mh.Value); // not secure way if we get a error here we are fubared...
+                        if (currentFileName > maxFileName)
+                        {
+                            maxFileName = currentFileName;
+                        }
+                    }
+                }
+                reg = null;
+                mh = null;
+                maxFileName++;
+                //Save the screenshot to file.
+                bmp.Save(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "//img" + maxFileName + ".bmp");
+                bmp.Dispose(); // clear the data so that we don't have leaks...
             }
         }
     }

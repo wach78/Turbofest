@@ -81,16 +81,16 @@ namespace OpenGL
                     {
                         //do a loop so taht we don't need to add as we add new textures...
                         Util.DeleteTexture(ref texture[0]);
-                        Util.DeleteTexture(ref texture[1]);
+                        /*Util.DeleteTexture(ref texture[1]);
                         Util.DeleteTexture(ref texture[2]);
                         Util.DeleteTexture(ref texture[3]);
                         Util.DeleteTexture(ref texture[4]);
                         Util.DeleteTexture(ref texture[5]);
-                        Util.DeleteTexture(ref texture[6]);
+                        Util.DeleteTexture(ref texture[6]);*/
                         Util.DeleteTexture(ref texture[7]);
                         Util.DeleteTexture(ref texture[8]);
                     }
-                    Console.WriteLine("Object disposed.");
+                    Console.WriteLine(this.GetType().ToString() + " disposed.");
                 }
 
                 // Indicate that the instance has been disposed.
@@ -347,10 +347,10 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
-        public void Draw(string Text, FontName Font, float X, float Y, float Z, float Scale = 1.0f)
+        /*public void Draw(string Text, FontName Font, float X, float Y, float Z, float Scale = 1.0f)
         {
             Draw(Text, Font, new Vector3(X, Y, Z), new Vector2(-2.0f, 0.0f), new Vector2(-2.0f, 0.0f));
-        }
+        }*/
 
         private Vector2 ScaleVector2(Vector2 ToScale, float Scale)
         {

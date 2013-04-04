@@ -11,10 +11,7 @@ namespace OpenGL
 {
     public class Chess : IEffect
     {
-        #region Suppress 414 warning variable set but not used
-#pragma warning disable 414
-        #endregion
-        public enum ChessColor {BlackWhite, BlueWhite, PurpleGreen, BlackGreen, BlackLightGreen, BlackPurple, BlackRed}; // this is after the constructor index...
+        public enum ChessColor {BlackWhite, BlueBlack, PurpleGreen, BlackGreen, BlackLightGreen, BlackPurple, WhiteRed}; // this is after the constructor index...
         private bool disposed = false;
         private int[] texture;
         private double m_scrollX;
@@ -89,18 +86,21 @@ namespace OpenGL
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!this.disposed)
             {
-                // free managed resources
-                for (int i = 0; i < texture.Length; i++)
+                if (disposing)
                 {
-                    Util.DeleteTexture(ref texture[i]);    
+                    // free managed resources
+                    for (int i = 0; i < texture.Length; i++)
+                    {
+                        Util.DeleteTexture(ref texture[i]);
+                    }
+                    texture = null;
                 }
-                texture = null;
+                // free native resources if there are any.
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                disposed = true;
             }
-            // free native resources if there are any.
-
-            disposed = true;
         }
         public void Draw(string date)
         {
@@ -114,10 +114,20 @@ namespace OpenGL
 
         public void Draw(bool scrollx, bool scrolly, ChessColor CC)
         {
-            if (scrolly) this.m_scrollY += 0.008;
-            if (scrollx) this.m_scrollX += 0.008;
+            if (scrolly) this.m_scrollY += 0.005;
+            if (scrollx) this.m_scrollX += 0.005;
             if (this.m_scrollY >= 1.0) this.m_scrollY = 0.0;
             if (this.m_scrollX >= 1.0) this.m_scrollX = 0.0;
+            
+            if (Util.Fog)
+            {
+                GL.Enable(EnableCap.Fog);
+            }
+            if (Util.Lightning)
+            {
+                GL.Enable(EnableCap.Lighting);
+                GL.Enable(EnableCap.Light0);
+            }
 
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, texture[(int)CC]);
@@ -128,16 +138,32 @@ namespace OpenGL
             //GL.TexCoord2(5.0 + this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(2.30f, -1.50f, -1.0f); // bottom left
 
             
-            
-            GL.Color4(System.Drawing.Color.White); GL.TexCoord2(0.0 + this.m_scrollX, 5.0 + this.m_scrollY); GL.Vertex3(1.50f, -1.50f, 0.0f); // bottom left
-            GL.Color4(System.Drawing.Color.Yellow); GL.TexCoord2(5.0 + this.m_scrollX, 5.0 + this.m_scrollY); GL.Vertex3(-1.50f, -1.50f, 0.0f); // bottom right
-            GL.Color4(System.Drawing.Color.Blue); GL.TexCoord2(5.0 + this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(-3.00f, 0.50f, 6.0f); // top right
-            GL.Color4(System.Drawing.Color.Red); GL.TexCoord2(0.0 + this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(3.00f, 0.50f, 6.0f); // top left
-            
-            
+            /*
+            GL.Color4(System.Drawing.Color.White); GL.TexCoord2(0.0 - this.m_scrollX, 5.0 + this.m_scrollY); GL.Vertex3(2.50f, -1.50f, 0.0f); // bottom left
+            GL.Color4(System.Drawing.Color.Yellow); GL.TexCoord2(5.0 - this.m_scrollX, 5.0 + this.m_scrollY); GL.Vertex3(-2.50f, -1.50f, 0.0f); // bottom right
+            GL.Color4(System.Drawing.Color.Blue); GL.TexCoord2(5.0 - this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(-3.00f, 0.50f, 5.1f); // top right
+            GL.Color4(System.Drawing.Color.Red); GL.TexCoord2(0.0 - this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(3.00f, 0.50f, 5.1f); // top left
+            */
+
+            GL.TexCoord2(0.0 + this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(-4.60f, -1.50f, 0.0f); // bottom right
+            GL.TexCoord2(0.0 + this.m_scrollX, 5.0 + this.m_scrollY); GL.Vertex3(-4.60f, 0.20f, 5.1f); // top right
+            GL.TexCoord2(5.0 + this.m_scrollX, 5.0 + this.m_scrollY); GL.Vertex3(4.60f, 0.20f, 5.1f); // top left
+            GL.TexCoord2(5.0 + this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(4.60f, -1.50f, 0.0f); // bottom left
+
             GL.End();
             GL.BindTexture(TextureTarget.Texture2D, 0);
             GL.Disable(EnableCap.Texture2D);
+
+            if (Util.Fog)
+            {
+                GL.Disable(EnableCap.Fog);
+            }
+
+            if (Util.Lightning)
+            {
+                GL.Disable(EnableCap.Lighting);
+                GL.Disable(EnableCap.Light0);
+            }
         }
 
     }

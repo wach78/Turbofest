@@ -47,10 +47,13 @@ namespace OpenGL
         public void Dispose()
         {
             //base.Finalize();
-            Util.DeleteTexture(ref currentImage);
+            Util.DeleteTexture(ref image);
             snd = null;
+            sh.Dispose();
+            sh = null;
             //text = null;
             System.GC.SuppressFinalize(this);
+            Console.WriteLine(this.GetType().ToString() + " disposed.");
         }
 
         public void DrawImage()

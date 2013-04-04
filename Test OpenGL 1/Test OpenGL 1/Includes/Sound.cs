@@ -16,7 +16,7 @@ namespace OpenGL
         /// <summary>
         /// What type of file is to be loaded.
         /// </summary>
-        public enum FileType { Unknown = -1, WAV = 0/*, Ogg = 1*/ };
+        public enum FileType { Unknown = -1, WAV = 0, Ogg = 1 };
         private bool disposed;
         /// <summary>
         /// This is the list with sounds and what buffer is to be used
@@ -65,13 +65,13 @@ namespace OpenGL
         #region Dispose
         ~Sound()
         {
-            Console.WriteLine("Destructor / Finalizer");
+            Console.WriteLine("Sound Destructor / Finalizer");
             Dispose(false);
         }
 
         public void Dispose()
         {
-            Console.WriteLine("Dispose");
+            Console.WriteLine("Sound Dispose");
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -79,7 +79,7 @@ namespace OpenGL
 
         protected virtual void Dispose(bool disposing)
         {
-            Console.WriteLine("Dispose called with "+ (disposed?"Disposing":"Not Disposing"));
+            //Console.WriteLine("Dispose called with "+ (disposed?"Disposing":"Not Disposing"));
             if (disposing)
             {
                 // free managed resources
@@ -102,6 +102,7 @@ namespace OpenGL
             }
             // free native resources if there are any.
             disposed = true;
+            Console.WriteLine(this.GetType().ToString() + " disposed.");
         }
         #endregion
 
@@ -159,6 +160,7 @@ namespace OpenGL
         {
             if (!tr.IsAlive)
             {
+                tr.Name = "SoundThreadGLWindow";
                 tr.Start();
             }
             
@@ -191,6 +193,19 @@ namespace OpenGL
                     lock (SoundList)
                     {
                         SoundList.Add(Name, LoadWAV(filename));
+                    }
+                }
+                
+            }
+            else if (ft == FileType.Ogg)
+            {
+                // We might want to throw a exception here if there are more with the same name trying to get added.
+                if (!SoundList.ContainsKey(Name))
+                {
+                    lock (SoundList)
+                    {
+                        //SoundList.Add(Name, LoadOGG(filename));
+                        throw new Exception("Not implemented!");
                     }
                 }
                 
@@ -255,7 +270,7 @@ namespace OpenGL
             Format = new string(br.ReadChars(4));
             if (Format != "WAVE") // WAV-file header 1
             {
-                throw new Exception("input file not RIFF");
+                throw new Exception("input file not WAVE");
             }
             // HEADER end
             // Format start
@@ -316,6 +331,49 @@ namespace OpenGL
             */
             return ab;
         }
+        /*
+        public int LoadOGG(string filename)
+        {
+            //NVorbis.OpenTKSupport.OggStream asd = new NVorbis.OpenTKSupport.OggStream(filename, 1);
+            BinaryReader br = new BinaryReader(File.OpenRead(filename));
+            NVorbis.VorbisReader reader = new NVorbis.VorbisReader(filename);
+            //NVorbis.OpenTKSupport.OggStreamer asd2 = new NVorbis.OpenTKSupport.OggStreamer();
+            
+            int ab = AL.GenBuffer();
+            
+            ALFormat alf = 0;
+            if (reader.Channels == 1) // mono
+            {
+                alf = ALFormat.Mono16;
+            }
+            else if (reader.Channels == 2) // sterio
+            {
+                alf = ALFormat.Stereo16;
+            }
+            else if (alf == 0)
+            {
+                throw new Exception("Wrong number of channels in sound file.");
+            }
+
+            List<float> Rdata = new List<float>();
+            float[] data = new float[44100];
+            int readSamples;
+            //data = br.ReadBytes((int)br.BaseStream.Length);
+            do
+            {
+                readSamples = reader.ReadSamples(data, Rdata.Count, 44100);
+                Rdata.AddRange(data);
+            } while (readSamples > 0);
+
+            AL.BufferData(ab, alf, data, data.Length, reader.SampleRate);
+
+            reader.Dispose();
+            br.Close();
+            br.Dispose();
+            data = null;
+            
+            return ab;
+        }*/
 
 
         /// <summary>

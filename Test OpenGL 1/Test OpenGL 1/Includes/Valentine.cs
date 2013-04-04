@@ -29,8 +29,6 @@ namespace OpenGL
         {
             Util.DeleteTexture(ref image);
             Util.DeleteTexture(ref image2);
-            this.image = -1;
-            this.image2 = -1;
             snd = null;
             System.GC.SuppressFinalize(this);
         }

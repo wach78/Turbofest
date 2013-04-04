@@ -76,6 +76,7 @@
     <Compile Include="Includes\Datasmurf.cs" />
     <Compile Include="Includes\Dif.cs" />
     <Compile Include="Includes\Fbk.cs" />
+    <Compile Include="Includes\Halloween.cs" />
     <Compile Include="Includes\IEffect.cs" />
     <Compile Include="Includes\Intro.cs" />
     <Compile Include="Includes\Outro.cs" />
@@ -172,6 +173,9 @@
     <Content Include="gfx\godjul.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="gfx\halloween.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\rms.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -183,6 +187,9 @@
     </Content>
     <Content Include="gfx\snow1_db.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\spider.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\stripes.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

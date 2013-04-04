@@ -36,9 +36,9 @@ namespace OpenGL
         public void Dispose()
         {
             Util.DeleteTexture(ref image);
-            this.image = -1;
             bakground = null;
             System.GC.SuppressFinalize(this);
+            Console.WriteLine(this.GetType().ToString() + " disposed.");
         }
 
         private void DrawImage()
@@ -113,7 +113,7 @@ namespace OpenGL
 
         public void Draw(string Date)
         {
-            bakground.Draw(Date, Chess.ChessColor.BlackRed);
+            bakground.Draw(Date, Chess.ChessColor.WhiteRed);
             moveImage();
             DrawImage();
             

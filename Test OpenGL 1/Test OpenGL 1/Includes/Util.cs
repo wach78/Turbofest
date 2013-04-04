@@ -16,6 +16,22 @@ namespace OpenGL
         private static int maxShaderVertexTextures; // Max combinde shader - and vertex texture.
         private static int maxBuffers; //color buffers
         private static int currentTextureBuffers; // the number of current generated Texture buffers created
+        public static bool Lightning;
+        public static bool Fog;
+        public static bool Fullscreen;
+
+        private static bool MVP_changed;
+        private static bool Viewport_changed;
+        private static Matrix4 MVPMatrix;
+        private static float[] viewport;
+
+        //fix me...
+        public static float FOV = OpenTK.MathHelper.DegreesToRadians(60.0f);
+        public static float Aspect = 1.6f;
+
+        //
+        public static Random Rnd;
+
 
         #region Constructor
         static Util()
@@ -23,6 +39,13 @@ namespace OpenGL
             GL.GetInteger(GetPName.MaxCombinedTextureImageUnits, out maxShaderVertexTextures);
             GL.GetInteger(GetPName.MaxDrawBuffers, out maxBuffers);
             currentTextureBuffers = 0;
+            Lightning = false;
+            Fog = true;
+            Fullscreen = false;
+            MVP_changed = true;
+            Viewport_changed = true;
+            viewport = new float[4];
+            Rnd = new Random();
         }
         #endregion
 
@@ -136,20 +159,56 @@ namespace OpenGL
             }*/
         }//DeleteTexture
 
+        /// <summary>
+        /// Might need to rethink this as this make my head spin on the same point as this isen't helping that mutch ;D
+        /// </summary>
+        /// <param name="changed"></param>
+        /// <returns></returns>
+        public static bool ViewportChanged(bool changed)
+        {
+            return (Viewport_changed = changed);
+        }
+
+        public static float[] GetViewport()
+        {
+            if (Viewport_changed)
+            {
+                GL.GetFloat(GetPName.Viewport, viewport);
+                Viewport_changed = false;
+            }
+            return viewport;
+        }
+
+        public static bool MVPChanged(bool changed)
+        {
+            return (MVP_changed = changed);
+        }
+
         public static Matrix4 GetMVP()
         {
-            float[] viewport = new float[4];
-            float[] projectiofM = new float[16];
-            float[] modelviewfM = new float[16];
+            /*//float[] viewport = new float[4];
+            //float[] projectiofM = new float[16];
+            //float[] modelviewfM = new float[16];
             Matrix4 projectionM = new Matrix4();
             Matrix4 modelviewM = new Matrix4();
             Matrix4 projMultimodel;
 
-            GL.GetFloat(GetPName.Viewport, viewport);
+            //GL.GetFloat(GetPName.Viewport, viewport);
             GL.GetFloat(GetPName.ProjectionMatrix, out projectionM);
             GL.GetFloat(GetPName.ModelviewMatrix, out modelviewM);
-            projMultimodel = Matrix4.Mult(projectionM, modelviewM);
-            return projMultimodel;
+            //projMultimodel = Matrix4.Mult(projectionM, modelviewM);
+            projMultimodel = Matrix4.Mult(modelviewM, projectionM);
+            return projMultimodel;*/
+            if (MVP_changed)
+            {
+                Matrix4 projectionM = new Matrix4();
+                Matrix4 modelviewM = new Matrix4();
+                GL.GetFloat(GetPName.ProjectionMatrix, out projectionM);
+                GL.GetFloat(GetPName.ModelviewMatrix, out modelviewM);
+                MVPMatrix = Matrix4.Mult(modelviewM, projectionM);
+                MVP_changed = false;
+            }
+            return MVPMatrix;
         }
 
         /// <summary>

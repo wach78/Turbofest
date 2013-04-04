@@ -40,8 +40,10 @@ namespace OpenGL
         public void Dispose()
         {
             //base.Finalize();
-            Util.DeleteTexture(ref textTexture);
+            if (textTexture > 0)
+                Util.DeleteTexture(ref textTexture);
             System.GC.SuppressFinalize(this);
+            Console.WriteLine(this.GetType().ToString() + " disposed.");
         }
     
         public static void readFromXml()

@@ -61,9 +61,10 @@ namespace OpenGL
                 // free managed resources
             
                 snd = null;
+                text = null;
             }
             // free native resources if there are any.
-
+            Console.WriteLine(this.GetType().ToString() + " disposed.");
             disposed = true;
         }
         private void Play()

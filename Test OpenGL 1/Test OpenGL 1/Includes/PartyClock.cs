@@ -100,12 +100,12 @@ namespace OpenGL
                         Util.DeleteTexture(ref m_tex[0]);
                         Util.DeleteTexture(ref m_tex[1]);
                     }
-                    Console.WriteLine("Object disposed.");
                 }
 
                 // Indicate that the instance has been disposed.
                 m_tex = null;
                 _disposed = true;
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
             }
         }
 

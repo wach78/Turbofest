@@ -38,6 +38,7 @@ namespace OpenGL
             Util.DeleteTexture(ref image);
             this.image = -1;
             snd = null;
+            Console.WriteLine(this.GetType().ToString() + " disposed.");
             System.GC.SuppressFinalize(this);
         }
 

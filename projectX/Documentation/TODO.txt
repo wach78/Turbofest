@@ -3,25 +3,25 @@
 
 asg crash handler
 event handler
-asg	födelsedagar
-asg	2dtext
+asg		födelsedagar
+asg		2dtext D (Missing some fonts...)
 wach	alla hjärtansdag
-asg	heeloween
+asg		halloween
 wach	xmas
 wach	sune
 wach	dif
 wach	fbk
-asg	turbologga
-asg	scrollers
+asg		turbologga D
+asg		scrollers
 wach	se över scroll text
-asg	advent
-asg	luzia
-asg	schak
+asg		advent
+asg		lucia
+asg		shack D
 wach	smurf
 wach	semla 
-asg	rms??
-asg starfield ??
-asg win+linux logga 
+asg		rms??
+asg		starfield D (still need to place it correct...)
+asg		win+linux logga 
         nyår bara bild
 wach	intro
 wach	outro
