@@ -294,20 +294,27 @@ namespace projectX
 
         private void lViewParty_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (lViewParty.SelectedItems[0].Selected)
+            try
             {
-                fileName = lViewParty.SelectedItems[0].Text;
-                fileName += ".xml";
+                if (lViewParty.SelectedItems[0].Selected)
+                {
+                    fileName = lViewParty.SelectedItems[0].Text;
+                    fileName += ".xml";
 
-                btnAdd.Enabled = true;
-                btnStart.Enabled = true;
-                AdminToolStripMenuItem.Enabled = true;
-                printToolStripMenuItem.Enabled = true;
-                printPreviewToolStripMenuItem.Enabled = true;
+                    btnAdd.Enabled = true;
+                    btnStart.Enabled = true;
+                    AdminToolStripMenuItem.Enabled = true;
+                    printToolStripMenuItem.Enabled = true;
+                    printPreviewToolStripMenuItem.Enabled = true;
 
-                logic.getData(fileName);
+                    logic.getData(fileName);
 
-                toolStripStatusLabel1.Text = Path.GetFileNameWithoutExtension(fileName);
+                    toolStripStatusLabel1.Text = Path.GetFileNameWithoutExtension(fileName);
+                }
+            }//try
+            catch (Exception)
+            {
+
             }
         }
         

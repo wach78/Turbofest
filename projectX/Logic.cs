@@ -228,6 +228,7 @@ namespace projectX
                 case "4 hours": runValue = 4 * 60 * 60 * 1000; break;
                 case "4.5 hours": runValue = (4 * 60 * 60 * 1000) + (30 * 60 * 1000); break;
                 case "5 hours": runValue = 5 * 60 * 60 * 1000; break;
+                case "Test 1 hour": runValue = 60 * 60 * 1000; break;
             }//switch 
             return runValue;
         }//calculateRunTime
@@ -243,6 +244,7 @@ namespace projectX
                 case "14400000": value = "4 hours"; break;
                 case "16200000": value = "4.5 hours"; break;
                 case "18000000": value = "5 hours"; break;
+                case "3600000" : value = "1 hour"; break; ;
             }//switch
 
             return value;
@@ -462,7 +464,7 @@ namespace projectX
         public void addScroller(string text)
         {
             string file = "scrollers.xml";
-            file = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Scrollers\\" + file;
+            file = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\XMLFiles\\Scrollers\\" + file;
             XmlHandler xmlStuff = new XmlHandler(file, "XEle");
             xmlStuff.writeScrollerToXmlFile(text);
         }//addScroller
@@ -470,7 +472,7 @@ namespace projectX
         public void delScroller(string text)
         {
             string file = "scrollers.xml";
-            file = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Scrollers\\" + file;
+            file = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\XMLFiles\\Scrollers\\" + file;
             XmlHandler xmlStuff = new XmlHandler(file, "Delete");
             xmlStuff.deleteScroller(text);
 

@@ -14,7 +14,7 @@ namespace OpenGL
         private int image2;
         private int snowImage;
 
-        //private int currentImage;
+        private int currentImage;
         private Sound snd;
 
         private bool leftBorder;
@@ -25,10 +25,10 @@ namespace OpenGL
         private float x;
         private float y;
 
-        /*
+        
          private SnowFlake[] sf;
-         private const int NUMBEROFFLAKES = 13;
-        */
+         private const int NUMBEROFFLAKES = 150;
+        
       
 
         public Christmas(ref Sound sound)
@@ -37,7 +37,7 @@ namespace OpenGL
             image2 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\godjul.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snowImage = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\snow1_db.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
 
-           // currentImage = 0;
+            currentImage = 0;
             snd = sound;
             snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\datasmurf.wav", "smurf");
             leftBorder = true;
@@ -47,7 +47,7 @@ namespace OpenGL
 
             x = 1;
             y = 0;
-            /*
+            
             Random r = new Random();
             sf = new SnowFlake[NUMBEROFFLAKES];
 
@@ -56,7 +56,7 @@ namespace OpenGL
 
 
 
-                sf[i] = new SnowFlake((r.Next(-10, 20) * -1)/10.0f, 0.002f, 0.02f, -0.4f, 0.5f, snowImage,
+                sf[i] = new SnowFlake((r.Next(0, 100)%2 == 0 ? -1.0f : 1.0f), (r.Next(-20, 20) * -1) / 10.0f, (r.Next(-10, 20) * -1) / 10.0f, r.Next(1, 10) / 1000.0f, r.Next(1, 10) / 1000.0f, snowImage,
                     new Vector2[] {  new Vector2(0.0f + (currentImage * 0.2f), 1.0f),
                                      new Vector2(0.2f + (currentImage * 0.2f), 1.0f),
                                      new Vector2(0.2f + (currentImage * 0.2f), 0.0f),
@@ -70,7 +70,7 @@ namespace OpenGL
 
                   
             }
-             */
+             
                 /*
                     new Vector3[] {new Vector3(0.0f,-0.1f,1.1f),
                                    new Vector3(-0.1f,-0.1f,1.1f),
@@ -123,12 +123,12 @@ namespace OpenGL
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
 
-            /*
+            
             for (int i = 0; i < NUMBEROFFLAKES; i++)
             {
                 sf[i].Draw();
             }
-            */
+            
 
         }//DrawImage
 

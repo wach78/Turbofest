@@ -302,13 +302,15 @@ namespace OpenGL
             //text.Draw("Ännu mer här !åäö? och så har vi något lång rad som inte skall få radbrytnignar om man inte\ngör en själv!", Text2D.FontName.TypeFont, new Vector3(1.6f, -0.6f, 1.5f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(0.0f, 0.0f));
             //s.Draw(nowDate);
              //dif.Draw(nowDate);
-           // xmas.Draw(nowDate);
+         //  xmas.Draw(nowDate);
           //  f.Draw(nowDate);
            // smurf.Draw(nowDate);
           //  v.Draw(nowDate);
-            //o.Draw(nowDate);
-            //i.Draw(nowDate);
+          //  o.Draw(nowDate);
+            i.Draw(nowDate);
             //chess.Draw(nowDate);
+           // hw.Draw(nowDate);
+            //tl.Draw(nowDate);
             
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
             //Console.WriteLine("FPS: " + (1.0/e.Time));

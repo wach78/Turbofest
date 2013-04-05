@@ -26,7 +26,7 @@ namespace OpenGL
         //private Text2D text;
         private bool soundTrue = false;
         private bool soundDone = false;
-        private short soundTimes = 0;
+       
 
         public SuneAnimation(ref Sound sound, ref Text2D Text)
         {

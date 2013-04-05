@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <scrollers>
+	<scroller>
+		<name>wach</name>
+		<type>scroll</type>
+	</scroller>
+	 <scroller>
+    <name>drick upp er öhl och spill inte mvh öhlhitler</name>
+    <type>scroll</type>
+  </scroller>
   <scroller>
     <name>turbophest</name>
     <type>scroll</type>
@@ -17,7 +25,7 @@
     <type>scroll</type>
   </scroller>
   <scroller>
-    <name>turbophest</name>
+    <name>oldschool sexmästareri own u</name>
     <type>scroll</type>
   </scroller>
   <scroller>
@@ -25,11 +33,7 @@
     <type>scroll</type>
   </scroller>
   <scroller>
-    <name>teknat sektionens sexmästeri</name>
-    <type>scroll</type>
-  </scroller>
-  <scroller>
-    <name>oj vilken fin effekt</name>
+    <name>teknat sexmästeri</name>
     <type>scroll</type>
   </scroller>
   <scroller>

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
+
+
 namespace OpenGL
 {
     class SnowFlake
@@ -14,30 +16,29 @@ namespace OpenGL
         private float y;
         private float speedY; // Y led gravity 
         private float speedX;
-        private float borderLeft;
-        private float borderRight;
 
-        private bool flakesLeft = true;
-        private bool flakesRight = false;
+        private float startLeftOrRight;
 
         private int snowImage;
+        private int MaxBounceNumber;
+        private int BounceNumber;
 
         Vector2[] vecTex;
         Vector3[] vecPos;
 
-        public SnowFlake(float x, float speedY, float speedX,float borderLeft,
-            float borderRight, int snowImage, Vector2[] vecTex)
+        public SnowFlake(float startLeftOrRight, float x, float y,float speedX, float speedY
+            , int snowImage, Vector2[] vecTex)
         {
             this.x = x;
-            this.y = 1.4f;
+            this.y = y;
             this.speedY = speedY;
             this.speedX = speedX;
-            this.borderLeft = x - borderLeft;
-            this.borderRight = x + borderRight;
             this.snowImage = snowImage;
             this.vecTex = vecTex;
             //this.vecPos = vecPos;
-
+            this.startLeftOrRight = startLeftOrRight;
+            MaxBounceNumber = 10;
+            BounceNumber = 0;
             this.vecPos = new Vector3[] {
                                          new Vector3(x + 0.0f,y  -0.05f,1.1f),
                                          new Vector3(x - 0.05f,y  -0.05f,1.1f),
@@ -72,12 +73,14 @@ namespace OpenGL
          
             y -= speedY;
 
+            x = x + (float)Math.Sin(y / 15.0 * speedX ) * (float)((0.05 + 1) *10);
+
             vecPos[0].Y = y - 0.05f;
             vecPos[1].Y = y - 0.05f;
             vecPos[2].Y = y;
             vecPos[3].Y = y;
 
-            snowFlakesXpos();
+            //snowFlakesXpos();
             vecPos[0].X = x;
             vecPos[1].X = x - 0.05f;
             vecPos[2].X = x - 0.05f;
@@ -88,28 +91,24 @@ namespace OpenGL
 
         private void snowFlakesXpos()
         {
-            if (Math.Round((x), 2) == Math.Round(borderRight,2))
+            /*if (x > (x - speedX))
             {
-                flakesLeft = true;
-                flakesRight = false;
+                startLeftOrRight  *= -1.0f;
             }
 
-            if (Math.Round((x), 2) == Math.Round(borderLeft, 2))
+            if (x < (x + speedX))
             {
-                flakesRight = true;
-                flakesLeft = false;
-            }
+              startLeftOrRight *= -1.0f;
+            }*/
 
-            if (!flakesRight)
+
+            BounceNumber++;
+            x += speedX * startLeftOrRight;
+            if (BounceNumber > MaxBounceNumber)
             {
-                x+= 0.005f;
+                startLeftOrRight *= -1.0f;
+                BounceNumber = 0;
             }
-
-            if (!flakesLeft)
-            {
-                x -= 0.005f;
-            }
-
 
         }
     }//class

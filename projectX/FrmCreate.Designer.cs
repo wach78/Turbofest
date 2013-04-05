@@ -30,9 +30,6 @@
         {
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.txtPartyName = new System.Windows.Forms.TextBox();
-            this.lblPartyName = new System.Windows.Forms.Label();
             this.datePanel = new System.Windows.Forms.Panel();
             this.cbRunTime = new System.Windows.Forms.ComboBox();
             this.cbEndTimeDay = new System.Windows.Forms.ComboBox();
@@ -45,14 +42,13 @@
             this.gBoxSpringOrFall = new System.Windows.Forms.GroupBox();
             this.rbtnFall = new System.Windows.Forms.RadioButton();
             this.rBtnSpring = new System.Windows.Forms.RadioButton();
-            this.panel1.SuspendLayout();
             this.datePanel.SuspendLayout();
             this.gBoxSpringOrFall.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(12, 287);
+            this.btnCancel.Location = new System.Drawing.Point(12, 223);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(50, 25);
             this.btnCancel.TabIndex = 6;
@@ -63,39 +59,13 @@
             // btnNext
             // 
             this.btnNext.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnNext.Location = new System.Drawing.Point(162, 287);
+            this.btnNext.Location = new System.Drawing.Point(162, 223);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(50, 25);
             this.btnNext.TabIndex = 5;
             this.btnNext.Text = "Ok";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.txtPartyName);
-            this.panel1.Controls.Add(this.lblPartyName);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 70);
-            this.panel1.TabIndex = 4;
-            // 
-            // txtPartyName
-            // 
-            this.txtPartyName.Location = new System.Drawing.Point(69, 22);
-            this.txtPartyName.Name = "txtPartyName";
-            this.txtPartyName.Size = new System.Drawing.Size(117, 20);
-            this.txtPartyName.TabIndex = 1;
-            // 
-            // lblPartyName
-            // 
-            this.lblPartyName.AutoSize = true;
-            this.lblPartyName.Location = new System.Drawing.Point(3, 25);
-            this.lblPartyName.Name = "lblPartyName";
-            this.lblPartyName.Size = new System.Drawing.Size(63, 13);
-            this.lblPartyName.TabIndex = 0;
-            this.lblPartyName.Text = "Party name:";
             // 
             // datePanel
             // 
@@ -108,7 +78,7 @@
             this.datePanel.Controls.Add(this.lblRunTime);
             this.datePanel.Controls.Add(this.lblEndTime);
             this.datePanel.Controls.Add(this.labelStartTime);
-            this.datePanel.Location = new System.Drawing.Point(12, 166);
+            this.datePanel.Location = new System.Drawing.Point(12, 102);
             this.datePanel.Name = "datePanel";
             this.datePanel.Size = new System.Drawing.Size(200, 115);
             this.datePanel.TabIndex = 3;
@@ -121,7 +91,8 @@
             "3.5 hours",
             "4 hours",
             "4.5 hours ",
-            "5 hours"});
+            "5 hours",
+            "Test 1 hour"});
             this.cbRunTime.Location = new System.Drawing.Point(61, 87);
             this.cbRunTime.Name = "cbRunTime";
             this.cbRunTime.Size = new System.Drawing.Size(110, 21);
@@ -218,7 +189,7 @@
             // 
             this.gBoxSpringOrFall.Controls.Add(this.rbtnFall);
             this.gBoxSpringOrFall.Controls.Add(this.rBtnSpring);
-            this.gBoxSpringOrFall.Location = new System.Drawing.Point(12, 88);
+            this.gBoxSpringOrFall.Location = new System.Drawing.Point(12, 12);
             this.gBoxSpringOrFall.Name = "gBoxSpringOrFall";
             this.gBoxSpringOrFall.Size = new System.Drawing.Size(200, 72);
             this.gBoxSpringOrFall.TabIndex = 2;
@@ -254,10 +225,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(227, 322);
+            this.ClientSize = new System.Drawing.Size(227, 254);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnNext);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.gBoxSpringOrFall);
             this.Controls.Add(this.datePanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -267,8 +237,6 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "New Party";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.datePanel.ResumeLayout(false);
             this.datePanel.PerformLayout();
             this.gBoxSpringOrFall.ResumeLayout(false);
@@ -283,9 +251,6 @@
         private System.Windows.Forms.GroupBox gBoxSpringOrFall;
         private System.Windows.Forms.RadioButton rbtnFall;
         private System.Windows.Forms.RadioButton rBtnSpring;
-        private System.Windows.Forms.TextBox txtPartyName;
-        private System.Windows.Forms.Label lblPartyName;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblRunTime;
         private System.Windows.Forms.Label lblEndTime;
         private System.Windows.Forms.Label labelStartTime;

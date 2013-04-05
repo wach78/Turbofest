@@ -70,26 +70,33 @@ namespace projectX
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-
-            if (validate.isTextboxEmpty(txtPartyName, "Party Name can not be empty") &&
-                validate.validateComboBox(cbStartTimeMonth,"Start Time month can not be empty") &&
+ 
+            if (validate.validateComboBox(cbStartTimeMonth,"Start Time month can not be empty") &&
                 validate.validateComboBox(cbStartTimeDay, "Start Time day can not be empty") &&
                 validate.validateComboBox(cbEndTimeMonth,"End Time month can not be empty") &&
                 validate.validateComboBox(cbEndTimeDay, "End time day can not be empty"))
             {
 
+             string str = "";
 
+             if ("Spring".Equals(FrmMain.SpringOrFall))
+                 str = "VT";
 
+             if ("Fall".Equals(FrmMain.SpringOrFall))
+                 str = "HT";
 
+                string file = "Turbofest";
+                file += str;
+                file += DateTime.Now.Year;
 
-                string path = XmlHandler.fixPath(txtPartyName.Text + ".xml");
+                string path = XmlHandler.fixPath(file +  ".xml");
 
                 string fileName = Path.GetFullPath(path);
-                Debug.WriteLine(fileName);
+  
                 if (!File.Exists(fileName))
                 {
                     Logic logic = new Logic();
-                    logic.createparty(FrmMain.SpringOrFall, txtPartyName.Text, cbStartTimeMonth.SelectedItem + " " + cbStartTimeDay.SelectedItem,
+                    logic.createparty(FrmMain.SpringOrFall, file, cbStartTimeMonth.SelectedItem + " " + cbStartTimeDay.SelectedItem,
                       cbEndTimeMonth.SelectedItem + " " + cbEndTimeDay.SelectedItem, cbRunTime.SelectedItem + "");
 
                     this.Dispose();

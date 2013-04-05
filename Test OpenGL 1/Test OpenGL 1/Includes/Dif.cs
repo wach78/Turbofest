@@ -20,6 +20,8 @@ namespace OpenGL
         private bool topBorder;
         private bool bottomBorder;
 
+        private bool disposed = false;
+
         public Dif(ref Chess chess)
         {
             bakground = chess;
@@ -38,7 +40,21 @@ namespace OpenGL
             Util.DeleteTexture(ref image);
             bakground = null;
             System.GC.SuppressFinalize(this);
-            Console.WriteLine(this.GetType().ToString() + " disposed.");
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    // free managed resources
+                    Util.DeleteTexture(ref image);
+                }
+                // free native resources if there are any.
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                disposed = true;
+            }
         }
 
         private void DrawImage()

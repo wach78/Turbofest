@@ -24,6 +24,8 @@ namespace OpenGL
         private float XT;
         private float XW;
 
+        private bool XTBack;
+
         public Intro(ref Sound sound, ref Text2D txt)
         {
             disposed = false;
@@ -40,6 +42,7 @@ namespace OpenGL
             XA = 0.0f;
             XT = 0.0f;
             XW = 0.0f;
+            XTBack = false;
 
         }
 
@@ -56,16 +59,19 @@ namespace OpenGL
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!this.disposed)
             {
-                // free managed resources
-            
-                snd = null;
-                text = null;
+                if (disposing)
+                {
+                    // free managed resources
+
+                    snd = null;
+                    text = null;
+                }
+                // free native resources if there are any.
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                disposed = true;
             }
-            // free native resources if there are any.
-            Console.WriteLine(this.GetType().ToString() + " disposed.");
-            disposed = true;
         }
         private void Play()
         {
@@ -99,39 +105,47 @@ namespace OpenGL
 
         private void drawText()
         {
-            text.Draw("ANDREAS", Text2D.FontName.Coolfont, new Vector3(0.5f + XA, 1.0f, 4.0f - ZA), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f));
-            text.Draw("TURBOPHEST!", Text2D.FontName.Coolfont, new Vector3(0.5f + XT, 0.0f, 4.0f - ZT), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f));
-            text.Draw("WACH", Text2D.FontName.Coolfont, new Vector3(0.5f + XW, -1.0f, 4.0f - ZW), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f));
+            text.Draw("KamikazE", Text2D.FontName.Coolfont, new Vector3(1.5f + XA, 1.0f, 4.0f - ZA), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 4.0f);
+            text.Draw("TURBOPHEST!", Text2D.FontName.Coolfont, new Vector3(1.5f + XT, 0.0f, 4.0f - ZT), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 4.0f);
+            text.Draw("WACH", Text2D.FontName.Coolfont, new Vector3(1.5f + XW, -1.0f, 4.0f - ZW), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 4.0f);
 
-            if (Math.Round(ZA, 2) <= 2.00f)
+            if (ZA <= 2.00f)
             {
                 ZA += 0.01f;
             }
 
-            if (Math.Round(ZA, 2) >= 2.00f && Math.Round(ZW, 2) <= 2.00f)
+            if (ZA >= 2.00f && ZW <= 2.00f)
             {
                 ZW += 0.01f;
             }
 
-            if (Math.Round(ZW, 2) >= 2.00f && Math.Round(ZT, 2) <= 2.00f)
+            if (ZW >= 2.00f && ZT <= 2.00f)
             {
                 ZT += 0.01f;
             }
 
            // någon form av delay inann x ändras
             
-            if (Math.Round(ZT, 2) >= 2.00f && Math.Round(XT, 2) >= -3.70f)
+            if (ZT >= 2.00f && XT  >= -4.70f && !XTBack)
             {
-                 XT -= 0.025f;
+                 XT -= 0.01f;
+               
             }
 
-            if (Math.Round(XT, 2) <= -3.70f && Math.Round(XA, 2) <= 3.5f)
+            if (XT <= -4.70f && XA <= 5.5f)
             {
                 XA += 0.01f;
                 XW += 0.01f;
+                XTBack = true;
             }
-            
 
+            if (XT <= 0.6f && XA >= 5.5f && XTBack)
+            {
+                XT += 0.025f;
+                ZT += 0.003f;
+            }
+
+         
            
 
         }

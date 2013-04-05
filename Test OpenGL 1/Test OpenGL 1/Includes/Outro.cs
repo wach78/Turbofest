@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
@@ -37,15 +36,18 @@ namespace OpenGL
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!this.disposed)
             {
-                // free managed resources
-                Util.DeleteTexture(ref image);
-                snd = null;
+                if (disposing)
+                {
+                    // free managed resources
+                    Util.DeleteTexture(ref image);
+                    snd = null;
+                }
+                // free native resources if there are any.
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                disposed = true;
             }
-            // free native resources if there are any.
-            Console.WriteLine(this.GetType().ToString() + " disposed.");
-            disposed = true;
         }
 
         public void Play()
