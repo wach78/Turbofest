@@ -72,11 +72,14 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GLWindow.cs" />
+    <Compile Include="Includes\Ballons.cs" />
+    <Compile Include="Includes\Birthday.cs" />
     <Compile Include="Includes\Christmas.cs" />
     <Compile Include="Includes\Datasmurf.cs" />
     <Compile Include="Includes\Dif.cs" />
     <Compile Include="Includes\Fbk.cs" />
     <Compile Include="Includes\Halloween.cs" />
+    <Compile Include="Includes\Hearts.cs" />
     <Compile Include="Includes\IEffect.cs" />
     <Compile Include="Includes\Intro.cs" />
     <Compile Include="Includes\Outro.cs" />
@@ -125,6 +128,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="gfx\ballons.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\barseback3.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -173,6 +179,9 @@
     <Content Include="gfx\godjul.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="gfx\h.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\halloween.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -197,6 +206,7 @@
     <Content Include="gfx\sune_sprite.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="gfx\tarta.bmp" />
     <Content Include="gfx\typefont15x25.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -204,6 +214,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\xmas.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\birthday.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\Blackheart.wav">

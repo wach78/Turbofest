@@ -7,38 +7,36 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 
-
 namespace OpenGL
 {
-    class SnowFlake
+    class SnowFlake : IEffect
     {
         private float x;
         private float y;
         private float speedY; // Y led gravity 
         private float speedX;
 
-        private float startLeftOrRight;
+        private float Xpos;
 
         private int snowImage;
-        private int MaxBounceNumber;
-        private int BounceNumber;
 
-        Vector2[] vecTex;
-        Vector3[] vecPos;
+        private bool disposed = false;
 
-        public SnowFlake(float startLeftOrRight, float x, float y,float speedX, float speedY
-            , int snowImage, Vector2[] vecTex)
+        private Vector2[] vecTex;
+        private Vector3[] vecPos;
+
+        public SnowFlake(float x, float y,float speedX, float speedY, int snowImage, Vector2[] vecTex)
         {
             this.x = x;
             this.y = y;
+            this.Xpos = x;
             this.speedY = speedY;
             this.speedX = speedX;
             this.snowImage = snowImage;
             this.vecTex = vecTex;
-            //this.vecPos = vecPos;
-            this.startLeftOrRight = startLeftOrRight;
-            MaxBounceNumber = 10;
-            BounceNumber = 0;
+       
+            
+
             this.vecPos = new Vector3[] {
                                          new Vector3(x + 0.0f,y  -0.05f,1.1f),
                                          new Vector3(x - 0.05f,y  -0.05f,1.1f),
@@ -47,6 +45,33 @@ namespace OpenGL
                                         };
 
         }
+        ~SnowFlake()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            System.GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    // free managed resources
+                    snowImage = 0;
+                }
+                // free native resources if there are any.
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                disposed = true;
+            }
+        }
+
+        
 
         public void Draw()
         {
@@ -69,11 +94,58 @@ namespace OpenGL
             GL.Disable(EnableCap.Texture2D);
 
 
+            if (this.y < -1.4f)
+            {
+                this.y = 1.4f;
+            }
+            else
+            {
+                this.y -= speedY;
+            }
 
-         
-            y -= speedY;
 
-            x = x + (float)Math.Sin(y / 15.0 * speedX ) * (float)((0.05 + 1) *10);
+           // x = x + 0.001f * (float)Math.Sin(y * 50000 * speedX) + 0.005f;
+
+            x = this.Xpos + (float)((0.001 * Math.Sin(500 * y * (Math.PI /180)) + 0.005)  ) *100.0f;
+
+            
+            //x = A*sin((10+m)*y)+1+k
+            //Där A är random mellan 0,5 och 1,5
+            //m är mellan -5 och 5 och k är mellan -2 och 2
+
+          //  x = x + (float)(0.001 * Math.Sin(y * 872) + 0.005);
+
+           // x = (float)(1000 * Math.Pow(y,2) + 0.001);
+
+           // x = x + (float)Math.Sin((y / 20) * speedX) * (float)0.05f + 1;
+
+        //    x = (float)Math.Sin(y);
+
+         //   x =  + (float)(0.001 * Math.Sin(10000 * y) + 0.005) * 500.0f;
+           
+
+             //Prova detta 0.001*sin (5000*x) + 0.005
+         //   3*sin(x+)+x+ 
+
+            // r.Next(1, 10) / 1000.0f
+         // x = A * sin(y + m);
+
+            
+
+          //  typ x=Asin(y+k) + b Där du låter A, k och b vara random tal???
+            /*   I ekvationen jag skrev, så kommer A bestämma hur långt ut snöflingan 
+               åker från centrum, k bestämmer långden på varje topp/dal medans b förskjuter
+               kurvan gentemot andra kurvor.....
+              om du inte vill att dom ska falla rakt ner så kan du alltid lägga till 
+              en extra ekvation så kommer sinuskurvan åka runt den ekvationen
+             typ x = A * sin(y + k) + m * y + b
+            Detta kommer få sinuskurvan att variera i en linje som bestäms av m som då kan simulera en vind i sidled
+             * 
+             *  Jag tänkte något i stil med x = A * sin(y+m) + k * x
+                Där A är random mellan -1,5 och 1,5. m mellan 0 och 2 och k mellan är ett fast värde runt 1
+                Ja då.... Med ekvationen jag precis skrev så får du en variation i x-led..... sen har du en annan ekvation där du bestämmer hastigheten i y-led
+                Om du vill ha snöflingorna rakt neråt så sätt bara k = 0
+             */
 
             vecPos[0].Y = y - 0.05f;
             vecPos[1].Y = y - 0.05f;
@@ -89,27 +161,6 @@ namespace OpenGL
         }
 
 
-        private void snowFlakesXpos()
-        {
-            /*if (x > (x - speedX))
-            {
-                startLeftOrRight  *= -1.0f;
-            }
 
-            if (x < (x + speedX))
-            {
-              startLeftOrRight *= -1.0f;
-            }*/
-
-
-            BounceNumber++;
-            x += speedX * startLeftOrRight;
-            if (BounceNumber > MaxBounceNumber)
-            {
-                startLeftOrRight *= -1.0f;
-                BounceNumber = 0;
-            }
-
-        }
     }//class
 }//namespase

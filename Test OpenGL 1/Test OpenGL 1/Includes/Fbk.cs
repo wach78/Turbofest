@@ -40,6 +40,7 @@ namespace OpenGL
                 {
                     // free managed resources
                     Util.DeleteTexture(ref image);
+                    image = 0;
                     snd = null;
                 }
                 // free native resources if there are any.

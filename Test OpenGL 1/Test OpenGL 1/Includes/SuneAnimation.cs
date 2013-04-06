@@ -26,6 +26,7 @@ namespace OpenGL
         //private Text2D text;
         private bool soundTrue = false;
         private bool soundDone = false;
+        private bool disposed = false;
        
 
         public SuneAnimation(ref Sound sound, ref Text2D Text)
@@ -46,14 +47,29 @@ namespace OpenGL
 
         public void Dispose()
         {
-            //base.Finalize();
-            Util.DeleteTexture(ref image);
-            snd = null;
-            sh.Dispose();
-            sh = null;
-            //text = null;
+            Dispose(true);
             System.GC.SuppressFinalize(this);
-            Console.WriteLine(this.GetType().ToString() + " disposed.");
+           
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    // free managed resources
+                    Util.DeleteTexture(ref image);
+                    snd = null;
+                    sh.Dispose();
+                    sh = null;
+                    image = 0;
+                    currentImage = 0;
+                }
+                // free native resources if there are any.
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                disposed = true;
+            }
         }
 
         public void DrawImage()

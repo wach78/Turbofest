@@ -282,18 +282,26 @@ namespace projectX
 
         public string getDataFromXml()
         {
-            List<string> data =
-                            xDoc.Root.Elements("data")
-                            .Select(x => (string)x)                 
-                            .ToList();
-            //Console.WriteLine(xDoc.Root.Elements("data"));
             string str = "";
-            foreach (string x in data)
+            try
             {
-                str = x;
+                List<string> data =
+                                xDoc.Root.Elements("data")
+                                .Select(x => (string)x)
+                                .ToList();
+                
+                foreach (string x in data)
+                {
+                    str = x;
+                }
+               
             }
-            return str;
+            catch (Exception)
+            {
 
+            }
+
+            return str;
         }//getDataFromXml
 
 

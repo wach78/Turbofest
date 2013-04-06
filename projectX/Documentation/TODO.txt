@@ -5,9 +5,9 @@ asg crash handler
 event handler
 asg		födelsedagar
 asg		2dtext D (Missing some fonts...)
-wach	alla hjärtansdag
+wach	done alla hjärtansdag
 asg		halloween
-wach	xmas
+wach	done xmas
 wach	sune
 wach	dif
 wach	fbk

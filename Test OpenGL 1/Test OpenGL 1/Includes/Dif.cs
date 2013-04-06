@@ -35,10 +35,15 @@ namespace OpenGL
             bottomBorder = false;
         }
 
+        ~Dif()
+        {
+            Dispose(false);
+        }
+
+
         public void Dispose()
         {
-            Util.DeleteTexture(ref image);
-            bakground = null;
+            Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
@@ -50,6 +55,8 @@ namespace OpenGL
                 {
                     // free managed resources
                     Util.DeleteTexture(ref image);
+                    image = 0;
+                    bakground = null;
                 }
                 // free native resources if there are any.
                 Console.WriteLine(this.GetType().ToString() + " disposed.");
@@ -81,25 +88,25 @@ namespace OpenGL
    
         private void moveImage()
         {        
-            if (Math.Round(x,2) < -2.90)
+            if (x < -2.90f)
             {
                 rightBorder = true; 
                 leftBorder = false;
             }
 
-            if (Math.Round(x, 2) > 0.3)
+            if (x > 0.3f)
             {
                 leftBorder = true; 
                 rightBorder = false;
             }
 
-            if (Math.Round(y,2) >1.10)
+            if (y >1.10f)
             {
                 topBorder = true; 
                 bottomBorder = false;
             }
 
-            if (Math.Round(y, 2) < 0.0 && Math.Round(y, 2) < -0.48)
+            if (y < 0.0f && y < -0.48f)
             {
                 bottomBorder = true; 
                 topBorder = false;

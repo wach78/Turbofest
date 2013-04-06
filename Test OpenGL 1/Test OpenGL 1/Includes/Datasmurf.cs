@@ -18,6 +18,7 @@ namespace OpenGL
         private bool rightBorder;
         private bool topBorder;
         private bool bottomBorder;
+        private bool disposed = false;
 
         public Datasmurf(ref Sound sound)
         {
@@ -31,6 +32,28 @@ namespace OpenGL
             rightBorder = false;
             topBorder = true;
             bottomBorder = false;
+        }
+
+        ~Datasmurf()
+        {
+            Dispose(false);
+            System.GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    // free managed resources
+                    Util.DeleteTexture(ref image);
+                    image = 0;
+                }
+                // free native resources if there are any.
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                disposed = true;
+            }
         }
 
         public void Dispose()
@@ -67,25 +90,25 @@ namespace OpenGL
 
         private void moveImage()
         {
-            if (Math.Round(x, 2) < -3.10)
+            if (x < -3.10f)
             {
                 rightBorder = true;
                 leftBorder = false;
             }
 
-            if (Math.Round(x, 2) > 0.0)
+            if (x > 0.0f)
             {
                 leftBorder = true;
                 rightBorder = false;
             }
 
-            if (Math.Round(y, 2) > 1.20)
+            if (y > 1.20f)
             {
                 topBorder = true;
                 bottomBorder = false;
             }
 
-            if (Math.Round(y, 2) < 0.0 && Math.Round(y, 2) < -0.48)
+            if (y < 0.0f && y < -0.48f)
             {
                 bottomBorder = true;
                 topBorder = false;

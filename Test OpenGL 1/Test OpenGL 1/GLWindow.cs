@@ -9,6 +9,7 @@ using OpenTK;
 //using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
+using System.Threading;
 
 namespace OpenGL
 {
@@ -42,6 +43,7 @@ namespace OpenGL
         Valentine v;
         Outro o;
         Intro i;
+        Birthday b;
 
         // Test for sound
         Sound snd;
@@ -88,6 +90,7 @@ namespace OpenGL
             v = new Valentine(ref snd);
             o = new Outro(ref snd);
             i = new Intro(ref snd, ref text);
+            b = new Birthday(ref snd, ref text);
             
             //Events
             //_WriteVersion();
@@ -262,11 +265,14 @@ namespace OpenGL
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.StencilBufferBit | ClearBufferMask.DepthBufferBit); // Clear the OpenGL color buffer
             //GL.MatrixMode(MatrixMode.Projection);
+
+
             if (!pc.EndOfRuntime())
             {
                 pc.updateClock();
                 //GL.MatrixMode(MatrixMode.Modelview);
                 // Time
+
                 pc.DrawTime();
                 // Date
                 pc.DrawDate();
@@ -302,15 +308,16 @@ namespace OpenGL
             //text.Draw("Ännu mer här !åäö? och så har vi något lång rad som inte skall få radbrytnignar om man inte\ngör en själv!", Text2D.FontName.TypeFont, new Vector3(1.6f, -0.6f, 1.5f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(0.0f, 0.0f));
             //s.Draw(nowDate);
              //dif.Draw(nowDate);
-         //  xmas.Draw(nowDate);
+           xmas.Draw(nowDate);
           //  f.Draw(nowDate);
            // smurf.Draw(nowDate);
           //  v.Draw(nowDate);
           //  o.Draw(nowDate);
-            i.Draw(nowDate);
+            //i.Draw(nowDate);
             //chess.Draw(nowDate);
            // hw.Draw(nowDate);
             //tl.Draw(nowDate);
+           // b.Draw(nowDate);
             
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
             //Console.WriteLine("FPS: " + (1.0/e.Time));

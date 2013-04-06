@@ -24,7 +24,7 @@ namespace OpenGL
 
         private float x;
         private float y;
-
+        private bool disposed = false;
         
          private SnowFlake[] sf;
          private const int NUMBEROFFLAKES = 150;
@@ -39,7 +39,7 @@ namespace OpenGL
 
             currentImage = 0;
             snd = sound;
-            snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\datasmurf.wav", "smurf");
+            snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.wav", "xmas");
             leftBorder = true;
             rightBorder = false;
             topBorder = true;
@@ -56,7 +56,7 @@ namespace OpenGL
 
 
 
-                sf[i] = new SnowFlake((r.Next(0, 100)%2 == 0 ? -1.0f : 1.0f), (r.Next(-20, 20) * -1) / 10.0f, (r.Next(-10, 20) * -1) / 10.0f, r.Next(1, 10) / 1000.0f, r.Next(1, 10) / 1000.0f, snowImage,
+                sf[i] = new SnowFlake((r.Next(-30, 40)) / 10.0f, (r.Next(-10, 20) * -1) / 10.0f, 0.00001f, r.Next(1, 10) / 1000.0f, snowImage,
                     new Vector2[] {  new Vector2(0.0f + (currentImage * 0.2f), 1.0f),
                                      new Vector2(0.2f + (currentImage * 0.2f), 1.0f),
                                      new Vector2(0.2f + (currentImage * 0.2f), 0.0f),
@@ -80,15 +80,41 @@ namespace OpenGL
             snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.wav", "xmas");
         }
 
+        ~Christmas()
+        {
+            Dispose(false);
+        }
+       
         public void Dispose()
         {
-            //base.Finalize();
-            Util.DeleteTexture(ref image);
-            Util.DeleteTexture(ref image2);
-            Util.DeleteTexture(ref snowImage);
-            snd = null;
-            Console.WriteLine(this.GetType().ToString() + " disposed.");
+            Dispose(true);
             System.GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    // free managed resources
+                   Util.DeleteTexture(ref image);
+                   Util.DeleteTexture(ref image2);
+                   Util.DeleteTexture(ref snowImage);
+                   snd = null;
+                   image = 0;
+                   image2 = 0;
+                   snowImage = 0;
+
+                   for (int i = 0; i < NUMBEROFFLAKES; i++)
+                   {
+                       sf[i].Dispose();
+                       sf[i] = null;
+                   }
+                }
+                // free native resources if there are any.
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                disposed = true;
+            }
         }
 
         private void drawImage()
@@ -134,25 +160,25 @@ namespace OpenGL
 
         private void moveImage()
         {
-            if (Math.Round(x, 2) < -0.8)
+            if (x < -0.8f)
             {
                 rightBorder = true;
                 leftBorder = false;
             }
 
-            if (Math.Round(x, 2) > 0.8)
+            if (x > 0.8f)
             {
                 leftBorder = true;
                 rightBorder = false;
             }
 
-            if (Math.Round(y, 2) > 1.20)
+            if (y > 1.20f)
             {
                 topBorder = true;
                 bottomBorder = false;
             }
 
-            if (Math.Round(y, 2) < 0.0 && Math.Round(y, 2) < -0.48)
+            if (y < 0.0f && y < -0.48f)
             {
                 bottomBorder = true;
                 topBorder = false;
@@ -191,6 +217,7 @@ namespace OpenGL
         {
             moveImage();
             drawImage();
+            
         }//Draw
     }//class
 }//namespace

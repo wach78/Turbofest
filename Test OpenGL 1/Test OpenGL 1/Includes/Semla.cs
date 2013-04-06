@@ -18,7 +18,7 @@ namespace OpenGL
         private bool topBorder;
         private bool bottomBorder;
 
-        private Random random;
+        private bool disposed = false;
 
         public Semla()
         {
@@ -31,14 +31,33 @@ namespace OpenGL
             topBorder = true;
             bottomBorder = false;
 
-            random = new Random();
         }
-
+        ~Semla()
+         {
+            Dispose(false);
+         }
         public void Dispose()
         {
-            Util.DeleteTexture(ref image);
+            Dispose(true);
             System.GC.SuppressFinalize(this);
-            Console.WriteLine(this.GetType().ToString() + " disposed.");
+
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    // free managed resources
+                    Util.DeleteTexture(ref image);
+                    
+                    image = 0;
+                }
+                // free native resources if there are any.
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                disposed = true;
+            }
         }
 
         private void DrawImage()
@@ -68,25 +87,25 @@ namespace OpenGL
 
         private void moveImage()
         {
-            if (Math.Round(x, 2) < -3.10)
+            if (x < -3.10f)
             {
                 rightBorder = true;
                 leftBorder = false;
             }
 
-            if (Math.Round(x, 2) > 0.50)
+            if (x > 0.50f)
             {
                 leftBorder = true;
                 rightBorder = false;
             }
 
-            if (Math.Round(y, 2) > 1.20)
+            if (y > 1.20f)
             {
                 topBorder = true;
                 bottomBorder = false;
             }
 
-            if (Math.Round(y, 2) < 0.0 && Math.Round(y, 2) < -0.48) //-0,48
+            if (y < 0.0f && y < -0.48f) //-0,48
             {
                 bottomBorder = true;
                 topBorder = false;
@@ -116,7 +135,9 @@ namespace OpenGL
 
         public void Draw(string Date)
         {
-            moveImage();
+           // moveImage();
+
+           
             DrawImage();
         }//Draw
 
