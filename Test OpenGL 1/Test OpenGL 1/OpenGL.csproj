@@ -33,7 +33,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;noogg;sound</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;ogg;sound</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
@@ -83,6 +83,8 @@
     <Compile Include="Includes\Ballons.cs" />
     <Compile Include="Includes\Birthday.cs" />
     <Compile Include="Includes\Christmas.cs" />
+    <Compile Include="Includes\Advent.cs" />
+    <Compile Include="Includes\Lucia.cs" />
     <Compile Include="Includes\WinLinux.cs" />
     <Compile Include="Includes\Rms.cs" />
     <Compile Include="Includes\Datasmurf.cs" />
@@ -130,6 +132,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="gfx\ljus.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\lucia.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\winlogo.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -156,6 +164,9 @@
     </Content>
     <Content Include="Samples\xmas.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\tandettljus.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

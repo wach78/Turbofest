@@ -3,19 +3,11 @@
 
 asg crash handler
 event handler
-<<<<<<< HEAD
-asg		födelsedagar
-asg		2dtext D (Missing some fonts...)
-wach	done alla hjärtansdag
-asg		halloween
-wach	done xmas
-=======
 wach	födelsedagar
 asg		2dtext D (Missing some fonts...) (size corrected)
 wach	alla hjärtansdag
 asg		halloween D
 wach	xmas
->>>>>>> More sound
 wach	sune
 wach	dif 
 wach	fbk
@@ -23,7 +15,7 @@ asg		turbologga D
 asg		scrollers
 wach	se över scroll text
 asg		advent 
-asg		lucia 
+asg		lucia D
 asg		shack D
 wach	smurf
 wach	semla 

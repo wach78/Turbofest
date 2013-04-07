@@ -353,10 +353,11 @@ namespace OpenGL
             int ab = AL.GenBuffer();
 
 //#define ogg // or activate this, but this is just for this place/file... :D
-#if !ogg
+#if noogg
 #warning "Returning 0 on Ogg file, you need to define \"ogg\" in build constants, in project build property."
             return ab; // quicker upstart
 #endif
+
             VorbisFile asd = new VorbisFile(filename);
             Console.WriteLine(filename);
             Info info = asd.getInfo(-1);

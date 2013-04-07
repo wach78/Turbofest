@@ -15,27 +15,32 @@ using System.IO;
 namespace OpenGL
 {
     /// <summary>
-    /// Windows and Linux event.
+    /// Lucia event.
     /// </summary>
-    class WinLinux : IEffect
+    class Lucia : IEffect
     {
         private bool disposed = false;
         Chess chess;
+        Sound snd;
         private int texture;
         private Vector3[] Ghost;
         private SizeF Size;
+        private float Speed;
         private float X;
         private float Y;
         private float Z;
         private long tick = 0;
 
-        public WinLinux(ref Chess chessboard)
+        public Lucia(ref Chess chessboard, ref Sound sound)
         {
             chess = chessboard;
-            texture = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/winlogo.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255,0,255));
+            snd = sound;
+            texture = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/lucia.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.Black);
+            //snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/lucia.ogg", "lucia"); 
 
             Ghost = new Vector3[4];
-            Size = new SizeF(1.4f, 1.4f);
+            Size = new SizeF(0.4f, 0.8f);
+            Speed = 0.0025f;
 
             X = Util.Rnd.Next(-3, 3) / 10.0f;
             Y = Util.Rnd.Next(-3, 3) / 10.0f;
@@ -47,7 +52,7 @@ namespace OpenGL
 
         }
 
-        ~WinLinux()
+        ~Lucia()
         {
             Dispose(false);
         }
@@ -78,9 +83,25 @@ namespace OpenGL
         
         public void Move()
         {
+            //kze: fix new movment pathern...
             tick++;
-            X = (float)Math.Sin(tick / 42.1f) * 0.6f - Size.Width / 2;
-            Y = (float)Math.Cos(tick / 62.1f) * 0.4f - Size.Height / 2;
+            //float mx = (1.65f - Size.Width);
+            /*X = (tick / 80.0f) % (mx * 2.0f);
+            if (X >= mx)
+            {
+                X = mx - (X - mx);
+            }*/
+            X += Speed;
+            if (X >= (1.65f - Size.Width))
+            {
+                Speed = -Speed;
+            }
+            else if (X <= -1.65f)
+            {
+                Speed = -Speed;
+            }
+
+            Y = (float)Math.Sin(tick / 42.1f) * 0.3f - Size.Height * 0.75f;
 
             Ghost[0].Xy = new Vector2(X, Y);
             Ghost[1].Xy = new Vector2(X, Y + Size.Height);

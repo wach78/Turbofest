@@ -46,6 +46,8 @@ namespace OpenGL
         Birthday b;
         RMS richard;
         WinLinux wl;
+        Lucia lucia;
+        Advent advent;
 
         // Test for sound
         Sound snd;
@@ -96,6 +98,8 @@ namespace OpenGL
             b = new Birthday(ref snd, ref text);
             richard = new RMS(ref snd, ref text);
             wl = new WinLinux(ref chess);
+            lucia = new Lucia(ref chess, ref snd);
+            advent = new Advent(ref snd);
 
             //Events
             //_WriteVersion();
@@ -206,8 +210,11 @@ namespace OpenGL
             v.Dispose(); // 2 texturer
             o.Dispose(); // 1 textur
             i.Dispose(); // 1 textur
+            b.Dispose(); // 1 textur
             richard.Dispose(); // 1 textur
             wl.Dispose(); // 1 textur
+            lucia.Dispose(); // 1 textur
+            advent.Dispose(); // 1 textur
             
             Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             Console.WriteLine(this.GetType().ToString() + " closed.");
@@ -300,7 +307,7 @@ namespace OpenGL
                 sune.NewQoute();
             }
             //sf.Draw(nowDate);
-            sune.Draw(nowDate);
+            //sune.Draw(nowDate);
             /*if (nowDate == "2012-03-03")
                 sune.Draw(nowDate);
             else if (nowDate == "2012-03-02")
@@ -319,7 +326,7 @@ namespace OpenGL
              //dif.Draw(nowDate);
            //xmas.Draw(nowDate);
           //  f.Draw(nowDate);
-           // smurf.Draw(nowDate);
+            smurf.Draw(nowDate);
           //  v.Draw(nowDate);
           //  o.Draw(nowDate);
             //i.Draw(nowDate);
@@ -332,7 +339,9 @@ namespace OpenGL
             //tl.Draw(nowDate);
             //hw.Draw(nowDate);
             //wl.Draw(nowDate);
-           // richard.Draw(nowDate);
+            //richard.Draw(nowDate);
+            //lucia.Draw(nowDate);
+            //advent.Draw(nowDate);
 
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
             //Console.WriteLine("FPS: " + (1.0/e.Time));
