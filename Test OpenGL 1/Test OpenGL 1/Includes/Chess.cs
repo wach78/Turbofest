@@ -145,10 +145,10 @@ namespace OpenGL
             GL.Color4(System.Drawing.Color.Red); GL.TexCoord2(0.0 - this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(3.00f, 0.50f, 5.1f); // top left
             */
 
-            GL.TexCoord2(0.0 + this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(-4.60f, -1.50f, 0.0f); // bottom right
+            GL.TexCoord2(0.0 + this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(-4.60f, -2.00f, 0.0f); // bottom right
             GL.TexCoord2(0.0 + this.m_scrollX, 5.0 + this.m_scrollY); GL.Vertex3(-4.60f, 0.20f, 5.1f); // top right
             GL.TexCoord2(5.0 + this.m_scrollX, 5.0 + this.m_scrollY); GL.Vertex3(4.60f, 0.20f, 5.1f); // top left
-            GL.TexCoord2(5.0 + this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(4.60f, -1.50f, 0.0f); // bottom left
+            GL.TexCoord2(5.0 + this.m_scrollX, 0.0 + this.m_scrollY); GL.Vertex3(4.60f, -2.00f, 0.0f); // bottom left
 
             GL.End();
             GL.BindTexture(TextureTarget.Texture2D, 0);

@@ -71,9 +71,9 @@ namespace OpenGL
             }
         }
 
-        
 
-        public void Draw()
+
+        public void Draw(string Date)
         {
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, snowImage);

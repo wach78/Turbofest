@@ -57,6 +57,7 @@ namespace OpenGL
             snd = sound;
 
             snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.wav", "roadrunner");
+            //snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.ogg", "roadrunner");
 
             VTColour = VT;
 
@@ -237,7 +238,7 @@ namespace OpenGL
             //GL.BlendColor(255, 0, 255, 255);
             //GL.BlendFunc(BlendingFactorSrc.ConstantColor, BlendingFactorDest.OneMinusConstantColor); //(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha); //(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
-            
+            GL.Disable(EnableCap.DepthTest);
             GL.Begin(BeginMode.Quads);
             //X += moveX;
             //Y += moveY;
@@ -308,14 +309,15 @@ namespace OpenGL
             
 
             GL.End();
+            GL.Enable(EnableCap.DepthTest);
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
 
-            GL.PointSize(5.0f);
+            /*GL.PointSize(5.0f);
             GL.Begin(BeginMode.Points);
             GL.Vertex3(new Vector3(X + 1.0f, Y + 0.2f, 1.0f));
             GL.Vertex3(new Vector3(X - 0.3f, Y - 0.4f, 1.0f));
-            GL.End();
+            GL.End();*/
 
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }

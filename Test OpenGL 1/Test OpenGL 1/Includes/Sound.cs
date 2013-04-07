@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
 using System.Threading;
+using csogg;
+using csvorbis;
 
 namespace OpenGL
 {
@@ -35,7 +37,7 @@ namespace OpenGL
         int NowPlayingBuffer;
         string NextPlayingName;
         int NextPlayingBuffer;
-        int numPLayedBuffer;
+        //int numPLayedBuffer;
 
         public Sound(bool StartThread)
         {
@@ -51,7 +53,7 @@ namespace OpenGL
             NowPlayingBuffer = -1;
             NextPlayingName = string.Empty;
             NextPlayingBuffer = -1;
-            numPLayedBuffer = 0; //??
+            //numPLayedBuffer = 0; //??
             /*OpenTK.Vector3 v3 = new OpenTK.Vector3(1, 1, 1);
             AL.Source(AL.GenBuffer(), ALSource3f.Position, ref v3);*/
 
@@ -80,29 +82,32 @@ namespace OpenGL
         protected virtual void Dispose(bool disposing)
         {
             //Console.WriteLine("Dispose called with "+ (disposed?"Disposing":"Not Disposing"));
-            if (disposing)
+            if (!this.disposed)
             {
-                // free managed resources
-                if (tr.IsAlive)
+                if (disposing)
                 {
-                    RunSoundThread = false;
+                    // free managed resources
+                    if (tr.IsAlive)
+                    {
+                        RunSoundThread = false;
+                    }
+                    tr = null; // is bad if it's not stopped?
+                    if (SoundSource != -1)
+                    {
+                        AL.SourceStop(SoundSource);
+                        AL.DeleteSource(SoundSource);
+                    }
+                    foreach (var item in SoundList)
+                    {
+                        AL.DeleteBuffer(item.Value);
+                    }
+                    SoundList.Clear();
+                    SoundList = null;
                 }
-                tr = null; // is bad if it's not stopped?
-                if (SoundSource != -1)
-                {
-                    AL.SourceStop(SoundSource);
-                    AL.DeleteSource(SoundSource);
-                }
-                foreach (var item in SoundList)
-                {
-                    AL.DeleteBuffer(item.Value);
-                }
-                SoundList.Clear();
-                SoundList = null;
+                // free native resources if there are any.
+                disposed = true;
+                Console.WriteLine(this.GetType().ToString() + " disposed.");
             }
-            // free native resources if there are any.
-            disposed = true;
-            Console.WriteLine(this.GetType().ToString() + " disposed.");
         }
         #endregion
 
@@ -199,13 +204,18 @@ namespace OpenGL
             }
             else if (ft == FileType.Ogg)
             {
+                // With this we can still play but we will not play the ogg music...
+                if (!File.Exists("csogg.dll") || !File.Exists("csvorbis.dll"))
+                {
+                    return; // or throw a error
+                }
                 // We might want to throw a exception here if there are more with the same name trying to get added.
                 if (!SoundList.ContainsKey(Name))
                 {
                     lock (SoundList)
                     {
-                        //SoundList.Add(Name, LoadOGG(filename));
-                        throw new Exception("Not implemented!");
+                        SoundList.Add(Name, LoadOGG(filename));
+                        //throw new Exception("Not implemented!");
                     }
                 }
                 
@@ -331,22 +341,365 @@ namespace OpenGL
             */
             return ab;
         }
-        /*
+
         public int LoadOGG(string filename)
         {
-            //NVorbis.OpenTKSupport.OggStream asd = new NVorbis.OpenTKSupport.OggStream(filename, 1);
-            BinaryReader br = new BinaryReader(File.OpenRead(filename));
-            NVorbis.VorbisReader reader = new NVorbis.VorbisReader(filename);
-            //NVorbis.OpenTKSupport.OggStreamer asd2 = new NVorbis.OpenTKSupport.OggStreamer();
-            
+            // Dirty way of checking that we have ogg-dlls in exe path....
+            if (!File.Exists("csogg.dll") || !File.Exists("csvorbis.dll"))
+            {
+                return 0;
+            }
+
             int ab = AL.GenBuffer();
-            
+
+//#define ogg // or activate this, but this is just for this place/file... :D
+#if !ogg
+#warning "Returning 0 on Ogg file, you need to define \"ogg\" in build constants, in project build property."
+            return ab; // quicker upstart
+#endif
+            VorbisFile asd = new VorbisFile(filename);
+            Console.WriteLine(filename);
+            Info info = asd.getInfo(-1);
+            //long samples = asd.pcm_total(-1);
+            //int streams = asd.streams();
+            //byte[] data3 = new byte[samples*streams];
+            byte[] data2 = new byte[4096];
+            Stream output2 = new MemoryStream();
+            int readBytes = 0;
+
+            while ((readBytes = asd.read(data2, data2.Length, 0 /*Bigendian*/, /*(info.rate < 44100 ? 2 : 2)*/ 2 /*1=byte, 2=16bit*/, 1/*signd*/, null)) > 0)
+            {
+                output2.Write(data2, 0, readBytes);
+            }
+            data2 = null;
+            data2 = new byte[output2.Length];
+            output2.Seek(0, SeekOrigin.Begin);
+            output2.Read(data2, 0, data2.Length);
+            output2.Close();
+            output2.Dispose();
+            //
+            #region csogg and stuff, commented
+            // borrow from csogg and csvorbis...
+            /*using (var input = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                Console.WriteLine(filename);
+                bool skipWavHeader = true;
+                int HEADER_SIZE = 36;
+
+                int convsize = 4096 * 2;
+                byte[] convbuffer = new byte[convsize]; // take 8k out of the data segment, not the stack
+
+                Stream output = new MemoryStream();
+                if (!skipWavHeader)
+                    output.Seek(HEADER_SIZE, SeekOrigin.Begin); // reserve place for WAV header
+
+                SyncState oy = new SyncState(); // sync and verify incoming physical bitstream
+                StreamState os = new StreamState(); // take physical pages, weld into a logical stream of packets
+                Page og = new Page(); // one Ogg bitstream page.  Vorbis packets are inside
+                Packet op = new Packet(); // one raw packet of data for decode
+
+                Info vi = new Info();  // struct that stores all the static vorbis bitstream settings
+                Comment vc = new Comment(); // struct that stores all the bitstream user comments
+                DspState vd = new DspState(); // central working state for the packet->PCM decoder
+                Block vb = new Block(vd); // local working space for packet->PCM decode
+
+                byte[] buffer;
+                int bytes = 0;
+
+                // Decode setup
+
+                oy.init(); // Now we can read pages
+
+                while (true)
+                { // we repeat if the bitstream is chained
+                    int eos = 0;
+
+                    // grab some data at the head of the stream.  We want the first page
+                    // (which is guaranteed to be small and only contain the Vorbis
+                    // stream initial header) We need the first page to get the stream
+                    // serialno.
+
+                    // submit a 4k block to libvorbis' Ogg layer
+                    int index = oy.buffer(4096);
+                    buffer = oy.data;
+                    try
+                    {
+                        bytes = input.Read(buffer, index, 4096);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                    oy.wrote(bytes);
+
+                    // Get the first page.
+                    if (oy.pageout(og) != 1)
+                    {
+                        // have we simply run out of data?  If so, we're done.
+                        if (bytes < 4096) break;
+
+                        // error case.  Must not be Vorbis data
+                        Console.WriteLine("Input does not appear to be an Ogg bitstream.");
+                    }
+
+                    // Get the serial number and set up the rest of decode.
+                    // serialno first; use it to set up a logical stream
+                    os.init(og.serialno());
+
+                    // extract the initial header from the first page and verify that the
+                    // Ogg bitstream is in fact Vorbis data
+
+                    // I handle the initial header first instead of just having the code
+                    // read all three Vorbis headers at once because reading the initial
+                    // header is an easy way to identify a Vorbis bitstream and it's
+                    // useful to see that functionality seperated out.
+
+                    vi.init();
+                    vc.init();
+                    if (os.pagein(og) < 0)
+                    {
+                        // error; stream version mismatch perhaps
+                        Console.WriteLine("Error reading first page of Ogg bitstream data.");
+                    }
+
+                    if (os.packetout(op) != 1)
+                    {
+                        // no page? must not be vorbis
+                        Console.WriteLine("Error reading initial header packet.");
+                    }
+
+                    if (vi.synthesis_headerin(vc, op) < 0)
+                    {
+                        // error case; not a vorbis header
+                        Console.WriteLine("This Ogg bitstream does not contain Vorbis audio data.");
+                    }
+
+                    // At this point, we're sure we're Vorbis.  We've set up the logical
+                    // (Ogg) bitstream decoder.  Get the comment and codebook headers and
+                    // set up the Vorbis decoder
+
+                    // The next two packets in order are the comment and codebook headers.
+                    // They're likely large and may span multiple pages.  Thus we reead
+                    // and submit data until we get our two pacakets, watching that no
+                    // pages are missing.  If a page is missing, error out; losing a
+                    // header page is the only place where missing data is fatal. 
+
+                    int i = 0;
+
+                    while (i < 2)
+                    {
+                        while (i < 2)
+                        {
+
+                            int result = oy.pageout(og);
+                            if (result == 0) break; // Need more data
+                            // Don't complain about missing or corrupt data yet.  We'll
+                            // catch it at the packet output phase
+
+                            if (result == 1)
+                            {
+                                os.pagein(og); // we can ignore any errors here
+                                // as they'll also become apparent
+                                // at packetout
+                                while (i < 2)
+                                {
+                                    result = os.packetout(op);
+                                    if (result == 0) break;
+                                    if (result == -1)
+                                    {
+                                        // Uh oh; data at some point was corrupted or missing!
+                                        // We can't tolerate that in a header.  Die.
+                                        Console.WriteLine("Corrupt secondary header.  Exiting.");
+                                    }
+                                    vi.synthesis_headerin(vc, op);
+                                    i++;
+                                }
+                            }
+                        }
+                        // no harm in not checking before adding more
+                        index = oy.buffer(4096);
+                        buffer = oy.data;
+                        try
+                        {
+                            bytes = input.Read(buffer, index, 4096);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                        if (bytes == 0 && i < 2)
+                        {
+                            Console.WriteLine("End of file before finding all Vorbis headers!");
+                        }
+                        oy.wrote(bytes);
+                    }
+
+                    // Throw the comments plus a few lines about the bitstream we're decoding
+                    {
+                        byte[][] ptr = vc.user_comments;
+                        for (int j = 0; j < vc.user_comments.Length; j++)
+                        {
+                            if (ptr[j] == null) break;
+                            Console.WriteLine(vc.getComment(j));
+                        }
+                        Console.WriteLine("\nBitstream is " + vi.channels + " channel, " + vi.rate + "Hz");
+                        Console.WriteLine("Encoded by: " + vc.getVendor() + "\n");
+                    } // comment this on release...
+                    
+                    convsize = 4096 / vi.channels;
+
+                    // OK, got and parsed all three headers. Initialize the Vorbis
+                    //  packet->PCM decoder.
+                    vd.synthesis_init(vi); // central decode state
+                    vb.init(vd);           // local state for most of the decode
+
+                    // so multiple block decodes can
+                    // proceed in parallel.  We could init
+                    // multiple vorbis_block structures
+                    // for vd here
+
+                    float[][][] _pcm = new float[1][][];
+                    int[] _index = new int[vi.channels];
+                    // The rest is just a straight decode loop until end of stream
+                    while (eos == 0)
+                    {
+                        while (eos == 0)
+                        {
+
+                            int result = oy.pageout(og);
+                            if (result == 0) break; // need more data
+                            if (result == -1)
+                            { // missing or corrupt data at this page position
+                                Console.WriteLine("Corrupt or missing data in bitstream; continuing...");
+                            }
+                            else
+                            {
+                                os.pagein(og); // can safely ignore errors at
+                                // this point
+                                while (true)
+                                {
+                                    result = os.packetout(op);
+
+                                    if (result == 0) break; // need more data
+                                    if (result == -1)
+                                    { // missing or corrupt data at this page position
+                                        // no reason to complain; already complained above
+                                    }
+                                    else
+                                    {
+                                        // we have a packet.  Decode it
+                                        int samples;
+                                        if (vb.synthesis(op) == 0)
+                                        { // test for success!
+                                            vd.synthesis_blockin(vb);
+                                        }
+
+                                        // **pcm is a multichannel float vector.  In stereo, for
+                                        // example, pcm[0] is left, and pcm[1] is right.  samples is
+                                        // the size of each channel.  Convert the float values
+                                        // (-1.<=range<=1.) to whatever PCM format and write it out
+
+                                        while ((samples = vd.synthesis_pcmout(_pcm, _index)) > 0)
+                                        {
+                                            float[][] pcm = _pcm[0];
+                                            bool clipflag = false;
+                                            int bout = (samples < convsize ? samples : convsize);
+
+                                            // convert floats to 16 bit signed ints (host order) and
+                                            // interleave
+                                            for (i = 0; i < vi.channels; i++)
+                                            {
+                                                int ptr = i * 2;
+                                                //int ptr=i;
+                                                int mono = _index[i];
+                                                for (int j = 0; j < bout; j++)
+                                                {
+                                                    int val = (int)(pcm[i][mono + j] * 32767.0);
+                                                    //        short val=(short)(pcm[i][mono+j]*32767.);
+                                                    //        int val=(int)Math.round(pcm[i][mono+j]*32767.);
+                                                    // might as well guard against clipping
+                                                    if (val > 32767)
+                                                    {
+                                                        val = 32767;
+                                                        clipflag = true;
+                                                    }
+                                                    if (val < -32768)
+                                                    {
+                                                        val = -32768;
+                                                        clipflag = true;
+                                                    }
+                                                    if (val < 0) val = val | 0x8000;
+                                                    convbuffer[ptr] = (byte)(val);
+                                                    convbuffer[ptr + 1] = (byte)((uint)val >> 8);
+                                                    ptr += 2 * (vi.channels);
+                                                }
+                                            }
+
+                                            if (clipflag)
+                                            {
+                                                //s_err.WriteLine("Clipping in frame "+vd.sequence);
+                                            }
+
+                                            output.Write(convbuffer, 0, 2 * vi.channels * bout);
+
+                                            vd.synthesis_read(bout); // tell libvorbis how
+                                            // many samples we
+                                            // actually consumed
+                                        }
+                                    }
+                                }
+                                if (og.eos() != 0) eos = 1;
+                            }
+                        }
+                        if (eos == 0)
+                        {
+                            index = oy.buffer(4096);
+                            buffer = oy.data;
+                            try
+                            {
+                                bytes = input.Read(buffer, index, 4096);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e);
+                            }
+                            oy.wrote(bytes);
+                            if (bytes == 0) eos = 1;
+                        }
+                    }
+
+                    // clean up this logical bitstream; before exit we see if we're
+                    // followed by another [chained]
+
+                    os.clear();
+
+                    // ogg_page and ogg_packet structs always point to storage in
+                    // libvorbis.  They're never freed or manipulated directly
+
+                    vb.clear();
+                    vd.clear();
+                    vi.clear();  // must be called last
+                }
+
+                // OK, clean up the framer
+                oy.clear();
+                Console.WriteLine("Done.");
+
+                output.Seek(0, SeekOrigin.Begin);
+                if (!skipWavHeader)
+                {
+                    WriteHeader(output, (int)(output.Length - HEADER_SIZE), vi.rate, (ushort)16, (ushort)vi.channels);
+                    output.Seek(0, SeekOrigin.Begin);
+                }
+                */
+            #endregion
+            //
             ALFormat alf = 0;
-            if (reader.Channels == 1) // mono
+            if (/*vi*/info.channels == 1) // mono
             {
                 alf = ALFormat.Mono16;
             }
-            else if (reader.Channels == 2) // sterio
+            else if (/*vi*/info.channels == 2) // sterio
             {
                 alf = ALFormat.Stereo16;
             }
@@ -355,26 +708,43 @@ namespace OpenGL
                 throw new Exception("Wrong number of channels in sound file.");
             }
 
-            List<float> Rdata = new List<float>();
-            float[] data = new float[44100];
-            int readSamples;
-            //data = br.ReadBytes((int)br.BaseStream.Length);
-            do
-            {
-                readSamples = reader.ReadSamples(data, Rdata.Count, 44100);
-                Rdata.AddRange(data);
-            } while (readSamples > 0);
+            /*BinaryReader bw = new BinaryReader(output);
+            byte[] data = bw.ReadBytes((int)output.Length);
+            bw.Close();
+            bw.Dispose();*/
+            /*byte[] data = new byte[(int)output.Length];
+            output.Read(data, 0, data.Length);
+            output.Close();
+            output.Dispose();*/
+            AL.BufferData(ab, alf, data2, data2.Length, /*vi.rate*/ info.rate);
+            //data = null;
+            //}
 
-            AL.BufferData(ab, alf, data, data.Length, reader.SampleRate);
-
-            reader.Dispose();
-            br.Close();
-            br.Dispose();
-            data = null;
-            
             return ab;
-        }*/
+        }
 
+
+        private void WriteHeader(Stream stream, int length, int audioSampleRate, ushort audioBitsPerSample, ushort audioChannels)
+        {
+            int HEADER_SIZE = 36;
+            BinaryWriter bw = new BinaryWriter(stream);
+
+            bw.Write(new char[4] { 'R', 'I', 'F', 'F' });
+            int fileSize = HEADER_SIZE + length;
+            bw.Write(fileSize);
+            bw.Write(new char[8] { 'W', 'A', 'V', 'E', 'f', 'm', 't', ' ' });
+            bw.Write((int)16);
+            bw.Write((short)1);
+            bw.Write((short)audioChannels);
+            bw.Write(audioSampleRate);
+            bw.Write((int)(audioSampleRate * ((audioBitsPerSample * audioChannels) / 8)));
+            bw.Write((short)((audioBitsPerSample * audioChannels) / 8));
+            bw.Write((short)audioBitsPerSample);
+
+            bw.Write(new char[4] { 'd', 'a', 't', 'a' });
+            bw.Write(length);
+            bw.Close();
+        }
 
         /// <summary>
         /// Sets up a buffer from the Name and plays it

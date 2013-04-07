@@ -20,7 +20,7 @@ namespace OpenGL
         float[,] FontSize;
         System.Drawing.Font m_font;
         int[] m_drawSize;
-        string oldDate;
+        //string oldDate;
 
         public enum FontName { Coolfont=0, CandyBlue, CandyGreen, CandyGrey, CandyPink, CandyPurple, CandyYellow, TypeFont, Other };
 
@@ -48,7 +48,7 @@ namespace OpenGL
 
             AllowedChars[0] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!?:;0123456789\"()-ÅÄÖ* ";
             AllowedChars[1] = AllowedChars[2] = AllowedChars[3] = AllowedChars[4] = AllowedChars[5] = AllowedChars[6] = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ!?- ";
-            AllowedChars[7] = " ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö0123456789()!:;.,-+\"´@&*?";
+            AllowedChars[7] = " ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö0123456789()!:;.,-+\"'@&*?";
             AllowedChars[8] = "";
 
             splitChars = new char[] { ' ', '.', '-', '\n' }; // set this to each Font as not all have them..
@@ -384,7 +384,8 @@ namespace OpenGL
                     GL.TexCoord2(texVec[2]); GL.Vertex3(X - (i * CharSize.X), Y, Position.Z); // top left
                     GL.TexCoord2(texVec[3]); GL.Vertex3(X - (i * CharSize.X), Y - CharSize.Y, Position.Z); // bottom left
                 }
-                Y -= 0.1f;
+                //Y -= 0.1f;
+                Y -= CharSize.Y;
             }
 
             GL.End();

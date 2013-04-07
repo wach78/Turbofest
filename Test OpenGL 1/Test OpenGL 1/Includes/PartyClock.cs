@@ -282,6 +282,8 @@ namespace OpenGL
 
 
             GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Blend);
+
             //GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, this.m_tex[0]);
             GL.Begin(BeginMode.Quads);
@@ -304,6 +306,8 @@ namespace OpenGL
             }
 
             GL.End();
+
+            GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
             /*GL.Disable(EnableCap.Light0);
             GL.Disable(EnableCap.Lighting);*/

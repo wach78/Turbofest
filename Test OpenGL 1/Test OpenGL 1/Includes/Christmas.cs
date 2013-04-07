@@ -39,7 +39,9 @@ namespace OpenGL
 
             currentImage = 0;
             snd = sound;
-            snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.wav", "xmas");
+            //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.wav", "smurf");
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.ogg", "smurf");
+
             leftBorder = true;
             rightBorder = false;
             topBorder = true;
@@ -152,7 +154,7 @@ namespace OpenGL
             
             for (int i = 0; i < NUMBEROFFLAKES; i++)
             {
-                sf[i].Draw();
+                sf[i].Draw("");
             }
             
 

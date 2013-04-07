@@ -22,7 +22,7 @@ namespace OpenGL
         bool blnPointDraw;
         bool blnWireFrameDraw;
 
-        Matrix4 matLook;
+        //Matrix4 matLook;
         /*double xScroll = 0.0;
         double yScroll = 0.0;*/
         PartyClock pc;
@@ -30,7 +30,7 @@ namespace OpenGL
         Starfield sf;
         Text2D text;
 
-        Particle particle;
+        //Particle particle;
         SuneAnimation sune;
         Dif dif;
         Fbk fbk;
@@ -44,6 +44,8 @@ namespace OpenGL
         Outro o;
         Intro i;
         Birthday b;
+        RMS richard;
+        WinLinux wl;
 
         // Test for sound
         Sound snd;
@@ -76,7 +78,7 @@ namespace OpenGL
             // Effects
             chess = new Chess();
             sune = new SuneAnimation(ref snd, ref text);
-            sf = new Starfield();
+            sf = new Starfield(300);
             text = new Text2D();
             //particle = new Particle();
             fbk = new Fbk(ref snd);
@@ -86,12 +88,14 @@ namespace OpenGL
             f = new Fbk(ref snd);
             tl = new TurboLogo(ref snd);
             smurf = new Datasmurf(ref snd);
-            hw = new Halloween(25);
+            hw = new Halloween(ref chess, 25);
             v = new Valentine(ref snd);
             o = new Outro(ref snd);
             i = new Intro(ref snd, ref text);
             b = new Birthday(ref snd, ref text);
-            
+            richard = new RMS(ref snd, ref text);
+            wl = new WinLinux(ref chess);
+
             //Events
             //_WriteVersion();
             //text.TextureCoordinates('A', Text2D.FontName.Coolfont);
@@ -120,6 +124,8 @@ namespace OpenGL
             //GL.Enable(EnableCap.Texture2D);
             //GL.Enable(EnableCap.DepthTest); // to enable depth but needs reconfiguring
             //GL.DepthRange(-1.0, 1.0); // needed for DepthTest to show graphics
+            GL.DepthRange(0.0, 1.0);
+            GL.Enable(EnableCap.DepthTest);
 
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
             GL.Enable(EnableCap.CullFace);
@@ -199,6 +205,8 @@ namespace OpenGL
             v.Dispose(); // 2 texturer
             o.Dispose(); // 1 textur
             i.Dispose(); // 1 textur
+            richard.Dispose(); // 1 textur
+            wl.Dispose(); // 1 textur
             
             Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             Console.WriteLine(this.GetType().ToString() + " closed.");
@@ -308,9 +316,9 @@ namespace OpenGL
             //text.Draw("Ännu mer här !åäö? och så har vi något lång rad som inte skall få radbrytnignar om man inte\ngör en själv!", Text2D.FontName.TypeFont, new Vector3(1.6f, -0.6f, 1.5f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(0.0f, 0.0f));
             //s.Draw(nowDate);
              //dif.Draw(nowDate);
-           xmas.Draw(nowDate);
+           //xmas.Draw(nowDate);
           //  f.Draw(nowDate);
-           // smurf.Draw(nowDate);
+            //smurf.Draw(nowDate);
           //  v.Draw(nowDate);
           //  o.Draw(nowDate);
             //i.Draw(nowDate);
@@ -318,7 +326,13 @@ namespace OpenGL
            // hw.Draw(nowDate);
             //tl.Draw(nowDate);
            // b.Draw(nowDate);
-            
+            //snd.Play("Sune");
+            //fbk.Draw(nowDate);
+            //tl.Draw(nowDate);
+            //hw.Draw(nowDate);
+            wl.Draw(nowDate);
+            //richard.Draw(nowDate);
+
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
             //Console.WriteLine("FPS: " + (1.0/e.Time));
             //Console.WriteLine(RenderFrequency);

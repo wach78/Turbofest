@@ -128,21 +128,27 @@ namespace OpenGL
         {
 
             //x = (MoveLeft ? x - speed : x + speed);
+            //x += speed;
             //y = (MoveUp ? y - speed : y + speed);
-            z -= speed*2;
+            z -= speed*4;
 
-            if (/*z > 0.49f ||*/ z < 0.0f)
+            if (/*z > 0.49f ||*/ z < 1.5f)
             {
                 z = 4.9f;
+                x = Util.Rnd.Next(-25, 30) / 10.0f; 
+                y = Util.Rnd.Next(-20, 20) / 10.0f;
             }
-            float[] viewport = Util.GetViewport();
+            /*float[] viewport = Util.GetViewport();
             Matrix4 mvp = Util.GetMVP();
             Vector3 pointV = Vector3.Transform(new Vector3(x,y,z), mvp);
-            //pointV.Normalize(); //can normalize it to get the same?!
-            float X = (pointV.X / pointV.Z);
-            float Y = (pointV.Y / pointV.Z);
-            X = ((pointV.X / pointV.Z) + 1) * viewport[2] / 2;
-            Y = ((pointV.Y / pointV.Z) + 1) * viewport[3] / 2;
+            pointV.Normalize(); //can normalize it to get the same?!
+            //float X = (pointV.X / pointV.Z);
+            //float Y = (pointV.Y / pointV.Z);
+            float X = pointV.X;
+            float Y = pointV.Y;
+            X = ((pointV.X) + 1) * viewport[2] / 2;
+            Y = ((pointV.Y) + 1) * viewport[3] / 2;
+            //Console.WriteLine(x + ", " + y + ". " + X + ", " + Y);
             Vector2 pointV2D = new Vector2(X, Y);
 
             if (pointV2D.X >= viewport[2])
@@ -165,7 +171,7 @@ namespace OpenGL
                 y = starty;
                 z = startz;
             }
-
+            */
             //Console.WriteLine(pointV2D.X + ", " + pointV2D.Y);
         }
     
@@ -175,12 +181,12 @@ namespace OpenGL
     {
         private bool disposed = false;
         private Star[] Stars;
-        private float minDepth;
-        private float maxDepth;
+        /*private float minDepth;
+        private float maxDepth;*/
 
         uint vboHandle, voaHandle;
         Vector3[] vertices;
-        int vShader;
+        /*int vShader;
         int vsProgram;
         int locMVP;
         int locPosition;
@@ -200,16 +206,17 @@ namespace OpenGL
                 gl_Position = mvpMatrix * gl_Vertex;
             }
             ";
-
+        */
         public Starfield(int AmountOfStars = 100)
         {
-            Random rnd = new Random(/*(int)(DateTime.Now.Ticks / 10000) + i*/);
             Stars = new Star[AmountOfStars];
-            minDepth = 0.00f;
-            maxDepth = 5.0f;
+            //minDepth = 0.00f;
+            //maxDepth = 5.0f;
             for (int i = 0; i < AmountOfStars; i++)
             {
-                Stars[i] = new Star(/*0.0f, 0.0f, 0.0f*/ (3 - (rnd.Next(int.MinValue, int.MaxValue) % 20)) * 0.1f, (3 - (rnd.Next(int.MinValue, int.MaxValue) % 15)) * 0.1f, 3.7f, /*rnd.Next(1, 50) / 100000.0f*/ 0.00025f, (rnd.Next(1, 100) <= 50 ? false : true), (rnd.Next(1, 100) <= 50 ? false : true), 1.0f);
+                //Stars[i] = new Star((3 - (rnd.Next(int.MinValue, int.MaxValue) % 20)) * 0.1f, (3 - (rnd.Next(int.MinValue, int.MaxValue) % 15)) * 0.1f, Util.Rnd.Next(16, 49) / 10.0f, 0.1f + 0.9f * rnd.Next(0, 32 * 1024) / (32 * 1024 +1) /*0.00025f*/, (rnd.Next(1, 100) <= 50 ? false : true), (rnd.Next(1, 100) <= 50 ? false : true), 1.0f);
+                Stars[i] = new Star(Util.Rnd.Next(-25, 30) / 10.0f, Util.Rnd.Next(-20, 20) / 10.0f, Util.Rnd.Next(16, 49) / 10.0f, 
+                    Util.Rnd.Next(50, 100) / 100000.0f /*0.00025f*/, (Util.Rnd.Next(1, 100) % 2 == 0 ? false : true), (Util.Rnd.Next(1, 100) % 2 == 0 ? false : true), 2.0f);
                 System.Threading.Thread.Sleep(1);
             }
 

@@ -27,7 +27,7 @@ namespace OpenGL
         private bool soundTrue = false;
         private bool soundDone = false;
         private bool disposed = false;
-       
+        //private short soundTimes = 0;
 
         public SuneAnimation(ref Sound sound, ref Text2D Text)
         {
@@ -42,6 +42,7 @@ namespace OpenGL
 
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\sune_sprite.bmp");
             snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\laugh.wav", "Sune");
+            //snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\laugh.ogg", "Sune");
             
         }
 

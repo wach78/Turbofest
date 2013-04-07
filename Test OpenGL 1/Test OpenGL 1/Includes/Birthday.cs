@@ -102,7 +102,7 @@ namespace OpenGL
             
             for (int i = 0; i < NUMBEROFBALLONS; i++)
             {
-                b[i].Draw();
+                b[i].Draw("");
             }
             
 

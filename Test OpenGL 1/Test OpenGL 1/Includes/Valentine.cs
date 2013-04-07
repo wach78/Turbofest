@@ -29,6 +29,7 @@ namespace OpenGL
             currentImage = 0;
             snd = sound;
             snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\valentine.wav", "Valentine");
+            //snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\valentine.ogg", "Valentine");
          
             Random r = new Random();
             h = new Hearts[NUMBEROFHEARTS];
@@ -124,7 +125,7 @@ namespace OpenGL
 
             for (int i = 0; i < NUMBEROFHEARTS; i++)
             {
-                h[i].Draw();
+                h[i].Draw("");
             }
       
 
