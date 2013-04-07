@@ -68,10 +68,10 @@ namespace OpenGL
 
             // x y z
             // alla i mitten Y-led  alla till vänster x-led
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(2.0f, -1.2f, 0.7f); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-2.0f, -1.2f, 0.7f); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-2.0f, 1.20f, 0.7f);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(2.0f, 1.20f, 0.7f); // top left 
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.7f, -1.0f, 0.4f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.7f, -1.0f, 0.4f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.7f, 1.0f, 0.4f);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.7f, 1.0f, 0.4f); // top left 
 
             GL.End();
             GL.Disable(EnableCap.Texture2D);

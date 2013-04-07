@@ -38,10 +38,10 @@ namespace OpenGL
             
 
             this.vecPos = new Vector3[] {
-                                         new Vector3(x + 0.0f,y  -0.05f,1.1f),
-                                         new Vector3(x - 0.05f,y  -0.05f,1.1f),
-                                         new Vector3(x - 0.05f,y  + 0.0f,1.1f),
-                                         new Vector3(x + 0.0f,y  +0.0f,1.1f)
+                                         new Vector3(x + 0.0f,y  -0.05f,0.4f),
+                                         new Vector3(x - 0.05f,y  -0.05f,0.4f),
+                                         new Vector3(x - 0.05f,y  + 0.0f,0.4f),
+                                         new Vector3(x + 0.0f,y  +0.0f,0.4f)
                                         };
 
         }

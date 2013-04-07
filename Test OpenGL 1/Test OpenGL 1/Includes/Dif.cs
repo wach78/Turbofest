@@ -15,24 +15,17 @@ namespace OpenGL
         private float x;
         private float y;
 
-        private bool leftBorder;
-        private bool rightBorder;
-        private bool topBorder;
-        private bool bottomBorder;
-
         private bool disposed = false;
+        private int tick;
 
         public Dif(ref Chess chess)
         {
             bakground = chess;
-            x = -1.0f;
+            x = 0.0f;
             y = 0.0f;
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\dif2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
            
-            leftBorder = true;
-            rightBorder = false;
-            topBorder = true;
-            bottomBorder = false;
+            tick = 0;
         }
 
         ~Dif()
@@ -75,10 +68,10 @@ namespace OpenGL
            
             // x y z
             // alla i mitten Y-led  alla till vänster x-led //
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.6f+x, -0.55f+y, 0.8f); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.0f+x, -0.55f+y, 0.8f); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.0f+x, 0.10f+y, 0.8);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.6f+x, 0.10f+y, 0.8f); // top left 
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.6f+x, -0.55f+y, 0.4f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.0f+x, -0.55f+y, 0.4f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.0f+x, 0.10f+y, 0.4);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.6f+x, 0.10f+y, 0.4f); // top left 
 
             GL.End();
             GL.Disable(EnableCap.Blend);
@@ -87,50 +80,13 @@ namespace OpenGL
         }//DrawImage
    
         private void moveImage()
-        {        
-            if (x < -2.90f)
-            {
-                rightBorder = true; 
-                leftBorder = false;
-            }
+        {                   
+            this.tick++;
 
-            if (x > 0.3f)
-            {
-                leftBorder = true; 
-                rightBorder = false;
-            }
-
-            if (y >1.10f)
-            {
-                topBorder = true; 
-                bottomBorder = false;
-            }
-
-            if (y < 0.0f && y < -0.48f)
-            {
-                bottomBorder = true; 
-                topBorder = false;
-            }
-            
-            if (!topBorder)
-            {
-                y += 0.010f;
-            }
-
-            if (!bottomBorder)
-            {
-                y -= 0.010f;
-            }
-
-            if (!rightBorder)
-            {
-                x -= 0.010f;
-            }
-
-            if (!leftBorder)
-            {
-                  x += 0.010f;
-            }      
+            x = (float)(Math.Tan((this.tick * 1.5) * Math.PI / 180));
+            x -= 1.0f;
+            y = (float)(Math.Cos((this.tick * 1.5) * Math.PI / 180) * 0.6f);
+            y += 0.25f;
              
         }//moveImage
 

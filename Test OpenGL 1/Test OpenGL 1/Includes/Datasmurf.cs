@@ -4,40 +4,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+using OpenTK;
 
 namespace OpenGL
 {
     class Datasmurf : IEffect
     {
         private Sound snd;
+        private Text2D text;
         private int image;
         private float x;
         private float y;
 
-        private bool leftBorder;
-        private bool rightBorder;
-        private bool topBorder;
-        private bool bottomBorder;
         private bool disposed = false;
+        private int tick;
 
-        public Datasmurf(ref Sound sound)
+        public Datasmurf(ref Sound sound, ref Text2D txt)
         {
             x = -1.0f;
             y = 0.0f;
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\dataSmurf.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255,0,255));
 
             snd = sound;
+            text = txt;
             //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\datasmurf.wav", "Smurf");
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\datasmurf.ogg", "Smurf");
-            leftBorder = true; 
-            rightBorder = false;
-            topBorder = true;
-            bottomBorder = false;
+
+            tick = 0;
         }
 
         ~Datasmurf()
         {
             Dispose(false);
+            System.GC.SuppressFinalize(this);
+        }
+        public void Dispose()
+        {
+            Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
@@ -57,14 +60,7 @@ namespace OpenGL
             }
         }
 
-        public void Dispose()
-        {
-            Util.DeleteTexture(ref image);
-            this.image = -1;
-            snd = null;
-            Console.WriteLine(this.GetType().ToString() + " disposed.");
-            System.GC.SuppressFinalize(this);
-        }
+      
 
         private void DrawImage()
         {
@@ -77,10 +73,10 @@ namespace OpenGL
 
             // x y z
             // alla i mitten Y-led  alla till vänster x-led
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(2.0f + x, -0.85f + y, 1.0f); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.0f + x, -0.85f + y, 1.0f); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.0f + x, 0.10f + y, 1.0f);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(2.0f + x, 0.10f + y, 1.0f); // top left 
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(2.0f + x, -0.75f + y, 0.4f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.1f + x, -0.75f + y, 0.4f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.1f + x, 0.10f + y, 0.4f);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(2.0f + x, 0.10f + y, 0.4f); // top left 
 
             GL.End();
             GL.Disable(EnableCap.Blend);//
@@ -91,51 +87,21 @@ namespace OpenGL
 
         private void moveImage()
         {
-            if (x < -3.10f)
-            {
-                rightBorder = true;
-                leftBorder = false;
-            }
-
-            if (x > 0.0f)
-            {
-                leftBorder = true;
-                rightBorder = false;
-            }
-
-            if (y > 1.20f)
-            {
-                topBorder = true;
-                bottomBorder = false;
-            }
-
-            if (y < 0.0f && y < -0.48f)
-            {
-                bottomBorder = true;
-                topBorder = false;
-            }
-
-            if (!topBorder)
-            {
-                y += 0.010f;
-            }
-
-            if (!bottomBorder)
-            {
-                y -= 0.010f;
-            }
-
-            if (!rightBorder)
-            {
-                x -= 0.010f;
-            }
-
-            if (!leftBorder)
-            {
-                x += 0.010f;
-            }
-
+            
+            this.tick++;
+            
+            x = (float)(Math.Tan((this.tick / 1.5) * Math.PI / 180));
+            x = x * -1.0f;
+            y = (float)(Math.Sin((this.tick / 1.5) * Math.PI / 180) * 0.6f);
+            y += 0.25f;
+         
         }//moveImage
+
+        private void drawText()
+        {
+            text.Draw("Smurfar", Text2D.FontName.Coolfont, new Vector3(0.8f, 0.2f, 0.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 2.0f);
+            text.Draw("Internet", Text2D.FontName.Coolfont, new Vector3(0.8f, -0.2f, 0.5f ), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 2.0f);
+        }
 
         private void Play()
         {
@@ -147,6 +113,7 @@ namespace OpenGL
         public void Draw(string Date)
         {
             Play();
+            drawText();
             moveImage();
             DrawImage();
         }//Draw

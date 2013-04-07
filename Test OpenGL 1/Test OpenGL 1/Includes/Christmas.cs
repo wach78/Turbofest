@@ -40,7 +40,7 @@ namespace OpenGL
             currentImage = 0;
             snd = sound;
             //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.wav", "smurf");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.ogg", "smurf");
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.ogg", "XMAS");
 
             leftBorder = true;
             rightBorder = false;
@@ -55,8 +55,6 @@ namespace OpenGL
 
             for (int i = 0; i < NUMBEROFFLAKES; i++)
             {
-
-
 
                 sf[i] = new SnowFlake((r.Next(-30, 40)) / 10.0f, (r.Next(-10, 20) * -1) / 10.0f, 0.00001f, r.Next(1, 10) / 1000.0f, snowImage,
                     new Vector2[] {  new Vector2(0.0f + (currentImage * 0.2f), 1.0f),
@@ -79,7 +77,7 @@ namespace OpenGL
                                    new Vector3(0.1f,0.0f,1.1f),
                                    new Vector3(0.0f,0.0f,1.1f)},
                  */
-            snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\xmas.wav", "xmas");
+            
         }
 
         ~Christmas()
@@ -142,10 +140,10 @@ namespace OpenGL
 
             // x y z
             // alla i mitten Y-led  alla till vänster x-led
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(0.8f + x, -0.8f + y, 1.0f); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-0.8f+ x, -0.8f + y, 1.0f ); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-.8f + x, -0.0f + y, 1.0f);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(0.8f + x, -0.0f + y , 1.0f); // top left 
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(0.8f + x, -0.8f + y, 0.45f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-0.8f+ x, -0.8f + y, 0.45f ); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-.8f + x, -0.0f + y, 0.45f);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(0.8f + x, -0.0f + y , 0.45f); // top left 
 
             GL.End();
             GL.Disable(EnableCap.Blend);
@@ -215,8 +213,16 @@ namespace OpenGL
         {
             //player.Stop();
         }
+        public void Play()
+        {
+            if (snd.PlayingName() != "XMAS") // this will start once the last sound is done, ie looping.
+            {
+                snd.Play("XMAS");
+            }
+        }
         public void Draw(string Date)
         {
+            play();
             moveImage();
             drawImage();
             

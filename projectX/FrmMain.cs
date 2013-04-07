@@ -128,30 +128,36 @@ namespace projectX
 
         private void btnDel_Click(object sender, EventArgs e)
         {
-            fileName = lViewParty.SelectedItems[0].Text;
-            fileName += ".xml";
-
-            string path = XmlHandler.fixPath(fileName);
-            
-
-            fileName = Path.GetFullPath(path);
-
-            if (File.Exists(fileName))
+            try
             {
-                SystemSounds.Beep.Play();
-                DialogResult result = MessageBox.Show("Delete this file?", "Important ", MessageBoxButtons.YesNo);
+                fileName = lViewParty.SelectedItems[0].Text;
+                fileName += ".xml";
 
-                if (result == DialogResult.Yes)
+                string path = XmlHandler.fixPath(fileName);
+
+
+                fileName = Path.GetFullPath(path);
+
+                if (File.Exists(fileName))
                 {
-                    File.Delete(fileName);
-                    uppdateFilesToListView();
+                    SystemSounds.Beep.Play();
+                    DialogResult result = MessageBox.Show("Delete this file?", "Important ", MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        File.Delete(fileName);
+                        uppdateFilesToListView();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("File does not exist!");
                 }
             }
-            else
+            catch (Exception)
             {
-                MessageBox.Show("File does not exist!");
-            }
 
+            }
             
         }//btnDel_Click
 

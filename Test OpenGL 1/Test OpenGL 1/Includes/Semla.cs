@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+using System.Drawing;
 
 namespace OpenGL
 {
@@ -18,6 +19,9 @@ namespace OpenGL
         private bool topBorder;
         private bool bottomBorder;
 
+        private SizeF Size;
+        private long tick;
+
         private bool disposed = false;
 
         public Semla()
@@ -30,6 +34,8 @@ namespace OpenGL
             rightBorder = false;
             topBorder = true;
             bottomBorder = false;
+            Size = new SizeF(1.0f, 1.0f);
+            tick = 0;
 
         }
         ~Semla()
@@ -71,10 +77,10 @@ namespace OpenGL
 
             // x y z
             // alla i mitten Y-led  alla till vänster x-led
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.6f + x, -0.85f + y, 1.0f); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.0f + x, -0.85f + y, 1.0f); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.0f + x, 0.10f + y, 1.0f);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.6f + x, 0.10f + y, 1.0f); // top left 
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.6f + x, -0.85f + y, 0.4f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.0f + x, -0.85f + y, 0.4f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.0f + x, 0.10f + y, 0.4f);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.6f + x, 0.10f + y, 0.4f); // top left 
 
             GL.End();
             GL.Disable(EnableCap.Blend);//
@@ -137,7 +143,14 @@ namespace OpenGL
         {
            // moveImage();
 
-           
+            this.tick++;
+           // x = (float)Math.Sin(tick / 22.1f) * 0.6f - Size.Width / 2;
+           // y = (float)Math.Cos(tick / 22.1f) * 0.4f - Size.Height / 2;
+
+            x = (float)(Math.Sin((this.tick * 1.5) * Math.PI / 180));
+            x -= 1.3f;
+            y = (float)(Math.Cos((this.tick * 1.5) * Math.PI / 180) * 0.5f);
+            y += 0.34f;
             DrawImage();
         }//Draw
 

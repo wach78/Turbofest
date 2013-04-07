@@ -17,8 +17,6 @@ namespace OpenGL
         private float ZT;
         private float ZW;
 
-        private long ticks;
-        private long oldTicks;
 
         private float XA;
         private float XT;
@@ -36,8 +34,6 @@ namespace OpenGL
             ZT = 0.0f;
             ZW = 0.0f;
 
-            ticks = 0;
-            oldTicks = 0;
 
             XA = 0.0f;
             XT = 0.0f;
@@ -81,27 +77,6 @@ namespace OpenGL
             }
         }
 
-        public bool  delay()
-        {
-            ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-
-            bool b = false;
-
-            if (this.oldTicks != 0)
-            {
-                if ((this.ticks - this.oldTicks) > 3000)
-                {
-                    b = true; 
-                    oldTicks = ticks;
-                }//inner if
-            }//outer if
-
-            if (oldTicks == 0)
-                oldTicks = ticks;
-
-            return b;
-
-        }
 
         private void drawText()
         {

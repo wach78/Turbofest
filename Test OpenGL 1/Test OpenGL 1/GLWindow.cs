@@ -77,9 +77,10 @@ namespace OpenGL
             
             // Effects
             chess = new Chess();
-            sune = new SuneAnimation(ref snd, ref text);
             sf = new Starfield(300);
             text = new Text2D();
+            sune = new SuneAnimation(ref snd, ref text);
+            
             //particle = new Particle();
             fbk = new Fbk(ref snd);
             dif = new Dif(ref chess);
@@ -87,7 +88,7 @@ namespace OpenGL
             s = new Semla();
             f = new Fbk(ref snd);
             tl = new TurboLogo(ref snd);
-            smurf = new Datasmurf(ref snd);
+            smurf = new Datasmurf(ref snd,ref text);
             hw = new Halloween(ref chess, 25);
             v = new Valentine(ref snd);
             o = new Outro(ref snd);
@@ -299,7 +300,7 @@ namespace OpenGL
                 sune.NewQoute();
             }
             //sf.Draw(nowDate);
-           // sune.Draw(nowDate);
+            sune.Draw(nowDate);
             /*if (nowDate == "2012-03-03")
                 sune.Draw(nowDate);
             else if (nowDate == "2012-03-02")
@@ -314,11 +315,11 @@ namespace OpenGL
            // text.Draw("Hej på dig!", Text2D.FontName.Coolfont, new Vector3(1.0f, 0.0f, 1.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f));
             //text.Draw("andra raden som skall själv delas?", Text2D.FontName.CandyPink, new Vector3(1.0f, -0.4f, 1.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(2.8f, 0.10f));
             //text.Draw("Ännu mer här !åäö? och så har vi något lång rad som inte skall få radbrytnignar om man inte\ngör en själv!", Text2D.FontName.TypeFont, new Vector3(1.6f, -0.6f, 1.5f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(0.0f, 0.0f));
-            //s.Draw(nowDate);
+          //  s.Draw(nowDate);
              //dif.Draw(nowDate);
            //xmas.Draw(nowDate);
           //  f.Draw(nowDate);
-            //smurf.Draw(nowDate);
+           // smurf.Draw(nowDate);
           //  v.Draw(nowDate);
           //  o.Draw(nowDate);
             //i.Draw(nowDate);
@@ -330,8 +331,8 @@ namespace OpenGL
             //fbk.Draw(nowDate);
             //tl.Draw(nowDate);
             //hw.Draw(nowDate);
-            wl.Draw(nowDate);
-            //richard.Draw(nowDate);
+            //wl.Draw(nowDate);
+           // richard.Draw(nowDate);
 
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
             //Console.WriteLine("FPS: " + (1.0/e.Time));
