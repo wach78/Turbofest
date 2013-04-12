@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
 
 namespace OpenGL
 {
@@ -14,7 +15,8 @@ namespace OpenGL
         private float x;
         private float y;
         private float speedY;
-        private float speedX;
+        private float z;
+        private float XLed;
 
         private float Xpos;
 
@@ -24,21 +26,22 @@ namespace OpenGL
         private Vector3[] vecPos;
         private bool disposed = false;
 
-        public Ballons(float x, float y, float speedX, float speedY, int BallonsImage, Vector2[] vecTex)
+        public Ballons(float x, float y, float speedY, int BallonsImage, Vector2[] vecTex, float XLed, float z)
         {
             this.x = x;
             this.y = y;
             this.Xpos = x;
             this.speedY = speedY;
-            this.speedX = speedX;
+            this.z = z;
+            this.XLed = XLed;
             this.BallonsImage = BallonsImage;
             this.vecTex = vecTex;
 
             this.vecPos = new Vector3[] {
-                                         new Vector3(x + 0.0f,y  -0.2f,1.1f),
-                                         new Vector3(x - 0.2f,y  -0.2f,1.1f),
-                                         new Vector3(x - 0.2f,y  + 0.0f,1.1f),
-                                         new Vector3(x + 0.0f,y  +0.0f,1.1f)
+                                         new Vector3(x + 0.0f,y  -0.2f,this.z),
+                                         new Vector3(x - 0.2f,y  -0.2f,this.z),
+                                         new Vector3(x - 0.2f,y  + 0.0f,this.z),
+                                         new Vector3(x + 0.0f,y  +0.0f,this.z)
                                         };
         }
 
@@ -60,11 +63,11 @@ namespace OpenGL
                 if (disposing)
                 {
                     // free managed resources
-                    BallonsImage = 0;
+                    BallonsImage = -1;
                     
                 }
                 // free native resources if there are any.
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                Debug.WriteLine(this.GetType().ToString() + " disposed.");
                 disposed = true;
             }
         }
@@ -100,7 +103,7 @@ namespace OpenGL
                 this.y += speedY;
             }
 
-            x = this.Xpos + (float)((0.001 * Math.Sin(500 * y * (Math.PI / 180)) + 0.005)) * 100.0f;
+            x = this.Xpos + (float)((0.001 * Math.Sin(500 * y * (Math.PI / 180)) + 0.005)) * this.XLed;
 
             vecPos[0].Y = y - 0.2f;
             vecPos[1].Y = y - 0.2f;

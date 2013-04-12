@@ -20,7 +20,16 @@ namespace projectX
             labelVersion.Text = String.Format("Version {0}", "0,1337");
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = "Hej";
+            this.textBoxDescription.Text = "Detta program har Andreas \"KamikazE\" Gustavsson och Christer \"wach\" Wadman gjort ";
+            this.textBoxDescription.Text += "Idérna, de flesta bilderna och ljud  kommer från det gamla turboprogrammet ";
+            this.textBoxDescription.Text += "Som Aio och pejlow gjorde, kanske var det någon mer med? ";
+            this.textBoxDescription.Text += "\n";
+            this.textBoxDescription.Text += "En del saker finns inte med längre med det finns nya roliga saker med istället ";
+            this.textBoxDescription.Text += "\n";
+            this.textBoxDescription.Text += "\n";
+            this.textBoxDescription.Text += "TekNat rules";
+
+
         }
 
         #region Assembly Attribute Accessors

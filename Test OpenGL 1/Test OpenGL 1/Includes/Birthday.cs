@@ -33,15 +33,18 @@ namespace OpenGL
             Random r = new Random();
             b = new Ballons[NUMBEROFBALLONS];
 
+            float z = 0.4f;
+
             for (int i = 0; i < NUMBEROFBALLONS; i++)
             {
-                b[i] = new Ballons((r.Next(-30, 40)) / 10.0f, (r.Next(-10, 20) * -1) / 10.0f, 0.00001f, r.Next(1, 10) / 1000.0f, ballonsImage,
+                b[i] = new Ballons((r.Next(-18, 15)) / 10.0f, (r.Next(-10, 20) * -1) / 10.0f, r.Next(2, 8) / 1000.0f, ballonsImage,
                     new Vector2[] {  new Vector2(0.0f + (currentImage * 0.2f), 1.0f),
                                      new Vector2(0.2f + (currentImage * 0.2f), 1.0f),
                                      new Vector2(0.2f + (currentImage * 0.2f), 0.0f),
-                                     new Vector2(0.0f + (currentImage * 0.2f), 0.0f)});
+                                     new Vector2(0.0f + (currentImage * 0.2f), 0.0f)}, r.Next(5, 10) * 10.0f, z);
 
 
+                z -= 0.0000001f;
                 currentImage++;
 
                 if (currentImage == 4)

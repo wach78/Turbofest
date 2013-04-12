@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
 
 namespace OpenGL
 {
@@ -46,7 +47,7 @@ namespace OpenGL
                     snd = null;
                 }
                 // free native resources if there are any.
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                Debug.WriteLine(this.GetType().ToString() + " disposed.");
                 disposed = true;
             }
         }

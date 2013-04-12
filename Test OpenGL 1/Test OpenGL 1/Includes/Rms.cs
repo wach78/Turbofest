@@ -10,6 +10,7 @@ using OpenTK.Audio.OpenAL;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Diagnostics;
 
 namespace OpenGL
 {
@@ -74,7 +75,7 @@ namespace OpenGL
                 }
                 // free native resources if there are any.
                 disposed = true;
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                Debug.WriteLine(this.GetType().ToString() + " disposed.");
             }
         }
 

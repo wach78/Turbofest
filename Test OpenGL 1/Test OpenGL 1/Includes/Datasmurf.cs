@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
+using System.Diagnostics;
 
 namespace OpenGL
 {
@@ -52,10 +53,10 @@ namespace OpenGL
                 {
                     // free managed resources
                     Util.DeleteTexture(ref image);
-                    image = 0;
+                    text = null;
                 }
                 // free native resources if there are any.
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                Debug.WriteLine(this.GetType().ToString() + " disposed.");
                 disposed = true;
             }
         }
@@ -99,8 +100,8 @@ namespace OpenGL
 
         private void drawText()
         {
-            text.Draw("Smurfar", Text2D.FontName.Coolfont, new Vector3(0.8f, 0.2f, 0.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 2.0f);
-            text.Draw("Internet", Text2D.FontName.Coolfont, new Vector3(0.8f, -0.2f, 0.5f ), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 2.0f);
+            text.Draw("Smurfar", Text2D.FontName.Coolfont, new Vector3(0.8f, 0.0f, 0.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 2.0f);
+            text.Draw("Internet", Text2D.FontName.Coolfont, new Vector3(0.8f, -0.4f, 0.5f ), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 2.0f);
         }
 
         private void Play()

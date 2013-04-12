@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
 
 namespace OpenGL
 {
@@ -34,18 +35,20 @@ namespace OpenGL
             Random r = new Random();
             h = new Hearts[NUMBEROFHEARTS];
 
+            float z = 0.4f;
+
             for (int i = 0; i < NUMBEROFHEARTS; i++)
             {
 
 
 
-                h[i] = new Hearts((r.Next(-30, 40)) / 10.0f, (r.Next(-10, 20) * -1) / 10.0f, 0.00001f, r.Next(1, 10) / 1000.0f, heartsImage,
+                h[i] = new Hearts((r.Next(-18, 15)) / 10.0f, (r.Next(-10, 20) * -1) / 10.0f, r.Next(2, 8) / 1000.0f, heartsImage,
                     new Vector2[] {  new Vector2(0.0f + (currentImage * 0.2f), 1.0f),
                                      new Vector2(0.2f + (currentImage * 0.2f), 1.0f),
                                      new Vector2(0.2f + (currentImage * 0.2f), 0.0f),
-                                     new Vector2(0.0f + (currentImage * 0.2f), 0.0f)});
+                                     new Vector2(0.0f + (currentImage * 0.2f), 0.0f)}, r.Next(5, 10) * 10.0f, z);
 
-
+                z -= 0.000001f;
                 currentImage++;
 
                 if (currentImage == 4)
@@ -85,7 +88,7 @@ namespace OpenGL
                   
                 }
                 // free native resources if there are any.
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                Debug.WriteLine(this.GetType().ToString() + " disposed.");
                 disposed = true;
             }
         }

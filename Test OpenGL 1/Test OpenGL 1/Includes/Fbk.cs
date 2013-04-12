@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
 
 namespace OpenGL
 {
@@ -41,11 +42,10 @@ namespace OpenGL
                 {
                     // free managed resources
                     Util.DeleteTexture(ref image);
-                    image = 0;
                     snd = null;
                 }
                 // free native resources if there are any.
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                Debug.WriteLine(this.GetType().ToString() + " disposed.");
                 disposed = true;
             }
         }
@@ -76,10 +76,7 @@ namespace OpenGL
                 snd.Play("FBK");
             }
         }
-        public void Stop()
-        {
-            //player.Stop();
-        }
+
         public void Draw(string Date)
         {
             Play();

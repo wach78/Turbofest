@@ -11,6 +11,7 @@ using OpenTK.Audio.OpenAL;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Diagnostics;
 
 namespace OpenGL
 {
@@ -114,10 +115,10 @@ namespace OpenGL
                     if (disposing)
                     {
                         // free managed resources
-                        Texture = 0;
+                        Texture = -1;
                     }
                     // free native resources if there are any.
-                    Console.WriteLine(this.GetType().ToString() + " disposed.");
+                    Debug.WriteLine(this.GetType().ToString() + " disposed.");
                     disposed = true;
                 }
             }
@@ -155,14 +156,14 @@ namespace OpenGL
                 GL.Enable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
                 
-                /*GL.Begin(BeginMode.Quads);
+                GL.Begin(BeginMode.Quads);
                 GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(vSpiders[0]);
                 GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(vSpiders[1]);
                 GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(vSpiders[2]);
                 GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(vSpiders[3]); 
-                GL.End();*/
+                GL.End();
 
-                
+                /*
                 //float coefficients[] = {constant,linear,quadratic}; // defailt (1,0,0)
                 GL.PointParameter(PointParameterName.PointDistanceAttenuation, new float[] { 0.0f, 0.00000003f, 0.0f }); // float[] val = new float[]{constant,linear * correction, quadratic * correction, 1};
                 GL.TexEnv(TextureEnvTarget.PointSprite, TextureEnvParameter.CoordReplace, 1.0f); // 
@@ -174,7 +175,7 @@ namespace OpenGL
                 GL.End();
                 GL.PopAttrib();
                 GL.Disable(EnableCap.PointSprite);
-
+                */
                 GL.Disable(EnableCap.Blend);
                 GL.Disable(EnableCap.Texture2D);
                 GL.BindTexture(TextureTarget.Texture2D, 0);
@@ -250,7 +251,7 @@ namespace OpenGL
                 }
                 // free native resources if there are any.
                 disposed = true;
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                Debug.WriteLine(this.GetType().ToString() + " disposed.");
             }
         }
         

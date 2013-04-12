@@ -1,6 +1,34 @@
 ﻿
 19 april vara klart 
 
+chrismas done
+snowflakes done
+datasmurf done
+DIf done
+fbk done
+Helloween done
+semla done
+valentine done
+Hearts done
+Text2D done
+RMS done
+outro done
+ballon done
+sune done
+advent maybe done image?
+luzia done
+chess done
+
+wach birthday add chess, text maybe jumping cake
+wach intro need som changes 
+asg star fix nice move
+self effect
+asg turbo logga random chess
+scrollers  background random chess and star ,in ut tillbaka , studsande , in stana gör nåt, cirkel rörelse,
+wach newyear 
+loading sound ??
+evenhadlar 
+
 asg crash handler
 event handler
 wach	födelsedagar
