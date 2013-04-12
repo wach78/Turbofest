@@ -48,6 +48,9 @@ namespace OpenGL
         WinLinux wl;
         Lucia lucia;
         Advent advent;
+        NewYear nw;
+        Scroller scroll;
+
 
         // Test for sound
         Sound snd;
@@ -89,17 +92,19 @@ namespace OpenGL
             xmas = new Christmas(ref snd);
             s = new Semla();
             f = new Fbk(ref snd);
-            tl = new TurboLogo(ref snd);
+            tl = new TurboLogo(ref snd,ref chess);
             smurf = new Datasmurf(ref snd,ref text);
             hw = new Halloween(ref chess, 25);
             v = new Valentine(ref snd);
             o = new Outro(ref snd);
             i = new Intro(ref snd, ref text);
-            b = new Birthday(ref snd, ref text);
+            b = new Birthday(ref snd, ref text, ref chess);
             richard = new RMS(ref snd, ref text);
             wl = new WinLinux(ref chess);
             lucia = new Lucia(ref chess, ref snd);
             advent = new Advent(ref snd);
+            nw = new NewYear();
+            scroll = new Scroller(ref chess, ref sf, ref text);
 
             //Events
             //_WriteVersion();
@@ -215,6 +220,7 @@ namespace OpenGL
             wl.Dispose(); // 1 textur
             lucia.Dispose(); // 1 textur
             advent.Dispose(); // 1 textur
+            nw.Dispose();
             
             Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             Console.WriteLine(this.GetType().ToString() + " closed.");
@@ -336,8 +342,8 @@ namespace OpenGL
             //i.Draw(nowDate);
             //chess.Draw(nowDate);
            // hw.Draw(nowDate);
-            //tl.Draw(nowDate);
-           // b.Draw(nowDate);
+            tl.Draw(nowDate);
+            //b.Draw(nowDate);
             //snd.Play("Sune");
             //fbk.Draw(nowDate);
          //   tl.Draw(nowDate);
@@ -345,13 +351,15 @@ namespace OpenGL
 
             //wl.Draw(nowDate);
             //richard.Draw(nowDate);
-            lucia.Draw(nowDate);
+            //lucia.Draw(nowDate);
             //advent.Draw(nowDate);
+           // nw.Draw(nowDate);
 
 
            // wl.Draw(nowDate);
            // richard.Draw(nowDate);
             //sf.Draw(nowDate);
+           // scroll.Draw(nowDate);
 
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
             //Console.WriteLine("FPS: " + (1.0/e.Time));

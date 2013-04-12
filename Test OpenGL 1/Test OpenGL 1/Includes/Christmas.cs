@@ -152,10 +152,16 @@ namespace OpenGL
         {
 
             this.tick++;
+            /*
             x = (float)(Math.Sin((this.tick * 1.5) * Math.PI / 180)) * 0.8f;
             x += 0.0f;
             y = (float)(Math.Sin((this.tick * 1.5) * Math.PI / 180) * 0.5f);
             y += 0.34f;
+            */
+            x = (float)(0.004 * Math.Sin((this.tick / 50.0) * 3.1415) * 200);
+             
+            y = (float)(0.004 * Math.Sin((this.tick / 42.1) * 3.1415) * 150);
+            y += 0.37f;
 
         }//moveImage
 

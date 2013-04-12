@@ -14,21 +14,36 @@ namespace OpenGL
         private int ballonsImage;
         private Sound snd;
         private Text2D text;
+        private Chess bakground; 
 
         private int currentImage;
         private Ballons[] b;
         private const int NUMBEROFBALLONS = 20;
         private bool disposed = false;
+        private int chessNumber;
+        private long tick;
+        private float y;
+        private float x;
 
-        public Birthday(ref Sound sound, ref Text2D txt)
+        private bool rightborder;
+        private bool leftborder;
+
+        public Birthday(ref Sound sound, ref Text2D txt, ref Chess chess)
         {
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\tarta.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             ballonsImage = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\ballons.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snd = sound;
             text = txt;
+            bakground = chess;
+            tick = 0;
+            y = 0.0f;
+            x = 0.0f;
            // snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/birthday.wav", "Birthday");
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\datasmurf.ogg", "Birthday");
             currentImage = 0;
+
+            rightborder = false;
+            leftborder = true;
 
             Random r = new Random();
             b = new Ballons[NUMBEROFBALLONS];
@@ -51,6 +66,9 @@ namespace OpenGL
                     currentImage = 0;
 
             }//for
+
+
+            chessNumber = r.Next(0,6);
         }
         ~Birthday()
          {
@@ -89,19 +107,53 @@ namespace OpenGL
         {
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, image);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.Begin(BeginMode.Quads);
 
             // x y z
             // alla i mitten Y-led  alla till vänster x-led
+            /*
             GL.TexCoord2(0.0, 1.0); GL.Vertex3(-0.8f, -1.2f, 0.8f); // bottom left  
             GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.8f, -1.2f, 0.8f); // bottom right 
             GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.8f, -0.2f, 0.8f);// top right
             GL.TexCoord2(0.0, 0.0); GL.Vertex3(-0.8f, -0.2f, 0.8f); // top left 
+            */
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(-0.8f + x, -1.2f + y, 0.8f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.8f + x, -1.2f + y, 0.8f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.8f + x, -0.2f + y, 0.8f);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(-0.8f + x, -0.2f + y, 0.8f); // top left 
 
             GL.End();
 
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
+
+            this.tick++;
+
+            if (x <= -0.1f)
+            {
+                rightborder = false;
+                leftborder = true;
+            }
+              
+
+            if (x >= 2.7f)
+            {
+                rightborder = true;
+                leftborder = false;
+            }
+               
+
+            if (!rightborder)
+                x += 0.02f;
+               
+            if (!leftborder)
+                x -= 0.02f;
+           
+        //   y = (float) Math.Abs( ((0.001 * Math.Sin(500  * (Math.PI / 180)) + 0.005)) * 200);
+            y = (float)Math.Abs(0.001 * Math.Sin((this.tick / 42.1) * 3.1415) * 500);
+            //y = 400 - y;
 
             
             for (int i = 0; i < NUMBEROFBALLONS; i++)
@@ -119,11 +171,19 @@ namespace OpenGL
             }
         }
 
-        public void Draw(string Date)
+        private void drawText()
         {
-            Play();
-            drawImage();
+            text.Draw(text.ToString(), Text2D.FontName.Coolfont, new Vector3(0.8f, 0.2f, 0.9f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 2.0f);
+           
+        }
 
+        public void Draw(string Date)
+        {       
+            Play(); 
+            bakground.Draw(Date, (Chess.ChessColor)chessNumber);
+            drawText();
+            drawImage();
+            
         }//Draw
 
     }//class

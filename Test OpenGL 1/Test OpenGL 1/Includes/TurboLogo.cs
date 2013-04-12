@@ -30,10 +30,12 @@ namespace OpenGL
         private float X;
         private float Y;
         private Sound snd;
+        private Chess bakground;
+        private int chessNumber;
         private int numPlayedSound = 0;
         private string LastPlayedDate = string.Empty;
 
-        public TurboLogo(ref Sound sound, bool VT=true)
+        public TurboLogo(ref Sound sound, ref Chess chess,bool VT = true)
         {
             Random rnd = new Random();
             if (rnd.Next(0, 10) < 6)
@@ -53,8 +55,10 @@ namespace OpenGL
                 moveLeft = true;
             }
 
+            chessNumber = rnd.Next(0, 6);
             rnd = null;
             snd = sound;
+            bakground = chess;
 
             //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.wav", "roadrunner");
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.ogg", "roadrunner");
@@ -215,6 +219,9 @@ namespace OpenGL
 
         public void Draw(string Date)
         {
+
+            bakground.Draw(Date, (Chess.ChessColor)chessNumber);
+
             float[] viewport = Util.GetViewport();
             Matrix4 mvp = Util.GetMVP();
             // process drain....

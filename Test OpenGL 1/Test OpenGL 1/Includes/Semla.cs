@@ -85,11 +85,19 @@ namespace OpenGL
             this.tick++;
            // x = (float)Math.Sin(tick / 22.1f) * 0.6f - Size.Width / 2;
            // y = (float)Math.Cos(tick / 22.1f) * 0.4f - Size.Height / 2;
-
+            /*
             x = (float)(Math.Sin((this.tick * 1.5) * Math.PI / 180));
             x -= 1.3f;
             y = (float)(Math.Cos((this.tick * 1.5) * Math.PI / 180) * 0.5f);
             y += 0.34f;
+            */
+            x = (float)(0.004 * Math.Sin((this.tick / 50.0) * 3.1415) * 250);
+            x -= 1.2f;
+            y = (float)(0.004 * Math.Sin((this.tick / 42.1) * 3.1415) * 125);
+            y += 0.37f;
+
+        
+
             DrawImage();
         }//Draw
 
