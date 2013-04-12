@@ -98,7 +98,7 @@ namespace OpenGL
                     texture = null;
                 }
                 // free native resources if there are any.
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
                 disposed = true;
             }
         }

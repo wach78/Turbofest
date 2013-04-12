@@ -84,6 +84,7 @@
     <Compile Include="Includes\Birthday.cs" />
     <Compile Include="Includes\Christmas.cs" />
     <Compile Include="Includes\Advent.cs" />
+    <Compile Include="Includes\Event.cs" />
     <Compile Include="Includes\Lucia.cs" />
     <Compile Include="Includes\NewYear.cs" />
     <Compile Include="Includes\Scroller.cs" />

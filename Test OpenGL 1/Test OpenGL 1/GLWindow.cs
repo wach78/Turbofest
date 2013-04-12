@@ -22,9 +22,9 @@ namespace OpenGL
         bool blnPointDraw;
         bool blnWireFrameDraw;
 
-        //Matrix4 matLook;
-        /*double xScroll = 0.0;
-        double yScroll = 0.0;*/
+
+        /*
+        string lastDate, nowDate; 
         PartyClock pc;
         Chess chess;
         Starfield sf;
@@ -36,7 +36,6 @@ namespace OpenGL
         Fbk fbk;
         Christmas xmas;
         Semla s;
-        Fbk f;
         TurboLogo tl;
         Datasmurf smurf;
         Halloween hw;
@@ -54,17 +53,18 @@ namespace OpenGL
 
         // Test for sound
         Sound snd;
-
+        */
+        Event.Event events;
         System.Xml.Linq.XDocument m_events; // this needs to be fixed and stuff...
 
         // OpenGL version after 3.0 needs there own matrix libs so we need to create them if we run over 3.0!!! if ser major and minor to 0 we can get around it?!
         public GLWindow(System.Xml.Linq.XDocument Events, string runtime) : base(WIDTH, HEIGHT, new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(32), 24, 8, 0)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
         {
-            if (runtime.Length < 28)
+            /*if (runtime.Length < 28)
             {
                 throw new Exception("Error in runtime, it is to short");
-            }
-            Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
+            }*/
+            System.Diagnostics.Debug.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             Keyboard.KeyDown += OnKeyboardKeyDown;
             Closing += OnClosing;
 
@@ -73,8 +73,11 @@ namespace OpenGL
             m_events = Events;
             DateTime dtStart = DateTime.Parse(runtime.Substring(0, 10));
             DateTime dtEnd = DateTime.Parse(runtime.Substring(10, 10));
-            TimeSpan tsDiff = dtEnd.Subtract(dtStart);
-            
+            //TimeSpan tsDiff = dtEnd.Subtract(dtStart);
+
+            events = new Event.Event(dtStart, dtEnd, int.Parse(runtime.Substring(20)), Events);
+
+            /*
             //Sound
             snd = new Sound(true); // this starts the sound thread
             // Clock
@@ -105,6 +108,8 @@ namespace OpenGL
             advent = new Advent(ref snd);
             nw = new NewYear();
             scroll = new Scroller(ref chess, ref sf, ref text);
+*/
+
 
             //Events
             //_WriteVersion();
@@ -119,11 +124,11 @@ namespace OpenGL
             GL.GetInteger(GetPName.MaxVertexTextureImageUnits, out texVxShader);
             GL.GetInteger(GetPName.MaxTextureImageUnits, out texFragSh);
             GL.GetInteger(GetPName.MaxTextureUnits, out texFixedPipe);
-            Console.WriteLine(GL.GetString(StringName.Version) + ", " + GL.GetString(StringName.ShadingLanguageVersion) + ", " + GL.GetString(StringName.Renderer) + ", " + GL.GetString(StringName.Extensions));
-            Console.WriteLine("Max combinde textures: " + Util.MaxCombindeTextures + ", Currently using genTextures: " + Util.CurrentUsedTextures + ", Max Draw Buffers: " + Util.MaxBuffers);
-            Console.WriteLine("Max texture units in a vertex shader: " + texVxShader);
-            Console.WriteLine("Max texture units in a fragment shader: " + texFragSh);
-            Console.WriteLine("Max texture units in a fixed pipe: " + texFixedPipe);
+            System.Diagnostics.Debug.WriteLine(GL.GetString(StringName.Version) + ", " + GL.GetString(StringName.ShadingLanguageVersion) + ", " + GL.GetString(StringName.Renderer) + ", " + GL.GetString(StringName.Extensions));
+            System.Diagnostics.Debug.WriteLine("Max combinde textures: " + Util.MaxCombindeTextures + ", Currently using genTextures: " + Util.CurrentUsedTextures + ", Max Draw Buffers: " + Util.MaxBuffers);
+            System.Diagnostics.Debug.WriteLine("Max texture units in a vertex shader: " + texVxShader);
+            System.Diagnostics.Debug.WriteLine("Max texture units in a fragment shader: " + texFragSh);
+            System.Diagnostics.Debug.WriteLine("Max texture units in a fixed pipe: " + texFixedPipe);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -174,30 +179,18 @@ namespace OpenGL
         protected void OnClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
-            snd.StopThread();
-
-            
+            //snd.StopThread();
 
             GL.BindTexture(TextureTarget.Texture2D, 0);
-            Console.WriteLine("Closing");
+            System.Diagnostics.Debug.WriteLine("Closing");
         }
-
-        /*protected override void Dispose(bool manual)
-        {
-            base.Dispose(manual);
-            if (manual)
-            {
-                
-                Console.WriteLine("After dispose textures: " + Util.CurrentUsedTextures);
-            }
-            Console.WriteLine("Disposing");
-        }*/
 
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
+            System.Diagnostics.Debug.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             //Not clean... set to null as well if we want that
+            /*
             snd.Dispose();
             pc.Dispose(); // 2 texturer
             sune.Dispose(); // 1-2 texturer
@@ -208,7 +201,6 @@ namespace OpenGL
             dif.Dispose(); // 1 textur
             xmas.Dispose(); // 3 texturer
             s.Dispose(); // 1 textur
-            f.Dispose(); // 1 textur
             tl.Dispose(); // 1 textur
             smurf.Dispose(); // 1 textur
             hw.Dispose(); // 1 textur
@@ -221,9 +213,12 @@ namespace OpenGL
             lucia.Dispose(); // 1 textur
             advent.Dispose(); // 1 textur
             nw.Dispose();
-            
-            Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
-            Console.WriteLine(this.GetType().ToString() + " closed.");
+
+            */
+            if (events != null) events.Dispose();
+            System.Diagnostics.Debug.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
+            System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " closed.");
+
             this.Dispose(true);
         }
 
@@ -271,9 +266,6 @@ namespace OpenGL
         }
 
 
-        /*OpenTK.Vector2[,] texTimeVert = new Vector2[8, 4];
-        OpenTK.Vector2[,] texDateVert = new Vector2[10, 4];*/
-
         // The rendering for the scene happens here.
         protected override void OnRenderFrame(OpenTK.FrameEventArgs e)
         {
@@ -288,7 +280,7 @@ namespace OpenGL
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.StencilBufferBit | ClearBufferMask.DepthBufferBit); // Clear the OpenGL color buffer
             //GL.MatrixMode(MatrixMode.Projection);
 
-
+            /*
             if (!pc.EndOfRuntime())
             {
                 pc.updateClock();
@@ -312,6 +304,7 @@ namespace OpenGL
                 lastDate = nowDate;
                 sune.NewQoute();
             }
+            */
             //sf.Draw(nowDate);
 
             //sune.Draw(nowDate);
@@ -332,44 +325,37 @@ namespace OpenGL
            // text.Draw("Hej på dig!", Text2D.FontName.Coolfont, new Vector3(1.0f, 0.0f, 1.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f));
             //text.Draw("andra raden som skall själv delas?", Text2D.FontName.CandyPink, new Vector3(1.0f, -0.4f, 1.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(2.8f, 0.10f));
             //text.Draw("Ännu mer här !åäö? och så har vi något lång rad som inte skall få radbrytnignar om man inte\ngör en själv!", Text2D.FontName.TypeFont, new Vector3(1.6f, -0.6f, 1.5f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(0.0f, 0.0f));
-          // s.Draw(nowDate);
+
+            //s.Draw(nowDate);
              //dif.Draw(nowDate);
-          // xmas.Draw(nowDate);
-          //  f.Draw(nowDate);
-          //  smurf.Draw(nowDate);
-          //  v.Draw(nowDate);
-          //  o.Draw(nowDate);
+            //xmas.Draw(nowDate);
+            //f.Draw(nowDate);
+            //smurf.Draw(nowDate);
+            //v.Draw(nowDate);
+            //o.Draw(nowDate);
             //i.Draw(nowDate);
             //chess.Draw(nowDate);
-           // hw.Draw(nowDate);
-            tl.Draw(nowDate);
+            //hw.Draw(nowDate);
+            //tl.Draw(nowDate);
+
             //b.Draw(nowDate);
             //snd.Play("Sune");
             //fbk.Draw(nowDate);
-         //   tl.Draw(nowDate);
+            //tl.Draw(nowDate);
             //hw.Draw(nowDate);
 
             //wl.Draw(nowDate);
             //richard.Draw(nowDate);
             //lucia.Draw(nowDate);
-            //advent.Draw(nowDate);
-           // nw.Draw(nowDate);
+            //advent.Draw(nowDate, Advent.WhatAdvent.Fourth);
 
-
-           // wl.Draw(nowDate);
-           // richard.Draw(nowDate);
-            //sf.Draw(nowDate);
-           // scroll.Draw(nowDate);
+            events.Draw();
 
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
-            //Console.WriteLine("FPS: " + (1.0/e.Time));
-            //Console.WriteLine(RenderFrequency);
+            //System.Diagnostics.Debug.WriteLine("FPS: " + (1.0/e.Time));
+            //System.Diagnostics.Debug.WriteLine(RenderFrequency);
         }
 
-        string lastDate, nowDate;
-
-    
-        
         private void OnKeyboardKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs key)
         {
             //OpenTK.Input.MouseDevice asd = new OpenTK.Input.MouseDevice();
@@ -391,7 +377,7 @@ namespace OpenGL
                     WindowState = OpenTK.WindowState.Normal;
                     WindowBorder = OpenTK.WindowBorder.Resizable;
                     //GL.Viewport(this.ClientRectangle);
-                    Console.WriteLine("Going to window");
+                    System.Diagnostics.Debug.WriteLine("Going to window");
                     
                 }
                 else
@@ -402,10 +388,11 @@ namespace OpenGL
                     WindowState = OpenTK.WindowState.Fullscreen;
                     WindowBorder = OpenTK.WindowBorder.Hidden;
                     //GL.Viewport(this.ClientRectangle);
-                    Console.WriteLine("Going to fullscreen");
+                    System.Diagnostics.Debug.WriteLine("Going to fullscreen");
                 }
                 Util.Fullscreen = !Util.Fullscreen;
             }
+#if DEBUG
             else if (key.Key == OpenTK.Input.Key.P)
             {
                 this.blnPointDraw = !this.blnPointDraw; // not active
@@ -434,6 +421,11 @@ namespace OpenGL
             {
                 Util.Lightning = !Util.Lightning;
             }
+            else if (key.Key == OpenTK.Input.Key.C)
+            {
+                Util.ShowClock = !Util.ShowClock;
+            }
+#endif
             else if (key.Key == OpenTK.Input.Key.F12)
             {
                 if (OpenTK.Graphics.GraphicsContext.CurrentContext == null)

@@ -69,6 +69,7 @@ namespace OpenGL
                 }
                 // free native resources if there are any.
                 Debug.WriteLine(this.GetType().ToString() + " disposed.");
+
                 disposed = true;
             }
         }

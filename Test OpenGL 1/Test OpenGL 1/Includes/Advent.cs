@@ -19,6 +19,8 @@ namespace OpenGL
     /// </summary>
     class Advent : IEffect
     {
+        public enum WhatAdvent { First = 1, Second, Third, Fourth };
+
         private bool disposed = false;
         Sound snd;
         private int texture;
@@ -40,8 +42,8 @@ namespace OpenGL
             Size = new SizeF(0.4f, 0.8f);
             Speed = 0.0025f;
 
-            X = Util.Rnd.Next(-3, 3) / 10.0f;
-            Y = Util.Rnd.Next(-3, 3) / 10.0f;
+            X = 0.0f - Size.Width / 2.0f;
+            Y = -0.5f - Size.Height / 2.0f;
             Z = 0.45f;
             Ghost[0] = new Vector3(X, Y, Z); // red
             Ghost[1] = new Vector3(X, Y + Size.Height, Z); // blue
@@ -73,7 +75,7 @@ namespace OpenGL
                 }
                 // free native resources if there are any.
                 disposed = true;
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
             }
         }
 
@@ -108,6 +110,11 @@ namespace OpenGL
 
         public void Draw(string Date)
         {
+            Draw(Date, WhatAdvent.First);
+        }
+
+        public void Draw(string Date, WhatAdvent adventnumber)
+        {
             // Spiders that draws after eachother and end ontop durring run will be hidden...
 
             GL.Enable(EnableCap.Texture2D);
@@ -116,16 +123,68 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, texture);
 
             GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(Ghost[0]); // bottom right 
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(Ghost[1]); // Top right
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(Ghost[2]);// top left
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(Ghost[3]); // bottom left
-            /*
-            GL.Color3(Color.Red); GL.Vertex3(Ghost[0]); // bottom left 
-            GL.Color3(Color.Yellow); GL.Vertex3(Ghost[1]); // bottom right
-            GL.Color3(Color.Green); GL.Vertex3(Ghost[2]);// top right
-            GL.Color3(Color.Blue); GL.Vertex3(Ghost[3]); // top left 
-            */
+            // Fix this to be dynamic, I don't have the feeling for it currently...
+            if (adventnumber == WhatAdvent.First)
+            {
+                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(X, Y, Z); // bottom right 
+                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(X, Y + Size.Height, Z); // Top right
+                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(X + Size.Width, Y + Size.Height, Z);// top left
+                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(X + Size.Width, Y, Z); // bottom left
+            }
+            else if (adventnumber == WhatAdvent.Second)
+            {
+
+                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(X - Size.Width, Y, Z); // bottom right 
+                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(X - Size.Width, Y + Size.Height, Z); // Top right
+                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(X , Y + Size.Height, Z);// top left
+                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(X , Y, Z); // bottom left
+
+                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(X + Size.Width, Y, Z); // bottom right 
+                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(X + Size.Width, Y + Size.Height, Z); // Top right
+                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(X + Size.Width*2, Y + Size.Height, Z);// top left
+                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(X + Size.Width*2, Y, Z); // bottom left
+            }
+            else if (adventnumber == WhatAdvent.Third)
+            {
+                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(X, Y, Z); // bottom right 
+                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(X, Y + Size.Height, Z); // Top right
+                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(X + Size.Width, Y + Size.Height, Z);// top left
+                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(X + Size.Width, Y, Z); // bottom left
+
+                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(X - Size.Width*2, Y, Z); // bottom right 
+                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(X - Size.Width*2, Y + Size.Height, Z); // Top right
+                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(X - Size.Width, Y + Size.Height, Z);// top left
+                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(X - Size.Width, Y, Z); // bottom left
+
+                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(X + Size.Width*2, Y, Z); // bottom right 
+                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(X + Size.Width*2, Y + Size.Height, Z); // Top right
+                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(X + Size.Width * 3, Y + Size.Height, Z);// top left
+                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(X + Size.Width * 3, Y, Z); // bottom left
+            }
+            else 
+            {
+
+                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(X - Size.Width*3, Y, Z); // bottom right 
+                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(X - Size.Width*3, Y + Size.Height, Z); // Top right
+                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(X - Size.Width*2, Y + Size.Height, Z);// top left
+                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(X - Size.Width*2, Y, Z); // bottom left
+
+                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(X - Size.Width, Y, Z); // bottom right 
+                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(X - Size.Width, Y + Size.Height, Z); // Top right
+                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(X, Y + Size.Height, Z);// top left
+                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(X, Y, Z); // bottom left
+
+                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(X + Size.Width, Y, Z); // bottom right 
+                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(X + Size.Width, Y + Size.Height, Z); // Top right
+                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(X + Size.Width * 2, Y + Size.Height, Z);// top left
+                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(X + Size.Width * 2, Y, Z); // bottom left
+
+                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(X + Size.Width*3, Y, Z); // bottom right 
+                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(X + Size.Width*3, Y + Size.Height, Z); // Top right
+                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(X + Size.Width * 4, Y + Size.Height, Z);// top left
+                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(X + Size.Width * 4, Y, Z); // bottom left
+            }
+
             GL.End();
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);

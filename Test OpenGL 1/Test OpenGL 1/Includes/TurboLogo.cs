@@ -164,7 +164,7 @@ namespace OpenGL
                 }
                 // free native resources if there are any.
                 disposed = true;
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace OpenGL
             screenY = ((pointVBottomRight.Y / pointVBottomRight.Z) + 1) * viewport[3] / 2;
             Vector2 pointV2DBottomRight = new Vector2(screenX, screenY);
 
-            //Console.WriteLine(pointV2DTopLeft.X + ", " + pointV2DTopLeft.Y);
+            //System.Diagnostics.Debug.WriteLine(pointV2DTopLeft.X + ", " + pointV2DTopLeft.Y);
             
 
             PlaySound(Date);
@@ -308,7 +308,7 @@ namespace OpenGL
             
             //FrameUpdate(Date);
 
-            //Console.WriteLine(X + ", " + Y + ", " + moveUp + ", " + moveRight);
+            //System.Diagnostics.Debug.WriteLine(X + ", " + Y + ", " + moveUp + ", " + moveRight);
             GL.TexCoord2((moveLeft ? 0.5f : 0.0f), (VTColour ? 0.5f : 0.0f)); GL.Vertex3(1.00f + X, 0.20f + Y, 1.00f); // top left
             GL.TexCoord2((moveLeft ? 0.5f : 0.0f), (VTColour ? 1.0f : 0.5f)); GL.Vertex3(1.00f + X, -0.40f + Y, 1.00f); // bottom left
             GL.TexCoord2((moveLeft ? 1.0f : 0.5f), (VTColour ? 1.0f : 0.5f)); GL.Vertex3(-0.30f + X, -0.40f + Y, 1.00f); // bottom right

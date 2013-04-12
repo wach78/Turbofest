@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <turbo>
   <data>
-    <startDate>2012-03-01</startDate>
-    <endDate>2012-12-21</endDate>
-    <runTime>14400000</runTime>
+    <startDate>2012-10-22</startDate>
+    <endDate>2013-01-02</endDate>
+    <runTime>1440000</runTime>
   </data>
   <feasts>
     <feast>
@@ -68,7 +68,7 @@
     </feast>
     <feast>
       <name>Semla</name>
-      <date>2012-02-21</date>
+      <date>2013-02-21</date>
       <type>Effect</type>
     </feast>
   </feasts>

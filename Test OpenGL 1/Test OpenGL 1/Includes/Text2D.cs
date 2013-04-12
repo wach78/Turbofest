@@ -90,7 +90,7 @@ namespace OpenGL
                         Util.DeleteTexture(ref texture[7]);
                         Util.DeleteTexture(ref texture[8]);
                     }
-                    Console.WriteLine(this.GetType().ToString() + " disposed.");
+                    System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
                 }
 
                 // Indicate that the instance has been disposed.
@@ -186,7 +186,7 @@ namespace OpenGL
             float width;
             if (/*StartPosition != Vector3.Zero &&*/ WidthHeight != Vector2.Zero)
             {
-                Console.WriteLine("We can get size of text area");
+                System.Diagnostics.Debug.WriteLine("We can get size of text area");
                 // Nasty stuff :D
                 for (int y = 0; y < RealRow.Count; y++)
                 {
@@ -216,7 +216,7 @@ namespace OpenGL
             }
             else
             {
-                Console.WriteLine("We can print text all over the place :)");
+                System.Diagnostics.Debug.WriteLine("We can print text all over the place :)");
                 
             }
             

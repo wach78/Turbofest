@@ -76,7 +76,7 @@ namespace OpenGL
                 mvp.Invert();
                 Vector3 tmp = new Vector3(X, Y, Z);
                 Vector3.TransformVector(ref tmp, ref mvp, out tmp); // not sure this is the right one...
-                Console.WriteLine(rndX + ", " + rndY + ". " +tmp.X + ", " + tmp.Y);
+                System.Diagnostics.Debug.WriteLine(rndX + ", " + rndY + ". " +tmp.X + ", " + tmp.Y);
                 */
                 X += Util.Rnd.Next(-10,13) / 10.0f ;
                 Y += Util.Rnd.Next(-5, 7) / 10.0f;
@@ -89,7 +89,7 @@ namespace OpenGL
                 Y = tmp.Y;
                 //Vector3.TransformVector(ref tmp, ref modelviewM, out tmp);
                 //Vector3.TransformVector(ref tmp, ref projectionM, out tmp);
-                //Console.WriteLine(rndX + ", " + rndY + ". " + tmp.X + ", " + tmp.Y);
+                //System.Diagnostics.Debug.WriteLine(rndX + ", " + rndY + ". " + tmp.X + ", " + tmp.Y);
 
                 vSpiders[0] = new Vector3(X + Size.Width, Y, Z); // bottom left
                 vSpiders[1] = new Vector3(X, Y, Z); // bottom right
@@ -119,6 +119,7 @@ namespace OpenGL
                     }
                     // free native resources if there are any.
                     Debug.WriteLine(this.GetType().ToString() + " disposed.");
+
                     disposed = true;
                 }
             }
@@ -252,6 +253,7 @@ namespace OpenGL
                 // free native resources if there are any.
                 disposed = true;
                 Debug.WriteLine(this.GetType().ToString() + " disposed.");
+
             }
         }
         

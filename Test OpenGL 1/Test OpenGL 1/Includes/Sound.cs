@@ -67,13 +67,13 @@ namespace OpenGL
         #region Dispose
         ~Sound()
         {
-            Console.WriteLine("Sound Destructor / Finalizer");
+            System.Diagnostics.Debug.WriteLine("Sound Destructor / Finalizer");
             Dispose(false);
         }
 
         public void Dispose()
         {
-            Console.WriteLine("Sound Dispose");
+            System.Diagnostics.Debug.WriteLine("Sound Dispose");
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -81,7 +81,7 @@ namespace OpenGL
 
         protected virtual void Dispose(bool disposing)
         {
-            //Console.WriteLine("Dispose called with "+ (disposed?"Disposing":"Not Disposing"));
+            //System.Diagnostics.Debug.WriteLine("Dispose called with "+ (disposed?"Disposing":"Not Disposing"));
             if (!this.disposed)
             {
                 if (disposing)
@@ -106,7 +106,7 @@ namespace OpenGL
                 }
                 // free native resources if there are any.
                 disposed = true;
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
             }
         }
         #endregion
@@ -115,7 +115,7 @@ namespace OpenGL
         {
             int sourceState;
             context.MakeCurrent();
-            Console.WriteLine("Sound thread started.");
+            System.Diagnostics.Debug.WriteLine("Sound thread started.");
             while (RunSoundThread)
             {
                 //Check if there is a sound to play
@@ -158,7 +158,7 @@ namespace OpenGL
                 isPlaying = false;
                 Thread.Sleep(10); // just to let other threads run...
             }
-            Console.WriteLine("Sound thread stopped.");
+            System.Diagnostics.Debug.WriteLine("Sound thread stopped.");
         }
 
         public void RunThread()
@@ -353,13 +353,13 @@ namespace OpenGL
             int ab = AL.GenBuffer();
 
 //#define ogg // or activate this, but this is just for this place/file... :D
-#if noogg
+#if !noogg
 #warning "Returning 0 on Ogg file, you need to define \"ogg\" in build constants, in project build property."
             return ab; // quicker upstart
 #endif
 
             VorbisFile asd = new VorbisFile(filename);
-            Console.WriteLine(filename);
+            System.Diagnostics.Debug.WriteLine(filename);
             Info info = asd.getInfo(-1);
             //long samples = asd.pcm_total(-1);
             //int streams = asd.streams();
@@ -383,7 +383,7 @@ namespace OpenGL
             // borrow from csogg and csvorbis...
             /*using (var input = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
-                Console.WriteLine(filename);
+                System.Diagnostics.Debug.WriteLine(filename);
                 bool skipWavHeader = true;
                 int HEADER_SIZE = 36;
 
@@ -429,7 +429,7 @@ namespace OpenGL
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
+                        System.Diagnostics.Debug.WriteLine(e);
                     }
                     oy.wrote(bytes);
 
@@ -440,7 +440,7 @@ namespace OpenGL
                         if (bytes < 4096) break;
 
                         // error case.  Must not be Vorbis data
-                        Console.WriteLine("Input does not appear to be an Ogg bitstream.");
+                        System.Diagnostics.Debug.WriteLine("Input does not appear to be an Ogg bitstream.");
                     }
 
                     // Get the serial number and set up the rest of decode.
@@ -460,19 +460,19 @@ namespace OpenGL
                     if (os.pagein(og) < 0)
                     {
                         // error; stream version mismatch perhaps
-                        Console.WriteLine("Error reading first page of Ogg bitstream data.");
+                        System.Diagnostics.Debug.WriteLine("Error reading first page of Ogg bitstream data.");
                     }
 
                     if (os.packetout(op) != 1)
                     {
                         // no page? must not be vorbis
-                        Console.WriteLine("Error reading initial header packet.");
+                        System.Diagnostics.Debug.WriteLine("Error reading initial header packet.");
                     }
 
                     if (vi.synthesis_headerin(vc, op) < 0)
                     {
                         // error case; not a vorbis header
-                        Console.WriteLine("This Ogg bitstream does not contain Vorbis audio data.");
+                        System.Diagnostics.Debug.WriteLine("This Ogg bitstream does not contain Vorbis audio data.");
                     }
 
                     // At this point, we're sure we're Vorbis.  We've set up the logical
@@ -510,7 +510,7 @@ namespace OpenGL
                                     {
                                         // Uh oh; data at some point was corrupted or missing!
                                         // We can't tolerate that in a header.  Die.
-                                        Console.WriteLine("Corrupt secondary header.  Exiting.");
+                                        System.Diagnostics.Debug.WriteLine("Corrupt secondary header.  Exiting.");
                                     }
                                     vi.synthesis_headerin(vc, op);
                                     i++;
@@ -526,11 +526,11 @@ namespace OpenGL
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine(e);
+                            System.Diagnostics.Debug.WriteLine(e);
                         }
                         if (bytes == 0 && i < 2)
                         {
-                            Console.WriteLine("End of file before finding all Vorbis headers!");
+                            System.Diagnostics.Debug.WriteLine("End of file before finding all Vorbis headers!");
                         }
                         oy.wrote(bytes);
                     }
@@ -541,10 +541,10 @@ namespace OpenGL
                         for (int j = 0; j < vc.user_comments.Length; j++)
                         {
                             if (ptr[j] == null) break;
-                            Console.WriteLine(vc.getComment(j));
+                            System.Diagnostics.Debug.WriteLine(vc.getComment(j));
                         }
-                        Console.WriteLine("\nBitstream is " + vi.channels + " channel, " + vi.rate + "Hz");
-                        Console.WriteLine("Encoded by: " + vc.getVendor() + "\n");
+                        System.Diagnostics.Debug.WriteLine("\nBitstream is " + vi.channels + " channel, " + vi.rate + "Hz");
+                        System.Diagnostics.Debug.WriteLine("Encoded by: " + vc.getVendor() + "\n");
                     } // comment this on release...
                     
                     convsize = 4096 / vi.channels;
@@ -571,7 +571,7 @@ namespace OpenGL
                             if (result == 0) break; // need more data
                             if (result == -1)
                             { // missing or corrupt data at this page position
-                                Console.WriteLine("Corrupt or missing data in bitstream; continuing...");
+                                System.Diagnostics.Debug.WriteLine("Corrupt or missing data in bitstream; continuing...");
                             }
                             else
                             {
@@ -662,7 +662,7 @@ namespace OpenGL
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine(e);
+                                System.Diagnostics.Debug.WriteLine(e);
                             }
                             oy.wrote(bytes);
                             if (bytes == 0) eos = 1;
@@ -684,7 +684,7 @@ namespace OpenGL
 
                 // OK, clean up the framer
                 oy.clear();
-                Console.WriteLine("Done.");
+                System.Diagnostics.Debug.WriteLine("Done.");
 
                 output.Seek(0, SeekOrigin.Begin);
                 if (!skipWavHeader)

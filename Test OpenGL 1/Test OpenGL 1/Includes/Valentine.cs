@@ -78,6 +78,7 @@ namespace OpenGL
                     // free managed resources
                     Util.DeleteTexture(ref image);
                     Util.DeleteTexture(ref image2);
+                    Util.DeleteTexture(ref heartsImage);
                     snd = null;
 
                     for (int i = 0; i < NUMBEROFHEARTS; i++)
@@ -89,6 +90,7 @@ namespace OpenGL
                 }
                 // free native resources if there are any.
                 Debug.WriteLine(this.GetType().ToString() + " disposed.");
+
                 disposed = true;
             }
         }

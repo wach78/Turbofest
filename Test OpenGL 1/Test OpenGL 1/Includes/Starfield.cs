@@ -57,7 +57,7 @@ namespace OpenGL
                 }
                 // free native resources if there are any.
                 disposed = true;
-                //Console.WriteLine(this.GetType().ToString() + " disposed.");
+                //System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
             }
         }
         #endregion
@@ -148,7 +148,7 @@ namespace OpenGL
             float Y = pointV.Y;
             X = ((pointV.X) + 1) * viewport[2] / 2;
             Y = ((pointV.Y) + 1) * viewport[3] / 2;
-            //Console.WriteLine(x + ", " + y + ". " + X + ", " + Y);
+            //System.Diagnostics.Debug.WriteLine(x + ", " + y + ". " + X + ", " + Y);
             Vector2 pointV2D = new Vector2(X, Y);
 
             if (pointV2D.X >= viewport[2])
@@ -172,7 +172,7 @@ namespace OpenGL
                 z = startz;
             }
             */
-            //Console.WriteLine(pointV2D.X + ", " + pointV2D.Y);
+            //System.Diagnostics.Debug.WriteLine(pointV2D.X + ", " + pointV2D.Y);
         }
     
     } //end Start

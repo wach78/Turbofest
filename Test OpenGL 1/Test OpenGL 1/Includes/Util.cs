@@ -19,6 +19,7 @@ namespace OpenGL
         public static bool Lightning;
         public static bool Fog;
         public static bool Fullscreen;
+        public static bool ShowClock;
 
         private static bool MVP_changed;
         private static bool Viewport_changed;
@@ -42,6 +43,7 @@ namespace OpenGL
             Lightning = false;
             Fog = true;
             Fullscreen = false;
+            ShowClock = false;
             MVP_changed = true;
             Viewport_changed = true;
             viewport = new float[4];

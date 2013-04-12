@@ -43,7 +43,7 @@ namespace OpenGL
             if (textTexture > 0)
                 Util.DeleteTexture(ref textTexture);
             System.GC.SuppressFinalize(this);
-            Console.WriteLine(this.GetType().ToString() + " disposed.");
+            System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
         }
     
         public static void readFromXml()

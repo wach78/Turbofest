@@ -105,7 +105,7 @@ namespace OpenGL
                 // Indicate that the instance has been disposed.
                 m_tex = null;
                 _disposed = true;
-                Console.WriteLine(this.GetType().ToString() + " disposed.");
+                System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
             }
         }
 
@@ -116,7 +116,7 @@ namespace OpenGL
 
             if (this.old_ticks != 0)
             {
-                //Console.WriteLine(this.clock + " , " + this.increments + " , " + this.ticks + " , " + this.old_ticks + " , " + (this.increments * (this.ticks - this.old_ticks)) / TimeSpan.TicksPerSecond);
+                //System.Diagnostics.Debug.WriteLine(this.clock + " , " + this.increments + " , " + this.ticks + " , " + this.old_ticks + " , " + (this.increments * (this.ticks - this.old_ticks)) / TimeSpan.TicksPerSecond);
 
                 this.clock += (this.increments * (this.ticks - this.old_ticks)) / 10 /*/ TimeSpan.TicksPerSecond*/; // seconds use the tickspersecond to go faster more correct but to fast...
                 if ((this.ticks - this.old_ticks) > 1)
@@ -228,13 +228,13 @@ namespace OpenGL
             string tmp = this.CurrentClock().ToLongTimeString();
             for (int i = 0; i < tmp.Length; i++)
             {
-                //Console.WriteLine(tmp);
+                //System.Diagnostics.Debug.WriteLine(tmp);
                 retVal = this.CharPosition(false, tmp[i]);
                 texTimeVert[i, 0] = retVal[0];
                 texTimeVert[i, 1] = retVal[1];
                 texTimeVert[i, 2] = retVal[2];
                 texTimeVert[i, 3] = retVal[3];
-                //Console.WriteLine(texTimeVert[i,0] + ", " + texTimeVert[i,1] + ", " + texTimeVert[i,2] + ", " + texTimeVert[i,3]);
+                //System.Diagnostics.Debug.WriteLine(texTimeVert[i,0] + ", " + texTimeVert[i,1] + ", " + texTimeVert[i,2] + ", " + texTimeVert[i,3]);
             }
 
             GL.Enable(EnableCap.Texture2D);
@@ -271,13 +271,13 @@ namespace OpenGL
             string tmp = this.CurrentClock().ToShortDateString();
             for (int i = 0; i < tmp.Length; i++)
             {
-                //Console.WriteLine(tmp);
+                //System.Diagnostics.Debug.WriteLine(tmp);
                 retVal = this.CharPosition(true, tmp[i]);
                 texDateVert[i, 0] = retVal[0];
                 texDateVert[i, 1] = retVal[1];
                 texDateVert[i, 2] = retVal[2];
                 texDateVert[i, 3] = retVal[3];
-                //Console.WriteLine(texTimeVert[i,0] + ", " + texTimeVert[i,1] + ", " + texTimeVert[i,2] + ", " + texTimeVert[i,3]);
+                //System.Diagnostics.Debug.WriteLine(texTimeVert[i,0] + ", " + texTimeVert[i,1] + ", " + texTimeVert[i,2] + ", " + texTimeVert[i,3]);
             }
 
 
@@ -311,6 +311,14 @@ namespace OpenGL
             GL.Disable(EnableCap.Texture2D);
             /*GL.Disable(EnableCap.Light0);
             GL.Disable(EnableCap.Lighting);*/
+        }
+
+        public void Draw()
+        {
+            // Time
+            DrawTime();
+            // Date
+            DrawDate();
         }
 
         // normalize a vector

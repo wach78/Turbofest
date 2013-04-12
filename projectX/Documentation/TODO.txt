@@ -45,7 +45,7 @@ wach	fbk
 asg		turbologga D
 asg		scrollers
 wach	se över scroll text
-asg		advent 
+asg		advent D
 asg		lucia D
 asg		shack D
 wach	smurf

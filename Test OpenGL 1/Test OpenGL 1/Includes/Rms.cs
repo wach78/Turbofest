@@ -76,6 +76,7 @@ namespace OpenGL
                 // free native resources if there are any.
                 disposed = true;
                 Debug.WriteLine(this.GetType().ToString() + " disposed.");
+
             }
         }
 
@@ -142,7 +143,7 @@ namespace OpenGL
 
             txt.Draw(SongText[CurrentRow == -1 ? 8 : CurrentRow], Text2D.FontName.TypeFont, new OpenTK.Vector3(0.9f, 0.10f, 1.0f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(2.9f, 2.0f), 1.8f);
 
-            //Console.WriteLine(SongText[CurrentRow]);
+            //System.Diagnostics.Debug.WriteLine(SongText[CurrentRow]);
         }
 
     }
