@@ -168,10 +168,11 @@ namespace OpenGL.Event
             richard = new RMS(ref sound, ref text); // random
             scroller = new Scroller(ref chess, ref sf, ref text); // random
             semla = new Semla();
+            sune = new SuneAnimation(ref sound, ref text);
             tl = new TurboLogo(ref sound, ref chess); // vilken termin är det? random
             valentine = new Valentine(ref sound);
             wl = new WinLinux(ref chess); //random
-            randomEvent = new List<string>(new string[] { "", "", "smurf", "dif", "fbk", "rms", "scrollers", "scrollers", "scrollers", "scrollers", "scrollers", "turbologo", "winlinux" });
+            randomEvent = new List<string>(new string[] { "", "", "smurf", "sune", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "scrollers", "scrollers", "scrollers", "turbologo", "winlinux" });
 
             string name, date, type;
             // Event dates setup
@@ -238,6 +239,7 @@ namespace OpenGL.Event
                     if (semla != null) semla.Dispose(); // 1 textur
                     if (tl != null) tl.Dispose(); // 1 textur
                     if (smurf != null) smurf.Dispose(); // 1 textur
+                    if (sune != null) sune.Dispose(); // 1 textur
                     if (hw != null) hw.Dispose(); // 1 textur
                     if (valentine != null) valentine.Dispose(); // 2 texturer
                     if (outro != null) outro.Dispose(); // 1 textur
@@ -279,7 +281,8 @@ namespace OpenGL.Event
                     sound.StopSound();
                 }
                 lastDate = nowDate;
-                //sune.NewQoute();
+                sune.NewQoute(); // flytta in detta i sune...
+                scroller.getRandomScrollerStuff(); // flytta in detta i scroller
             }
 
             if (Util.ShowClock)
@@ -344,6 +347,9 @@ namespace OpenGL.Event
                                 break;
                             case "scrollers":
                                 scroller.Draw(nowDate);
+                                break;
+                            case "sune":
+                                sune.Draw(nowDate);
                                 break;
                             case "turbologo":
                                 tl.Draw(nowDate);
