@@ -26,6 +26,9 @@ namespace OpenGL
         private float y;
         private float x;
 
+        private bool leftborder;
+        private bool rightborder;
+
         public Birthday(ref Sound sound, ref Text2D txt, ref Chess chess)
         {
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\tarta.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
@@ -33,9 +36,12 @@ namespace OpenGL
             snd = sound;
             text = txt;
             this.chess = chess;
+            x = 0.0f;
+            leftborder = false;
+            rightborder = true;
 
            // snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/birthday.wav", "Birthday");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\datasmurf.ogg", "Birthday");
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\birthday.ogg", "Birthday");
             currentImage = 0;
 
             Random r = new Random();
@@ -128,6 +134,23 @@ namespace OpenGL
             GL.Disable(EnableCap.Texture2D);
 
             this.tick++;
+
+            if (x > 2.7)
+            {
+                leftborder = false;
+                rightborder = true;
+            }
+
+            if (x < -0.1)
+            {
+                leftborder = true;
+                rightborder = false;
+            }
+
+            if (!leftborder) 
+                 x -= 0.02f;
+            else if (!rightborder)
+                x += 0.02f;
 
         //   y = (float) Math.Abs( ((0.001 * Math.Sin(500  * (Math.PI / 180)) + 0.005)) * 200);
             y = (float)Math.Abs(0.001 * Math.Sin((this.tick / 42.1) * 3.1415) * 500);
