@@ -144,17 +144,26 @@ namespace OpenGL
             }
         }
 
-        private void drawText()
+        private void drawText(string name)
         {
-            Play();
-            drawImage();
+            text.Draw(name, Text2D.FontName.Coolfont, new Vector3(1.0f, 0.2f, 1.0f), new Vector2(0.2f, 0.2f), new Vector2());
         }
 
+
         public void Draw(string Date)
+        {
+            Play();
+            chess.Draw(Date, (Chess.ChessColor)chessNumber);
+            drawText("Grattis!");
+            drawImage();
+
+        }//Draw
+
+        public void Draw(string Date, string names)
         {       
             Play(); 
             chess.Draw(Date, (Chess.ChessColor)chessNumber);
-            drawText();
+            drawText("Grattis!\n\n" + names);
             drawImage();
             
         }//Draw

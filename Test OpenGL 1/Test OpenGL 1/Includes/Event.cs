@@ -116,7 +116,6 @@ namespace OpenGL.Event
         OpenGL.Chess chess;
         OpenGL.Starfield sf;
 
-
         //Effects
         SuneAnimation sune;
         Dif dif;
@@ -134,9 +133,12 @@ namespace OpenGL.Event
         WinLinux wl;
         Lucia lucia;
         Advent advent;
+        NewYear newyear;
+        Scroller scroller;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
+        System.Collections.Generic.List<string> randomEvent;
         string lastDate;
         string nowDate;
 
@@ -156,8 +158,20 @@ namespace OpenGL.Event
 
             advent = new Advent(ref sound);
             birthday = new Birthday(ref sound, ref text, ref chess);
-            richard = new RMS(ref sound, ref text);
+            xmas = new Christmas(ref sound);
+            smurf = new Datasmurf(ref sound, ref text); // random
+            dif = new Dif(ref chess); // random
+            fbk = new Fbk(ref sound); // random
             hw = new Halloween(ref chess, 25);
+            lucia = new Lucia(ref chess, ref sound);
+            newyear = new NewYear();
+            richard = new RMS(ref sound, ref text); // random
+            scroller = new Scroller(ref chess, ref sf, ref text); // random
+            semla = new Semla();
+            tl = new TurboLogo(ref sound, ref chess); // vilken termin är det? random
+            valentine = new Valentine(ref sound);
+            wl = new WinLinux(ref chess); //random
+            randomEvent = new List<string>(new string[] { "", "", "smurf", "dif", "fbk", "rms", "scrollers", "scrollers", "scrollers", "scrollers", "scrollers", "turbologo", "winlinux" });
 
             string name, date, type;
             // Event dates setup
@@ -170,16 +184,28 @@ namespace OpenGL.Event
                 if (!events.ContainsKey(date))
                 { 
                     List<EventItem> list = new List<EventItem>(); // seems most bad in my eyes...
-                    list.Add(ei);
                     events.Add(date, list);
                 }
-                else
-                {
-                    events[date].Add(ei);
-                }
+                events[date].Add(ei);
+              
                 name = date = type = string.Empty;
             }
             
+            // Random effects on dates with no effects.
+            DateTime dt = ClockStart;
+            while (dt <= ClockEnd)
+            {
+                date = dt.ToShortDateString();
+                if (!events.ContainsKey(date))
+                {
+                    EventItem ei = new EventItem(randomEvent[Util.Rnd.Next(0, randomEvent.Count)], "random", date);
+                    List<EventItem> list = new List<EventItem>(); // seems most bad in my eyes...
+                    events.Add(date, list);
+                    events[date].Add(ei);
+                }
+                dt = dt.AddDays(1);
+                date = string.Empty;
+            }
         }
 
         #region Dispose
@@ -248,7 +274,7 @@ namespace OpenGL.Event
             nowDate = clock.CurrentClock().ToShortDateString();
             if (nowDate != lastDate)
             {
-                if (lastDate != string.Empty)
+                if (sound.PlayingBuffer() != 0)
                 {
                     sound.StopSound();
                 }
@@ -275,22 +301,69 @@ namespace OpenGL.Event
                     case "effect":
                         switch (ei.Name)
                         {
+                            case "Advent":
+                                advent.Draw(nowDate);
+                                break;
+                            case "Christmas":
+                                xmas.Draw(nowDate);
+                                break;
                             case "Halloween":
                                 hw.Draw(nowDate);
                                 break;
+                            case "Lucia":
+                                lucia.Draw(nowDate);
+                                break;
+                            case "NewYear":
+                                newyear.Draw(nowDate);
+                                break;
+                            case "Semla":
+                                semla.Draw(nowDate);
+                                break;
+                            case "Valentine":
+                                valentine.Draw(nowDate);
+                                break;
                             default:
-                                Console.WriteLine("No Effect");
+                                Console.WriteLine("No effect");
+                                break;
+                        }
+                        break;
+                    case "random":
+                        switch (ei.Name)
+                        {
+                            case "smurf":
+                                smurf.Draw(nowDate);
+                                break;
+                            case "dif":
+                                dif.Draw(nowDate);
+                                break;
+                            case "fbk":
+                                fbk.Draw(nowDate);
+                                break;
+                            case "rms":
+                                richard.Draw(nowDate);
+                                break;
+                            case "scrollers":
+                                scroller.Draw(nowDate);
+                                break;
+                            case "turbologo":
+                                tl.Draw(nowDate);
+                                break;
+                            case "winlinux":
+                                wl.Draw(nowDate);
+                                break;
+                            default:
+                                Console.WriteLine("No random effect");
                                 break;
                         }
                         break;
                     case "birthday":
-                        birthday.Draw(nowDate); // fix in name...
+                        birthday.Draw(nowDate, ei.Name); // fix in name...
                         break;
                     case "text":
                         text.Draw(ei.Name, Text2D.FontName.Coolfont, new OpenTK.Vector3(1.0f, 0.0f, 0.4f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2()); // fix in name...
                         break;
                     default:
-                        Console.WriteLine("No Event");
+                        Console.WriteLine("No event");
                         break;
                 }
                 
