@@ -88,6 +88,7 @@
     <Compile Include="Includes\Lucia.cs" />
     <Compile Include="Includes\NewYear.cs" />
     <Compile Include="Includes\Scroller.cs" />
+    <Compile Include="Includes\Self.cs" />
     <Compile Include="Includes\WinLinux.cs" />
     <Compile Include="Includes\Rms.cs" />
     <Compile Include="Includes\Datasmurf.cs" />
@@ -135,6 +136,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="gfx\ballons2.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\kze.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\ljus.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -142,6 +149,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\newyear.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\wach.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\winlogo.bmp">

@@ -87,9 +87,7 @@ namespace OpenGL
         {
             chessNumber = rand.Next(0, 6);
             randomBackground = rand.Next(0, 6);
-          //  randomScrollMove = rand.Next(0, 6);
-
-            randomScrollMove = 3;
+            randomScrollMove = rand.Next(0, 6);
             strScroll = getOneRandomScrollers();
         }
 

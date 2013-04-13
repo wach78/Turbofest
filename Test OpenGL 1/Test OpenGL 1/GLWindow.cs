@@ -22,7 +22,45 @@ namespace OpenGL
         bool blnPointDraw;
         bool blnWireFrameDraw;
 
+
         Event.Event events;
+
+        //Matrix4 matLook;
+        /*double xScroll = 0.0;
+        double yScroll = 0.0;*/
+        PartyClock pc;
+        Chess chess;
+        Starfield sf;
+        Text2D text;
+
+        //Particle particle;
+        SuneAnimation sune;
+        Dif dif;
+        Fbk fbk;
+        Christmas xmas;
+        Semla s;
+        Fbk f;
+        TurboLogo tl;
+        Datasmurf smurf;
+        Halloween hw;
+        Valentine v;
+        Outro o;
+        Intro i;
+        Birthday b;
+        RMS richard;
+        WinLinux wl;
+        Lucia lucia;
+        Advent advent;
+        NewYear nw;
+        Scroller scroll;
+        Self self;
+
+
+        // Test for sound
+        Sound snd;
+
+        System.Xml.Linq.XDocument m_events; // this needs to be fixed and stuff...
+
 
         // OpenGL version after 3.0 needs there own matrix libs so we need to create them if we run over 3.0!!! if ser major and minor to 0 we can get around it?!
         public GLWindow(System.Xml.Linq.XDocument Events, string runtime) : base(WIDTH, HEIGHT, new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(32), 24, 8, 0)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
@@ -40,9 +78,49 @@ namespace OpenGL
             blnWireFrameDraw = false;
             DateTime dtStart = DateTime.Parse(runtime.Substring(0, 10));
             DateTime dtEnd = DateTime.Parse(runtime.Substring(10, 10));
+
             //TimeSpan tsDiff = dtEnd.Subtract(dtStart);
 
             events = new Event.Event(dtStart, dtEnd, int.Parse(runtime.Substring(20)), Events);
+
+            TimeSpan tsDiff = dtEnd.Subtract(dtStart);
+            
+            //Sound
+            snd = new Sound(true); // this starts the sound thread
+            // Clock
+            pc = new PartyClock(dtStart, dtEnd, int.Parse(runtime.Substring(20)));
+            
+            // Effects
+            chess = new Chess();
+            sf = new Starfield(300);
+            text = new Text2D();
+            sune = new SuneAnimation(ref snd, ref text);
+            
+            //particle = new Particle();
+            fbk = new Fbk(ref snd);
+            dif = new Dif(ref chess);
+            xmas = new Christmas(ref snd);
+            s = new Semla();
+            f = new Fbk(ref snd);
+            tl = new TurboLogo(ref snd,ref chess);
+            smurf = new Datasmurf(ref snd,ref text);
+            hw = new Halloween(ref chess, 25);
+            v = new Valentine(ref snd);
+            o = new Outro(ref snd);
+            i = new Intro(ref snd, ref text);
+            b = new Birthday(ref snd, ref text, ref chess);
+            richard = new RMS(ref snd, ref text);
+            wl = new WinLinux(ref chess);
+            lucia = new Lucia(ref chess, ref snd);
+            advent = new Advent(ref snd);
+            nw = new NewYear();
+            scroll = new Scroller(ref chess, ref sf, ref text);
+            self = new Self();
+
+            //Events
+            //_WriteVersion();
+            //text.TextureCoordinates('A', Text2D.FontName.Coolfont);
+
         }
 
         public void _WriteVersion()
@@ -117,10 +195,42 @@ namespace OpenGL
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+
             System.Diagnostics.Debug.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             if (events != null) events.Dispose();
             System.Diagnostics.Debug.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " closed.");
+
+
+            Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
+            //Not clean... set to null as well if we want that
+            snd.Dispose();
+            pc.Dispose(); // 2 texturer
+            sune.Dispose(); // 1-2 texturer
+            chess.Dispose(); // 7 texturer
+            sf.Dispose(); // 0 texturer
+            text.Dispose(); // 9 texturer
+            fbk.Dispose(); // 1 textur
+            dif.Dispose(); // 1 textur
+            xmas.Dispose(); // 3 texturer
+            s.Dispose(); // 1 textur
+            f.Dispose(); // 1 textur
+            tl.Dispose(); // 1 textur
+            smurf.Dispose(); // 1 textur
+            hw.Dispose(); // 1 textur
+            v.Dispose(); // 2 texturer
+            o.Dispose(); // 1 textur
+            i.Dispose(); // 1 textur
+            b.Dispose(); // 1 textur
+            richard.Dispose(); // 1 textur
+            wl.Dispose(); // 1 textur
+            lucia.Dispose(); // 1 textur
+            advent.Dispose(); // 1 textur
+            nw.Dispose();
+            self.Dispose();
+            
+            Console.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
+            Console.WriteLine(this.GetType().ToString() + " closed.");
 
             this.Dispose(true);
         }
@@ -183,7 +293,86 @@ namespace OpenGL
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.StencilBufferBit | ClearBufferMask.DepthBufferBit); // Clear the OpenGL color buffer
             //GL.MatrixMode(MatrixMode.Projection);
 
+
             events.Draw();
+
+
+            if (!pc.EndOfRuntime())
+            {
+                pc.updateClock();
+                //GL.MatrixMode(MatrixMode.Modelview);
+                // Time
+
+                pc.DrawTime();
+                // Date
+                pc.DrawDate();
+            }
+            
+
+            // Draw effects and events here
+            /*
+            nowDate = pc.CurrentClock().ToShortDateString();
+            if (nowDate != lastDate)
+            {
+                if (lastDate != string.Empty)
+                {
+                    snd.StopSound();
+                }
+                lastDate = nowDate;
+                sune.NewQoute();
+            }
+             * */
+            //sf.Draw(nowDate);
+
+            //sune.Draw(nowDate);
+
+           // sune.Draw(nowDate);
+
+            /*if (nowDate == "2012-03-03")
+                sune.Draw(nowDate);
+            else if (nowDate == "2012-03-02")
+                fbk.Draw(nowDate);
+            else if (nowDate == "2012-03-04")
+                sune.Draw(nowDate);
+            else
+            {
+                //tl.toPlay(nowDate);
+                tl.Draw(nowDate);
+            }*/
+            // text.Draw("Hej på dig!", Text2D.FontName.CandyBlue], new Vector3(1.0f, 0.0f, 1.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f));
+            //text.Draw("andra raden som skall själv delas?", Text2D.FontName.CandyBlue], new Vector3(1.0f, -0.4f, 1.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(2.8f, 0.10f));
+          //  text.Draw("Ännu mer här !åäö? och så har vi något lång rad som inte skall få radbrytnignar om man inte\ngör en själv!", Text2D.FontName.CandyBlue], new Vector3(1.6f, -0.6f, 1.5f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(0.0f, 0.0f));
+          // s.Draw(nowDate);
+             //dif.Draw(nowDate);
+          // xmas.Draw(nowDate);
+          //  f.Draw(nowDate);
+          // smurf.Draw(nowDate);
+          //  v.Draw(nowDate);
+          //  o.Draw(nowDate);
+            //i.Draw(nowDate);
+            //chess.Draw(nowDate);
+           // hw.Draw(nowDate);
+            //tl.Draw(nowDate);
+            //b.Draw(nowDate);
+            //snd.Play("Sune");
+            //fbk.Draw(nowDate);
+         //   tl.Draw(nowDate);
+            //hw.Draw(nowDate);
+
+            //wl.Draw(nowDate);
+            //richard.Draw(nowDate);
+            //lucia.Draw(nowDate);
+            //advent.Draw(nowDate);
+           // nw.Draw(nowDate);
+
+
+           // wl.Draw(nowDate);
+           // richard.Draw(nowDate);
+            //sf.Draw(nowDate);
+           // scroll.Draw(nowDate);
+
+
+          //  self.Draw(nowDate);
 
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
             //System.Diagnostics.Debug.WriteLine("FPS: " + (1.0/e.Time));

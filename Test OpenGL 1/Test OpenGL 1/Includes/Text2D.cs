@@ -32,7 +32,7 @@ namespace OpenGL
             AllowedChars = new string[9];
             //use the enum or not that is the question :D
             texture[(int)FontName.Coolfont] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/coolfont_db.bmp", out textureSize[0, 0], out textureSize[0, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest);
-        //    texture[(int)FontName.CandyBlue] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_blue.bmp", out textureSize[1, 0], out textureSize[1, 1]);
+            //texture[(int)FontName.CandyBlue] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_blue.bmp", out textureSize[1, 0], out textureSize[1, 1]);
         //    texture[(int)FontName.CandyGreen] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_green.bmp", out textureSize[2, 0], out textureSize[2, 1]);
         //    texture[(int)FontName.CandyGrey] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_grey.bmp", out textureSize[3, 0], out textureSize[3, 1]);
         //    texture[(int)FontName.CandyPink] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_pink.bmp", out textureSize[4, 0], out textureSize[4, 1]);

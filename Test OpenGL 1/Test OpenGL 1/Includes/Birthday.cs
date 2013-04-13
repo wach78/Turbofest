@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
 
 namespace OpenGL
 {
@@ -28,7 +29,7 @@ namespace OpenGL
         public Birthday(ref Sound sound, ref Text2D txt, ref Chess chess)
         {
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\tarta.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            ballonsImage = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\ballons.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            ballonsImage = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\ballons2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snd = sound;
             text = txt;
             this.chess = chess;
@@ -51,7 +52,7 @@ namespace OpenGL
                                      new Vector2(0.0f + (currentImage * 0.2f), 0.0f)}, r.Next(5, 10) * 10.0f, z);
 
 
-                z -= 0.0000001f;
+                z -= 0.00001f;
                 currentImage++;
 
                 if (currentImage == 4)
@@ -91,7 +92,11 @@ namespace OpenGL
                     }
                 }
                 // free native resources if there are any.
+
                 System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
+
+                Debug.WriteLine(this.GetType().ToString() + " disposed.");
+
                 disposed = true;
             }
         }
