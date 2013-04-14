@@ -29,6 +29,7 @@ namespace OpenGL
         private int chessNumber;
         private int randomBackground;
         private int randomScrollMove;
+        private int randomFont;
         
         private string strScroll;
 
@@ -43,6 +44,7 @@ namespace OpenGL
             maxIndexValue = 0;
             randomBackground = 0;
             randomScrollMove =  0;
+            randomFont = 0;
             x = 0.0f;
             y = 0.0f;
             z = 0.0f;
@@ -88,7 +90,14 @@ namespace OpenGL
             chessNumber = rand.Next(0, 6);
             randomBackground = rand.Next(0, 6);
             randomScrollMove = rand.Next(0, 6);
+            randomFont = rand.Next(0, 6);
             strScroll = getOneRandomScrollers();
+
+
+
+            x = 0.0f;
+            y = 0.0f;
+            z = 0.0f;
         }
 
         private static void readFromXml()
@@ -187,7 +196,7 @@ namespace OpenGL
 
             Debug.WriteLine("randomScrollMove");
             Debug.Write(randomScrollMove);
-            text.Draw(strScroll, Text2D.FontName.CandyBlue, new Vector3(-1.5f + x,startY + y, 0.4f + z), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 1.5f);
+            text.Draw(strScroll, (Text2D.FontName)randomFont , new Vector3(-1.5f + x,startY + y, 0.4f + z), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 1.5f);
         }
 
 

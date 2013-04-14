@@ -29,6 +29,8 @@ namespace OpenGL
         private bool leftborder;
         private bool rightborder;
 
+        private int randomFontt;
+        private Random r;
         public Birthday(ref Sound sound, ref Text2D txt, ref Chess chess)
         {
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\tarta.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
@@ -39,12 +41,15 @@ namespace OpenGL
             x = 0.0f;
             leftborder = false;
             rightborder = true;
+            randomFontt = 0;
+            r = new Random();
+            randomFont();
 
            // snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/birthday.wav", "Birthday");
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\birthday.ogg", "Birthday");
             currentImage = 0;
 
-            Random r = new Random();
+            
             b = new Ballons[NUMBEROFBALLONS];
 
             float z = 0.4f;
@@ -107,6 +112,10 @@ namespace OpenGL
             }
         }
 
+        private void randomFont()
+        {
+            randomFontt = r.Next(0, 6);
+        }
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -174,7 +183,7 @@ namespace OpenGL
 
         private void drawText(string name)
         {
-            text.Draw(name, Text2D.FontName.Coolfont, new Vector3(1.0f, 0.2f, 1.0f), new Vector2(0.2f, 0.2f), new Vector2());
+            text.Draw(name, (Text2D.FontName)randomFontt, new Vector3(1.0f, 0.2f, 1.0f), new Vector2(0.2f, 0.2f), new Vector2());
         }
 
 
