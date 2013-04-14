@@ -32,12 +32,12 @@ namespace OpenGL
             AllowedChars = new string[9];
             //use the enum or not that is the question :D
             texture[(int)FontName.Coolfont] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/coolfont_db.bmp", out textureSize[0, 0], out textureSize[0, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest);
-            //texture[(int)FontName.CandyBlue] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_blue.bmp", out textureSize[1, 0], out textureSize[1, 1]);
-        //    texture[(int)FontName.CandyGreen] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_green.bmp", out textureSize[2, 0], out textureSize[2, 1]);
-        //    texture[(int)FontName.CandyGrey] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_grey.bmp", out textureSize[3, 0], out textureSize[3, 1]);
-        //    texture[(int)FontName.CandyPink] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_pink.bmp", out textureSize[4, 0], out textureSize[4, 1]);
-        //    texture[(int)FontName.CandyPurple] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_purple.bmp", out textureSize[5, 0], out textureSize[5, 1]);
-        //    texture[(int)FontName.CandyYellow] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_yellow.bmp", out textureSize[6, 0], out textureSize[6, 1]);
+            texture[(int)FontName.CandyBlue] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_blue.bmp", out textureSize[1, 0], out textureSize[1, 1]);
+            texture[(int)FontName.CandyGreen] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_green.bmp", out textureSize[2, 0], out textureSize[2, 1]);
+            texture[(int)FontName.CandyGrey] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_grey.bmp", out textureSize[3, 0], out textureSize[3, 1]);
+            texture[(int)FontName.CandyPink] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_pink.bmp", out textureSize[4, 0], out textureSize[4, 1]);
+            texture[(int)FontName.CandyPurple] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_purple.bmp", out textureSize[5, 0], out textureSize[5, 1]);
+            texture[(int)FontName.CandyYellow] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_yellow.bmp", out textureSize[6, 0], out textureSize[6, 1]);
             texture[(int)FontName.TypeFont] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/typefont15x25.bmp", out textureSize[7, 0], out textureSize[7, 1]);
             texture[(int)FontName.Other] = Util.GenTextureID(); // used for builtintext generation
 
@@ -81,12 +81,12 @@ namespace OpenGL
                     {
                         //do a loop so taht we don't need to add as we add new textures...
                         Util.DeleteTexture(ref texture[0]);
-                        /*Util.DeleteTexture(ref texture[1]);
+                        Util.DeleteTexture(ref texture[1]);
                         Util.DeleteTexture(ref texture[2]);
                         Util.DeleteTexture(ref texture[3]);
                         Util.DeleteTexture(ref texture[4]);
                         Util.DeleteTexture(ref texture[5]);
-                        Util.DeleteTexture(ref texture[6]);*/
+                        Util.DeleteTexture(ref texture[6]);
                         Util.DeleteTexture(ref texture[7]);
                         Util.DeleteTexture(ref texture[8]);
                     }
@@ -124,11 +124,15 @@ namespace OpenGL
                 {
                     Row += FontSize[intFont, 1];
                     Column -= textureSize[intFont, 0];
+                    /*if (intFont >= 1 && intFont <= 6)
+                    {
+                        Row -= -5;
+                    }*/
                 }
 
                 // top left
                 texVec[3].X = Column / textureSize[intFont, 0];
-                texVec[3].Y = (Row + FontSize[intFont, 1]) / textureSize[intFont, 1];
+                texVec[3].Y = (Row + FontSize[intFont, 1] - (intFont >= 1 && intFont <= 6? 5:0)) / textureSize[intFont, 1];
                 
                 // bottom left
                 texVec[2].X = Column / textureSize[intFont, 0];
@@ -140,7 +144,7 @@ namespace OpenGL
                 
                 // top right
                 texVec[0].X = (Column + FontSize[intFont, 0]) / textureSize[intFont, 0];
-                texVec[0].Y = (Row + FontSize[intFont, 1]) / textureSize[intFont, 1];
+                texVec[0].Y = (Row + FontSize[intFont, 1] - (intFont >= 1 && intFont <= 6 ? 5 : 0)) / textureSize[intFont, 1];
             }
             /*else // this make alot of crashes if not handled
             {

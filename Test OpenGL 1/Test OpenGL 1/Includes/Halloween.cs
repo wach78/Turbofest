@@ -197,6 +197,7 @@ namespace OpenGL
         private float Z;
         long tick = 0;
 
+        // missing sound?
         public Halloween(ref Chess chessboard, int NumberOfSpiders)
         {
             chess = chessboard;
@@ -279,9 +280,10 @@ namespace OpenGL
             }
 
             GL.Enable(EnableCap.Texture2D);
+            GL.BindTexture(TextureTarget.Texture2D, textureGhost);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            GL.BindTexture(TextureTarget.Texture2D, textureGhost);
+            
             GL.Begin(BeginMode.Quads);
             GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(Ghost[0]); // bottom right 
             GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(Ghost[1]); // Top right

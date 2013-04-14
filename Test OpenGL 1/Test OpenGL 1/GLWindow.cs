@@ -22,12 +22,7 @@ namespace OpenGL
         bool blnPointDraw;
         bool blnWireFrameDraw;
 
-
         Event.Event events;
-
-       
-        System.Xml.Linq.XDocument m_events; // this needs to be fixed and stuff...
-
 
         // OpenGL version after 3.0 needs there own matrix libs so we need to create them if we run over 3.0!!! if ser major and minor to 0 we can get around it?!
         public GLWindow(System.Xml.Linq.XDocument Events, string runtime) : base(WIDTH, HEIGHT, new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(32), 24, 8, 0)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
@@ -49,13 +44,6 @@ namespace OpenGL
             //TimeSpan tsDiff = dtEnd.Subtract(dtStart);
 
             events = new Event.Event(dtStart, dtEnd, int.Parse(runtime.Substring(20)), Events);
-
-            TimeSpan tsDiff = dtEnd.Subtract(dtStart);
-          
-
-            //Events
-            //_WriteVersion();
-            //text.TextureCoordinates('A', Text2D.FontName.Coolfont);
 
         }
 
@@ -137,9 +125,6 @@ namespace OpenGL
             System.Diagnostics.Debug.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " closed.");
 
-
-           
-
             this.Dispose(true);
         }
 
@@ -201,14 +186,7 @@ namespace OpenGL
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.StencilBufferBit | ClearBufferMask.DepthBufferBit); // Clear the OpenGL color buffer
             //GL.MatrixMode(MatrixMode.Projection);
 
-
             events.Draw();
-
-
-            
-            
-
-    
 
             SwapBuffers(); // Swapping the background and foreground buffers to display our scene
             //System.Diagnostics.Debug.WriteLine("FPS: " + (1.0/e.Time));

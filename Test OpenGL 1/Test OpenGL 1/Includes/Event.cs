@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace OpenGL.Event
 {
@@ -326,7 +327,7 @@ namespace OpenGL.Event
                                 valentine.Draw(nowDate);
                                 break;
                             default:
-                                Console.WriteLine("No effect");
+                                Debug.WriteLine("No effect");
                                 break;
                         }
                         break;
@@ -358,7 +359,7 @@ namespace OpenGL.Event
                                 wl.Draw(nowDate);
                                 break;
                             default:
-                                Console.WriteLine("No random effect");
+                                Debug.WriteLine("No random effect");
                                 break;
                         }
                         break;
@@ -369,7 +370,7 @@ namespace OpenGL.Event
                         text.Draw(ei.Name, Text2D.FontName.Coolfont, new OpenTK.Vector3(1.0f, 0.0f, 0.4f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2()); // fix in name...
                         break;
                     default:
-                        Console.WriteLine("No event");
+                        Debug.WriteLine("No event");
                         break;
                 }
                 
