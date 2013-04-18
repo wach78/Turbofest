@@ -47,7 +47,8 @@ namespace OpenGL
             SongText[5] = "We'll kick out those dirty licenses Ever more, hackers, ever more.";
             SongText[6] = "Join us now and share the software. You'll be free, hackers, you'll be free.";
             SongText[7] = "Join us now and share the software. You'll be free, hackers, you'll be free.";
-            SongText[8] = "Richard Stallman - a true hacker's birthday!";
+            //SongText[8] = "Richard Stallman - a true hacker's birthday!";
+            SongText[8] = "Richard Stallman - a true hacker!";
             lastTick = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond; // lastTick is in milisecond
         }
 

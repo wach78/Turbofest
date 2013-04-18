@@ -13,34 +13,28 @@ namespace OpenGL
     class Self
     {
         private bool disposed = false;
-        private int image;
+        private int imageWach;
+        private int imageKamikazE;
 
         private long tick;
         private float x;
         private float y;
-        private Random r = new Random();
         private int randomIamge;
+        private string CurrentDate;
 
         public Self()
         {
-           // r = new Random();
-            randomIamge = r.Next(0, 6);
-            Debug.WriteLine(randomIamge);
 
-            if (randomIamge <=3)
-            {
-                image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\wach.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-
-            }
-            else if (randomIamge > 3)
-            {
-                image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\kze.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-
-            }
+            imageWach = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\wach.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            imageKamikazE = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\kze.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             
+            SetRandomSelf();
+
             tick = 0;
             x = 0.0f;
             y = 0.0f;
+
+            CurrentDate = string.Empty;
         }
 
         ~Self()
@@ -61,7 +55,8 @@ namespace OpenGL
                 if (disposing)
                 {
                     // free managed resources
-                    Util.DeleteTexture(ref image);
+                    Util.DeleteTexture(ref imageWach);
+                    Util.DeleteTexture(ref imageKamikazE);
 
                 }
                 // free native resources if there are any.
@@ -70,10 +65,16 @@ namespace OpenGL
             }
         }
 
+        // this needs to be set to not load new textures each time... quick and dirty way now...
+        private void SetRandomSelf()
+        {
+            randomIamge = Util.Rnd.Next(0, 6);
+        }
+
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
-            GL.BindTexture(TextureTarget.Texture2D, image);
+            GL.BindTexture(TextureTarget.Texture2D, (randomIamge <= 3? imageKamikazE:imageWach));
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.Begin(BeginMode.Quads);
@@ -105,7 +106,11 @@ namespace OpenGL
 
         public void Draw(string Date)
         {
-          
+            if (CurrentDate != Date)
+            {
+                CurrentDate = Date;
+                SetRandomSelf();
+            }
             drawImage();
 
         }//Draw

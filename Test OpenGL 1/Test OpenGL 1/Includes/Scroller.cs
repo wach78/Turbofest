@@ -194,8 +194,8 @@ namespace OpenGL
 
             }
 
-            Debug.WriteLine("randomScrollMove");
-            Debug.Write(randomScrollMove);
+            /*Debug.WriteLine("randomScrollMove");
+            Debug.Write(randomScrollMove);*/
             text.Draw(strScroll, (Text2D.FontName)randomFont , new Vector3(-1.5f + x,startY + y, 0.4f + z), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 1.5f);
         }
 

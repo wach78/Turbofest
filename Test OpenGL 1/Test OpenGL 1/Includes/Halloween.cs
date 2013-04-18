@@ -91,10 +91,10 @@ namespace OpenGL
                 //Vector3.TransformVector(ref tmp, ref projectionM, out tmp);
                 //System.Diagnostics.Debug.WriteLine(rndX + ", " + rndY + ". " + tmp.X + ", " + tmp.Y);
 
-                vSpiders[0] = new Vector3(X + Size.Width, Y, Z); // bottom left
-                vSpiders[1] = new Vector3(X, Y, Z); // bottom right
-                vSpiders[2] = new Vector3(X, Y + Size.Height, Z); // top right
-                vSpiders[3] = new Vector3(X + Size.Width, Y + Size.Height, Z); // top left
+                vSpiders[0] = new Vector3(X + Size.Width, Y, this.Z); // bottom left
+                vSpiders[1] = new Vector3(X, Y, this.Z); // bottom right
+                vSpiders[2] = new Vector3(X, Y + Size.Height, this.Z); // top right
+                vSpiders[3] = new Vector3(X + Size.Width, Y + Size.Height, this.Z); // top left
             }
 
             ~Spider()
@@ -163,10 +163,10 @@ namespace OpenGL
                 GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(vSpiders[2]);
                 GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(vSpiders[3]); 
                 GL.End();
-
+                
                 /*
                 //float coefficients[] = {constant,linear,quadratic}; // defailt (1,0,0)
-                GL.PointParameter(PointParameterName.PointDistanceAttenuation, new float[] { 0.0f, 0.00000003f, 0.0f }); // float[] val = new float[]{constant,linear * correction, quadratic * correction, 1};
+                GL.PointParameter(PointParameterName.PointDistanceAttenuation, new float[] { 0.0f, 0.0000000000003f, 0.0f, 1.0f }); // float[] val = new float[]{constant,linear * correction, quadratic * correction, 1};
                 GL.TexEnv(TextureEnvTarget.PointSprite, TextureEnvParameter.CoordReplace, 1.0f); // 
                 GL.Enable(EnableCap.PointSprite);
                 GL.PointSize(Size.Width); // set this to 30-ish and remove GL.PointParameter...
@@ -175,8 +175,8 @@ namespace OpenGL
                 GL.Vertex3(vSpiders[1]);
                 GL.End();
                 GL.PopAttrib();
-                GL.Disable(EnableCap.PointSprite);
-                */
+                GL.Disable(EnableCap.PointSprite);*/
+                
                 GL.Disable(EnableCap.Blend);
                 GL.Disable(EnableCap.Texture2D);
                 GL.BindTexture(TextureTarget.Texture2D, 0);
@@ -210,12 +210,12 @@ namespace OpenGL
             float sZ = 0.4f;
             for (int i = 0; i < MaxSpiders; i++)
             {
-                Spiders[i] = new Spider(0.1f, 0.1f, Z, 1.0f, textureSpider);
+                Spiders[i] = new Spider(0.1f, 0.1f, sZ, 1.0f, textureSpider);
                 sZ -= sZ / (NumberOfSpiders + 2000);
             }
             X = Util.Rnd.Next(-3, 3) / 10.0f;
             Y = Util.Rnd.Next(-3, 3) / 10.0f;
-            Z = 0.3f;
+            Z = sZ - 0.001f;
             Ghost[0] = new Vector3(X, Y, Z); // red
             Ghost[1] = new Vector3(X, Y + Size.Height, Z); // blue
             Ghost[2] = new Vector3(X + Size.Width, Y + Size.Height, Z); // green

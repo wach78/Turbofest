@@ -111,7 +111,7 @@ namespace OpenGL
         {
 
             //snd.StopThread();
-
+            
             GL.BindTexture(TextureTarget.Texture2D, 0);
             System.Diagnostics.Debug.WriteLine("Closing");
         }

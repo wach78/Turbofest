@@ -136,6 +136,7 @@ namespace OpenGL.Event
         Advent advent;
         NewYear newyear;
         Scroller scroller;
+        Self creators;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -170,10 +171,11 @@ namespace OpenGL.Event
             scroller = new Scroller(ref chess, ref sf, ref text); // random
             semla = new Semla();
             sune = new SuneAnimation(ref sound, ref text);
-            tl = new TurboLogo(ref sound, ref chess); // vilken termin är det? random
+            tl = new TurboLogo(ref sound, ref chess, ((ClockStart.Month >= 1 && ClockStart.Month <= 8)? true:false) ); // vilken termin är det? jan till början av augusti VT, resten HT... random
             valentine = new Valentine(ref sound);
             wl = new WinLinux(ref chess); //random
-            randomEvent = new List<string>(new string[] { "", "", "smurf", "sune", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "scrollers", "scrollers", "scrollers", "turbologo", "winlinux" });
+            creators = new Self();
+            randomEvent = new List<string>(new string[] { "", "", "smurf", "sune", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "scrollers", "scrollers", "scrollers", "turbologo", "winlinux", "creators" });
 
             string name, date, type;
             // Event dates setup
@@ -250,6 +252,9 @@ namespace OpenGL.Event
                     if (wl != null) wl.Dispose(); // 1 textur
                     if (lucia != null) lucia.Dispose(); // 1 textur
                     if (advent != null) advent.Dispose(); // 1 textur
+                    if (creators != null) creators.Dispose(); // 2 textur
+                    if (newyear != null) newyear.Dispose(); // 1 textur
+                    if (scroller != null) scroller.Dispose(); //
 
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
@@ -277,7 +282,7 @@ namespace OpenGL.Event
             nowDate = clock.CurrentClock().ToShortDateString();
             if (nowDate != lastDate)
             {
-                if (sound.PlayingBuffer() != 0)
+                if (sound.PlayingName() != string.Empty)
                 {
                     sound.StopSound();
                 }
@@ -327,7 +332,10 @@ namespace OpenGL.Event
                                 valentine.Draw(nowDate);
                                 break;
                             default:
-                                Debug.WriteLine("No effect");
+                                if (nowDate != lastDate)
+                                {
+                                    Debug.WriteLine("No effect");
+                                }
                                 break;
                         }
                         break;
@@ -358,8 +366,14 @@ namespace OpenGL.Event
                             case "winlinux":
                                 wl.Draw(nowDate);
                                 break;
+                            case "creators":
+                                creators.Draw(nowDate);
+                                break;
                             default:
-                                Debug.WriteLine("No random effect");
+                                if (nowDate != lastDate)
+                                {
+                                    Debug.WriteLine("No random effect");
+                                }
                                 break;
                         }
                         break;
@@ -370,7 +384,10 @@ namespace OpenGL.Event
                         text.Draw(ei.Name, Text2D.FontName.Coolfont, new OpenTK.Vector3(1.0f, 0.0f, 0.4f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2()); // fix in name...
                         break;
                     default:
-                        Debug.WriteLine("No event");
+                        if (nowDate != lastDate)
+                        {
+                            Debug.WriteLine("No event");
+                        }
                         break;
                 }
                 
