@@ -40,7 +40,7 @@ namespace OpenGL
 
             Ghost = new Vector3[4];
             Size = new SizeF(0.4f, 0.8f);
-            Speed = 0.0025f;
+            Speed = 0.0045f;
 
             X = Util.Rnd.Next(-3, 3) / 10.0f;
             Y = Util.Rnd.Next(-3, 3) / 10.0f;

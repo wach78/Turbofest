@@ -171,11 +171,11 @@ namespace OpenGL.Event
             scroller = new Scroller(ref chess, ref sf, ref text); // random
             semla = new Semla();
             sune = new SuneAnimation(ref sound, ref text);
-            tl = new TurboLogo(ref sound, ref chess, ((ClockStart.Month >= 1 && ClockStart.Month <= 8)? true:false) ); // vilken termin är det? jan till början av augusti VT, resten HT... random
+            tl = new TurboLogo(ref sound, ref chess, ((ClockStart.Month >= 1 && ClockStart.Month <= 8)? false:true) ); // vilken termin är det? jan till början av augusti VT, resten HT... random
             valentine = new Valentine(ref sound);
             wl = new WinLinux(ref chess); //random
             creators = new Self();
-            randomEvent = new List<string>(new string[] { "", "", "smurf", "sune", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "scrollers", "scrollers", "scrollers", "turbologo", "winlinux", "creators" });
+            randomEvent = new List<string>(new string[] { "", "", "smurf", "sune", "sune", "dif", "fbk", "rms", "scrollers", "scrollers","", "scrollers", "turbologo", "winlinux","", "creators" });
 
             string name, date, type;
             // Event dates setup
@@ -276,6 +276,7 @@ namespace OpenGL.Event
             else 
             {
                 Util.ShowClock = false;
+                outro.Draw(nowDate);
             }
 
             // Draw effects and events here
@@ -310,10 +311,19 @@ namespace OpenGL.Event
                     case "effect":
                         switch (ei.Name)
                         {
-                            case "Advent":
-                                advent.Draw(nowDate);
+                            case "Advent 1":
+                                advent.Draw(nowDate, Advent.WhatAdvent.First);
                                 break;
-                            case "Christmas":
+                            case "Advent 2":
+                                advent.Draw(nowDate, Advent.WhatAdvent.Second);
+                                break;
+                            case "Advent 3":
+                                advent.Draw(nowDate, Advent.WhatAdvent.Third);
+                                break;
+                            case "Advent 4":
+                                advent.Draw(nowDate, Advent.WhatAdvent.Fourth);
+                                break;
+                            case "JulAfton":
                                 xmas.Draw(nowDate);
                                 break;
                             case "Halloween":
@@ -322,7 +332,7 @@ namespace OpenGL.Event
                             case "Lucia":
                                 lucia.Draw(nowDate);
                                 break;
-                            case "NewYear":
+                            case "Nyårsafton":
                                 newyear.Draw(nowDate);
                                 break;
                             case "Semla":
@@ -331,6 +341,7 @@ namespace OpenGL.Event
                             case "Valentine":
                                 valentine.Draw(nowDate);
                                 break;
+                            
                             default:
                                 if (nowDate != lastDate)
                                 {
@@ -381,7 +392,7 @@ namespace OpenGL.Event
                         birthday.Draw(nowDate, ei.Name); // fix in name...
                         break;
                     case "text":
-                        text.Draw(ei.Name, Text2D.FontName.Coolfont, new OpenTK.Vector3(1.0f, 0.0f, 0.4f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2()); // fix in name...
+                        text.Draw(ei.Name, Text2D.FontName.Coolfont, new OpenTK.Vector3(1.0f, 0.0f, 0.4f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(),1.5f); // fix in name...
                         break;
                     default:
                         if (nowDate != lastDate)

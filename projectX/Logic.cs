@@ -338,16 +338,16 @@ namespace projectX
 
                 date = findFirstAdvent();
 
-                xmlStuff2.writeFeastToXmlFile("Advent", getShortDate(date), "Effect");
+                xmlStuff2.writeFeastToXmlFile("Advent 1", getShortDate(date), "Effect");
 
                 date = date.AddDays(7);
-                xmlStuff2.writeFeastToXmlFile("Advent", getShortDate(date), "Effect");
+                xmlStuff2.writeFeastToXmlFile("Advent 2", getShortDate(date), "Effect");
 
                 date = date.AddDays(7);
-                xmlStuff2.writeFeastToXmlFile("Advent", getShortDate(date), "Effect");
+                xmlStuff2.writeFeastToXmlFile("Advent 3", getShortDate(date), "Effect");
 
                 date = date.AddDays(7);
-                xmlStuff2.writeFeastToXmlFile("Advent", getShortDate(date), "Effect");
+                xmlStuff2.writeFeastToXmlFile("Advent 4", getShortDate(date), "Effect");
 
                 date = new DateTime(year,12,24);
                 xmlStuff2.writeFeastToXmlFile("JulAfton", getShortDate(date), "Effect");
@@ -364,6 +364,10 @@ namespace projectX
                 date = new DateTime(year, 12, 24);
                 date = date.AddDays(13);
                 xmlStuff2.writeFeastToXmlFile("Trettondedag jul", getShortDate(date), "Text");
+
+                date = new DateTime(year, 02, 14);
+     
+                xmlStuff2.writeFeastToXmlFile("Valentine", getShortDate(date), "Text");
 
                 date = semlaDate();
                 xmlStuff2.writeFeastToXmlFile("Semla", getShortDate(date), "Effect");

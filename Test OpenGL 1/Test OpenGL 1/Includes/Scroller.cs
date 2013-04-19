@@ -98,6 +98,7 @@ namespace OpenGL
             x = 0.0f;
             y = 0.0f;
             z = 0.0f;
+            tick = 0;
         }
 
         private static void readFromXml()
