@@ -359,17 +359,16 @@ namespace OpenGL
                                                     break;
                                                 }
                                             }
-
-                                            AL.BufferData(BufferRef, alf, BufferData, /*BufferData.Length*/readSize, FileInfo.rate);
+                                            if (isPlaying)
+                                            {
+                                                AL.BufferData(BufferRef, alf, BufferData, /*BufferData.Length*/readSize, FileInfo.rate);
+                                                System.Diagnostics.Debug.WriteLine("Buffering data: " + AL.GetErrorString(AL.GetError()));
+                                                System.Diagnostics.Debug.WriteLine("ALC: " + context.CurrentError.ToString());
+                                                AL.SourceQueueBuffer(SoundStreamSource, BufferRef);
+                                                System.Diagnostics.Debug.WriteLine("source queuing: " + AL.GetErrorString(AL.GetError()));
+                                            }
                                             Array.Clear(BufferData, 0, BufferData.Length);
                                             Array.Clear(BufferData2, 0, BufferData2.Length);
-                                            System.Diagnostics.Debug.WriteLine("Buffering data: " + AL.GetErrorString(AL.GetError()));
-                                            /*AL.BindBufferToSource(SoundStreamSource, BufferRef);
-                                            Console.WriteLine("binding to source: " + AL.GetErrorString(AL.GetError()));*/
-                                            System.Diagnostics.Debug.WriteLine("ALC: " + context.CurrentError.ToString());
-                                            AL.SourceQueueBuffer(SoundStreamSource, BufferRef);
-                                            System.Diagnostics.Debug.WriteLine("source queuing: " + AL.GetErrorString(AL.GetError()));
-
                                         }
                                         --ProcessedBuffers;
                                     }

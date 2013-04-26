@@ -28,10 +28,10 @@ namespace OpenGL
         public GLWindow(System.Xml.Linq.XDocument Events, string runtime) : base(WIDTH, HEIGHT, new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(32), 24, 8, 0)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
         {
             // fix me...
-            if (runtime.Length < 24) // YYYY-MM-DDYYYY-MM-DDxxxxxx
+            /*if (runtime.Length < 24) // YYYY-MM-DDYYYY-MM-DDxxxxxx
             {
                 throw new Exception("Error in runtime, it is to short");
-            }
+            }*/
             System.Diagnostics.Debug.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             Keyboard.KeyDown += OnKeyboardKeyDown;
             Closing += OnClosing;
