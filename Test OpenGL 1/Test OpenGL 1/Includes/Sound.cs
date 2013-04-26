@@ -171,10 +171,14 @@ namespace OpenGL
             disposed = false;
             SoundList = new Dictionary<string, SoundType>();
             context = new AudioContext();
-            context.MakeCurrent();
-            SoundBuffers = AL.GenBuffers(4); // number of buffers
+            lock (context)
+            {
+                context.MakeCurrent();
+            }
+            
+            /*SoundBuffers = AL.GenBuffers(4); // number of buffers
             SoundSource = AL.GenSource();
-            SoundStreamSource = AL.GenSource();
+            SoundStreamSource = AL.GenSource();*/
             RunSoundThread = true;
 
             isPlaying = false;
@@ -186,7 +190,7 @@ namespace OpenGL
             /*OpenTK.Vector3 v3 = new OpenTK.Vector3(1, 1, 1);
             AL.Source(AL.GenBuffer(), ALSource3f.Position, ref v3);*/
 
-            Debug.WriteLine(AL.Get(ALGetString.Version));
+            //Debug.WriteLine(AL.Get(ALGetString.Version));
             
 
             tr = new System.Threading.Thread(new ThreadStart(PlayThread));
@@ -253,130 +257,163 @@ namespace OpenGL
             int sourceState;
             SoundType st;
             byte[] BufferData = new byte[4096*10];
-
-            context.MakeCurrent();
-            System.Diagnostics.Debug.WriteLine("Sound thread started.");
-            while (RunSoundThread)
+            byte[] BufferData2 = new byte[4096];
+            lock (context)
             {
-                //Check if there is a sound to play
-                if (NowPlayingName == string.Empty && NextPlayingName != string.Empty)
+                context.MakeCurrent();
+                SoundBuffers = AL.GenBuffers(4); // number of buffers
+                SoundSource = AL.GenSource();
+                SoundStreamSource = AL.GenSource();
+                
+                System.Diagnostics.Debug.WriteLine("Sound thread started.");
+                while (RunSoundThread)
                 {
-                    //NowPlayingBuffer = NextPlayingBuffer;
-                    NowPlayingName = NextPlayingName;
-
-                    if (SoundList.ContainsKey(NowPlayingName))
+                    //Check if there is a sound to play
+                    if (NowPlayingName == string.Empty && NextPlayingName != string.Empty)
                     {
-                        st = SoundList[NowPlayingName];
-                        //NextPlayingBuffer = -1;
-                        NextPlayingName = string.Empty;
+                        //NowPlayingBuffer = NextPlayingBuffer;
+                        NowPlayingName = NextPlayingName;
 
-                        if (st.ToBeStreamed)
+                        if (SoundList.ContainsKey(NowPlayingName))
                         {
-                            // open file to read to buffers
-                            VorbisFile FileToBuffer = new VorbisFile(st.Filename);
-                            Info FileInfo = FileToBuffer.getInfo(-1);
-                            ALFormat alf = 0;
-                            if (FileInfo.channels == 1) // mono
-                            {
-                                alf = ALFormat.Mono16;
-                            }
-                            else if (FileInfo.channels == 2) // sterio
-                            {
-                                alf = ALFormat.Stereo16;
-                            }
-                            else if (alf == 0)
-                            {
-                                throw new Exception("Wrong number of channels in sound file.");
-                            }
+                            st = SoundList[NowPlayingName];
+                            //NextPlayingBuffer = -1;
+                            NextPlayingName = string.Empty;
 
-                            for (int i = 0; i < SoundBuffers.Length; i++)
+                            if (st.ToBeStreamed)
                             {
-                                FileToBuffer.read(BufferData, BufferData.Length, 0, 2, 1, null);
-                                AL.BufferData(SoundBuffers[i], alf, BufferData, BufferData.Length, FileInfo.rate);
-                            }
-
-                            AL.SourceQueueBuffers(SoundStreamSource, 4, SoundBuffers);
-                            AL.SourcePlay(SoundStreamSource);
-                            isPlaying = true;
-
-                            int ProcessedBuffers = 0;
-                            /*int QueuedBuffers = 0;
-                            int fileRead;*/
-                            int BufferRef;
-                            bool EOF = false;
-
-                            do
-                            {
-                                if (!RunSoundThread || !isPlaying)
+                                // open file to read to buffers
+                                VorbisFile FileToBuffer = new VorbisFile(st.Filename);
+                                Info FileInfo = FileToBuffer.getInfo(-1);
+                                ALFormat alf = 0;
+                                int fileRead, readSize;
+                                if (FileInfo.channels == 1) // mono
                                 {
-                                    break;
+                                    alf = ALFormat.Mono16;
                                 }
-                                // read in buffers...
+                                else if (FileInfo.channels == 2) // sterio
+                                {
+                                    alf = ALFormat.Stereo16;
+                                }
+                                else if (alf == 0)
+                                {
+                                    throw new Exception("Wrong number of channels in sound file.");
+                                }
+                                //readSize = fileRead = 0; // buggs out
+
+                                for (int i = 0; i < SoundBuffers.Length; i++)
+                                {
+                                    fileRead = FileToBuffer.read(BufferData, BufferData.Length, 0, 2, 1, null);
+                                    AL.BufferData(SoundBuffers[i], alf, BufferData, fileRead, FileInfo.rate);
+                                    //readSize += fileRead;
+                                    Array.Clear(BufferData, 0, BufferData.Length);
+                                }
+
+
+                                AL.SourceQueueBuffers(SoundStreamSource, SoundBuffers.Length, SoundBuffers);
+                                AL.SourcePlay(SoundStreamSource);
+                                isPlaying = true;
+
+                                int ProcessedBuffers = 0;
+                                /*int QueuedBuffers = 0;*/
+                                int[] section = new int[10];
+                                int BufferRef;
+                                bool EOF = false;
+
                                 do
                                 {
-                                    AL.GetSource(SoundStreamSource, ALGetSourcei.BuffersProcessed, out ProcessedBuffers);
-                                } while (ProcessedBuffers == 0);
-
-                                //AL.GetSource(SoundStreamSource, ALGetSourcei.BuffersQueued, out QueuedBuffers);
-                                /*if (ProcessedBuffers > 0 && QueuedBuffers < SoundBuffers.Length)
-                                {*/
-                                //Console.WriteLine("Processing: " + ProcessedBuffers + " buffer(s) left");
-                                while (ProcessedBuffers > 0)
-                                {
-                                    BufferRef = AL.SourceUnqueueBuffer(SoundStreamSource);
-                                    if (BufferRef != 0 && !EOF)
+                                    if (!RunSoundThread || !isPlaying)
                                     {
-                                        if (FileToBuffer.read(BufferData, BufferData.Length, 0, 2, 1, null) == 0)
-                                            EOF = true;
-                                        AL.BufferData(BufferRef, alf, BufferData, BufferData.Length, FileInfo.rate);
-
-                                        AL.SourceQueueBuffer(SoundStreamSource, BufferRef);
+                                        System.Diagnostics.Debug.WriteLine("Ending loop with boolean.");
+                                        break;
                                     }
-                                    ProcessedBuffers--;
-                                }
 
-                                //}
-                                // fill buffers before sleeping...
-                                System.Threading.Thread.Sleep(1); // let other threads run.
-                                
-                                // Get Source State
-                                AL.GetSource(SoundStreamSource, ALGetSourcei.SourceState, out sourceState);
-                            } while ((ALSourceState)sourceState == ALSourceState.Playing);
-                            AL.SourceUnqueueBuffers(SoundStreamSource, SoundBuffers.Length);
-                            FileInfo.clear();
-                            FileInfo = null;
-                            FileToBuffer = null;
-                        }
-                        else
-                        {
-                            AL.Source(SoundSource, ALSourcei.Buffer, st.Buffer);
-                            AL.SourcePlay(SoundSource);
-                            isPlaying = true;
-                            do
+                                    Thread.Sleep(10);
+
+                                    AL.GetSource(SoundStreamSource, ALGetSourcei.BuffersProcessed, out ProcessedBuffers);
+                                    while (ProcessedBuffers > 0 && isPlaying)
+                                    {
+                                        readSize = fileRead = 0;
+                                        BufferRef = AL.SourceUnqueueBuffer(SoundStreamSource);
+                                        if (BufferRef != 0 && !EOF && isPlaying)
+                                        {
+                                            while (readSize < (BufferData.Length * 0.75) && isPlaying) // this is not at all safe!!!
+                                            {
+                                                fileRead = FileToBuffer.read(BufferData2, BufferData2.Length, 0, 2, 1, null);
+                                                System.Diagnostics.Debug.WriteLine("Bytes read: " + fileRead);
+                                                if (fileRead > 0)
+                                                {
+                                                    Buffer.BlockCopy(BufferData2, 0, BufferData, readSize, fileRead);
+                                                    readSize += fileRead;
+                                                    Array.Clear(BufferData2, 0, BufferData2.Length);
+                                                }
+                                                else if (fileRead < 0)
+                                                {
+                                                    EOF = true;
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    EOF = true;
+                                                    System.Diagnostics.Debug.WriteLine("File is at the end no more data. Size read: " + readSize.ToString());
+                                                    break;
+                                                }
+                                            }
+
+                                            AL.BufferData(BufferRef, alf, BufferData, /*BufferData.Length*/readSize, FileInfo.rate);
+                                            Array.Clear(BufferData, 0, BufferData.Length);
+                                            Array.Clear(BufferData2, 0, BufferData2.Length);
+                                            System.Diagnostics.Debug.WriteLine("Buffering data: " + AL.GetErrorString(AL.GetError()));
+                                            /*AL.BindBufferToSource(SoundStreamSource, BufferRef);
+                                            Console.WriteLine("binding to source: " + AL.GetErrorString(AL.GetError()));*/
+                                            System.Diagnostics.Debug.WriteLine("ALC: " + context.CurrentError.ToString());
+                                            AL.SourceQueueBuffer(SoundStreamSource, BufferRef);
+                                            System.Diagnostics.Debug.WriteLine("source queuing: " + AL.GetErrorString(AL.GetError()));
+
+                                        }
+                                        --ProcessedBuffers;
+                                    }
+
+                                    // Get Source State
+                                    AL.GetSource(SoundStreamSource, ALGetSourcei.SourceState, out sourceState);
+                                } while ((ALSourceState)sourceState == ALSourceState.Playing);
+                                System.Diagnostics.Debug.WriteLine("Not playing any more.");
+                                AL.SourceUnqueueBuffers(SoundStreamSource, SoundBuffers.Length);
+                                FileInfo.clear();
+                                FileInfo = null;
+                                FileToBuffer = null;
+                            } // end is to be streamd
+                            else
                             {
-                                if (!RunSoundThread || !isPlaying)
+                                AL.Source(SoundSource, ALSourcei.Buffer, st.Buffer);
+                                AL.SourcePlay(SoundSource);
+                                isPlaying = true;
+                                do
                                 {
-                                    break;
-                                }
+                                    if (!RunSoundThread || !isPlaying)
+                                    {
+                                        break;
+                                    }
 
-                                System.Threading.Thread.Sleep(100); // let other threads run.
+                                    System.Threading.Thread.Sleep(100); // let other threads run.
 
-                                // Get Source State
-                                AL.GetSource(SoundSource, ALGetSourcei.SourceState, out sourceState);
-                            } while ((ALSourceState)sourceState == ALSourceState.Playing);
+                                    // Get Source State
+                                    AL.GetSource(SoundSource, ALGetSourcei.SourceState, out sourceState);
+                                } while ((ALSourceState)sourceState == ALSourceState.Playing);
+
+                            }
 
                         }
-                        
+
+                        AL.SourceStop(SoundSource);
+                        AL.SourceStop(SoundStreamSource);
+                        NowPlayingName = string.Empty;
+                        st = null;
+                        isPlaying = false;
                     }
-                    
-                    AL.SourceStop(SoundSource);
-                    AL.SourceStop(SoundStreamSource);
-                    NowPlayingName = string.Empty;
-                    st = null;
-                    isPlaying = false;
+
+                    Thread.Sleep(10); // just to let other threads run...
                 }
-                
-                Thread.Sleep(10); // just to let other threads run...
             }
             System.Diagnostics.Debug.WriteLine("Sound thread stopped.");
         }
@@ -398,7 +435,10 @@ namespace OpenGL
 
         public void StopSound()
         {
+            Console.WriteLine("Stoping sound method");
             isPlaying = false;
+            AL.SourceStop(SoundSource); // to be safe
+            AL.SourceStop(SoundStreamSource); // to be safe
         }
 
         /// <summary>
@@ -441,13 +481,13 @@ namespace OpenGL
                     {
                         /*if (Name == "rms" || Name == "FBK")
                         {*/
-                        
-                        SoundList.Add(Name, new SoundType(filename, /*(Name=="rms"? true:false)*/false));
-                        if (!SoundList[Name].ToBeStreamed)
-                        {
-                            LoadOGG(SoundList[Name]);
-                        }
-                        //}
+
+                            SoundList.Add(Name, new SoundType(filename, /*(Name == "rms" ?*/ true /*: false)*/));
+                            /*if (!SoundList[Name].ToBeStreamed)
+                            {
+                                LoadOGG(SoundList[Name]);
+                            }
+                        }*/
                         //SoundList.Add(Name, LoadOGG(filename));
                         //throw new Exception("Not implemented!");
                     }

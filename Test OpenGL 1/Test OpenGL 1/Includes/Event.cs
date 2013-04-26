@@ -177,7 +177,7 @@ namespace OpenGL.Event
             valentine = new Valentine(ref sound);
             wl = new WinLinux(ref chess); //random
             creators = new Self();
-            randomEvent = new List<string>(new string[] { /*"", "", "smurf", "sune",*/ "sune" /*,"dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
+            randomEvent = new List<string>(new string[] { "", "", "smurf", "sune", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
 
             string name, date, type;
             // Event dates setup
@@ -193,8 +193,6 @@ namespace OpenGL.Event
                     events.Add(date, list);
                 }
 
-
-
                 for (int i = 0; i < events[date].Count; i++)
                 {
                     EventItem e = events[date][i];
@@ -205,8 +203,6 @@ namespace OpenGL.Event
                     }
 
                 }
-                 
-                
                 events[date].Add(ei);
               
                 name = date = type = string.Empty;
