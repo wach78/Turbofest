@@ -90,7 +90,7 @@ namespace OpenGL.Event
         public string Name
         {
             get { return mName; }
-            set { }
+            set { mName = value; }
         }
 
         public string Type
@@ -145,6 +145,8 @@ namespace OpenGL.Event
         string nowDate;
 
 
+
+
         public Event(DateTime ClockStart, DateTime ClockEnd, int ClockRunTime, System.Xml.Linq.XDocument XMLEvents)
         {
             events = new Dictionary<string, List<EventItem>>();
@@ -175,7 +177,7 @@ namespace OpenGL.Event
             valentine = new Valentine(ref sound);
             wl = new WinLinux(ref chess); //random
             creators = new Self();
-            randomEvent = new List<string>(new string[] { "", "", "smurf", "sune", "sune", "dif", "fbk", "rms", "scrollers", "scrollers","", "scrollers", "turbologo", "winlinux","", "creators" });
+            randomEvent = new List<string>(new string[] { /*"", "", "smurf", "sune",*/ "sune" /*,"dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
 
             string name, date, type;
             // Event dates setup
@@ -190,6 +192,21 @@ namespace OpenGL.Event
                     List<EventItem> list = new List<EventItem>(); // seems most bad in my eyes...
                     events.Add(date, list);
                 }
+
+
+
+                for (int i = 0; i < events[date].Count; i++)
+                {
+                    EventItem e = events[date][i];
+                    if ("birthday".Equals(e.Type) && "birthday".Equals(ei.Type))
+                    {
+                        e.Name += "\n\n" + ei.Name;
+                        events[date][i] = e;
+                    }
+
+                }
+                 
+                
                 events[date].Add(ei);
               
                 name = date = type = string.Empty;
@@ -301,7 +318,24 @@ namespace OpenGL.Event
             EventItem ei = null;
             if (events.ContainsKey(nowDate))
             {
-                ei = events[nowDate][0];// make this so that we can use more then one...
+               // make this so that we can use more then one...
+
+                if (events[nowDate].Count > 1)
+                {
+                    ei = events[nowDate][0];
+                    for (int i = 0; i < events[nowDate].Count; i++)
+                    {
+                        if ("effect".Equals(events[nowDate][i].Type))
+                        {
+                            ei = events[nowDate][i];
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    ei = events[nowDate][0];
+                }
             }
 
             if (ei != null)
@@ -357,10 +391,12 @@ namespace OpenGL.Event
                                 smurf.Draw(nowDate);
                                 break;
                             case "dif":
-                                dif.Draw(nowDate);
+                                if (difFbk(nowDate))
+                                     dif.Draw(nowDate);
                                 break;
                             case "fbk":
-                                fbk.Draw(nowDate);
+                                if (difFbk(nowDate))
+                                    fbk.Draw(nowDate);
                                 break;
                             case "rms":
                                 richard.Draw(nowDate);
@@ -389,7 +425,7 @@ namespace OpenGL.Event
                         }
                         break;
                     case "birthday":
-                        birthday.Draw(nowDate, ei.Name); // fix in name...
+                        birthday.Draw(nowDate, ei.Name); 
                         break;
                     case "text":
                         text.Draw(ei.Name, Text2D.FontName.Coolfont, new OpenTK.Vector3(1.0f, 0.0f, 0.4f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(),1.5f); // fix in name...
@@ -405,5 +441,27 @@ namespace OpenGL.Event
             }
 
         }
-    }
-}
+        
+        private bool difFbk(string nowDate)
+        {
+            bool ok = false;
+            string month = "";
+
+            if (nowDate != null)
+                month = nowDate.Substring(5,2);
+
+            if ("01".Equals(month))
+            {
+              ok = true;
+            }
+            else if ("07".Equals(month))
+            {
+                 ok = true;
+            }
+          
+
+            return ok;
+        }
+            
+    }//class
+}//namespace

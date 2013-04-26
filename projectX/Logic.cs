@@ -367,7 +367,7 @@ namespace projectX
 
                 date = new DateTime(year, 02, 14);
      
-                xmlStuff2.writeFeastToXmlFile("Valentine", getShortDate(date), "Text");
+                xmlStuff2.writeFeastToXmlFile("Valentine", getShortDate(date), "Effect");
 
                 date = semlaDate();
                 xmlStuff2.writeFeastToXmlFile("Semla", getShortDate(date), "Effect");

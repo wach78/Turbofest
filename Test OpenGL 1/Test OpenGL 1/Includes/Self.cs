@@ -27,7 +27,7 @@ namespace OpenGL
 
             imageWach = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\wach.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             imageKamikazE = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\kze.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            
+            randomIamge = -1;
             SetRandomSelf();
 
             tick = 0;
@@ -68,13 +68,16 @@ namespace OpenGL
         // this needs to be set to not load new textures each time... quick and dirty way now...
         private void SetRandomSelf()
         {
-            randomIamge = Util.Rnd.Next(0, 6);
+            if (randomIamge == 0)
+                randomIamge = 1;
+            else
+                randomIamge = 0;
         }
 
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
-            GL.BindTexture(TextureTarget.Texture2D, (randomIamge <= 3? imageKamikazE:imageWach));
+            GL.BindTexture(TextureTarget.Texture2D, (randomIamge == 1? imageKamikazE:imageWach));
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.Begin(BeginMode.Quads);

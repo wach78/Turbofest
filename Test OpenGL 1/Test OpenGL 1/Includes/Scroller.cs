@@ -171,6 +171,7 @@ namespace OpenGL
             {
                 if (strScroll.Length < 12)
                 {
+                    startY = 0.0f;
                     x = (float)(0.004 * Math.Sin((this.tick / 50.0) * 3.1415) * 200);
 
                     if (strScroll.Length < 5)

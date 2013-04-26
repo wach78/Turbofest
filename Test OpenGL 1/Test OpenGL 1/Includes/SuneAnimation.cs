@@ -149,6 +149,8 @@ namespace OpenGL
         public void NewQoute()
         {
             sh.drawInit(false);
+            soundTrue = false;
+            soundDone = false;
         }
 
         public void Draw(string Date)

@@ -589,7 +589,7 @@ namespace OpenGL
 //#define ogg // or activate this, but this is just for this place/file... :D
 #if noogg
 #warning "Returning 0 on Ogg file, you need to define \"ogg\" in build constants, in project build property."
-            return ab; // quicker upstart
+            return ; // quicker upstart
 #endif
 
             VorbisFile asd = new VorbisFile(sound.Filename);
