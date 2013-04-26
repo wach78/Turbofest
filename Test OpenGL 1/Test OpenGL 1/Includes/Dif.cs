@@ -10,7 +10,8 @@ namespace OpenGL
 {
     class Dif : IEffect
     {
-        private Chess bakground; 
+        private Chess bakground;
+        private Sound snd;
         private int image;
         private float x;
         private float y;
@@ -18,14 +19,16 @@ namespace OpenGL
         private bool disposed = false;
         private int tick;
 
-        public Dif(ref Chess chess)
+        public Dif(ref Chess chess, ref Sound sound)
         {
             bakground = chess;
             x = 0.0f;
             y = 0.0f;
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\dif2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-           
+            snd = sound;
             tick = 0;
+
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\.ogg", "Dif");
         }
 
         ~Dif()
@@ -49,6 +52,7 @@ namespace OpenGL
                     // free managed resources
                     Util.DeleteTexture(ref image);
                     bakground = null;
+                    snd = null;
                 }
                 // free native resources if there are any.
                 Debug.WriteLine(this.GetType().ToString() + " disposed.");
@@ -90,8 +94,17 @@ namespace OpenGL
              
         }//moveImage
 
+        public void Play()
+        {
+            if (snd.PlayingName() != "Dif") // this will start once the last sound is done, ie looping.
+            {
+                snd.Play("Dif");
+            }
+        }
+
         public void Draw(string Date)
         {
+            Play();
             bakground.Draw(Date, Chess.ChessColor.WhiteRed);
             moveImage();
             DrawImage();

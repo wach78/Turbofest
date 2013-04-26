@@ -30,7 +30,6 @@ namespace OpenGL
         private bool rightborder;
 
         private int randomFontt;
-        private Random r;
         public Birthday(ref Sound sound, ref Text2D txt, ref Chess chess)
         {
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\tarta.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
@@ -42,7 +41,6 @@ namespace OpenGL
             leftborder = false;
             rightborder = true;
             randomFontt = 0;
-            //r = new Random();
             randomFont();
 
            // snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/birthday.wav", "Birthday");

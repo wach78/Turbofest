@@ -14,7 +14,6 @@ namespace OpenGL
     {
         private static List<string> listquotes;
         private static List<int> indexList;
-        private static Random rand;
         private static int maxIndexValue;
 
         private Bitmap textBmp;
@@ -28,7 +27,6 @@ namespace OpenGL
         {
             listquotes = new List<string>();
             indexList = new List<int>();
-            rand = new Random();
             maxIndexValue = 0;
             text = Text;
             builtInFont = BuiltInFont;
@@ -77,7 +75,7 @@ namespace OpenGL
                     indexList.Clear();
                 }
 
-                index = rand.Next(0, maxIndexValue);
+                index = Util.Rnd.Next(0, maxIndexValue);
 
                 if (!indexList.Contains(index))
                 {

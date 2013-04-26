@@ -24,7 +24,6 @@ namespace OpenGL
 
         private static List<string> listScrollers;
         private static List<int> indexList;
-        private static Random rand;
         private static int maxIndexValue;
         private int chessNumber;
         private int randomBackground;
@@ -40,7 +39,6 @@ namespace OpenGL
             text = txt;
             listScrollers = new List<string>();
             indexList = new List<int>();
-            rand = new Random();
             maxIndexValue = 0;
             randomBackground = 0;
             randomScrollMove =  0;
@@ -87,10 +85,10 @@ namespace OpenGL
 
         public void getRandomScrollerStuff()
         {
-            chessNumber = rand.Next(0, 6);
-            randomBackground = rand.Next(0, 6);
-            randomScrollMove = rand.Next(0, 6);
-            randomFont = rand.Next(0, 6);
+            chessNumber = Util.Rnd.Next(0, 6);
+            randomBackground = Util.Rnd.Next(0, 6);
+            randomScrollMove = Util.Rnd.Next(0, 6);
+            randomFont = Util.Rnd.Next(0, 6);
             strScroll = getOneRandomScrollers();
 
 
@@ -131,7 +129,7 @@ namespace OpenGL
                     indexList.Clear();
                 }
 
-                index = rand.Next(0, maxIndexValue);
+                index = Util.Rnd.Next(0, maxIndexValue);
 
                 if (!indexList.Contains(index))
                 {
