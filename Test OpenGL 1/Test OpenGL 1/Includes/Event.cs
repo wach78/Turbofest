@@ -177,7 +177,9 @@ namespace OpenGL.Event
             valentine = new Valentine(ref sound);
             wl = new WinLinux(ref chess); //random
             creators = new Self();
+
             randomEvent = new List<string>(new string[] { "", "", "smurf", "sune", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
+
 
             string name, date, type;
             // Event dates setup

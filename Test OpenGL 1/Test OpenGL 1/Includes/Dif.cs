@@ -28,7 +28,7 @@ namespace OpenGL
             snd = sound;
             tick = 0;
 
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\.ogg", "Dif");
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\imperial.ogg", "Dif");
         }
 
         ~Dif()
