@@ -359,6 +359,7 @@ namespace OpenGL
                                                     break;
                                                 }
                                             }
+
                                             if (isPlaying)
                                             {
                                                 AL.BufferData(BufferRef, alf, BufferData, /*BufferData.Length*/readSize, FileInfo.rate);

@@ -104,7 +104,8 @@
             "3.5 hours",
             "4 hours",
             "4.5 hours ",
-            "5 hours"});
+            "5 hours",
+            "Test 1 hour"});
             this.cbRunTime.Location = new System.Drawing.Point(62, 85);
             this.cbRunTime.Name = "cbRunTime";
             this.cbRunTime.Size = new System.Drawing.Size(110, 21);

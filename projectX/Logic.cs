@@ -365,8 +365,8 @@ namespace projectX
                 date = date.AddDays(13);
                 xmlStuff2.writeFeastToXmlFile("Trettondedag jul", getShortDate(date), "Text");
 
+                year++;// ful justering
                 date = new DateTime(year, 02, 14);
-     
                 xmlStuff2.writeFeastToXmlFile("Valentine", getShortDate(date), "Effect");
 
                 date = semlaDate();
