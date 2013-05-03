@@ -19,7 +19,7 @@ namespace OpenGL
         private long tick;
         private float x;
         private float y;
-        private int randomIamge;
+        private int randomImage;
         private string CurrentDate;
         private Sound snd;
 
@@ -28,8 +28,7 @@ namespace OpenGL
 
             imageWach = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/wach.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             imageKamikazE = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/kze.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            randomIamge = -1;
-            SetRandomSelf();
+            randomImage = Util.Rnd.Next(0, 1);
             snd = sound;
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/samples/tetris.ogg", "Self");
 
@@ -69,18 +68,18 @@ namespace OpenGL
         }
 
         // this needs to be set to not load new textures each time... quick and dirty way now...
-        private void SetRandomSelf()
+        private void SetSelf()
         {
-            if (randomIamge == 0)
-                randomIamge = 1;
+            if (randomImage == 0)
+                randomImage = 1;
             else
-                randomIamge = 0;
+                randomImage = 0;
         }
 
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
-            GL.BindTexture(TextureTarget.Texture2D, (randomIamge == 1? imageKamikazE:imageWach));
+            GL.BindTexture(TextureTarget.Texture2D, (randomImage == 1 ? imageKamikazE : imageWach));
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.Begin(BeginMode.Quads);
@@ -110,11 +109,12 @@ namespace OpenGL
 
         }//DrawImage
 
-        public void Play(string Date)
+        public void Play()
         {
 
             if (snd.PlayingName() != "Self")
-            {    
+            {
+                Console.WriteLine("Self");
                 snd.Play("Self");
             }
         }
@@ -125,8 +125,8 @@ namespace OpenGL
             if (CurrentDate != Date)
             {
                 CurrentDate = Date;
-                SetRandomSelf();
-                Play(Date);
+                SetSelf();
+                Play();
             }
             drawImage();
 

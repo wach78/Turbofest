@@ -176,9 +176,9 @@ namespace OpenGL.Event
             tl = new TurboLogo(ref sound, ref chess, ((ClockStart.Month >= 1 && ClockStart.Month <= 8)? false:true) ); // vilken termin är det? jan till början av augusti VT, resten HT... random
             valentine = new Valentine(ref sound);
             wl = new WinLinux(ref chess); //random
-            creators = new Self();
+            creators = new Self(ref sound);
 
-            randomEvent = new List<string>(new string[] { "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
+            randomEvent = new List<string>(new string[] { /*"", "",*/ "smurf", /*"sune","dif",*/ "sune", "dif", "fbk", "rms", /*"scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "",*/ "creators" });
 
 
             string name, date, type;

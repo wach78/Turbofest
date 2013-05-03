@@ -437,6 +437,7 @@ namespace OpenGL
         {
             Console.WriteLine("Stoping sound method");
             isPlaying = false;
+            NowPlayingName = string.Empty;
             AL.SourceStop(SoundSource); // to be safe
             AL.SourceStop(SoundStreamSource); // to be safe
         }
