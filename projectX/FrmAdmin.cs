@@ -67,7 +67,7 @@ namespace projectX
             
             System.Xml.XmlDocument loadDoc = new System.Xml.XmlDocument();
             
-            string path = XmlHandler.fixPath("Scrollers" +"\\Scrollers.xml");
+            string path = XmlHandler.fixPath("Scrollers" +"/Scrollers.xml");
             loadDoc.Load(path);
             XmlNodeList n= loadDoc.SelectNodes("scrollers/scroller");
 

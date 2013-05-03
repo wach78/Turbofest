@@ -325,7 +325,14 @@ namespace projectX
 
             if ("Spring".Equals(springOrFall))
             {
+
+                int m = int.Parse(monthNumber(startDate.Substring(0,3)));
+                int d = int.Parse(startDate.Substring(4,2));
                 year--; //justering av year 
+                date = new DateTime(year,m,d);
+                xmlStuff2.writeFeastToXmlFile("Välkommen till \n\n Turbophesten", getShortDate(date), "Text");
+
+              
                 date = new DateTime(year, 10, 24);
                 xmlStuff2.writeFeastToXmlFile("FN-dagen", getShortDate(date), "Text");
 
@@ -406,7 +413,7 @@ namespace projectX
         {
             string fileName = "scrollers";
 
-            fileName = Path.Combine("Scrollers\\", fileName);
+            fileName = Path.Combine("Scrollers/", fileName);
             XmlHandler xmlStuff = new XmlHandler(fileName, "Create");
             xmlStuff.createScrollersXmlFile();
 
@@ -468,7 +475,7 @@ namespace projectX
         public void addScroller(string text)
         {
             string file = "scrollers.xml";
-            file = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\XMLFiles\\Scrollers\\" + file;
+            file = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Scrollers/" + file;
             XmlHandler xmlStuff = new XmlHandler(file, "XEle");
             xmlStuff.writeScrollerToXmlFile(text);
         }//addScroller
@@ -476,7 +483,7 @@ namespace projectX
         public void delScroller(string text)
         {
             string file = "scrollers.xml";
-            file = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\XMLFiles\\Scrollers\\" + file;
+            file = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Scrollers/" + file;
             XmlHandler xmlStuff = new XmlHandler(file, "Delete");
             xmlStuff.deleteScroller(text);
 

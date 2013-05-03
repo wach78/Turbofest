@@ -21,14 +21,17 @@ namespace OpenGL
         private float y;
         private int randomIamge;
         private string CurrentDate;
+        private Sound snd;
 
-        public Self()
+        public Self(ref Sound sound)
         {
 
-            imageWach = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\wach.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            imageKamikazE = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\kze.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            imageWach = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/wach.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            imageKamikazE = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/kze.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             randomIamge = -1;
             SetRandomSelf();
+            snd = sound;
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/samples/tetris.ogg", "Self");
 
             tick = 0;
             x = 0.0f;
@@ -107,12 +110,23 @@ namespace OpenGL
 
         }//DrawImage
 
+        public void Play(string Date)
+        {
+
+            if (snd.PlayingName() != "Self")
+            {    
+                snd.Play("Self");
+            }
+        }
+
+
         public void Draw(string Date)
         {
             if (CurrentDate != Date)
             {
                 CurrentDate = Date;
                 SetRandomSelf();
+                Play(Date);
             }
             drawImage();
 

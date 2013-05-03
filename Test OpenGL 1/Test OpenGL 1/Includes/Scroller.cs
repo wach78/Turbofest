@@ -101,7 +101,7 @@ namespace OpenGL
 
         private static void readFromXml()
         {
-            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\XMLFiles\\Scrollers\\Scrollers.xml";
+            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Scrollers/Scrollers.xml";
 
             System.Xml.Linq.XDocument xDoc = System.Xml.Linq.XDocument.Load(path);
 

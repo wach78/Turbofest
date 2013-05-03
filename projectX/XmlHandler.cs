@@ -73,7 +73,7 @@ namespace projectX
            {
                return file;
            }
-           return  System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\XMLFiles\\" + file;
+           return  System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/" + file;
        }//fixPath
 
        public IEnumerable<XElement> getParticipant()

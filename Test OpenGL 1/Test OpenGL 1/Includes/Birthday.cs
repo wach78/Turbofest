@@ -28,12 +28,13 @@ namespace OpenGL
 
         private bool leftborder;
         private bool rightborder;
+        private string LastPlayedDate;
 
         private int randomFontt;
         public Birthday(ref Sound sound, ref Text2D txt, ref Chess chess)
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\tarta.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            ballonsImage = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\gfx\\ballons2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/tarta.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            ballonsImage = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/ballons2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snd = sound;
             text = txt;
             this.chess = chess;
@@ -44,7 +45,7 @@ namespace OpenGL
             randomFont();
 
            // snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/birthday.wav", "Birthday");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\samples\\birthday.ogg", "Birthday");
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/samples/birthday.ogg", "Birthday");
             currentImage = 0;
 
             
@@ -171,11 +172,14 @@ namespace OpenGL
             
 
         }//DrawImage
-        public void Play()
+        public void Play(string Date)
         {
-            if (snd.PlayingName() != "Birthday") // this will start once the last sound is done, ie looping.
+  
+            if (LastPlayedDate != Date && snd.PlayingName() != "Birthday")
             {
+                LastPlayedDate = Date;
                 snd.Play("Birthday");
+                
             }
         }
 
@@ -187,7 +191,7 @@ namespace OpenGL
 
         public void Draw(string Date)
         {
-            Play();
+            Play(Date);
             chess.Draw(Date, (Chess.ChessColor)chessNumber);
             drawText("Grattis!");
             drawImage();
@@ -196,7 +200,7 @@ namespace OpenGL
 
         public void Draw(string Date, string names)
         {       
-            Play(); 
+            Play(Date); 
             chess.Draw(Date, (Chess.ChessColor)chessNumber);
             drawText("Grattis!\n\n" + names);
             drawImage();

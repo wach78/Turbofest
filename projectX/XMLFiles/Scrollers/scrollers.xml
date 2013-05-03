@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <scrollers>
-
-	 <scroller>
+  <scroller>
     <name>drick upp er öhl och spill inte mvh öhlhitler</name>
     <type>scroll</type>
   </scroller>
@@ -38,7 +37,11 @@
     <type>scroll</type>
   </scroller>
   <scroller>
-    <name>datasmurfen smurfar internet</name>
+    <name>Epic</name>
+    <type>scroll</type>
+  </scroller>
+  <scroller>
+    <name>i sense a disturbance in the party  drink more water?</name>
     <type>scroll</type>
   </scroller>
 </scrollers>

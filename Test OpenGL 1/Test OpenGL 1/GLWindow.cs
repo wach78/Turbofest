@@ -15,8 +15,8 @@ namespace OpenGL
 {
     public class GLWindow : OpenTK.GameWindow
     {
-        const string TITLE = "Project X";
-        const int WIDTH = 1024;
+        const string TITLE = "Turbo";
+        const int WIDTH = 1024; // titta på
         const int HEIGHT = 768;
 
         bool blnPointDraw;
