@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="GLWindow.cs" />
     <Compile Include="Includes\Ballons.cs" />
+    <Compile Include="Includes\BB.cs" />
     <Compile Include="Includes\Birthday.cs" />
     <Compile Include="Includes\Christmas.cs" />
     <Compile Include="Includes\Advent.cs" />
@@ -214,6 +215,13 @@
     <Content Include="Samples\Tetris.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    
+    <None Include="Samples\bb.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Samples\Tetris.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

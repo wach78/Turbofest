@@ -137,6 +137,7 @@ namespace OpenGL.Event
         NewYear newyear;
         Scroller scroller;
         Self creators;
+        BB bb;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -177,8 +178,10 @@ namespace OpenGL.Event
             valentine = new Valentine(ref sound);
             wl = new WinLinux(ref chess); //random
             creators = new Self(ref sound);
+            bb = new BB(ref sound); 
 
-            randomEvent = new List<string>(new string[] { /*"", "",*/ "smurf", /*"sune","dif",*/ "sune", "dif", "fbk", "rms", /*"scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "",*/ "creators" });
+            randomEvent = new List<string>(new string[] {"BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
+
 
 
             string name, date, type;
@@ -274,6 +277,7 @@ namespace OpenGL.Event
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
                     if (chess != null) chess.Dispose(); // 7 texturer
+                    if (bb != null) bb.Dispose(); // 1 textur
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -414,6 +418,10 @@ namespace OpenGL.Event
                             case "creators":
                                 creators.Draw(nowDate);
                                 break;
+                            case "BB":
+                                bb.Draw(nowDate);
+                                break;
+
                             default:
                                 if (nowDate != lastDate)
                                 {
