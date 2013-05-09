@@ -28,6 +28,7 @@ namespace OpenGL
         private bool soundDone = false;
         private bool disposed = false;
         //private short soundTimes = 0;
+        private string LastPlayedDate;
 
         public SuneAnimation(ref Sound sound, ref Text2D Text)
         {
@@ -39,7 +40,7 @@ namespace OpenGL
             sh = new SuneTxtHandler(ref Text, false);
             snd = sound;
             //text = Text;
-
+            LastPlayedDate = string.Empty;
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/sune_sprite.bmp");
             //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/laugh.wav", "Sune");
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/laugh.ogg", "Sune");
@@ -110,6 +111,16 @@ namespace OpenGL
 
         }
 
+        private void random(string Date)
+        {
+            if (LastPlayedDate != Date)
+            {
+                NewQoute();
+                LastPlayedDate = Date;
+            }
+
+        }
+
         public void updateImages()
         {
             ticks = System.DateTime.Now.Ticks  / TimeSpan.TicksPerMillisecond; 
@@ -155,6 +166,7 @@ namespace OpenGL
 
         public void Draw(string Date)
         {
+            random(Date);
             playSound();
             updateImages();
             DrawImage();

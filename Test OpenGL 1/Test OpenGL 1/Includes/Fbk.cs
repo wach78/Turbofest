@@ -13,7 +13,7 @@ namespace OpenGL
         private bool disposed;
         private int image;
         private Sound snd;
-
+        private string LastDate;
         public Fbk(ref Sound sound)
         {
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/fbk2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
@@ -21,6 +21,7 @@ namespace OpenGL
             //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.wav", "FBK");
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.ogg", "FBK");
             disposed = false;
+            LastDate = string.Empty;
         }
 
         ~Fbk()
@@ -70,17 +71,18 @@ namespace OpenGL
 
         }//DrawImage
 
-        public void Play()
+        public void Play(string Date)
         {
-            if (snd.PlayingName() != "FBK") // this will start once the last sound is done, ie looping.
+            if ( LastDate != Date && snd.PlayingName() != "FBK") // this will start once the last sound is done, ie looping.
             {
                 snd.Play("FBK");
+                LastDate = Date;
             }
         }
 
         public void Draw(string Date)
         {
-            Play();
+            Play(Date);
             drawImage();
         }//Draw
 

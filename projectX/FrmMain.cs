@@ -83,6 +83,9 @@ namespace projectX
             lViewParty.FullRowSelect = true;
             lViewParty.MultiSelect = false;
             fileName = "";
+
+            FrmAdmin.Res = "800x600" + "@" + OpenTK.DisplayDevice.AvailableDisplays[0].RefreshRate;
+        
            
         }//init
 
@@ -108,6 +111,18 @@ namespace projectX
             if (lViewParty.SelectedIndices.Count > 0)
             {
                 fileName = lViewParty.SelectedItems[0].Text;
+
+                String season = fileName.Substring(9,2);
+
+                if ("VT".Equals(season))
+                {
+                    SpringOrFall = "Spring";
+                }
+                else if ("HT".Equals(season))
+                {
+                    SpringOrFall = "Fall";
+                }
+
                 fileName += ".xml";
 
                 btnAdd.Enabled = true;
@@ -184,7 +199,7 @@ namespace projectX
             }
             OpenGL.CrashHandler ch = new OpenGL.CrashHandler();
             ch.CheckCrash();
-            gw = new OpenGL.GLWindow(xmlStuff.sortXml(), xmlStuff.getDataFromXml(), ref ch);
+            gw = new OpenGL.GLWindow(xmlStuff.sortXml(), xmlStuff.getDataFromXml(),FrmAdmin.Resolution, ref ch);
             gw.Run();
             ch.Dispose();
             ch = null;
@@ -308,6 +323,18 @@ namespace projectX
                 if (lViewParty.SelectedItems[0].Selected)
                 {
                     fileName = lViewParty.SelectedItems[0].Text;
+
+                    String season = fileName.Substring(9, 2);
+
+                    if ("VT".Equals(season))
+                    {
+                        SpringOrFall = "Spring";
+                    }
+                    else if ("HT".Equals(season))
+                    {
+                        SpringOrFall = "Fall";
+                    }
+
                     fileName += ".xml";
 
                     btnAdd.Enabled = true;

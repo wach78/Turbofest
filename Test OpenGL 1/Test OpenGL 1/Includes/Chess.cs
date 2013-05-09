@@ -11,7 +11,7 @@ namespace OpenGL
 {
     public class Chess : IEffect
     {
-        public enum ChessColor {BlackWhite, BlueBlack, PurpleGreen, BlackGreen, BlackLightGreen, BlackPurple, WhiteRed}; // this is after the constructor index...
+        public enum ChessColor {BlackWhite=0, BlueBlack, PurpleGreen, BlackGreen, BlackLightGreen, BlackPurple, WhiteRed}; // this is after the constructor index...
         private bool disposed = false;
         private int[] texture;
         private double m_scrollX;

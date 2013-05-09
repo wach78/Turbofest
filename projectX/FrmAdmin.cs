@@ -20,6 +20,24 @@ namespace projectX
         private Logic logic;
         private string  fileName;
         private string oldRunTime;
+        private static string resolution;
+
+        public static int[] Resolution
+        {
+            get
+            {
+                int w = int.Parse(resolution.Substring(0,resolution.IndexOf("x")));
+                int h = int.Parse(resolution.Substring(resolution.IndexOf("x") + 1, resolution.IndexOf("@") - resolution.IndexOf("x")-1));
+
+                return new int[]{w,h}; 
+            }
+    
+        }
+
+        public static string Res
+        {
+            set { resolution = value; }
+        }
         public FrmAdmin()
         {
             InitializeComponent();
@@ -42,7 +60,23 @@ namespace projectX
             listViewScrollers.GridLines = true;
             listViewScrollers.FullRowSelect = true;
             listViewScrollers.MultiSelect = false;
+
+            screenSize();
+
+            cbResolution.SelectedItem = resolution;
         }//init
+
+        private void screenSize()
+        {
+            foreach (var res in OpenTK.DisplayDevice.AvailableDisplays[0].AvailableResolutions) 
+            {
+                if (res.BitsPerPixel == 32 && !cbResolution.Items.Contains(res.Width + "x" + res.Height + "@" + res.RefreshRate)) 
+                {
+                     cbResolution.Items.Add(res.Width +"x"+ res.Height+"@"+res.RefreshRate);
+                }
+            }
+            
+        }
 
         private void loadData()
         {
@@ -126,6 +160,11 @@ namespace projectX
                 logic.delScroller(listViewScrollers.SelectedItems[0].Text);
                 updateList();
             }   
+        }
+
+        private void cbResolution_SelectedValueChanged(object sender, EventArgs e)
+        {
+            resolution = cbResolution.Text;
         }
     }//class
 }//namespace

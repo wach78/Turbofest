@@ -19,6 +19,7 @@ namespace OpenGL
 
         private bool disposed = false;
         private int tick;
+        private string LastDate;
 
         public Datasmurf(ref Sound sound, ref Text2D txt)
         {
@@ -32,6 +33,7 @@ namespace OpenGL
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/datasmurf.ogg", "Smurf");
 
             tick = 0;
+            LastDate = string.Empty;
         }
 
         ~Datasmurf()
@@ -105,16 +107,17 @@ namespace OpenGL
             text.Draw("Internet", Text2D.FontName.Coolfont, new Vector3(0.8f, -0.4f, 0.5f ), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 2.0f);
         }
 
-        private void Play()
+        private void Play(String Date)
         {
-            if (snd.PlayingName() != "Smurf") // this will start once the last sound is done, ie looping.
+            if ( LastDate != Date && snd.PlayingName() != "Smurf") // this will start once the last sound is done, ie looping.
             {
                 snd.Play("Smurf");
+                LastDate = Date;
             }
         }
         public void Draw(string Date)
         {
-            Play();
+            Play(Date);
             drawText();
             moveImage();
             DrawImage();

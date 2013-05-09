@@ -71,7 +71,7 @@ namespace OpenGL
             }//for
 
 
-            chessNumber = Util.Rnd.Next(0, 6);
+           
         }
         ~Birthday()
          {
@@ -114,6 +114,7 @@ namespace OpenGL
         private void randomFont()
         {
             randomFontt = Util.Rnd.Next(0, 6);
+            chessNumber = Util.Rnd.Next(0, 6);
         }
         private void drawImage()
         {
@@ -179,7 +180,7 @@ namespace OpenGL
             {
                 LastPlayedDate = Date;
                 snd.Play("Birthday");
-                
+                randomFont();
             }
         }
 

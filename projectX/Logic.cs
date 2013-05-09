@@ -244,7 +244,7 @@ namespace projectX
                 case "14400000": value = "4 hours"; break;
                 case "16200000": value = "4.5 hours"; break;
                 case "18000000": value = "5 hours"; break;
-                case "3600000" : value = "1 hour"; break; ;
+                case "3600000": value = "Test 1 hour"; break; 
             }//switch
 
             return value;
@@ -469,7 +469,7 @@ namespace projectX
         public void updateData(string fileName,string oldRunTime,string sd, string ed,string rt)
         {
             XmlHandler xmlStuff = new XmlHandler(fileName, "XDoc");
-            xmlStuff.uppdateData(adjustStringFormatForDate(sd, "Start"), oldRunTime, adjustStringFormatForDate(ed, "end"), calculateRunTime(rt) + "");
+            xmlStuff.uppdateData(adjustStringFormatForDate(sd, "Start"), oldRunTime, adjustStringFormatForDate(ed, "End"), calculateRunTime(rt) + "");
         }//uppdateData
 
         public void addScroller(string text)

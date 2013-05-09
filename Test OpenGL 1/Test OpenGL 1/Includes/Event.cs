@@ -181,7 +181,7 @@ namespace OpenGL.Event
             bb = new BB(ref sound); // random
             GM = new GummiBears(ref sound);
 
-            randomEvent = new List<string>(new string[] {"bumbi"/*, "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
+            randomEvent = new List<string>(new string[] {/*"bumbi", "BB", "", "", "smurf",*/ "sune"/*,"dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers"/*, "turbologo", "winlinux", "", "creators"*/ });
 
 
 
@@ -310,8 +310,8 @@ namespace OpenGL.Event
                     sound.StopSound();
                 }
                 lastDate = nowDate;
-                sune.NewQoute(); // flytta in detta i sune...
-                scroller.getRandomScrollerStuff(); // flytta in detta i scroller
+                //sune.NewQoute(); // flytta in detta i sune...
+                //scroller.getRandomScrollerStuff(); // flytta in detta i scroller
             }
 
             if (Util.ShowClock)

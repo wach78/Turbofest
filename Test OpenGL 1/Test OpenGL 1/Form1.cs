@@ -24,7 +24,7 @@ namespace OpenGL
             OpenTK.GameWindow asd2 = new OpenTK.GameWindow(1024,768, OpenTK.Graphics.GraphicsMode.Default, "Project X", OpenTK.GameWindowFlags.Default, dev, 3, 0, OpenTK.Graphics.GraphicsContextFlags.Debug);
             //asd2.Run();
             CrashHandler ch = new CrashHandler();
-            GLWindow asd3 = new GLWindow(null, null, ref ch);
+            GLWindow asd3 = new GLWindow(null, null, null,ref ch);
             asd3.Run();
             
         }

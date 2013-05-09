@@ -18,6 +18,7 @@ namespace OpenGL
 
         private bool disposed = false;
         private int tick;
+        private string LastDate;
 
         public Dif(ref Chess chess, ref Sound sound)
         {
@@ -27,6 +28,7 @@ namespace OpenGL
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/dif2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snd = sound;
             tick = 0;
+            LastDate = string.Empty;
 
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/imperial.ogg", "Dif");
         }
@@ -94,17 +96,18 @@ namespace OpenGL
              
         }//moveImage
 
-        public void Play()
+        public void Play(String Date)
         {
-            if (snd.PlayingName() != "Dif") // this will start once the last sound is done, ie looping.
+            if (LastDate != Date && snd.PlayingName() != "Dif") 
             {
                 snd.Play("Dif");
+                LastDate = Date;
             }
         }
 
         public void Draw(string Date)
         {
-            Play();
+            Play(Date);
             bakground.Draw(Date, Chess.ChessColor.WhiteRed);
             moveImage();
             DrawImage();

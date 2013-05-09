@@ -13,6 +13,7 @@ namespace OpenGL
         private bool disposed;
         private int image;
         private Sound snd;
+        private string LastDate;
 
         public BB(ref Sound sound)
         {
@@ -21,6 +22,7 @@ namespace OpenGL
 
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/bb.ogg", "BB");
             disposed = false;
+            LastDate = string.Empty;
         }
 
         ~BB()
@@ -70,17 +72,18 @@ namespace OpenGL
 
         }//DrawImage
 
-        public void Play()
+        public void Play(String Date)
         {
-            if (snd.PlayingName() != "BB") // this will start once the last sound is done, ie looping.
+            if (LastDate != Date && snd.PlayingName() != "BB")  
             {
                 snd.Play("BB");
+                LastDate = Date;
             }
         }
 
         public void Draw(string Date)
         {
-            Play();
+            Play(Date);
             drawImage();
         }//Draw
 

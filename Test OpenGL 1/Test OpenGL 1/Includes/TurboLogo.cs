@@ -37,8 +37,8 @@ namespace OpenGL
 
         public TurboLogo(ref Sound sound, ref Chess chess,bool VT = true)
         {
-            Random rnd = new Random();
-            if (rnd.Next(0, 10) < 6)
+   
+            if (Util.Rnd.Next(0, 10) < 6)
             {
                 moveUp = false;
             }
@@ -46,7 +46,7 @@ namespace OpenGL
 	        {
                 moveUp = true;
             }
-            if (rnd.Next(0,10) < 6)
+            if (Util.Rnd.Next(0,10) < 6)
             {
                 moveLeft = false;
             }
@@ -55,8 +55,7 @@ namespace OpenGL
                 moveLeft = true;
             }
 
-            chessNumber = rnd.Next(0, 6);
-            rnd = null;
+            bakground = chess;
             snd = sound;
             randomChess();
 
@@ -188,6 +187,7 @@ namespace OpenGL
             {
                 LastPlayedDate = Date;
                 numPlayedSound = 0;
+                randomChess();
             }
             //need to keep track of how many times this have played?!
             if (snd.PlayingName() != "roadrunner" && numPlayedSound < 3) // this will start once the last sound is done, ie looping.

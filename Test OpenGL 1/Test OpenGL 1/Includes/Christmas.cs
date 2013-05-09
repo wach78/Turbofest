@@ -23,10 +23,10 @@ namespace OpenGL
         private bool disposed = false;
         private int tick;
         
-         private SnowFlake[] sf;
-         private const int NUMBEROFFLAKES = 150;
-        
-      
+        private SnowFlake[] sf;
+        private const int NUMBEROFFLAKES = 150;
+
+        private string LastDate;
 
         public Christmas(ref Sound sound)
         {
@@ -39,7 +39,7 @@ namespace OpenGL
             //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/xmas.wav", "smurf");
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/xmas.ogg", "XMAS");
 
-
+            LastDate = string.Empty;
             tick = 0;
 
             x = 1;
@@ -166,16 +166,17 @@ namespace OpenGL
 
         }//moveImage
 
-        public void Play()
+        public void Play(String Date)
         {
-            if (snd.PlayingName() != "XMAS") // this will start once the last sound is done, ie looping.
+            if (LastDate != Date && snd.PlayingName() != "XMAS") // this will start once the last sound is done, ie looping.
             {
                 snd.Play("XMAS");
+                LastDate = Date;
             }
         }
         public void Draw(string Date)
         {
-            Play();
+            Play(Date);
             moveImage();
            
             drawImage();

@@ -29,6 +29,8 @@ namespace OpenGL
         private int randomBackground;
         private int randomScrollMove;
         private int randomFont;
+
+        private string LastPlayedDate; 
         
         private string strScroll;
 
@@ -48,7 +50,7 @@ namespace OpenGL
             z = 0.0f;
             startY = 0.0f;
             tick = 0;
-
+            LastPlayedDate = string.Empty;
 
             readFromXml();
             getRandomScrollerStuff();
@@ -200,9 +202,20 @@ namespace OpenGL
         }
 
 
+        private void allRandom(string Date)
+        {
+            if (LastPlayedDate != Date)
+            {
+                getRandomScrollerStuff();
+                LastPlayedDate = Date;
+            }
+           
+        }
 
        public void Draw(string Date)
        {
+           allRandom(Date);
+        
            if (randomBackground == 0 || randomBackground == 1)
            {
                sf.Draw(Date);

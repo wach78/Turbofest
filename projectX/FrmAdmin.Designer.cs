@@ -32,6 +32,8 @@
             this.btncancel = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cbResolution = new System.Windows.Forms.ComboBox();
+            this.lblResolution = new System.Windows.Forms.Label();
             this.cbRunTime = new System.Windows.Forms.ComboBox();
             this.lblRunTime = new System.Windows.Forms.Label();
             this.cbEndTimeDay = new System.Windows.Forms.ComboBox();
@@ -45,8 +47,6 @@
             this.btnDel = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.lblResolution = new System.Windows.Forms.Label();
-            this.cbResolution = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -99,6 +99,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(197, 150);
             this.panel1.TabIndex = 3;
+            // 
+            // cbResolution
+            // 
+            this.cbResolution.FormattingEnabled = true;
+            this.cbResolution.Location = new System.Drawing.Point(62, 116);
+            this.cbResolution.Name = "cbResolution";
+            this.cbResolution.Size = new System.Drawing.Size(110, 21);
+            this.cbResolution.TabIndex = 22;
+            this.cbResolution.SelectedValueChanged += new System.EventHandler(this.cbResolution_SelectedValueChanged);
+            // 
+            // lblResolution
+            // 
+            this.lblResolution.AutoSize = true;
+            this.lblResolution.Location = new System.Drawing.Point(3, 124);
+            this.lblResolution.Name = "lblResolution";
+            this.lblResolution.Size = new System.Drawing.Size(60, 13);
+            this.lblResolution.TabIndex = 21;
+            this.lblResolution.Text = "Resolution:";
             // 
             // cbRunTime
             // 
@@ -247,32 +265,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(259, 65);
             this.panel3.TabIndex = 8;
-            // 
-            // lblResolution
-            // 
-            this.lblResolution.AutoSize = true;
-            this.lblResolution.Location = new System.Drawing.Point(3, 124);
-            this.lblResolution.Name = "lblResolution";
-            this.lblResolution.Size = new System.Drawing.Size(60, 13);
-            this.lblResolution.TabIndex = 21;
-            this.lblResolution.Text = "Resolution:";
-            // 
-            // cbResolution
-            // 
-            this.cbResolution.FormattingEnabled = true;
-            this.cbResolution.Items.AddRange(new object[] {
-            "640*480",
-            "800*640",
-            "1024*768",
-            "1280*720",
-            "1280*768",
-            "1280*800",
-            "1280*960",
-            "1280*1024"});
-            this.cbResolution.Location = new System.Drawing.Point(62, 116);
-            this.cbResolution.Name = "cbResolution";
-            this.cbResolution.Size = new System.Drawing.Size(110, 21);
-            this.cbResolution.TabIndex = 22;
             // 
             // FrmAdmin
             // 
