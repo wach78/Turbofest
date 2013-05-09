@@ -340,7 +340,7 @@ namespace OpenGL
                                             while (readSize < (BufferData.Length * 0.75) && isPlaying) // this is not at all safe!!!
                                             {
                                                 fileRead = FileToBuffer.read(BufferData2, BufferData2.Length, 0, 2, 1, null);
-                                                System.Diagnostics.Debug.WriteLine("Bytes read: " + fileRead);
+                                                //System.Diagnostics.Debug.WriteLine("Bytes read: " + fileRead);
                                                 if (fileRead > 0)
                                                 {
                                                     Buffer.BlockCopy(BufferData2, 0, BufferData, readSize, fileRead);
@@ -360,13 +360,13 @@ namespace OpenGL
                                                 }
                                             }
 
-                                            if (isPlaying)
+                                            if (isPlaying && readSize > 0)
                                             {
                                                 AL.BufferData(BufferRef, alf, BufferData, /*BufferData.Length*/readSize, FileInfo.rate);
-                                                System.Diagnostics.Debug.WriteLine("Buffering data: " + AL.GetErrorString(AL.GetError()));
-                                                System.Diagnostics.Debug.WriteLine("ALC: " + context.CurrentError.ToString());
+                                                /*System.Diagnostics.Debug.WriteLine("Buffering data: " + AL.GetErrorString(AL.GetError()));
+                                                System.Diagnostics.Debug.WriteLine("ALC: " + context.CurrentError.ToString());*/
                                                 AL.SourceQueueBuffer(SoundStreamSource, BufferRef);
-                                                System.Diagnostics.Debug.WriteLine("source queuing: " + AL.GetErrorString(AL.GetError()));
+                                                //System.Diagnostics.Debug.WriteLine("source queuing: " + AL.GetErrorString(AL.GetError()));
                                             }
                                             Array.Clear(BufferData, 0, BufferData.Length);
                                             Array.Clear(BufferData2, 0, BufferData2.Length);
@@ -437,9 +437,9 @@ namespace OpenGL
         {
             Console.WriteLine("Stoping sound method");
             isPlaying = false;
-            NowPlayingName = string.Empty;
             AL.SourceStop(SoundSource); // to be safe
             AL.SourceStop(SoundStreamSource); // to be safe
+            NowPlayingName = string.Empty;
         }
 
         /// <summary>

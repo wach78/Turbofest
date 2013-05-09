@@ -25,7 +25,7 @@ namespace OpenGL
         Event.Event events;
 
         // OpenGL version after 3.0 needs there own matrix libs so we need to create them if we run over 3.0!!! if ser major and minor to 0 we can get around it?!
-        public GLWindow(System.Xml.Linq.XDocument Events, string runtime) : base(WIDTH, HEIGHT, new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(32), 24, 8, 0)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
+        public GLWindow(System.Xml.Linq.XDocument Events, string runtime, ref CrashHandler Crash) : base(WIDTH, HEIGHT, new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(32), 24, 8, 0)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
         {
             // fix me...
             /*if (runtime.Length < 24) // YYYY-MM-DDYYYY-MM-DDxxxxxx
@@ -42,9 +42,9 @@ namespace OpenGL
             DateTime dtEnd = DateTime.Parse(runtime.Substring(10, 10));
 
             //TimeSpan tsDiff = dtEnd.Subtract(dtStart);
-
-            events = new Event.Event(dtStart, dtEnd, int.Parse(runtime.Substring(20)), Events);
-
+            
+            events = new Event.Event(dtStart, dtEnd, int.Parse(runtime.Substring(20)), Events, ref Crash);
+            
         }
 
         public void _WriteVersion()
@@ -202,7 +202,15 @@ namespace OpenGL
             {
                 //snd.Stop();
                 //soundThread.Abort();
+#if DEBUG
                 this.Exit();
+#else
+                if (System.Windows.Forms.MessageBox.Show("You are about to close this window, are you sure?", "Close window", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    this.Exit();
+                }
+#endif
+
                 //this.Close(); // dosen't release the window...
             }
             else if (/*key.Key == OpenTK.Input.Key.Enter && key.Key.HasFlag(OpenTK.Input.Key.AltLeft)*/ key.Key == OpenTK.Input.Key.F)

@@ -34,7 +34,7 @@ namespace OpenGL
             snd = sound;
             txt = text;
             texture = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/rms.jpg", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.Yellow);
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/samples/free.ogg", "rms");
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/free.ogg", "rms");
             SongText = new string[9];
             CurrentRow = -1;
             DelayRow = 3500; // milisecond

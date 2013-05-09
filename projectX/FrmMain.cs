@@ -42,7 +42,6 @@ namespace projectX
             init();
   
             uppdateFilesToListView();
-
         }
 
      
@@ -182,9 +181,12 @@ namespace projectX
                 Console.WriteLine("Starting dispose of old Gwindow.");
                 gw = null;
             }
-            gw = new OpenGL.GLWindow(xmlStuff.sortXml(), xmlStuff.getDataFromXml());
+            OpenGL.CrashHandler ch = new OpenGL.CrashHandler();
+            ch.CheckCrash();
+            gw = new OpenGL.GLWindow(xmlStuff.sortXml(), xmlStuff.getDataFromXml(), ref ch);
             gw.Run();
-            
+            ch.Dispose();
+            ch = null;
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)

@@ -45,7 +45,7 @@ namespace OpenGL
             randomFont();
 
            // snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/birthday.wav", "Birthday");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/samples/birthday.ogg", "Birthday");
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/birthday.ogg", "Birthday");
             currentImage = 0;
 
             

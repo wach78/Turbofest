@@ -28,8 +28,8 @@ namespace OpenGL
 
             snd = sound;
             text = txt;
-            //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/samples/datasmurf.wav", "Smurf");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/samples/datasmurf.ogg", "Smurf");
+            //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/datasmurf.wav", "Smurf");
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/datasmurf.ogg", "Smurf");
 
             tick = 0;
         }

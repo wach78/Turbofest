@@ -39,33 +39,11 @@ namespace OpenGL
             increments = (tsDiff.TotalSeconds) / (this.runtime / 1000) /*/ 1000*/; // every second in realtime we increase the clock with this increment
             m_tex = new int[2];
 
-            //System.Drawing.Bitmap bitmapDate = new System.Drawing.Bitmap(/*System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location)*/ System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/clockfont40x70.bmp" /*"../../gfx/clockfont40x70.bmp"*/); // this is now more controlled as it will looke for current exec path
-            /*System.Drawing.Bitmap bitmapClock = new System.Drawing.Bitmap(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/clockfont80x140.bmp"); // this is now more controlled as it will looke for current exec path
+            if (this.runtime <= 0.0)
+            {
+                throw new Exception("Runtime is less or equal to 0!");
+            }
 
-            GL.GenTextures(2, this.m_tex);
-
-            // Date font
-            GL.BindTexture(TextureTarget.Texture2D, this.m_tex[0]);
-            System.Drawing.Imaging.BitmapData data = bitmapDate.LockBits(new System.Drawing.Rectangle(0, 0, bitmapDate.Width, bitmapDate.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-            bitmapDate.UnlockBits(data);
-            data = null;
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-
-            // Time font
-            //GL.ActiveTexture(TextureUnit.Texture1);
-            GL.BindTexture(TextureTarget.Texture2D, this.m_tex[1]);
-
-            data = bitmapClock.LockBits(new System.Drawing.Rectangle(0, 0, bitmapClock.Width, bitmapClock.Height),
-                System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0,
-                PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-            bitmapClock.UnlockBits(data);
-            data = null;
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
-            */
             m_tex[0] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/clockfont40x70.bmp");
             m_tex[1] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/clockfont80x140.bmp");
 

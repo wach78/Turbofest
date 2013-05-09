@@ -109,6 +109,7 @@ namespace OpenGL.Event
     class Event
     {
         private bool disposed = false;
+        CrashHandler ch;
         // Time
         OpenGL.PartyClock clock;
         // Effect needed effects
@@ -138,6 +139,7 @@ namespace OpenGL.Event
         Scroller scroller;
         Self creators;
         BB bb;
+        GummiBears GM;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -145,11 +147,9 @@ namespace OpenGL.Event
         string lastDate;
         string nowDate;
 
-
-
-
-        public Event(DateTime ClockStart, DateTime ClockEnd, int ClockRunTime, System.Xml.Linq.XDocument XMLEvents)
+        public Event(DateTime ClockStart, DateTime ClockEnd, int ClockRunTime, System.Xml.Linq.XDocument XMLEvents, ref CrashHandler Crash)
         {
+            ch = Crash;
             events = new Dictionary<string, List<EventItem>>();
             clock = new PartyClock(ClockStart, ClockEnd, ClockRunTime);
             Util.ShowClock = true;
@@ -177,10 +177,11 @@ namespace OpenGL.Event
             tl = new TurboLogo(ref sound, ref chess, ((ClockStart.Month >= 1 && ClockStart.Month <= 8)? false:true) ); // vilken termin är det? jan till början av augusti VT, resten HT... random
             valentine = new Valentine(ref sound);
             wl = new WinLinux(ref chess); //random
-            creators = new Self(ref sound);
-            bb = new BB(ref sound); 
+            creators = new Self(ref sound); // random
+            bb = new BB(ref sound); // random
+            GM = new GummiBears(ref sound);
 
-            randomEvent = new List<string>(new string[] {"BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
+            randomEvent = new List<string>(new string[] {"bumbi"/*, "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
 
 
 
@@ -273,11 +274,12 @@ namespace OpenGL.Event
                     if (creators != null) creators.Dispose(); // 2 textur
                     if (newyear != null) newyear.Dispose(); // 1 textur
                     if (scroller != null) scroller.Dispose(); //
+                    if (bb != null) bb.Dispose(); // 1 textur
+                    if (GM != null) GM.Dispose(); // 7 textur
 
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
                     if (chess != null) chess.Dispose(); // 7 texturer
-                    if (bb != null) bb.Dispose(); // 1 textur
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -302,6 +304,7 @@ namespace OpenGL.Event
             nowDate = clock.CurrentClock().ToShortDateString();
             if (nowDate != lastDate)
             {
+                ch.update(clock.clock);
                 if (sound.PlayingName() != string.Empty)
                 {
                     sound.StopSound();
@@ -421,7 +424,9 @@ namespace OpenGL.Event
                             case "BB":
                                 bb.Draw(nowDate);
                                 break;
-
+                            case "bumbi":
+                                GM.Draw(nowDate);
+                                break;
                             default:
                                 if (nowDate != lastDate)
                                 {

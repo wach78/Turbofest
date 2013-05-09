@@ -327,7 +327,7 @@ namespace projectX
             {
 
                 int m = int.Parse(monthNumber(startDate.Substring(0,3)));
-                int d = int.Parse(startDate.Substring(4,2));
+                int d = int.Parse(startDate.Substring(4));
                 year--; //justering av year 
                 date = new DateTime(year,m,d);
                 xmlStuff2.writeFeastToXmlFile("Välkommen till \n\n Turbophesten", getShortDate(date), "Text");
@@ -411,7 +411,7 @@ namespace projectX
 
         public void createScrollers()
         {
-            string fileName = "scrollers";
+            string fileName = "Scrollers";
 
             fileName = Path.Combine("Scrollers/", fileName);
             XmlHandler xmlStuff = new XmlHandler(fileName, "Create");
@@ -474,7 +474,7 @@ namespace projectX
 
         public void addScroller(string text)
         {
-            string file = "scrollers.xml";
+            string file = "Scrollers.xml";
             file = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Scrollers/" + file;
             XmlHandler xmlStuff = new XmlHandler(file, "XEle");
             xmlStuff.writeScrollerToXmlFile(text);
@@ -482,7 +482,7 @@ namespace projectX
 
         public void delScroller(string text)
         {
-            string file = "scrollers.xml";
+            string file = "Scrollers.xml";
             file = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Scrollers/" + file;
             XmlHandler xmlStuff = new XmlHandler(file, "Delete");
             xmlStuff.deleteScroller(text);

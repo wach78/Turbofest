@@ -58,7 +58,7 @@ namespace OpenGL
             Bitmap bitmap = null;
             if (File.Exists(filename))
             {
-                bitmap = new Bitmap(filename);
+                bitmap = new Bitmap(filename, false);
                 Width = bitmap.Width;
                 Height = bitmap.Height;
             }
@@ -77,7 +77,8 @@ namespace OpenGL
             Bitmap bitmap = null;
             if (File.Exists(filename))
             {
-                bitmap = new Bitmap(filename);
+                Console.WriteLine("-----> " + filename);
+                bitmap = new Bitmap(filename, false);
             }
             else
             {
@@ -91,6 +92,10 @@ namespace OpenGL
         public static int LoadTexture(Bitmap bitmap, TextureMinFilter MinFilter = TextureMinFilter.Linear, TextureMagFilter MagFilter = TextureMagFilter.Linear,
             TextureWrapMode WrapS = TextureWrapMode.Clamp, TextureWrapMode WrapT = TextureWrapMode.Clamp, Color Transparant = new Color())
         {
+            if (bitmap == null)
+            {
+                throw new Exception("Bitmap is null, texture is not loading!");
+            }
             int tex;
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
 
