@@ -25,6 +25,7 @@ namespace OpenGL
         bool blnWireFrameDraw;
 
         Event.Event events;
+        private CrashHandler CrashH;
 
         // OpenGL version after 3.0 needs there own matrix libs so we need to create them if we run over 3.0!!! if ser major and minor to 0 we can get around it?!
         public GLWindow(System.Xml.Linq.XDocument Events, string runtime,int[] res, ref CrashHandler Crash) : base(res[0], res[1], new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(32), 24, 8, 0)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
@@ -42,10 +43,11 @@ namespace OpenGL
             blnWireFrameDraw = false;
             DateTime dtStart = DateTime.Parse(runtime.Substring(0, 10));
             DateTime dtEnd = DateTime.Parse(runtime.Substring(10, 10));
+            CrashH = Crash;
 
             //TimeSpan tsDiff = dtEnd.Subtract(dtStart);
             
-            events = new Event.Event(dtStart, dtEnd, int.Parse(runtime.Substring(20)), Events, ref Crash);
+            events = new Event.Event(dtStart, dtEnd, int.Parse(runtime.Substring(20)), Events, ref CrashH);
             
         }
 
@@ -206,10 +208,12 @@ namespace OpenGL
                 //soundThread.Abort();
 #if DEBUG
                 this.Exit();
+                CrashH.Exit = true;
 #else
                 if (System.Windows.Forms.MessageBox.Show("You are about to close this window, are you sure?", "Close window", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
                     this.Exit();
+                    CrashH.Exit = true;
                 }
 #endif
 

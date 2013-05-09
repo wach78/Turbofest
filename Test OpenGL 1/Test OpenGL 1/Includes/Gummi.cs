@@ -75,6 +75,8 @@ namespace OpenGL
 
         private bool disposed = false;
         private int[] textures;
+        private int currentSound;
+        private string[] songName;
         private Bear[] Bears;
         private Sound snd;
         private string LastPlayedDate;
@@ -82,6 +84,17 @@ namespace OpenGL
         public GummiBears(ref Sound sound)
         {
             snd = sound;
+
+            songName = new string[8];
+            songName[0] = "GummiSwe";
+            songName[1] = "GummiDan";
+            songName[2] = "GummiEng";
+            songName[3] = "GummiGer";
+            songName[4] = "GummiJap";
+            songName[5] = "GummiNor";
+            songName[6] = "GummiPol";
+            songName[7] = "GummiRus";
+
             textures = new int[7]; // there are 7 in the "newer" gummi bears, 6 in the older (Gusto is a new one)...
             textures[0] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/zummi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
             textures[1] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/grammi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
@@ -90,7 +103,17 @@ namespace OpenGL
             textures[4] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/sunni.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
             textures[5] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/cubbi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
             textures[6] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/gusto.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/free.ogg", "Gummi");
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Swedish.ogg", songName[0]);
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Danish.ogg", songName[1]);
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-English.ogg", songName[2]);
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-German.ogg", songName[3]);
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Japanese.ogg", songName[4]);
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Norwegian.ogg", songName[5]);
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Polish.ogg", songName[6]);
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Russian.ogg", songName[7]);
+
+            currentSound = 0; // do this random and add to list of played?
+
             LastPlayedDate = string.Empty;
             Bears = new Bear[7];
             Bears[0] = new Bear(0.4f, 0.4f, 0.0f, 0.0f, 0.0f, textures[0]);
@@ -137,10 +160,15 @@ namespace OpenGL
 
         public void PlaySound(string Date)
         {
-            if (LastPlayedDate != Date && snd.PlayingName() != "Gummi")
+            if (LastPlayedDate != Date && !songName.Contains( snd.PlayingName()))
             {
                 LastPlayedDate = Date;
-                //snd.Play("Gummi");
+                snd.Play(songName[currentSound]);
+                currentSound++;
+                if (currentSound > 7)
+                {
+                    currentSound = 0;
+                }
             }
         }
 
@@ -151,8 +179,13 @@ namespace OpenGL
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            /*
-            GL.BindTexture(TextureTarget.Texture2D, textures[0]);
+
+            foreach (Bear item in Bears)
+            {
+                item.Draw(Date);
+            }
+            
+            /*GL.BindTexture(TextureTarget.Texture2D, textures[0]);
             GL.Begin(BeginMode.Quads);
             GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(1.5f, 0.0f, 0.3f);
             GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(1.1f, 0.0f, 0.3f);
@@ -206,8 +239,8 @@ namespace OpenGL
             GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(-0.6f, -0.5f, 0.3f);
             GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(-0.6f, -0.1f, 0.3f);
             GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(-0.2f, -0.1f, 0.3f);
-            GL.End();
-            */
+            GL.End();*/
+            
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
         }
