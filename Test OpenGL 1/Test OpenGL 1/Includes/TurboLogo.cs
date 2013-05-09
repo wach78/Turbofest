@@ -58,7 +58,7 @@ namespace OpenGL
             chessNumber = rnd.Next(0, 6);
             rnd = null;
             snd = sound;
-            bakground = chess;
+            randomChess();
 
             //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.wav", "roadrunner");
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.ogg", "roadrunner");
@@ -168,7 +168,10 @@ namespace OpenGL
             }
         }
 
-        
+        public void randomChess()
+        {
+            chessNumber = Util.Rnd.Next(0, 6);
+        }
 
         /*public void toPlay(string Date)
         {

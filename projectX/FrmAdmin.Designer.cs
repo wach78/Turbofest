@@ -45,6 +45,8 @@
             this.btnDel = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.lblResolution = new System.Windows.Forms.Label();
+            this.cbResolution = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -83,6 +85,8 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.cbResolution);
+            this.panel1.Controls.Add(this.lblResolution);
             this.panel1.Controls.Add(this.cbRunTime);
             this.panel1.Controls.Add(this.lblRunTime);
             this.panel1.Controls.Add(this.cbEndTimeDay);
@@ -93,7 +97,7 @@
             this.panel1.Controls.Add(this.lblStartDate);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(197, 120);
+            this.panel1.Size = new System.Drawing.Size(197, 150);
             this.panel1.TabIndex = 3;
             // 
             // cbRunTime
@@ -202,7 +206,7 @@
             // 
             this.listViewScrollers.Location = new System.Drawing.Point(215, 12);
             this.listViewScrollers.Name = "listViewScrollers";
-            this.listViewScrollers.Size = new System.Drawing.Size(259, 120);
+            this.listViewScrollers.Size = new System.Drawing.Size(259, 150);
             this.listViewScrollers.TabIndex = 4;
             this.listViewScrollers.UseCompatibleStateImageBehavior = false;
             // 
@@ -228,7 +232,7 @@
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.btnChangeDate);
             this.panel2.Controls.Add(this.btncancel);
-            this.panel2.Location = new System.Drawing.Point(12, 138);
+            this.panel2.Location = new System.Drawing.Point(12, 168);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(197, 65);
             this.panel2.TabIndex = 7;
@@ -239,16 +243,42 @@
             this.panel3.Controls.Add(this.txtAddScroller);
             this.panel3.Controls.Add(this.btnAdd);
             this.panel3.Controls.Add(this.btnDel);
-            this.panel3.Location = new System.Drawing.Point(215, 138);
+            this.panel3.Location = new System.Drawing.Point(215, 168);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(259, 65);
             this.panel3.TabIndex = 8;
+            // 
+            // lblResolution
+            // 
+            this.lblResolution.AutoSize = true;
+            this.lblResolution.Location = new System.Drawing.Point(3, 124);
+            this.lblResolution.Name = "lblResolution";
+            this.lblResolution.Size = new System.Drawing.Size(60, 13);
+            this.lblResolution.TabIndex = 21;
+            this.lblResolution.Text = "Resolution:";
+            // 
+            // cbResolution
+            // 
+            this.cbResolution.FormattingEnabled = true;
+            this.cbResolution.Items.AddRange(new object[] {
+            "640*480",
+            "800*640",
+            "1024*768",
+            "1280*720",
+            "1280*768",
+            "1280*800",
+            "1280*960",
+            "1280*1024"});
+            this.cbResolution.Location = new System.Drawing.Point(62, 116);
+            this.cbResolution.Name = "cbResolution";
+            this.cbResolution.Size = new System.Drawing.Size(110, 21);
+            this.cbResolution.TabIndex = 22;
             // 
             // FrmAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 213);
+            this.ClientSize = new System.Drawing.Size(481, 260);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.listViewScrollers);
@@ -287,5 +317,7 @@
         private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ComboBox cbResolution;
+        private System.Windows.Forms.Label lblResolution;
     }
 }

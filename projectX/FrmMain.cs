@@ -83,6 +83,7 @@ namespace projectX
             lViewParty.FullRowSelect = true;
             lViewParty.MultiSelect = false;
             fileName = "";
+           
         }//init
 
         private void btnCreate_Click(object sender, EventArgs e)

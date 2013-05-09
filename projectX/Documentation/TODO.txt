@@ -8,6 +8,7 @@ tetis ljud till self
 crash 
 mera test 
 fullscreen
+anropa randomChess() för turbologga
 
 
 chrismas done

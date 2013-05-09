@@ -325,14 +325,14 @@ namespace projectX
 
             if ("Spring".Equals(springOrFall))
             {
+  
+                int m = int.Parse(monthNumber(startDate.Substring(0, startDate.IndexOf(" "))));
+                int d = int.Parse(startDate.Substring(startDate.IndexOf(" "), startDate.Length - startDate.IndexOf(" ")));
 
-                int m = int.Parse(monthNumber(startDate.Substring(0,3)));
-                int d = int.Parse(startDate.Substring(4));
                 year--; //justering av year 
                 date = new DateTime(year,m,d);
                 xmlStuff2.writeFeastToXmlFile("Välkommen till \n\n Turbophesten", getShortDate(date), "Text");
-
-              
+            
                 date = new DateTime(year, 10, 24);
                 xmlStuff2.writeFeastToXmlFile("FN-dagen", getShortDate(date), "Text");
 
