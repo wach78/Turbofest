@@ -77,7 +77,7 @@ namespace OpenGL
             Bitmap bitmap = null;
             if (File.Exists(filename))
             {
-                Console.WriteLine("-----> " + filename);
+                //Console.WriteLine("-----> " + filename);
                 bitmap = new Bitmap(filename, false);
             }
             else

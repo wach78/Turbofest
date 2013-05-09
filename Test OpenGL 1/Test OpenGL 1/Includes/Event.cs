@@ -291,6 +291,11 @@ namespace OpenGL.Event
         }
         #endregion
 
+        public void StopSound()
+        {
+            sound.StopThread();
+        }
+
         public void Draw()
         {
             if (!clock.EndOfRuntime())

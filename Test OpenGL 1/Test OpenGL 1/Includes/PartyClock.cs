@@ -203,7 +203,7 @@ namespace OpenGL
         public void DrawTime()
         {
             //OpenTK.Vector2[] texVert = new Vector2[4];
-            string tmp = this.CurrentClock().ToLongTimeString();
+            string tmp = this.CurrentClock().ToString("HH:mm:ss");//.ToLongTimeString();
             for (int i = 0; i < tmp.Length; i++)
             {
                 //System.Diagnostics.Debug.WriteLine(tmp);
@@ -246,7 +246,7 @@ namespace OpenGL
             GL.Enable(EnableCap.Light0);*/
 
             //OpenTK.Vector2[] texVert = new Vector2[4];
-            string tmp = this.CurrentClock().ToShortDateString();
+            string tmp = this.CurrentClock().ToString("yyyy-MM-dd");//.ToShortDateString();
             for (int i = 0; i < tmp.Length; i++)
             {
                 //System.Diagnostics.Debug.WriteLine(tmp);

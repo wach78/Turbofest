@@ -212,7 +212,6 @@ namespace OpenGL
             GC.SuppressFinalize(this);
         }
 
-
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -222,7 +221,10 @@ namespace OpenGL
                     // free managed resources
                     if (tr.IsAlive)
                     {
+                        Console.WriteLine("sound thread is running!!!!!");
                         RunSoundThread = false;
+                        StopSound();
+                        Thread.Sleep(100);
                     }
                     tr = null; // is bad if it's not stopped?
                     if (SoundSource != -1)
@@ -236,6 +238,7 @@ namespace OpenGL
                     {
                         AL.SourceStop(SoundStreamSource);
                         AL.DeleteSource(SoundStreamSource);
+                        AL.DeleteBuffers(SoundBuffers);
                         SoundStreamSource = -1;
                     }
                     foreach (var item in SoundList)
@@ -341,6 +344,11 @@ namespace OpenGL
                                             {
                                                 fileRead = FileToBuffer.read(BufferData2, BufferData2.Length, 0, 2, 1, null);
                                                 //System.Diagnostics.Debug.WriteLine("Bytes read: " + fileRead);
+                                                if (!isPlaying)
+                                                {
+                                                    AL.SourceStop(SoundStreamSource);
+                                                    break;
+                                                }
                                                 if (fileRead > 0)
                                                 {
                                                     Buffer.BlockCopy(BufferData2, 0, BufferData, readSize, fileRead);
@@ -376,7 +384,7 @@ namespace OpenGL
 
                                     // Get Source State
                                     AL.GetSource(SoundStreamSource, ALGetSourcei.SourceState, out sourceState);
-                                } while ((ALSourceState)sourceState == ALSourceState.Playing);
+                                } while ((ALSourceState)sourceState == ALSourceState.Playing && isPlaying);
                                 System.Diagnostics.Debug.WriteLine("Not playing any more.");
                                 AL.SourceUnqueueBuffers(SoundStreamSource, SoundBuffers.Length);
                                 FileInfo.clear();
@@ -400,10 +408,8 @@ namespace OpenGL
                                     // Get Source State
                                     AL.GetSource(SoundSource, ALGetSourcei.SourceState, out sourceState);
                                 } while ((ALSourceState)sourceState == ALSourceState.Playing);
-
-                            }
-
-                        }
+                            } // end else
+                        }// end playing content that is in list
 
                         AL.SourceStop(SoundSource);
                         AL.SourceStop(SoundStreamSource);
@@ -435,7 +441,7 @@ namespace OpenGL
 
         public void StopSound()
         {
-            Console.WriteLine("Stoping sound method");
+            System.Diagnostics.Debug.WriteLine("Stoping sound method");
             isPlaying = false;
             AL.SourceStop(SoundSource); // to be safe
             AL.SourceStop(SoundStreamSource); // to be safe
