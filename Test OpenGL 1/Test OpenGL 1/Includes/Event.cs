@@ -167,7 +167,7 @@ namespace OpenGL.Event
             smurf = new Datasmurf(ref sound, ref text); // random
             dif = new Dif(ref chess, ref sound); // random
             fbk = new Fbk(ref sound); // random
-            hw = new Halloween(ref chess, 25);
+            hw = new Halloween(ref chess, ref sound, 25);
             lucia = new Lucia(ref chess, ref sound);
             newyear = new NewYear();
             richard = new RMS(ref sound, ref text); // random

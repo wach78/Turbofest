@@ -186,6 +186,7 @@ namespace OpenGL
 
         private bool disposed = false;
         Chess chess;
+        Sound snd;
         private int textureSpider;
         private int textureGhost;
         private int MaxSpiders; // not really needed...
@@ -196,13 +197,16 @@ namespace OpenGL
         private float Y;
         private float Z;
         long tick = 0;
+        private string LastPlayedDate;
 
         // missing sound?
-        public Halloween(ref Chess chessboard, int NumberOfSpiders)
+        public Halloween(ref Chess chessboard, ref Sound sound, int NumberOfSpiders)
         {
             chess = chessboard;
+            snd = sound;
             textureSpider = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/spider.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.Black);
             textureGhost = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/halloween.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255,0,255));
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/scary.ogg", "Scary");
             MaxSpiders = NumberOfSpiders;
             Spiders = new Spider[MaxSpiders];
             Ghost = new Vector3[4];
@@ -220,7 +224,7 @@ namespace OpenGL
             Ghost[1] = new Vector3(X, Y + Size.Height, Z); // blue
             Ghost[2] = new Vector3(X + Size.Width, Y + Size.Height, Z); // green
             Ghost[3] = new Vector3(X + Size.Width, Y, Z); // yellow
-
+            LastPlayedDate = string.Empty;
         }
 
         ~Halloween()
@@ -270,8 +274,18 @@ namespace OpenGL
             Ghost[3].Xy = new Vector2(X + Size.Width, Y);
         }
 
+        public void Play(string Date)
+        {
+            if (LastPlayedDate != Date && snd.PlayingName() != "Scary")
+            {
+                LastPlayedDate = Date;
+                snd.Play("Scary");
+            }
+        }
+
         public void Draw(string Date)
         {
+            Play(Date);
             chess.Draw(Date, Chess.ChessColor.PurpleGreen);
             // Spiders that draws after eachother and end ontop durring run will be hidden...
             foreach (Spider s in Spiders)

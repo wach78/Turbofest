@@ -26,7 +26,7 @@ namespace OpenGL
             try
             {
                 XD = new XmlDocument();
-                FileName = Path.GetDirectoryName(Application.ExecutablePath) + "Crash.xml";
+                FileName = Path.GetDirectoryName(Application.ExecutablePath) + "/Crash.xml";
                 CrashFile = System.IO.File.Open(FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
             }
             catch (Exception ex)
@@ -76,8 +76,9 @@ namespace OpenGL
         {
             if (File.Exists(FileName)) // make this dynamic for each xmlfile...
             {
-                XD.RemoveAll();
-                XD.Load(CrashFile);
+                /*XD.RemoveAll();
+                XD.r
+                XD.Load(CrashFile);*/
 
                 CrashPresentDialogresult = MessageBox.Show("There is a crash file pressent do you want to continue from it?", "Crash file pressent!", MessageBoxButtons.YesNoCancel);
                 if (CrashPresentDialogresult == DialogResult.Yes)
