@@ -264,7 +264,7 @@ namespace projectX
             {
                 System.Xml.Linq.XElement item = dataDoc.Root.Elements("event").ElementAt(m_lngPrintingRow);
                 //height += wfont.Height;
-                g.DrawString(item.Element("type").Value + " - " + item.Element("name").Value, wfont, Brush, 10, height);
+                g.DrawString(item.Element("type").Value + " - " + item.Element("name").Value.Replace("\n", " "), wfont, Brush, 10, height);
                 g.DrawString(item.Element("date").Value, wfont, Brush, (int)(e.MarginBounds.Width * 0.50), height);
                 height += wfont.Height + 2;
                 g.DrawLine(pen, new Point(0, (int)height), new Point(e.MarginBounds.Width, (int)height));

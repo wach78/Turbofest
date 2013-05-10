@@ -33,7 +33,7 @@ namespace projectX
             path = XmlHandler.fixPath(FrmMain.FileName.ToString());
             participantData = new string[6];
             updateGridView();
-            printDocument = pd;
+            //printDocument = new PrintDocument();//pd;
             
         }
 

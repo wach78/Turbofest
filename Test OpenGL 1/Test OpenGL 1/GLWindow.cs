@@ -10,6 +10,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace OpenGL
 {
@@ -234,12 +235,17 @@ namespace OpenGL
                 this.Exit();
                 
 #else
-                if (System.Windows.Forms.MessageBox.Show("You are about to close this window, are you sure?", "Close window", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                
+                if (MessageBox.Show((IWin32Window)this, "You are about to close this window, are you sure?", "Close window", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                /*FrmDialog exitDialog = new FrmDialog( "You are about to close this window, are you sure?", "Close window", MessageBoxButtons.YesNo);
+                Application.DoEvents();
+                if (exitDialog.ShowDialog() == System.Windows.Forms.DialogResult.Yes)*/
                 {
                     events.StopSound();
                     CrashH.Exit = false;
                     this.Exit();
                 }
+                Application.DoEvents();
 #endif
 
                 //this.Close(); // dosen't release the window...
