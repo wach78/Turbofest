@@ -23,14 +23,33 @@ namespace OpenGL
         {
             private bool disposed = false;
             private SizeF fSize;
+            private Vector2 SpeedXY;
             private Vector3 StartPostition;
             private int Texture;
+            private float X;
+            private float Y;
+            private bool MoveLeft;
 
-            public Bear(float Width, float Height, float X, float Y, float Z, int TextureID)
+            public Bear(float Width, float Height, float X, float Y, float Z, float SpeedX, float SpeedY, int TextureID)
             {
                 Texture = TextureID;
                 fSize = new SizeF(Width, Height);
+                SpeedXY = new Vector2(SpeedX, SpeedY);
                 StartPostition = new Vector3(X, Y, Z);
+                this.X = X;
+                this.Y = Y;
+                MoveLeft = (Util.Rnd.Next(0, 100) < 50? true:false);
+            }
+
+            public Bear(SizeF size, Vector3 start, Vector2 SpeedXY, int TextureID)
+            {
+                Texture = TextureID;
+                fSize = size;
+                this.SpeedXY = SpeedXY;
+                StartPostition = start;
+                X = StartPostition.X;
+                Y = StartPostition.Y;
+                MoveLeft = (Util.Rnd.Next(0, 1) == 1 ? true : false);
             }
 
             ~Bear()
@@ -61,15 +80,41 @@ namespace OpenGL
                 }
             }
 
+            public void Update()
+            {
+                
+                if (X >= (1.6f - fSize.Width))
+                {
+                    MoveLeft = true;
+                }
+                else if (X <= -1.62f)
+                {
+                    MoveLeft = false;
+                }
+
+                X += (MoveLeft? -1:1) * SpeedXY.X;
+
+                Y = (float)Math.Sin(X*700 / 42.1f) * 0.4f - fSize.Height * 1.45f;
+            }
+
             public void Draw(string Date)
             {
                 GL.BindTexture(TextureTarget.Texture2D, Texture);
+                GL.Enable(EnableCap.Texture2D);
+                GL.Enable(EnableCap.Blend);
+                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
                 GL.Begin(BeginMode.Quads);
-                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(1.2f, 0.0f, 0.3f);
-                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(0.7f, 0.0f, 0.3f);
-                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(0.7f, 0.70f, 0.3f);
-                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(1.2f, 0.70f, 0.3f);
+                GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(X + fSize.Width, Y, StartPostition.Z);
+                GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(X, Y, StartPostition.Z);
+                GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(X, Y + fSize.Height, StartPostition.Z);
+                GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(X + fSize.Width, Y + fSize.Height, StartPostition.Z);
                 GL.End();
+
+                GL.Disable(EnableCap.Blend);
+                GL.Disable(EnableCap.Texture2D);
+                GL.BindTexture(TextureTarget.Texture2D, 0);
+                Update();
             }
         }
 
@@ -116,13 +161,14 @@ namespace OpenGL
 
             LastPlayedDate = string.Empty;
             Bears = new Bear[7];
-            Bears[0] = new Bear(0.4f, 0.4f, 0.0f, 0.0f, 0.0f, textures[0]);
-            Bears[1] = new Bear(0.4f, 0.4f, 0.0f, 0.0f, 0.0f, textures[1]);
-            Bears[2] = new Bear(0.4f, 0.4f, 0.0f, 0.0f, 0.0f, textures[2]);
-            Bears[3] = new Bear(0.4f, 0.4f, 0.0f, 0.0f, 0.0f, textures[3]);
-            Bears[4] = new Bear(0.3f, 0.35f, 0.0f, 0.0f, 0.0f, textures[4]);
-            Bears[5] = new Bear(0.3f, 0.3f, 0.0f, 0.0f, 0.0f, textures[5]);
-            Bears[6] = new Bear(0.4f, 0.4f, 0.0f, 0.0f, 0.0f, textures[6]);
+            // left max = 1.2, right max = -1.7,
+            Bears[0] = new Bear(0.4f, 0.4f, 1.0f, -0.5f, 0.40006f, Util.Rnd.Next(2000, 6500) / 1000000.0f, 0.0045f, textures[0]);
+            Bears[1] = new Bear(0.4f, 0.4f, 0.75f, 0.0f, 0.40005f, Util.Rnd.Next(2000, 6500) / 1000000.0f, 0.0045f, textures[1]);
+            Bears[2] = new Bear(0.4f, 0.4f, 0.5f, 0.0f, 0.40004f, Util.Rnd.Next(2000, 6500) / 1000000.0f, 0.0045f, textures[2]);
+            Bears[3] = new Bear(0.4f, 0.4f, 0.0f, 0.0f, 0.40003f, Util.Rnd.Next(2000, 6500) / 1000000.0f, 0.0045f, textures[3]);
+            Bears[4] = new Bear(0.25f, 0.35f, -0.5f, 0.0f, 0.40002f, Util.Rnd.Next(2000, 6500) / 1000000.0f, 0.0045f, textures[4]);
+            Bears[5] = new Bear(0.3f, 0.3f, -1.0f, 0.0f, 0.40001f, Util.Rnd.Next(2000, 6500) / 1000000.0f, 0.0045f, textures[5]);
+            Bears[6] = new Bear(0.4f, 0.4f, -1.5f, 0.0f, 0.40000f, Util.Rnd.Next(2000, 6500) / 1000000.0f, 0.0045f, textures[6]);
 
         }
 
@@ -171,77 +217,22 @@ namespace OpenGL
             }
         }
 
+        public void UpdateSceen()
+        {
+            foreach (Bear item in Bears)
+            {
+                item.Update();
+            }
+        }
+
         public void Draw(string Date)
         {
             PlaySound(Date);
-
-            GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             foreach (Bear item in Bears)
             {
                 item.Draw(Date);
             }
-            
-            /*GL.BindTexture(TextureTarget.Texture2D, textures[0]);
-            GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(1.5f, 0.0f, 0.3f);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(1.1f, 0.0f, 0.3f);
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(1.1f, 0.40f, 0.3f);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(1.5f, 0.40f, 0.3f);
-            GL.End();
-            
-            GL.BindTexture(TextureTarget.Texture2D, textures[1]);
-            GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(0.8f, 0.0f, 0.3f);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(0.4f, 0.0f, 0.3f);
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(0.4f, 0.40f, 0.3f);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(0.8f, 0.40f, 0.3f);
-            GL.End();
-            
-            GL.BindTexture(TextureTarget.Texture2D, textures[2]);
-            GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(0.2f, 0.0f, 0.3f);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(-0.2f, 0.0f, 0.3f);
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(-0.2f, 0.40f, 0.3f);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(0.2f, 0.40f, 0.3f);
-            GL.End();
-            
-            GL.BindTexture(TextureTarget.Texture2D, textures[3]);
-            GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(-0.5f, 0.0f, 0.3f);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(-0.9f, 0.0f, 0.3f);
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(-0.9f, 0.40f, 0.3f);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(-0.5f, 0.40f, 0.3f);
-            GL.End();
-            
-            GL.BindTexture(TextureTarget.Texture2D, textures[4]);
-            GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(1.1f, -0.45f, 0.3f);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(0.9f, -0.45f, 0.3f);
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(0.9f, -0.1f, 0.3f);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(1.1f, -0.1f, 0.3f);
-            GL.End();
-
-            GL.BindTexture(TextureTarget.Texture2D, textures[5]);
-            GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(0.6f, -0.4f, 0.3f);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(0.3f, -0.4f, 0.3f);
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(0.3f, -0.1f, 0.3f);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(0.6f, -0.1f, 0.3f);
-            GL.End();
-
-            GL.BindTexture(TextureTarget.Texture2D, textures[6]);
-            GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(-0.2f, -0.5f, 0.3f);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(-0.6f, -0.5f, 0.3f);
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(-0.6f, -0.1f, 0.3f);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(-0.2f, -0.1f, 0.3f);
-            GL.End();*/
-            
-            GL.Disable(EnableCap.Blend);
-            GL.Disable(EnableCap.Texture2D);
         }
 
     }

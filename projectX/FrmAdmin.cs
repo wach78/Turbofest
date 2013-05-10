@@ -28,8 +28,9 @@ namespace projectX
             {
                 int w = int.Parse(resolution.Substring(0,resolution.IndexOf("x")));
                 int h = int.Parse(resolution.Substring(resolution.IndexOf("x") + 1, resolution.IndexOf("@") - resolution.IndexOf("x")-1));
+                int r = int.Parse(resolution.Substring(resolution.IndexOf("@") + 1));
 
-                return new int[]{w,h}; 
+                return new int[]{w, h, r}; 
             }
     
         }
