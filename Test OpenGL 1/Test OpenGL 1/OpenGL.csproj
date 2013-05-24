@@ -96,6 +96,7 @@
     <Compile Include="Includes\Eggs.cs" />
     <Compile Include="Includes\Gummi.cs" />
     <Compile Include="Includes\Event.cs" />
+    <Compile Include="Includes\Hajk.cs" />
     <Compile Include="Includes\Lucia.cs" />
     <Compile Include="Includes\National.cs" />
     <Compile Include="Includes\NewYear.cs" />
@@ -152,6 +153,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\gladpask.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\hajk.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="OpenTK.dll.config">
@@ -305,6 +309,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\Gullefjun.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Samples\HAJK.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -142,6 +142,7 @@ namespace OpenGL.Event
         GummiBears GM;
         National NDay;
         Easter easter;
+        Hajk hajk;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -184,8 +185,9 @@ namespace OpenGL.Event
             GM = new GummiBears(ref sound);
             NDay = new National(ref chess, ref sound);
             easter = new Easter(ref sound);
+            hajk = new Hajk(ref sound);
 
-            randomEvent = new List<string>(new string[] {"bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
+            randomEvent = new List<string>(new string[] {"Hajk"/*,"bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
             {
@@ -289,6 +291,7 @@ namespace OpenGL.Event
                     if (chess != null) chess.Dispose(); // 7 texturer
                     if (NDay != null) NDay.Dispose();
                     if (easter != null) easter.Dispose();
+                    if (hajk != null) hajk.Dispose();
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -448,6 +451,9 @@ namespace OpenGL.Event
                                 break;
                             case "bumbi":
                                 GM.Draw(nowDate);
+                                break;
+                            case "Hajk":
+                                hajk.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)
