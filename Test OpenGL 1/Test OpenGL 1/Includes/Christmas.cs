@@ -45,7 +45,7 @@ namespace OpenGL
             x = 1;
             y = 0;
             
-            Random r = new Random();
+        //    Random r = new Random();
             sf = new SnowFlake[NUMBEROFFLAKES];
 
             float z = 0.4f;
@@ -53,11 +53,11 @@ namespace OpenGL
             for (int i = 0; i < NUMBEROFFLAKES; i++)
             {
 
-                sf[i] = new SnowFlake((r.Next(-18, 15)) / 10.0f, (r.Next(-10, 20) * -1) / 10.0f, r.Next(2, 8) / 1000.0f, snowImage,
+                sf[i] = new SnowFlake((Util.Rnd.Next(-18, 15)) / 10.0f, (Util.Rnd.Next(-10, 20) * -1) / 10.0f, Util.Rnd.Next(2, 8) / 1000.0f, snowImage,
                     new Vector2[] {  new Vector2(0.0f + (currentImage * 0.2f), 1.0f),
                                      new Vector2(0.2f + (currentImage * 0.2f), 1.0f),
                                      new Vector2(0.2f + (currentImage * 0.2f), 0.0f), 
-                                     new Vector2(0.0f + (currentImage * 0.2f), 0.0f)},  r.Next(5, 10) * 10.0f, z);
+                                     new Vector2(0.0f + (currentImage * 0.2f), 0.0f)}, Util.Rnd.Next(5, 10) * 10.0f, z);
 
 
                 z -= 0.00001f;
@@ -168,7 +168,7 @@ namespace OpenGL
 
         public void Play(String Date)
         {
-            if (LastDate != Date && snd.PlayingName() != "XMAS") // this will start once the last sound is done, ie looping.
+            if (LastDate != Date && snd.PlayingName() != "XMAS") 
             {
                 snd.Play("XMAS");
                 LastDate = Date;

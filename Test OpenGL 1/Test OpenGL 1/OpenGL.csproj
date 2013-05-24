@@ -92,9 +92,12 @@
     <Compile Include="Includes\Christmas.cs" />
     <Compile Include="Includes\Advent.cs" />
     <Compile Include="Includes\CrashHandler.cs" />
+    <Compile Include="Includes\Easter.cs" />
+    <Compile Include="Includes\Eggs.cs" />
     <Compile Include="Includes\Gummi.cs" />
     <Compile Include="Includes\Event.cs" />
     <Compile Include="Includes\Lucia.cs" />
+    <Compile Include="Includes\National.cs" />
     <Compile Include="Includes\NewYear.cs" />
     <Compile Include="Includes\Scroller.cs" />
     <Compile Include="Includes\Self.cs" />
@@ -139,6 +142,18 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Content Include="gfx\chicken.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\eggs.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\flagga.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\gladpask.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="OpenTK.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -283,6 +298,12 @@
     <Content Include="Samples\GummiBears-Swedish.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Samples\Du gamla du fria %28Black Ingvars%29.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Samples\Du gamla du fria %28Sven-Erik Magnusson%29.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

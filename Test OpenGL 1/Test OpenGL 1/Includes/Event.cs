@@ -140,6 +140,8 @@ namespace OpenGL.Event
         Self creators;
         BB bb;
         GummiBears GM;
+        National NDay;
+        Easter easter;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -180,6 +182,8 @@ namespace OpenGL.Event
             creators = new Self(ref sound); // random
             bb = new BB(ref sound); // random
             GM = new GummiBears(ref sound);
+            NDay = new National(ref chess, ref sound);
+            easter = new Easter();
 
             randomEvent = new List<string>(new string[] {"bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
 
@@ -283,6 +287,8 @@ namespace OpenGL.Event
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
                     if (chess != null) chess.Dispose(); // 7 texturer
+                    if (NDay != null) NDay.Dispose();
+                    if (easter != null) easter.Dispose();
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -387,6 +393,14 @@ namespace OpenGL.Event
                                 break;
                             case "Valentine":
                                 valentine.Draw(nowDate);
+                                break;
+
+                            case "Nationaldagen":
+                                NDay.Draw(nowDate);
+                                break;
+
+                            case "påsk":
+                                easter.Draw(nowDate);
                                 break;
                             
                             default:

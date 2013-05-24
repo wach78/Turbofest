@@ -47,6 +47,11 @@ namespace OpenGL
             
         }
 
+        ~SuneAnimation()
+        {
+            Dispose(false);
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -86,6 +91,7 @@ namespace OpenGL
             GL.TexCoord2(0.0f + (currentImage * 0.25f), 0.0f); GL.Vertex3(2.2f, 0.10f, 1.0f); // top left 
 
             GL.End();
+            GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
 
         }
