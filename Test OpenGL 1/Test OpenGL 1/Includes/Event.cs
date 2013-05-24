@@ -143,6 +143,7 @@ namespace OpenGL.Event
         National NDay;
         Easter easter;
         Hajk hajk;
+        midsummer mid;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -186,6 +187,7 @@ namespace OpenGL.Event
             NDay = new National(ref chess, ref sound);
             easter = new Easter(ref sound);
             hajk = new Hajk(ref sound);
+            mid = new midsummer(ref sound);
 
             randomEvent = new List<string>(new string[] {"Hajk"/*,"bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
 
@@ -292,6 +294,7 @@ namespace OpenGL.Event
                     if (NDay != null) NDay.Dispose();
                     if (easter != null) easter.Dispose();
                     if (hajk != null) hajk.Dispose();
+                    if (mid != null) mid.Dispose();
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -404,6 +407,10 @@ namespace OpenGL.Event
 
                             case "påsk":
                                 easter.Draw(nowDate);
+                                break;
+
+                            case "Midsommar":
+                                mid.Draw(nowDate);
                                 break;
                             
                             default:
