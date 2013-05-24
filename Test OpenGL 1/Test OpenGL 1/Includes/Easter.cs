@@ -31,8 +31,9 @@ namespace OpenGL
         private const int NUMBEROFFEGGS = 40;
 
         private string LastDate;
+        private Sound snd;
 
-        public Easter()
+        public Easter(ref Sound sound)
         {
           
             image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/gladpask.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
@@ -43,7 +44,8 @@ namespace OpenGL
             curruntEggImage = 0;
             ticks = 0;
             oldTicks = 0;
-
+            snd = sound;
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Gullefjun.ogg", "Easter");
             xc = 0;
 
 
@@ -97,6 +99,7 @@ namespace OpenGL
                    Util.DeleteTexture(ref image);
                    Util.DeleteTexture(ref image2);
                    Util.DeleteTexture(ref eggImage);
+                   snd = null;
 
                    for (int i = 0; i < NUMBEROFFEGGS; i++)
                    {
@@ -198,11 +201,20 @@ namespace OpenGL
 
         }
 
+        public void Play(String Date)
+        {
+            if (LastDate != Date && snd.PlayingName() != "Easter")
+            {
+                snd.Play("Easter");
+                LastDate = Date;
+            }
+        }
+
         public void Draw(string Date)
         {
             updateImages();
             moveImage();
-
+            Play(Date);
             drawImage();
 
         }//Draw

@@ -183,7 +183,7 @@ namespace OpenGL.Event
             bb = new BB(ref sound); // random
             GM = new GummiBears(ref sound);
             NDay = new National(ref chess, ref sound);
-            easter = new Easter();
+            easter = new Easter(ref sound);
 
             randomEvent = new List<string>(new string[] {"bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
 
