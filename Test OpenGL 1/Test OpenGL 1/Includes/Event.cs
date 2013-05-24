@@ -144,6 +144,7 @@ namespace OpenGL.Event
         Easter easter;
         Hajk hajk;
         midsummer mid;
+        Vaffla vaf;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -188,6 +189,7 @@ namespace OpenGL.Event
             easter = new Easter(ref sound);
             hajk = new Hajk(ref sound);
             mid = new midsummer(ref sound);
+            vaf = new Vaffla();
 
             randomEvent = new List<string>(new string[] {"Hajk"/*,"bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
 
@@ -295,6 +297,7 @@ namespace OpenGL.Event
                     if (easter != null) easter.Dispose();
                     if (hajk != null) hajk.Dispose();
                     if (mid != null) mid.Dispose();
+                    if (vaf != null) vaf.Dispose();
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -412,6 +415,10 @@ namespace OpenGL.Event
                             case "Midsommar":
                                 mid.Draw(nowDate);
                                 break;
+
+                            case "Våffeldagen":
+                                vaf.Draw(nowDate);
+                                break;
                             
                             default:
                                 if (nowDate != lastDate)
@@ -460,7 +467,8 @@ namespace OpenGL.Event
                                 GM.Draw(nowDate);
                                 break;
                             case "Hajk":
-                                hajk.Draw(nowDate);
+                                if (sommar(nowDate))
+                                     hajk.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)
@@ -506,6 +514,22 @@ namespace OpenGL.Event
             }
           
 
+            return ok;
+        }
+
+        private bool sommar(string nowDate)
+        {
+            bool ok = false;
+            string month = "";
+
+            if (nowDate != null)
+                month = nowDate.Substring(5, 2);
+
+            if ("06".Equals(month) || "07".Equals(month) || "08".Equals(month))
+            {
+                ok = true;
+            }
+           
             return ok;
         }
             
