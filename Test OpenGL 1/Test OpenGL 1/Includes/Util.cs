@@ -98,16 +98,17 @@ namespace OpenGL
             }
             int tex;
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
-
-            bitmap.MakeTransparent(Transparant);
-
+            if (!Transparant.IsEmpty)
+            {
+                bitmap.MakeTransparent(Transparant);
+            }
             //GL.GenTextures(1, out tex);
             //currentTextureBuffers++;
             GenTextureID(out tex);
             GL.BindTexture(TextureTarget.Texture2D, tex);
 
             BitmapData data = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb/*bitmap.PixelFormat*/);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0,
                 OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);

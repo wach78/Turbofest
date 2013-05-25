@@ -26,9 +26,9 @@ namespace OpenGL
         public Self(ref Sound sound)
         {
 
-            imageWach = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/wach.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            imageKamikazE = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/kze.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            randomImage = Util.Rnd.Next(0, 1);
+            imageWach = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/wach.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 255, 0, 255));
+            imageKamikazE = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/kze.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 255, 0, 255));
+            randomImage = (Util.Rnd.Next(0, 100)<50? 0:1);
             snd = sound;
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Tetris.ogg", "Self");
 
@@ -81,40 +81,30 @@ namespace OpenGL
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, (randomImage == 1 ? imageKamikazE : imageWach));
             GL.Enable(EnableCap.Blend);
+            //GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            
             GL.Begin(BeginMode.Quads);
-
-         
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(-0.2f + x, -1.2f + y, 0.4f); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.8f + x, -1.2f + y, 0.4f); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.8f + x, -0.2f + y, 0.4f);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(-0.2f + x, -0.2f + y, 0.4f); // top left 
-
+            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(-0.2f + x, -1.2f + y, 0.4f); // bottom left  
+            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(-1.8f + x, -1.2f + y, 0.4f); // bottom right 
+            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(-1.8f + x, -0.2f + y, 0.4f);// top right
+            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(-0.2f + x, -0.2f + y, 0.4f); // top left 
             GL.End();
 
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
 
             this.tick++;
-
-
-
             x = (float)(0.004 * Math.Sin((this.tick / 50.0) * 3.1415) * 200);
             x += 1.0f;
             y = (float)(0.004 * Math.Sin((this.tick / 42.1) * 3.1415) * 150);
             y += 0.7f;
-
-
-
-
         }//DrawImage
 
         public void Play()
         {
-
             if (snd.PlayingName() != "Self")
             {
-                Console.WriteLine("Self");
                 snd.Play("Self");
             }
         }

@@ -20,8 +20,8 @@ namespace OpenGL
         //const int WIDTH = 800; // titta på
         //const int HEIGHT = 640;
 
-        private bool blnPointDraw;
-        private bool blnWireFrameDraw;
+        //private bool blnPointDraw;
+        //private bool blnWireFrameDraw;
 
         private Event.Event events;
         private CrashHandler CrashH;
@@ -45,8 +45,8 @@ namespace OpenGL
             Keyboard.KeyDown += OnKeyboardKeyDown;
             Closing += OnClosing;
 
-            blnPointDraw = false;
-            blnWireFrameDraw = false;
+            //blnPointDraw = false;
+            //blnWireFrameDraw = false;
             DateTime dtStart = DateTime.Parse(runtime.Substring(0, 10));
             DateTime dtEnd = DateTime.Parse(runtime.Substring(10, 10));
             CrashH = Crash;
@@ -274,10 +274,10 @@ namespace OpenGL
                 Util.Fullscreen = !Util.Fullscreen;
             }
 #if DEBUG
-            else if (key.Key == OpenTK.Input.Key.P)
+            /*else if (key.Key == OpenTK.Input.Key.P)
             {
                 this.blnPointDraw = !this.blnPointDraw; // not active
-            }
+            }*/
             else if (key.Key == OpenTK.Input.Key.V)
             {
                 if (VSync == VSyncMode.Off)
@@ -294,10 +294,10 @@ namespace OpenGL
                 }
                 
             }
-            else if (key.Key == OpenTK.Input.Key.W)
+            /*else if (key.Key == OpenTK.Input.Key.W)
             {
                 this.blnWireFrameDraw = !this.blnWireFrameDraw; // not active
-            }
+            }*/
             else if (key.Key == OpenTK.Input.Key.O)
             {
                 Util.Fog = !Util.Fog;
