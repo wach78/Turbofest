@@ -20,7 +20,7 @@ namespace OpenGL
 
         public Vaffla ()
         {
-            //image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/vaffla.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/vaffla.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
          
             disposed = false; 
         }
@@ -74,6 +74,7 @@ namespace OpenGL
             GL.Disable(EnableCap.Texture2D);
 
             this.tick++;
+           
 
             x = (float)(0.004 * Math.Sin((this.tick / 50.0) * 3.1415) * 250);
             x -= 1.2f;

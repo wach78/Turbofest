@@ -94,6 +94,7 @@
     <Compile Include="Includes\CrashHandler.cs" />
     <Compile Include="Includes\Easter.cs" />
     <Compile Include="Includes\Eggs.cs" />
+    <Compile Include="Includes\FireWorks.cs" />
     <Compile Include="Includes\Gummi.cs" />
     <Compile Include="Includes\Event.cs" />
     <Compile Include="Includes\Hajk.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Includes\Scroller.cs" />
     <Compile Include="Includes\Self.cs" />
     <Compile Include="Includes\Vaffla.cs" />
+    <Compile Include="Includes\Walpurgis.cs" />
     <Compile Include="Includes\WinLinux.cs" />
     <Compile Include="Includes\Rms.cs" />
     <Compile Include="Includes\Datasmurf.cs" />
@@ -132,9 +134,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmDialog.resx">
       <DependentUpon>FrmDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -146,6 +150,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Content Include="gfx\bonefire.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\chicken.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -162,6 +169,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\mid.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\part1.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\part2.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\part3.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\part4.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\part5.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\rain.bmp">

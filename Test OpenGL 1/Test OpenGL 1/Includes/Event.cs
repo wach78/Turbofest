@@ -145,6 +145,7 @@ namespace OpenGL.Event
         Hajk hajk;
         midsummer mid;
         Vaffla vaf;
+        Walpurgis wp;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -190,6 +191,7 @@ namespace OpenGL.Event
             hajk = new Hajk(ref sound);
             mid = new midsummer(ref sound);
             vaf = new Vaffla();
+            wp = new Walpurgis();
 
             randomEvent = new List<string>(new string[] {"Hajk"/*,"bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
 
@@ -298,6 +300,7 @@ namespace OpenGL.Event
                     if (hajk != null) hajk.Dispose();
                     if (mid != null) mid.Dispose();
                     if (vaf != null) vaf.Dispose();
+                    if (wp != null) wp.Dispose();
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -418,6 +421,10 @@ namespace OpenGL.Event
 
                             case "Våffeldagen":
                                 vaf.Draw(nowDate);
+                                break;
+
+                            case "Valborgsmässoafton":
+                                wp.Draw(nowDate);
                                 break;
                             
                             default:

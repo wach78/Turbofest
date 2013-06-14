@@ -6,24 +6,21 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 
-namespace OpenGL
+namespace OpenGL 
 {
-    class NewYear : IEffect
+    class Walpurgis : IEffect
     {
-
-        private bool disposed;
+        private bool disposed = false;
         private int image;
-
         private MoreFireWorks mfw;
 
-        public NewYear()
+        public Walpurgis()
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/newyear.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/bonefire.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             mfw = new MoreFireWorks();
-
         }
 
-        ~NewYear()
+        ~Walpurgis()
         {
             Dispose(false);
         }
@@ -45,6 +42,7 @@ namespace OpenGL
                 }
                 // free native resources if there are any.
                 Debug.WriteLine(this.GetType().ToString() + " disposed.");
+
                 disposed = true;
             }
         }
@@ -57,15 +55,13 @@ namespace OpenGL
 
             // x y z
             // alla i mitten Y-led  alla till vänster x-led
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.7f, -1.0f, 0.45f); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.7f, -1.0f, 0.45f); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.7f, 1.0f, 0.45f);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.7f, 1.0f, 0.45f); // top left 
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(0.8f, -1.0f, 1.0f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-0.8f, -1.0f, 1.0f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-0.8f, -0.00f, 1.0f);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(0.8f, -0.00f, 1.0f); // top left 
 
             GL.End();
             GL.Disable(EnableCap.Texture2D);
-
-            
 
         }//DrawImage
 
@@ -73,7 +69,6 @@ namespace OpenGL
         {
             drawImage();
             mfw.Draw(Date);
-            
         }//Draw
     }//class
-}//namspace
+}//namepsece 

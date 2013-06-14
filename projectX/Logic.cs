@@ -403,7 +403,7 @@ namespace projectX
                 xmlStuff2.writeFeastToXmlFile("kronprinsesans födelsedag", getShortDate(date), "Text");
 
                 date = new DateTime(year, 8, 8);
-                xmlStuff2.writeFeastToXmlFile("Kräftpremiär", getShortDate(date), "Text");
+                xmlStuff2.writeFeastToXmlFile("Kräftpremiär", getShortDate(date), "Effect");
 
             }
 
