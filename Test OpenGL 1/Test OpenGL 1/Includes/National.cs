@@ -120,7 +120,7 @@ namespace OpenGL
         public void Draw(string Date)
         {
             Play(Date);
-            bakground.Draw(Date, Chess.ChessColor.WhiteRed);
+            bakground.Draw(Date, Chess.ChessColor.Swe);
             updateImages();
             DrawImage();
 

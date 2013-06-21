@@ -11,7 +11,7 @@ namespace OpenGL
 {
     public class Chess : IEffect
     {
-        public enum ChessColor {BlackWhite=0, BlueBlack, PurpleGreen, BlackGreen, BlackLightGreen, BlackPurple, WhiteRed}; // this is after the constructor index...
+        public enum ChessColor {BlackWhite=0, BlueBlack, PurpleGreen, BlackGreen, BlackLightGreen, BlackPurple, WhiteRed, Swe}; // this is after the constructor index...
         private bool disposed = false;
         private int[] texture;
         private double m_scrollX;
@@ -28,7 +28,7 @@ namespace OpenGL
             m_vec[1] = new Vector3(-2.30f, 0.20f, 5.0f);
             m_vec[2] = new Vector3(2.30f, 0.20f, 5.0f);
             m_vec[3] = new Vector3(2.30f, -1.50f, 0.0f);
-            texture = new int[7];
+            texture = new int[8];
 
             //GL.GenBuffers(1, out this.texture);
             //this.texture = GL.GenTexture();
@@ -43,6 +43,7 @@ namespace OpenGL
             texture[4] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_lightgreen.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
             texture[5] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_purple.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
             texture[6] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_red.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
+            texture[7] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_swe.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
             /*GL.BindTexture(TextureTarget.Texture2D, texture);
             System.Drawing.Imaging.BitmapData data = bitmapChess.LockBits(new System.Drawing.Rectangle(0, 0, bitmapChess.Width, bitmapChess.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
