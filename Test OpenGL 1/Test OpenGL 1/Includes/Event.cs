@@ -146,6 +146,7 @@ namespace OpenGL.Event
         midsummer mid;
         Vaffla vaf;
         Walpurgis wp;
+        CrayFish crayfish;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -192,8 +193,9 @@ namespace OpenGL.Event
             mid = new midsummer(ref sound);
             vaf = new Vaffla();
             wp = new Walpurgis();
+            crayfish = new CrayFish();
 
-            randomEvent = new List<string>(new string[] {"Hajk"/*,"bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
+            randomEvent = new List<string>(new string[] {"Krafta",/*"Hajk","bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
             {
@@ -475,7 +477,10 @@ namespace OpenGL.Event
                                 break;
                             case "Hajk":
                                 if (sommar(nowDate))
-                                     hajk.Draw(nowDate);
+                                    hajk.Draw(nowDate);
+                                break;
+                            case "Krafta":
+                                crayfish.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)
