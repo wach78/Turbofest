@@ -197,6 +197,7 @@ namespace projectX
                 Console.WriteLine("Starting dispose of old Gwindow.");
                 gw = null;
             }
+
             OpenGL.CrashHandler ch = new OpenGL.CrashHandler();
             if (ch.CheckCrash() != System.Windows.Forms.DialogResult.Cancel)
             {
@@ -209,6 +210,7 @@ namespace projectX
             }
             ch.Dispose();
             ch = null;
+            
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)

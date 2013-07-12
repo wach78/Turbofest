@@ -227,6 +227,7 @@ namespace OpenGL
                         Thread.Sleep(100);
                     }
                     tr = null; // is bad if it's not stopped?
+                    context.MakeCurrent();
                     if (SoundSource != -1)
                     {
                         AL.SourceStop(SoundSource);
@@ -237,6 +238,7 @@ namespace OpenGL
                     if (SoundStreamSource != -1)
                     {
                         AL.SourceStop(SoundStreamSource);
+                        AL.SourceUnqueueBuffers(SoundStreamSource,4);
                         AL.DeleteSource(SoundStreamSource);
                         AL.DeleteBuffers(SoundBuffers);
                         SoundStreamSource = -1;
@@ -247,6 +249,7 @@ namespace OpenGL
                     }
                     SoundList.Clear();
                     SoundList = null;
+                    context = null;
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -316,6 +319,8 @@ namespace OpenGL
                                 AL.SourceQueueBuffers(SoundStreamSource, SoundBuffers.Length, SoundBuffers);
                                 AL.SourcePlay(SoundStreamSource);
                                 isPlaying = true;
+
+                               
 
                                 int ProcessedBuffers = 0;
                                 /*int QueuedBuffers = 0;*/

@@ -195,7 +195,7 @@ namespace OpenGL.Event
             wp = new Walpurgis();
             crayfish = new CrayFish();
 
-            randomEvent = new List<string>(new string[] {"Krafta",/*"Hajk","bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
+            randomEvent = new List<string>(new string[] {"Krafta","Hajk","bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
             {
@@ -333,10 +333,13 @@ namespace OpenGL.Event
             if (nowDate != lastDate)
             {
                 ch.update(clock.clock);
+                /*
                 if (sound.PlayingName() != string.Empty)
                 {
                     sound.StopSound();
                 }
+                */
+                sound.StopSound();
                 lastDate = nowDate;
                 //sune.NewQoute(); // flytta in detta i sune...
                 //scroller.getRandomScrollerStuff(); // flytta in detta i scroller

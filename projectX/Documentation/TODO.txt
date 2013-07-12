@@ -1,4 +1,18 @@
-﻿
+﻿ljud 
+ljud test
+1. Starta programet och starta en gång, detta tycks fungera utan ljud störningar.
+2. Starta programmet och starta 2 gånger ljudet blir då snabbt och mycket irriterande.
+
+tiden är 3 timmar 3 timmar 
+
+starta en gång verkat finka mer test
+starta mer än en gång = fail
+
+
+
+
+
+
 sommar effect
 någon annan rolig effect???
 kolla ljudet 
