@@ -43,7 +43,6 @@ namespace OpenGL
                 {
                     // free managed resources
                     Util.DeleteTexture(ref image);
-                    snd = null;
                 }
                 // free native resources if there are any.
                 Debug.WriteLine(this.GetType().ToString() + " disposed.");
@@ -73,7 +72,7 @@ namespace OpenGL
 
         public void Play(string Date)
         {
-            if ( LastDate != Date && snd.PlayingName() != "FBK") // this will start once the last sound is done, ie looping.
+            if ( LastDate != Date && snd.PlayingName() != "FBK") 
             {
                 snd.Play("FBK");
                 LastDate = Date;

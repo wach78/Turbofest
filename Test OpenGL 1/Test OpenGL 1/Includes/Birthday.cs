@@ -94,7 +94,6 @@ namespace OpenGL
                     Util.DeleteTexture(ref image);
                     Util.DeleteTexture(ref ballonsImage);
                     image = 0;
-                    snd = null;
                     for (int i = 0; i < NUMBEROFBALLONS; i++)
                     {
                         b[i].Dispose();

@@ -93,7 +93,6 @@ namespace OpenGL
                    Util.DeleteTexture(ref image);
                    Util.DeleteTexture(ref image2);
                    Util.DeleteTexture(ref snowImage);
-                   snd = null;
 
                    for (int i = 0; i < NUMBEROFFLAKES; i++)
                    {

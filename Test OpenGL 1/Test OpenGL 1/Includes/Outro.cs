@@ -44,7 +44,6 @@ namespace OpenGL
                 {
                     // free managed resources
                     Util.DeleteTexture(ref image);
-                    snd = null;
                 }
                 // free native resources if there are any.
                 Debug.WriteLine(this.GetType().ToString() + " disposed.");
@@ -55,7 +54,7 @@ namespace OpenGL
 
         public void Play()
         {
-            if (snd.PlayingName() != "Outro") // this will start once the last sound is done, ie looping.
+            if (snd.PlayingName() != "Outro") // this will start once the last sound is done
             {
                 snd.Play("Outro");
             }

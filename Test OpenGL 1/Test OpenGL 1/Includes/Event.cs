@@ -147,6 +147,7 @@ namespace OpenGL.Event
         Vaffla vaf;
         Walpurgis wp;
         CrayFish crayfish;
+        TeknatStyle ts;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -194,8 +195,9 @@ namespace OpenGL.Event
             vaf = new Vaffla();
             wp = new Walpurgis();
             crayfish = new CrayFish();
+            ts = new TeknatStyle(ref chess, ref sound, ref text);
 
-            randomEvent = new List<string>(new string[] {"Krafta","Hajk","bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
+            randomEvent = new List<string>(new string[] {"TS" /*,Krafta","Hajk","bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" */});
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
             {
@@ -303,6 +305,7 @@ namespace OpenGL.Event
                     if (mid != null) mid.Dispose();
                     if (vaf != null) vaf.Dispose();
                     if (wp != null) wp.Dispose();
+                    if (ts != null) ts.Dispose();
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -490,6 +493,10 @@ namespace OpenGL.Event
                                 {
                                     Debug.WriteLine("No random effect");
                                 }
+                                break;
+
+                            case "TS":
+                                ts.Draw(nowDate);
                                 break;
                         }
                         break;
