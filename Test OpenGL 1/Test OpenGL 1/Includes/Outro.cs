@@ -13,7 +13,9 @@ namespace OpenGL
         private bool disposed;
         private int image;
         private Sound snd;
-
+        private long ticks;
+        private long oldTicks;
+        private bool delyed;
 
         public Outro(ref Sound sound)
         {
@@ -23,6 +25,9 @@ namespace OpenGL
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Blackheart.ogg", "Outro");
 
             disposed = false;
+            ticks = 0;
+            oldTicks = 0;
+            delyed = false;
         }
 
          ~Outro()
@@ -81,7 +86,27 @@ namespace OpenGL
 
         public void Draw(string Date)
         {
-            Play();
+            ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerSecond;
+
+            if (!delyed)
+            {
+                if (this.oldTicks != 0)
+                {
+                    if ((this.ticks - this.oldTicks) > 15)
+                    {
+                       
+                        delyed = true;
+                    }//inner if
+                }//outer if
+
+                if (oldTicks == 0)
+                    oldTicks = ticks;
+            }
+            else
+            {
+                Play();
+            }
+            
             drawImage();
 
         }//Draw

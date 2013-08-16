@@ -100,7 +100,7 @@ namespace OpenGL
                     image = -1;
                 }
                 // free native resources if there are any.
-                Debug.WriteLine(this.GetType().ToString() + " disposed.");
+               // Debug.WriteLine(this.GetType().ToString() + " disposed.");
 
                 disposed = true;
             }
@@ -218,7 +218,7 @@ namespace OpenGL
                          
                 }
                 // free native resources if there are any.
-                Debug.WriteLine(this.GetType().ToString() + " disposed.");
+              //  Debug.WriteLine(this.GetType().ToString() + " disposed.");
 
                 disposed = true;
             }

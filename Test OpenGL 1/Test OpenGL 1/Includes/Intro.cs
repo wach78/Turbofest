@@ -61,7 +61,6 @@ namespace OpenGL
                 {
                     // free managed resources
 
-                    snd = null;
                     text = null;
                 }
                 // free native resources if there are any.

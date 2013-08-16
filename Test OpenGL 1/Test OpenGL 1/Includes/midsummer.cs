@@ -71,7 +71,7 @@ namespace OpenGL
                 {
                     // free managed resources
                    Util.DeleteTexture(ref image);
-                   snd = null;
+                   Util.DeleteTexture(ref image2);
 
                    for (int i = 0; i < NUMBEROFRAINDROPS; i++)
                    {

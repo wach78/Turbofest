@@ -93,7 +93,6 @@ namespace OpenGL
                     // free managed resources
                     Util.DeleteTexture(ref image);
                     Util.DeleteTexture(ref ballonsImage);
-                    image = 0;
                     for (int i = 0; i < NUMBEROFBALLONS; i++)
                     {
                         b[i].Dispose();

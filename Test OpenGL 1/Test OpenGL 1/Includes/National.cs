@@ -54,8 +54,7 @@ namespace OpenGL
                 if (disposing)
                 {
                     // free managed resources
-                    Util.DeleteTexture(ref currentImage);
-                    snd = null;
+                    Util.DeleteTexture(ref image);
                     currentImage = 0;
                     image = 0;
                 }

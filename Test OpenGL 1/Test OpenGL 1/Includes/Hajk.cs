@@ -44,7 +44,7 @@ namespace OpenGL
                 {
                     // free managed resources
                     Util.DeleteTexture(ref image);
-                    snd = null;
+
                 }
                 // free native resources if there are any.
                 Debug.WriteLine(this.GetType().ToString() + " disposed.");

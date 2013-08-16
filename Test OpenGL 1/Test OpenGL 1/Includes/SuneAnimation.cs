@@ -69,7 +69,6 @@ namespace OpenGL
                     Util.DeleteTexture(ref image);
                     sh.Dispose();
                     sh = null;
-                    image = 0;
                     currentImage = 0;
                 }
                 // free native resources if there are any.
@@ -159,7 +158,7 @@ namespace OpenGL
                 soundTrue = true;
                 soundDone = true;
             }
-            stopSample();
+           // stopSample();
         }
 
         public void NewQoute()

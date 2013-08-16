@@ -64,6 +64,9 @@ namespace OpenGL
         private bool Streaming;
         private string File;
         private int BufferID;
+        private VorbisFile FileToBuffer;
+        private Info FileInfoVO;
+        private ALFormat alf;
 
         public SoundType(string FileName, bool IsToBeStreaming)
         {
@@ -80,6 +83,24 @@ namespace OpenGL
             else
             {
                 BufferID = -1;
+            }
+            // This makes the program take some time to load...
+            FileToBuffer = new VorbisFile(File);
+            FileInfoVO = FileToBuffer.getInfo(-1);
+            alf = 0;
+            /*int asd = FileToBuffer.bitrate(-1);
+            int asd2 = FileToBuffer.bitrate_instant();*/
+            if (FileInfoVO.channels == 1) // mono
+            {
+                alf = ALFormat.Mono16;
+            }
+            else if (FileInfoVO.channels == 2) // sterio
+            {
+                alf = ALFormat.Stereo16;
+            }
+            else if (alf == 0)
+            {
+                throw new Exception("Wrong number of channels in sound file.");
             }
         }
 
@@ -108,6 +129,9 @@ namespace OpenGL
                     {
                         AL.DeleteBuffer(BufferID);    
                     }
+                    FileToBuffer = null;
+                    FileInfoVO.clear();
+                    FileInfoVO = null;
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -131,6 +155,23 @@ namespace OpenGL
         public int Buffer
         {
             get { return BufferID; }
+            set { }
+        }
+
+        public VorbisFile FileData
+        {
+            get { return FileToBuffer; }
+            set { }
+        }
+
+        public Info FileInfo
+        {
+            get { return FileInfoVO; }
+            set { }
+        }
+        public ALFormat StereoMono
+        {
+            get { return alf; }
             set { }
         }
     }
@@ -170,11 +211,13 @@ namespace OpenGL
         {
             disposed = false;
             SoundList = new Dictionary<string, SoundType>();
-            context = new AudioContext();
+            context = new AudioContext(); // default audio device
             lock (context)
             {
                 context.MakeCurrent();
             }
+            //XRamExtension XRam = new XRamExtension();
+            
             
             /*SoundBuffers = AL.GenBuffers(4); // number of buffers
             SoundSource = AL.GenSource();
@@ -249,6 +292,7 @@ namespace OpenGL
                     }
                     SoundList.Clear();
                     SoundList = null;
+                    context.Dispose();
                     context = null;
                 }
                 // free native resources if there are any.
@@ -289,28 +333,30 @@ namespace OpenGL
                             if (st.ToBeStreamed)
                             {
                                 // open file to read to buffers
-                                VorbisFile FileToBuffer = new VorbisFile(st.Filename);
+                                /*VorbisFile FileToBuffer = new VorbisFile(st.Filename);
                                 Info FileInfo = FileToBuffer.getInfo(-1);
-                                ALFormat alf = 0;
+                                ALFormat alf = 0;*/
                                 int fileRead, readSize;
-                                if (FileInfo.channels == 1) // mono
+                                /*if (FileInfo.channels == 1) // mono
                                 {
                                     alf = ALFormat.Mono16;
                                 }
-                                else if (FileInfo.channels == 2) // sterio
+                                else if (FileInfo.channels == 2) // stereo
                                 {
                                     alf = ALFormat.Stereo16;
                                 }
                                 else if (alf == 0)
                                 {
                                     throw new Exception("Wrong number of channels in sound file.");
-                                }
+                                }*/
                                 //readSize = fileRead = 0; // buggs out
 
                                 for (int i = 0; i < SoundBuffers.Length; i++)
                                 {
-                                    fileRead = FileToBuffer.read(BufferData, BufferData.Length, 0, 2, 1, null);
-                                    AL.BufferData(SoundBuffers[i], alf, BufferData, fileRead, FileInfo.rate);
+                                    if (NowPlayingName == "Sune") 
+                                        Console.Write("");
+                                    fileRead = st.FileData.read(BufferData, BufferData.Length, 0, 2, 1, null);
+                                    AL.BufferData(SoundBuffers[i], st.StereoMono, BufferData, fileRead, st.FileInfo.rate);
                                     //readSize += fileRead;
                                     Array.Clear(BufferData, 0, BufferData.Length);
                                 }
@@ -347,7 +393,7 @@ namespace OpenGL
                                         {
                                             while (readSize < (BufferData.Length * 0.75) && isPlaying) // this is not at all safe!!!
                                             {
-                                                fileRead = FileToBuffer.read(BufferData2, BufferData2.Length, 0, 2, 1, null);
+                                                fileRead = st.FileData.read(BufferData2, BufferData2.Length, 0, 2, 1, null);
                                                 //System.Diagnostics.Debug.WriteLine("Bytes read: " + fileRead);
                                                 if (!isPlaying)
                                                 {
@@ -375,7 +421,7 @@ namespace OpenGL
 
                                             if (isPlaying && readSize > 0)
                                             {
-                                                AL.BufferData(BufferRef, alf, BufferData, /*BufferData.Length*/readSize, FileInfo.rate);
+                                                AL.BufferData(BufferRef, st.StereoMono, BufferData, /*BufferData.Length*/readSize, st.FileInfo.rate);
                                                 /*System.Diagnostics.Debug.WriteLine("Buffering data: " + AL.GetErrorString(AL.GetError()));
                                                 System.Diagnostics.Debug.WriteLine("ALC: " + context.CurrentError.ToString());*/
                                                 AL.SourceQueueBuffer(SoundStreamSource, BufferRef);
@@ -391,10 +437,17 @@ namespace OpenGL
                                     AL.GetSource(SoundStreamSource, ALGetSourcei.SourceState, out sourceState);
                                 } while ((ALSourceState)sourceState == ALSourceState.Playing && isPlaying);
                                 System.Diagnostics.Debug.WriteLine("Not playing any more.");
+                                AL.SourceStop(SoundStreamSource);
+                                AL.Source(SoundStreamSource, ALSourcei.Buffer, 0);
                                 AL.SourceUnqueueBuffers(SoundStreamSource, SoundBuffers.Length);
-                                FileInfo.clear();
+                                if (st.FileData.seekable()) { // this might not always be true
+                                    st.FileData.time_seek(0);
+                                }
+                                //seems like we can get error on dates where we have the same type of event...
+                                
+                                /*FileInfo.clear();
                                 FileInfo = null;
-                                FileToBuffer = null;
+                                FileToBuffer = null;*/
                             } // end is to be streamd
                             else
                             {
@@ -413,11 +466,12 @@ namespace OpenGL
                                     // Get Source State
                                     AL.GetSource(SoundSource, ALGetSourcei.SourceState, out sourceState);
                                 } while ((ALSourceState)sourceState == ALSourceState.Playing);
+                                AL.SourceStop(SoundSource);
                             } // end else
                         }// end playing content that is in list
 
-                        AL.SourceStop(SoundSource);
-                        AL.SourceStop(SoundStreamSource);
+                        /*AL.SourceStop(SoundSource);
+                        AL.SourceStop(SoundStreamSource);*/
                         NowPlayingName = string.Empty;
                         st = null;
                         isPlaying = false;

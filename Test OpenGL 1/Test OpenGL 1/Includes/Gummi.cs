@@ -195,7 +195,6 @@ namespace OpenGL
                     {
                         Util.DeleteTexture(ref textures[i]);
                     }
-                    snd = null;
                 }
                 // free native resources if there are any.
                 disposed = true;

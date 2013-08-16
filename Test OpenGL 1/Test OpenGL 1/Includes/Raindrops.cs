@@ -67,7 +67,7 @@ namespace OpenGL
                     dropImage = -1;
                 }
                 // free native resources if there are any.
-                Debug.WriteLine(this.GetType().ToString() + " disposed.");
+               // Debug.WriteLine(this.GetType().ToString() + " disposed.");
 
                 disposed = true;
             }
