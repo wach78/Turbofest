@@ -440,8 +440,13 @@ namespace OpenGL
                                 AL.SourceStop(SoundStreamSource);
                                 AL.Source(SoundStreamSource, ALSourcei.Buffer, 0);
                                 AL.SourceUnqueueBuffers(SoundStreamSource, SoundBuffers.Length);
-                                if (st.FileData.seekable()) { // this might not always be true
-                                    st.FileData.time_seek(0);
+                                if (st.FileData.seekable())
+                                { // this might not always be true
+                                    st.FileData.raw_seek(0);
+                                }
+                                else
+                                {
+                                    System.Diagnostics.Debug.WriteLine("ej sök");
                                 }
                                 //seems like we can get error on dates where we have the same type of event...
                                 
