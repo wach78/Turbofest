@@ -99,19 +99,26 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, texture);
 
             GL.Begin(BeginMode.Quads);
+            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(Ghost[3]); // bottom left
             GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(Ghost[0]); // bottom right 
             GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(Ghost[1]); // Top right
             GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(Ghost[2]);// top left
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(Ghost[3]); // bottom left
-            /*
-            GL.Color3(Color.Red); GL.Vertex3(Ghost[0]); // bottom left 
-            GL.Color3(Color.Yellow); GL.Vertex3(Ghost[1]); // bottom right
-            GL.Color3(Color.Green); GL.Vertex3(Ghost[2]);// top right
-            GL.Color3(Color.Blue); GL.Vertex3(Ghost[3]); // top left 
-            */
             GL.End();
+
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
+
+            /*GL.PushAttrib(AttribMask.CurrentBit);
+            GL.PointSize(5.0f);
+            GL.Begin(BeginMode.Points);
+            GL.Color3(Color.Red); GL.Vertex3(Ghost[3]); // bottom left 
+            GL.Color3(Color.Yellow); GL.Vertex3(Ghost[0]); // bottom right
+            GL.Color3(Color.Green); GL.Vertex3(Ghost[1]);// top right
+            GL.Color3(Color.Blue); GL.Vertex3(Ghost[2]); // top left 
+            GL.End();
+            GL.PopAttrib();*/
+
+            
             Move();
         }
 

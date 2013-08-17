@@ -311,11 +311,11 @@ namespace OpenGL
             //FrameUpdate(Date);
 
             //System.Diagnostics.Debug.WriteLine(X + ", " + Y + ", " + moveUp + ", " + moveRight);
-            GL.TexCoord2((moveLeft ? 0.5f : 0.0f), (VTColour ? 0.5f : 0.0f)); GL.Vertex3(1.00f + X, 0.20f + Y, 1.00f); // top left
+            
             GL.TexCoord2((moveLeft ? 0.5f : 0.0f), (VTColour ? 1.0f : 0.5f)); GL.Vertex3(1.00f + X, -0.40f + Y, 1.00f); // bottom left
             GL.TexCoord2((moveLeft ? 1.0f : 0.5f), (VTColour ? 1.0f : 0.5f)); GL.Vertex3(-0.30f + X, -0.40f + Y, 1.00f); // bottom right
             GL.TexCoord2((moveLeft ? 1.0f : 0.5f), (VTColour ? 0.5f : 0.0f)); GL.Vertex3(-0.30f + X, 0.20f + Y, 1.00f); // top right
-            
+            GL.TexCoord2((moveLeft ? 0.5f : 0.0f), (VTColour ? 0.5f : 0.0f)); GL.Vertex3(1.00f + X, 0.20f + Y, 1.00f); // top left
 
             GL.End();
             GL.Enable(EnableCap.DepthTest);

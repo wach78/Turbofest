@@ -64,14 +64,15 @@ namespace projectX
 
             screenSize();
 
-            cbResolution.SelectedItem = resolution;
+            cbResolution.SelectedItem = resolution; // rhis might bug out...
         }//init
 
         private void screenSize()
         {
-            foreach (var res in OpenTK.DisplayDevice.AvailableDisplays[0].AvailableResolutions) 
+            
+            foreach (var res in OpenTK.DisplayDevice.Default.AvailableResolutions) 
             {
-                if (res.BitsPerPixel == 32 && !cbResolution.Items.Contains(res.Width + "x" + res.Height + "@" + res.RefreshRate)) 
+                if (res.BitsPerPixel == Screen.PrimaryScreen.BitsPerPixel && !cbResolution.Items.Contains(res.Width + "x" + res.Height + "@" + res.RefreshRate)) 
                 {
                      cbResolution.Items.Add(res.Width +"x"+ res.Height+"@"+res.RefreshRate);
                 }
@@ -135,6 +136,7 @@ namespace projectX
 
         private void btncancel_Click(object sender, EventArgs e)
         {
+            this.Close();
             this.Dispose();
         }
 

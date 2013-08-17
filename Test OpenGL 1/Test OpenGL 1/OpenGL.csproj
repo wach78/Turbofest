@@ -179,7 +179,7 @@
     <Content Include="gfx\gladpask.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="gfx\hajk.bmp">
+    <Content Include="gfx\Hajk.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\krafta0.bmp">

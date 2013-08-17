@@ -84,7 +84,7 @@ namespace projectX
             lViewParty.MultiSelect = false;
             fileName = "";
 
-            FrmAdmin.Res = "800x600" + "@" + OpenTK.DisplayDevice.AvailableDisplays[0].RefreshRate;
+            FrmAdmin.Res = "800x600" + "@" + OpenTK.DisplayDevice.AvailableDisplays[0].RefreshRate; // this buggs out on mono with changing to fullscreen
         
            
         }//init

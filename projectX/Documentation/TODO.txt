@@ -187,3 +187,8 @@ Logic:
 XmlHandler:
 	Check path to be exe path DONE
 
+
+################
+## Mono on Linux
+################
+For Mono we need to have bmp images created without colour information as it seems to make null pointers when loading bmps with that information.

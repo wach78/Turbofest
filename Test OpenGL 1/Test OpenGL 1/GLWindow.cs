@@ -28,13 +28,15 @@ namespace OpenGL
         private int[] Resolution;
 
         // OpenGL version after 3.0 needs there own matrix libs so we need to create them if we run over 3.0!!! if ser major and minor to 0 we can get around it?!
-        public GLWindow(System.Xml.Linq.XDocument Events, string runtime, int[] res, ref CrashHandler Crash) : base(res[0], res[1], new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(32), 24, 8, 0)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
+        public GLWindow(System.Xml.Linq.XDocument Events, string runtime, int[] res, ref CrashHandler Crash) : base(res[0], res[1], new OpenTK.Graphics.GraphicsMode(/*new OpenTK.Graphics.ColorFormat(32), 24, 8, 0*/)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
         {
+            this.WindowBorder = OpenTK.WindowBorder.Fixed;
 #if !DEBUG
             //OpenTK.DisplayDevice.Default.ChangeResolution(this.Width, this.Height, OpenTK.DisplayDevice.AvailableDisplays[0].BitsPerPixel, OpenTK.DisplayDevice.AvailableDisplays[0].RefreshRate);
             WindowState = OpenTK.WindowState.Fullscreen;
             WindowBorder = OpenTK.WindowBorder.Hidden;
             Util.Fullscreen = true;
+            System.Windows.Forms.Cursor.Hide();
 #endif
             // fix me...
             /*if (runtime.Length < 24) // YYYY-MM-DDYYYY-MM-DDxxxxxx
@@ -131,9 +133,14 @@ namespace OpenGL
             {
                 Util.Fullscreen = false;
                 System.Windows.Forms.Cursor.Show();
-                OpenTK.DisplayDevice.Default.RestoreResolution();
+                //OpenTK.DisplayDevice.Default.RestoreResolution();
+                foreach (var item in OpenTK.DisplayDevice.AvailableDisplays)
+                {
+                    item.RestoreResolution();
+                }
+                //OpenTK.DisplayDevice.AvailableDisplays[0].RestoreResolution();
                 WindowState = OpenTK.WindowState.Normal;
-                WindowBorder = OpenTK.WindowBorder.Resizable;
+                WindowBorder = OpenTK.WindowBorder.Fixed;
                 System.Diagnostics.Debug.WriteLine("Going to window");
             }
 
@@ -150,9 +157,11 @@ namespace OpenGL
                 e.Cancel = true;
                 if (!Util.Fullscreen)
                 {
+                    
                     Util.Fullscreen = true;
                     System.Windows.Forms.Cursor.Hide();
                     OpenTK.DisplayDevice.Default.ChangeResolution(Resolution[0], Resolution[1], OpenTK.DisplayDevice.Default.BitsPerPixel, Resolution[2]);
+                    //OpenTK.DisplayDevice.AvailableDisplays[1].ChangeResolution(Resolution[0], Resolution[1], OpenTK.DisplayDevice.Default.BitsPerPixel, Resolution[2]);
                     WindowState = OpenTK.WindowState.Fullscreen;
                     WindowBorder = OpenTK.WindowBorder.Hidden;
                     System.Diagnostics.Debug.WriteLine("Going to fullscreen");
@@ -289,7 +298,7 @@ namespace OpenGL
                     System.Windows.Forms.Cursor.Show();
                     OpenTK.DisplayDevice.Default.RestoreResolution();
                     WindowState = OpenTK.WindowState.Normal;
-                    WindowBorder = OpenTK.WindowBorder.Resizable;
+                    WindowBorder = OpenTK.WindowBorder.Fixed;
                     //GL.Viewport(this.ClientRectangle);
                     System.Diagnostics.Debug.WriteLine("Going to window");
                 }
@@ -297,7 +306,7 @@ namespace OpenGL
                 {
                     System.Windows.Forms.Cursor.Hide();
                     //OpenTK.DisplayDevice.Default.ChangeResolution(dev.Width, dev.Height, dev.BitsPerPixel, dev.RefreshRate);
-                    OpenTK.DisplayDevice.Default.ChangeResolution(Resolution[0], Resolution[1], OpenTK.DisplayDevice.Default.BitsPerPixel, Resolution[2]);
+                    OpenTK.DisplayDevice.Default.ChangeResolution(Resolution[0], Resolution[1], Screen.PrimaryScreen.BitsPerPixel/*OpenTK.DisplayDevice.Default.BitsPerPixel*/, Resolution[2]);
                     //OpenTK.DisplayDevice.Default.ChangeResolution(OpenTK.DisplayDevice.Default.AvailableResolutions.Last());
                     WindowState = OpenTK.WindowState.Fullscreen;
                     WindowBorder = OpenTK.WindowBorder.Hidden;
