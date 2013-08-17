@@ -100,7 +100,7 @@ namespace OpenGL
                 {
                     XD.RemoveAll();
                     XD.Load(CrashFile);
-                    XmlNodeList xnl = XD.SelectNodes("crashdata");
+                    XmlNodeList xnl = XD.GetElementsByTagName("runtime");
                     if (xnl.Count > 0)
                     {
                         clock = double.Parse(xnl[0].InnerText);
@@ -114,14 +114,23 @@ namespace OpenGL
                     XD.AppendChild(XD.CreateXmlDeclaration("1.0", "UTF-8", null));
 
                     XmlNode xn = XD.CreateNode(XmlNodeType.Element, null, "crashdata", null);
-                    XmlNode xn2 = XD.CreateNode(XmlNodeType.Text, null, null, null);
-                    xn2.Value = (0.0).ToString();
+                    XmlNode xn2 = XD.CreateNode(XmlNodeType.Element, null, "runtime", null);
+                    XmlNode xn2b = XD.CreateNode(XmlNodeType.Text, null, null, null);
+                    XmlNode xn3 = XD.CreateNode(XmlNodeType.Element, null, "datetime", null);
+                    XmlNode xn3b = XD.CreateNode(XmlNodeType.Text, null, null, null);
+
+                    xn2b.Value = (0.0).ToString();
+                    xn2.AppendChild(xn2b);
+                    xn3b.Value = "0000-00-00 00:00:00";
+                    xn3.AppendChild(xn3b);
+
                     xn.AppendChild(xn2);
+                    xn.AppendChild(xn3);
                     XD.AppendChild(xn);
                     //CrashFile.Seek(0, SeekOrigin.Begin);
                     XD.Save(CrashFile);
                     CrashFile.Flush(true);
-                    clock = double.Parse(xn2.Value);
+                    clock = double.Parse(xn2b.Value);
                 }
                 catch (Exception ex) // all else ...
                 {
@@ -173,7 +182,7 @@ namespace OpenGL
             }
         }
 
-        public void update(double current)
+        public void update(double current, DateTime currentDateTime)
         {
             clock = current;
             XmlNodeList xnl = XD.GetElementsByTagName("crashdata");
@@ -181,7 +190,21 @@ namespace OpenGL
             {
                 CrashFile.Seek(0, SeekOrigin.Begin); // need to clear file here!!!
                 CrashFile.SetLength(0);
-                xnl[0].InnerText = clock.ToString();
+                /*xnl[0].InnerText = clock.ToString();
+                XD.Save(CrashFile);
+                CrashFile.Flush(true);*/
+                xnl = XD.GetElementsByTagName("runtime");
+                if (xnl.Count == 1)
+                {
+                    xnl[0].InnerText = clock.ToString();
+                }
+                xnl = XD.GetElementsByTagName("datetime");
+                if (xnl.Count == 1)
+                {
+                    xnl[0].InnerText = currentDateTime.ToString();
+                }
+
+
                 XD.Save(CrashFile);
                 CrashFile.Flush(true);
             }

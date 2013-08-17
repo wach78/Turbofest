@@ -125,9 +125,11 @@ namespace OpenGL
         private Bear[] Bears;
         private Sound snd;
         private string LastPlayedDate;
+        private List<int> PlayedSongs;
 
         public GummiBears(ref Sound sound)
         {
+            PlayedSongs = new List<int>();
             snd = sound;
 
             songName = new string[8];
@@ -157,8 +159,8 @@ namespace OpenGL
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Polish.ogg", songName[6]);
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Russian.ogg", songName[7]);
 
-            currentSound = 0; // do this random and add to list of played?
-
+            currentSound = Util.Rnd.Next(0, songName.Length); // do this random and add to list of played?
+            PlayedSongs.Add(currentSound);
             LastPlayedDate = string.Empty;
             Bears = new Bear[7];
             // left max = 1.2, right max = -1.7,
@@ -195,6 +197,7 @@ namespace OpenGL
                     {
                         Util.DeleteTexture(ref textures[i]);
                     }
+                    snd = null;
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -208,11 +211,13 @@ namespace OpenGL
             {
                 LastPlayedDate = Date;
                 snd.Play(songName[currentSound]);
-                currentSound++;
+                currentSound = Util.Rnd.Next(0, songName.Length);
+                PlayedSongs.Add(currentSound); // make sure that we have this stored and reseted if we have all in it.
+                /*currentSound++;
                 if (currentSound > 7)
                 {
                     currentSound = 0;
-                }
+                }*/
             }
         }
 

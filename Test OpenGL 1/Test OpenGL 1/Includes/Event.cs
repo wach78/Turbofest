@@ -335,7 +335,7 @@ namespace OpenGL.Event
             nowDate = clock.CurrentClock().ToShortDateString();
             if (nowDate != lastDate)
             {
-                ch.update(clock.clock);
+                ch.update(clock.clock, clock.CurrentClock());
                 /*
                 if (sound.PlayingName() != string.Empty)
                 {
