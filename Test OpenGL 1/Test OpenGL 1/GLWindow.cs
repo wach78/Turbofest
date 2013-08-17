@@ -127,6 +127,16 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, 0);
             System.Diagnostics.Debug.WriteLine("Closing");
 #else
+            if (Util.Fullscreen)
+            {
+                Util.Fullscreen = false;
+                System.Windows.Forms.Cursor.Show();
+                OpenTK.DisplayDevice.Default.RestoreResolution();
+                WindowState = OpenTK.WindowState.Normal;
+                WindowBorder = OpenTK.WindowBorder.Resizable;
+                System.Diagnostics.Debug.WriteLine("Going to window");
+            }
+
             if (System.Windows.Forms.MessageBox.Show("You are about to close this window, are you sure?", "Close window", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
             {
                 events.StopSound();
@@ -138,6 +148,15 @@ namespace OpenGL
             else
             {
                 e.Cancel = true;
+                if (!Util.Fullscreen)
+                {
+                    Util.Fullscreen = true;
+                    System.Windows.Forms.Cursor.Hide();
+                    OpenTK.DisplayDevice.Default.ChangeResolution(Resolution[0], Resolution[1], OpenTK.DisplayDevice.Default.BitsPerPixel, Resolution[2]);
+                    WindowState = OpenTK.WindowState.Fullscreen;
+                    WindowBorder = OpenTK.WindowBorder.Hidden;
+                    System.Diagnostics.Debug.WriteLine("Going to fullscreen");
+                }
             }
 #endif
 
@@ -235,22 +254,20 @@ namespace OpenGL
                 this.Exit();
                 
 #else
-                Util.Fullscreen = false;
+                /*Util.Fullscreen = false;
                 System.Windows.Forms.Cursor.Show();
                 OpenTK.DisplayDevice.Default.RestoreResolution();
                 WindowState = OpenTK.WindowState.Normal;
                 WindowBorder = OpenTK.WindowBorder.Resizable;
                 //GL.Viewport(this.ClientRectangle);
                 System.Diagnostics.Debug.WriteLine("Going to window");
+
                 if (MessageBox.Show("You are about to close this window, are you sure?", "Close window", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
-                /*FrmDialog exitDialog = new FrmDialog( "You are about to close this window, are you sure?", "Close window", MessageBoxButtons.YesNo);
-                Application.DoEvents();
-                if (exitDialog.ShowDialog() == System.Windows.Forms.DialogResult.Yes)*/
                 {
                     events.StopSound();
-                    CrashH.Exit = false;
+                    CrashH.Exit = false;*/
                     this.Exit();
-                }
+                /*}
                 else
                 {
                     Util.Fullscreen = true;
@@ -259,7 +276,7 @@ namespace OpenGL
                     WindowState = OpenTK.WindowState.Fullscreen;
                     WindowBorder = OpenTK.WindowBorder.Hidden;
                     System.Diagnostics.Debug.WriteLine("Going to fullscreen");
-                }
+                }*/
                 Application.DoEvents();
 #endif
 

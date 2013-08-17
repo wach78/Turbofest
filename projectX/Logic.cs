@@ -382,6 +382,10 @@ namespace projectX
 
             else if ("Fall".Equals(springOrFall))
             {
+                int m = int.Parse(monthNumber(startDate.Substring(0, startDate.IndexOf(" "))));
+                int d = int.Parse(startDate.Substring(startDate.IndexOf(" "), startDate.Length - startDate.IndexOf(" ")));
+                date = new DateTime(year, m, d);
+                xmlStuff2.writeFeastToXmlFile("Välkommen till \n\n Turbophesten", getShortDate(date), "Text");
 
                 date = new DateTime(year,3,25);
                 xmlStuff2.writeFeastToXmlFile("Våffeldagen", getShortDate(date), "Effect");

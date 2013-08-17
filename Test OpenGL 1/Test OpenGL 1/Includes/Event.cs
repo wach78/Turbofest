@@ -197,7 +197,7 @@ namespace OpenGL.Event
             crayfish = new CrayFish();
             ts = new TeknatStyle(ref chess, ref sound, ref text);
 
-            randomEvent = new List<string>(new string[] {"TS" ,"Hajk","bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
+            randomEvent = new List<string>(new string[] {"TS" ,"Hajk","bumbi", "BB", /*"", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators"*/ });
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
             {
@@ -321,14 +321,27 @@ namespace OpenGL.Event
 
         public void Draw()
         {
+
+            
+
             if (!clock.EndOfRuntime())
             {
                 clock.updateClock();
+                if (Util.ShowClock)
+                {
+                    clock.Draw();
+                }
             }
-            else 
+            if (clock.EndOfRuntime()) //else //<runtime>13737632</runtime>
             {
+                if (Util.ShowClock)
+                {
+                    System.Diagnostics.Debug.WriteLine("Outro stop sound");
+                    sound.StopSound();
+                }
                 Util.ShowClock = false;
                 outro.Draw(nowDate);
+                return;
             }
 
             // Draw effects and events here
@@ -336,23 +349,18 @@ namespace OpenGL.Event
             if (nowDate != lastDate)
             {
                 ch.update(clock.clock, clock.CurrentClock());
-                /*
-                if (sound.PlayingName() != string.Empty)
+                
+                /*if (sound.PlayingName() != string.Empty)
                 {
                     sound.StopSound();
-                }
-                */
+                }*/
+                
                 sound.StopSound();
                 lastDate = nowDate;
+                System.Diagnostics.Debug.WriteLine(nowDate);
                 //sune.NewQoute(); // flytta in detta i sune...
                 //scroller.getRandomScrollerStuff(); // flytta in detta i scroller
             }
-
-            if (Util.ShowClock)
-            {
-                clock.Draw();
-            }
-
 
             EventItem ei = null;
             if (events.ContainsKey(nowDate))
@@ -379,6 +387,7 @@ namespace OpenGL.Event
 
             if (ei != null)
             {
+                System.Diagnostics.Debug.WriteLine(ei.Name);
                 switch (ei.Type)
                 {
                     case "effect":

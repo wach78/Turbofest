@@ -61,6 +61,7 @@ namespace OpenGL
         {
             if (snd.PlayingName() != "Outro") // this will start once the last sound is done
             {
+                //snd.StopSound();
                 snd.Play("Outro");
             }
         }
@@ -94,17 +95,13 @@ namespace OpenGL
                 {
                     if ((this.ticks - this.oldTicks) > 15)
                     {
-                       
+                        Play();
                         delyed = true;
                     }//inner if
                 }//outer if
 
                 if (oldTicks == 0)
                     oldTicks = ticks;
-            }
-            else
-            {
-                Play();
             }
             
             drawImage();
