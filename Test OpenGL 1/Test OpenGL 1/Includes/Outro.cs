@@ -97,7 +97,9 @@ namespace OpenGL
                     {
                         delyed = true;
                     }//inner if
+                    
                 }//outer if
+              
 
                 if (oldTicks == 0)
                     oldTicks = ticks;

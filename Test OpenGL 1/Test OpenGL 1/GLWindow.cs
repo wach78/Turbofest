@@ -37,8 +37,10 @@ namespace OpenGL
             WindowBorder = OpenTK.WindowBorder.Hidden;
             Util.Fullscreen = true;
             System.Windows.Forms.Cursor.Hide();
+
 #else
             _WriteVersion();
+
 #endif
             // fix me...
             /*if (runtime.Length < 24) // YYYY-MM-DDYYYY-MM-DDxxxxxx
