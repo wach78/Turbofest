@@ -95,13 +95,16 @@ namespace OpenGL
                 {
                     if ((this.ticks - this.oldTicks) > 15)
                     {
-                        Play();
                         delyed = true;
                     }//inner if
                 }//outer if
 
                 if (oldTicks == 0)
                     oldTicks = ticks;
+            }
+            else
+            {
+                Play();
             }
             
             drawImage();

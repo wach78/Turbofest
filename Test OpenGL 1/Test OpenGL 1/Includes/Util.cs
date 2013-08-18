@@ -121,8 +121,7 @@ namespace OpenGL
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)MagFilter);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)WrapS);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)WrapT);
-
-            return tex;
+             return tex;
         }//LoadTexture
 
         public static int GenTextureID()
@@ -132,7 +131,9 @@ namespace OpenGL
                 throw new Exception("To many texture buffers used!");
             }*/
             currentTextureBuffers++;
-            return GL.GenTexture();
+            int tex = GL.GenTexture();
+            //System.Diagnostics.Debug.WriteLine("Create: " + tex + ", " + currentTextureBuffers);
+            return tex;
         }
 
         public static void GenTextureID(out int tid)
@@ -143,6 +144,7 @@ namespace OpenGL
             }*/
             currentTextureBuffers++;
             GL.GenTextures(1, out tid);
+            //System.Diagnostics.Debug.WriteLine("Create: " + tid + ", " + currentTextureBuffers);
         }
 
         /// <summary>
@@ -153,6 +155,7 @@ namespace OpenGL
         {
             /*if (GL.IsTexture(Texture))
             {*/
+            //System.Diagnostics.Debug.WriteLine("Delete: " + Texture + ", " + currentTextureBuffers);
                 GL.DeleteTextures(1, ref Texture);
                 currentTextureBuffers--;
                 Texture = -1;
@@ -350,6 +353,60 @@ namespace OpenGL
             RetArr[5] = NearFarFrustum[1];
 
             return RetArr;
+        }
+
+        // new test for get max with...
+
+
+        public static Vector4 UnProject(Matrix4 projection, Matrix4 view, Size viewport, Vector3 mouse)
+        {
+            Vector4 vec;
+
+            vec.X = 2.0f * mouse.X / (float)viewport.Width - 1;
+            vec.Y = -(2.0f * mouse.Y / (float)viewport.Height - 1);
+            vec.Z = 1.0f;
+            vec.W = 1.0f;
+
+            Matrix4 viewInv = Matrix4.Invert(view);
+            Matrix4 projInv = Matrix4.Invert(projection);
+
+            Vector4.Transform(ref vec, ref projInv, out vec);
+            Vector4.Transform(ref vec, ref viewInv, out vec);
+
+            if (vec.W > float.Epsilon || vec.W < float.Epsilon)
+            {
+                vec.X /= vec.W;
+                vec.Y /= vec.W;
+                vec.Z /= vec.W;
+            }
+
+            return vec;
+        }
+
+        public static Vector4 Project(OpenTK.Vector4 objPos, Matrix4 projection, Matrix4 view, Size viewport)
+        {
+            Vector4 vec = objPos;
+
+            vec = Vector4.Transform(vec, Matrix4.Mult(projection, view));
+
+            vec.X = (vec.X + 1) * (viewport.Width / 2);
+            vec.Y = (vec.Y + 1) * (viewport.Height / 2);
+
+            return vec;
+        }
+
+        /// <summary>
+        /// Method to make printouts more controlled not only by debug enabeling but also with compiler option,
+        /// DEBUGPRINT or RELEASEPRINT
+        /// </summary>
+        /// <param name="Text">Text to be printed</param>
+        public static void DebugPrint(string Text)
+        {
+#if DEBUGPRINT
+            System.Diagnostics.Debug.WriteLine(Text);
+#elif RELEASEPRINT
+            System.Console.WriteLine(Text);
+#endif
         }
         #endregion
 

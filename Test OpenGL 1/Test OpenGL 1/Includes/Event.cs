@@ -290,22 +290,24 @@ namespace OpenGL.Event
                     if (wl != null) wl.Dispose(); // 1 textur
                     if (lucia != null) lucia.Dispose(); // 1 textur
                     if (advent != null) advent.Dispose(); // 1 textur
-                    if (creators != null) creators.Dispose(); // 2 textur
+                    if (creators != null) creators.Dispose(); // 2 texturer
                     if (newyear != null) newyear.Dispose(); // 1 textur
                     if (scroller != null) scroller.Dispose(); //
                     if (bb != null) bb.Dispose(); // 1 textur
-                    if (GM != null) GM.Dispose(); // 7 textur
+                    if (GM != null) GM.Dispose(); // 7 texturer
+                    if (NDay != null) NDay.Dispose(); // 1 textur
+                    if (easter != null) easter.Dispose(); // 3 texturer
+                    if (hajk != null) hajk.Dispose(); // 1 textur
+                    if (mid != null) mid.Dispose(); // 2 texturer
+                    if (vaf != null) vaf.Dispose(); // 1 textur
+                    if (wp != null) wp.Dispose(); // 1 texturer
+                    if (crayfish != null) crayfish.Dispose(); // 8 texturer
+                    if (ts != null) ts.Dispose(); // 3 textur
 
+                    // Main effects
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
                     if (chess != null) chess.Dispose(); // 7 texturer
-                    if (NDay != null) NDay.Dispose();
-                    if (easter != null) easter.Dispose();
-                    if (hajk != null) hajk.Dispose();
-                    if (mid != null) mid.Dispose();
-                    if (vaf != null) vaf.Dispose();
-                    if (wp != null) wp.Dispose();
-                    if (ts != null) ts.Dispose();
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -357,7 +359,7 @@ namespace OpenGL.Event
                 
                 sound.StopSound();
                 lastDate = nowDate;
-                System.Diagnostics.Debug.WriteLine(nowDate);
+                //System.Diagnostics.Debug.WriteLine(nowDate);
                 //sune.NewQoute(); // flytta in detta i sune...
                 //scroller.getRandomScrollerStuff(); // flytta in detta i scroller
             }
@@ -387,7 +389,6 @@ namespace OpenGL.Event
 
             if (ei != null)
             {
-                System.Diagnostics.Debug.WriteLine(ei.Name);
                 switch (ei.Type)
                 {
                     case "effect":
@@ -443,7 +444,9 @@ namespace OpenGL.Event
                             case "Valborgsmässoafton":
                                 wp.Draw(nowDate);
                                 break;
-                            
+                            case "Krafta":
+                                crayfish.Draw(nowDate);
+                                break;
                             default:
                                 if (nowDate != lastDate)
                                 {

@@ -19,8 +19,6 @@ namespace OpenGL
     /// </summary>
     class CrayFish : IEffect
     {
-        
-
         private bool disposed = false;
         
         private int[] texture;
@@ -30,8 +28,15 @@ namespace OpenGL
         private float X;
         private float Y;
         private float Z;
-        private long tick = 0;
-        private int CurrentMove = 0;
+        private long ticks = 0;
+        private long oldTicks = 0;
+        private MoveState CurrentMove;
+        private ImageState ImageSequence;
+        private int CurrentImage;
+        private int CurrentImageSequence;
+        private string oldDate;
+        private enum MoveState { Intro=0, MoveRight, MoveLeft, Stop };
+        private enum ImageState { Normal = 0, NormalStop, Steroid, SteroidStop };
 
         public CrayFish()
         {
@@ -48,19 +53,43 @@ namespace OpenGL
 
             Shellfish = new Vector3[4];
             Size = new SizeF(0.6f, 0.8f);
-            Speed = 0.0025f;
-            CurrentMove = 0;
+            Init();
 
-            //X = 0.0f - Size.Width / 2.0f;
-            //Y = -0.5f - Size.Height / 2.0f;
-            X = 0.0f;
-            Y = 0.0f;
-            Z = 0.45f;
             Shellfish[0] = new Vector3(X, Y, Z); // red
             Shellfish[1] = new Vector3(X, Y + Size.Height, Z); // blue
             Shellfish[2] = new Vector3(X + Size.Width, Y + Size.Height, Z); // green
             Shellfish[3] = new Vector3(X + Size.Width, Y, Z); // yellow
 
+            /*Matrix4 projectionM = new Matrix4();
+            GL.GetFloat(GetPName.ProjectionMatrix, out projectionM);
+            Matrix4 modelviewM = new Matrix4();
+            GL.GetFloat(GetPName.ModelviewMatrix, out modelviewM);
+            float[] viewport = new float[4];
+            GL.GetFloat(GetPName.Viewport, viewport);
+            System.Drawing.Size viewM = new Size((int)viewport[2], (int)viewport[3]);
+            Vector4 vec = Util.UnProject(projectionM, modelviewM, viewM, new Vector3(0, 300, 0.45f));
+            Console.WriteLine(vec.Xyz.ToString());
+            vec = Util.Project(new Vector4(-2.0f, 1.0f, 0.45f, 1.0f), projectionM, modelviewM, viewM);
+            Console.WriteLine(vec.Xyz.ToString());*/
+            /*Byte Pixel = 0;
+            GL.ReadPixels(950, 600, 1, 1, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Byte, ref Pixel);
+            Console.WriteLine(Pixel.ToString());*/
+        }
+
+        public void Init()
+        {
+            Speed = Util.Rnd.Next(4000, 6200) / 1000000.0f;
+            CurrentMove = MoveState.Intro;
+            ImageSequence = ImageState.Normal;
+            CurrentImage = 0;
+            oldTicks = 0;
+            CurrentImageSequence = 0;
+
+            //X = 0.0f - Size.Width / 2.0f;
+            //Y = -0.5f - Size.Height / 2.0f;
+            X = (Util.Rnd.Next(-120, 120) / 100.0f) - (Size.Width / 2.0f); //0.0f - (Size.Width / 2.0f);
+            Y = -1.2f - Size.Height;
+            Z = 0.45f;
         }
 
         ~CrayFish()
@@ -97,23 +126,210 @@ namespace OpenGL
             }
         }
 
-        
+        /// <summary>
+        /// Very unsecure way of doing moving on a screen that is of unknown size in ogl window....
+        /// </summary>
         public void Move()
         {
-            // Make intro move
+            ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerSecond;
 
-            // Make left right move
+            if (this.oldTicks != 0)
+            {
+                #region Timed move - disabled
+                /*
+                //Console.WriteLine(DateTime.Now.ToString("hh:mm:ss.ffffff") + ": " + this.ticks + "-" + this.oldTicks + "=" + (this.ticks - this.oldTicks));
 
+                if ((this.ticks - this.oldTicks) % 3 == 2)
+                {
+                    CurrentImage++;
+                    if (CurrentImage > 7)
+                    {
+                        CurrentImage = 0;
+                    }
+                }
+
+                if ( 
+                    (CurrentMove == 0 && (this.ticks - this.oldTicks) > 6) ||
+                    (CurrentMove == 1 && (this.ticks - this.oldTicks) > 6) ||
+                    (CurrentMove == 2 && (this.ticks - this.oldTicks) > 13) ||
+                    (CurrentMove == 3 && (this.ticks - this.oldTicks) > 13)
+                   )
+                {
+                    if (CurrentMove == 3)
+                    {
+                        CurrentMove = 1;
+                    }
+                    CurrentMove++;
+                    oldTicks = ticks;
+                    //Console.WriteLine(DateTime.Now.ToString("hh:mm:ss.ffffff") + ": change move");
+                }
+
+                
+                // Make move, this is so not good to have constant sizes on edges...
+                switch (CurrentMove)
+                {
+                    case 0:
+                        if (Y < 1.0f)
+                        {
+                            Y += Speed;    
+                        }
+                        break;
+                    case 3:
+                    case 1:
+                        if (X > -2.0f)
+                        {
+                            X -= Speed;
+                        }
+                        break;
+                    case 2:
+                        if (X < 2.0f)
+                        {
+                            X += Speed;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                */
+                #endregion
+                
+                //Image selection
+                if (CurrentImageSequence >= 10)
+                {
+                    CurrentImageSequence = 0;
+                    switch (Util.Rnd.Next(0, 1000) / 100)
+                    {
+                        case 4: // Normal stop
+                        case 3:
+                        case 5:
+                            ImageSequence = ImageState.NormalStop;
+                            CurrentMove = MoveState.Stop;
+                            break;
+                        case 6: // Steroid
+                        case 7:
+                            ImageSequence = ImageState.Steroid;
+                            CurrentMove = (MoveState)(Util.Rnd.Next(0, 999) / 500);
+                            break;
+                        case 8:// Steroid stop
+                        case 9:
+                            ImageSequence = ImageState.SteroidStop;
+                            CurrentMove = MoveState.Stop;
+                            break;
+                        default: // Normal
+                            ImageSequence = ImageState.Normal;
+                            CurrentMove = (MoveState)(Util.Rnd.Next(0, 999) / 500);
+                            break;
+                    }
+                }
+
+                //Console.WriteLine((((this.ticks - this.oldTicks) / TimeSpan.TicksPerSecond) % 2) + ", " + ((this.ticks - this.oldTicks) / TimeSpan.TicksPerSecond));
+                if (this.ticks != this.oldTicks && (
+                    ( (((this.ticks - this.oldTicks) / TimeSpan.TicksPerSecond) % 2) == 0)
+                   ))
+                {
+                    /*
+                    CurrentImage++;
+                    
+                    if (CurrentImage > 7)
+                    {
+                        CurrentImage = 0;
+                    }*/
+
+                    switch (ImageSequence)
+                    {
+                        case ImageState.Normal: //0,1,2,3,4,5
+                        case ImageState.NormalStop:
+                            CurrentImage++;
+                            if (CurrentImage > 5)
+                            {
+                                CurrentImage = 0;
+                            }
+                            break;
+                        case ImageState.Steroid: //0,1,2,3,6,7
+                        case ImageState.SteroidStop:
+                            CurrentImage++;
+                            if (CurrentImage > 3 && CurrentImage < 6)
+                            {
+                                CurrentImage = 6;
+                            }
+                            else if (CurrentImage > 7)
+                            {
+                                CurrentImage = 0;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    oldTicks = ticks;
+                    CurrentImageSequence++;
+                }
+                
+
+                // Movements, fixed size :(
+                switch (CurrentMove)
+                {
+                    case MoveState.Intro:
+                        if (Y + Size.Height < 0.0f)
+                        {
+                            Y += 0.003f;
+                        }
+                        else
+                        {
+                            if ((Util.Rnd.Next(0, 1000) / 500.0) > 1.0)
+                            {
+                                CurrentMove = MoveState.MoveRight;
+                            }
+                            else
+                            {
+                                CurrentMove = MoveState.MoveLeft;
+                            }
+                            
+                        }
+                        break;
+                    case MoveState.MoveRight:
+                        if (X - Size.Width > -2.0f)
+                        {
+                            X -= Speed;
+                        }
+                        else
+                        {
+                            CurrentMove = MoveState.MoveLeft;
+                        }
+                        break;
+                    case MoveState.MoveLeft:
+                        if (X + Size.Width < 1.5f)
+                        {
+                            X += Speed;
+                        }
+                        else
+                        {
+                            CurrentMove = MoveState.MoveRight;
+                        }
+                        break;
+                    default: //MoveState.Stop
+                        break;
+                }
+            }
+            else if (oldTicks == 0)
+            {
+                oldTicks = ticks;
+            }
         }
 
         public void Draw(string Date)
         {
             // Spiders that draws after eachother and end ontop durring run will be hidden...
+            if (oldDate != Date)
+            {
+                Init();
+                oldDate = Date;
+            }
 
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            GL.BindTexture(TextureTarget.Texture2D, texture[0]);
+            GL.BindTexture(TextureTarget.Texture2D, texture[CurrentImage]);
 
             GL.Begin(BeginMode.Quads);
             // Fix this to be dynamic, I don't have the feeling for it currently...
@@ -126,7 +342,7 @@ namespace OpenGL
             GL.End();
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.Texture2D);
-            //Move();
+            Move();
         }
 
     }
