@@ -198,7 +198,7 @@ namespace OpenGL.Event
             ts = new TeknatStyle(ref chess, ref sound, ref text);
 
 
-            randomEvent = new List<string>(new string[] {"TS", "Hajk","bumbi", "BB", "", "", "smurf", "sune","dif", "sune", "dif", "fbk", "rms", "scrollers", "scrollers", "", "scrollers", "turbologo", "winlinux", "", "creators" });
+            randomEvent = new List<string>(new string[] {/*"","TS","", "Hajk","","bumbi","", "BB", "", "", "smurf","", "sune","","dif","", "sune","", "dif", "","fbk", "","rms","","", "scrollers", "","scrollers", "", "scrollers", "","turbologo", "","winlinux", "", "creators","" */"smurf" });
 
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)

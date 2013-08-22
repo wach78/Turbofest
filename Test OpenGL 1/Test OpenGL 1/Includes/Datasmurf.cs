@@ -21,6 +21,10 @@ namespace OpenGL
         private int tick;
         private string LastDate;
 
+        private long ticks;
+        private long oldTicks;
+        private int currentImage;
+
         public Datasmurf(ref Sound sound, ref Text2D txt)
         {
             x = -1.0f;
@@ -34,6 +38,9 @@ namespace OpenGL
 
             tick = 0;
             LastDate = string.Empty;
+
+            currentImage = 0;
+            ticks = oldTicks = 0;
         }
 
         ~Datasmurf()
@@ -77,10 +84,10 @@ namespace OpenGL
 
             // x y z
             // alla i mitten Y-led  alla till vänster x-led
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(2.0f + x, -0.75f + y, 0.4f); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.1f + x, -0.75f + y, 0.4f); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.1f + x, 0.10f + y, 0.4f);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(2.0f + x, 0.10f + y, 0.4f); // top left 
+            GL.TexCoord2(0.0 + (currentImage * 0.2f), 1.0); GL.Vertex3(2.0f + x, -0.75f + y, 0.4f); // bottom left  
+            GL.TexCoord2(0.2 + (currentImage * 0.2f), 1.0); GL.Vertex3(1.1f + x, -0.75f + y, 0.4f); // bottom right 
+            GL.TexCoord2(0.2 + (currentImage * 0.2f), 0.0); GL.Vertex3(1.1f + x, 0.10f + y, 0.4f);// top right
+            GL.TexCoord2(0.0 + (currentImage * 0.2f), 0.0); GL.Vertex3(2.0f + x, 0.10f + y, 0.4f); // top left 
 
             GL.End();
             GL.Disable(EnableCap.Blend);//
@@ -115,11 +122,36 @@ namespace OpenGL
                 LastDate = Date;
             }
         }
+
+        public void updateImages()
+        {
+            ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+
+            if (this.oldTicks != 0)
+            {
+                if ((this.ticks - this.oldTicks) > 3500)
+                {
+                    currentImage++;
+
+                    if (currentImage > 4)
+                        currentImage = 0;
+
+                    oldTicks = ticks;
+                }//inner if
+            }//outer if
+
+            if (oldTicks == 0)
+                oldTicks = ticks;
+
+           
+
+        }
         public void Draw(string Date)
         {
             Play(Date);
             drawText();
             moveImage();
+            updateImages();
             DrawImage();
         }//Draw
     }//class
