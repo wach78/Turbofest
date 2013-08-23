@@ -129,7 +129,7 @@ namespace OpenGL
 
             if (this.oldTicks != 0)
             {
-                if ((this.ticks - this.oldTicks) > 3500)
+                if ((this.ticks - this.oldTicks) > 4200)
                 {
                     currentImage++;
 
@@ -148,6 +148,12 @@ namespace OpenGL
         }
         public void Draw(string Date)
         {
+            if (LastDate != Date)
+            {
+                currentImage = 0;
+                ticks = oldTicks = 0;
+            }
+
             Play(Date);
             drawText();
             moveImage();
