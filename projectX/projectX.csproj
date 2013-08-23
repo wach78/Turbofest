@@ -180,6 +180,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLL\Validate.dll" />
+    <Content Include="Documentation\Tests.txt" />
     <Content Include="Documentation\TODO.txt" />
     <Content Include="XMLFiles\Scrollers\Scrollers.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

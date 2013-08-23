@@ -45,7 +45,9 @@
             this.printerSetupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.AdminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,8 +55,6 @@
             this.printDialog = new System.Windows.Forms.PrintDialog();
             this.printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.pageSetupDialog = new System.Windows.Forms.PageSetupDialog();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.listPanel.SuspendLayout();
             this.buttonPanel2.SuspendLayout();
             this.buttonPanel.SuspendLayout();
@@ -83,7 +83,7 @@
             this.lViewParty.MultiSelect = false;
             this.lViewParty.Name = "lViewParty";
             this.lViewParty.Size = new System.Drawing.Size(192, 142);
-            this.lViewParty.TabIndex = 0;
+            this.lViewParty.TabIndex = 1;
             this.lViewParty.UseCompatibleStateImageBehavior = false;
             this.lViewParty.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.lViewParty_ColumnWidthChanging);
             this.lViewParty.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lViewParty_MouseDoubleClick);
@@ -104,7 +104,7 @@
             this.btnStart.Location = new System.Drawing.Point(39, 95);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 50);
-            this.btnStart.TabIndex = 4;
+            this.btnStart.TabIndex = 5;
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
@@ -124,7 +124,7 @@
             this.btnCreate.Location = new System.Drawing.Point(3, 34);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(50, 25);
-            this.btnCreate.TabIndex = 4;
+            this.btnCreate.TabIndex = 0;
             this.btnCreate.Text = "Create";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
@@ -144,7 +144,7 @@
             this.btnLoad.Location = new System.Drawing.Point(116, 15);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(50, 25);
-            this.btnLoad.TabIndex = 6;
+            this.btnLoad.TabIndex = 2;
             this.btnLoad.Text = "Load";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
@@ -154,7 +154,7 @@
             this.btnDel.Location = new System.Drawing.Point(17, 15);
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(50, 25);
-            this.btnDel.TabIndex = 4;
+            this.btnDel.TabIndex = 3;
             this.btnDel.Text = "Del";
             this.btnDel.UseVisualStyleBackColor = true;
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
@@ -222,6 +222,11 @@
             this.printToolStripMenuItem.Text = "&Print...";
             this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
+            // 
             // AdminToolStripMenuItem
             // 
             this.AdminToolStripMenuItem.Name = "AdminToolStripMenuItem";
@@ -229,6 +234,11 @@
             this.AdminToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.AdminToolStripMenuItem.Text = "Admin";
             this.AdminToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
             // closeToolStripMenuItem1
             // 
@@ -250,7 +260,7 @@
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -279,16 +289,6 @@
             // pageSetupDialog
             // 
             this.pageSetupDialog.Document = this.printDocument;
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
             // 
             // FrmMain
             // 

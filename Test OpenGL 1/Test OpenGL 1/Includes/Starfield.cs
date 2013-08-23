@@ -22,6 +22,7 @@ namespace OpenGL
         private float width;
         private bool MoveLeft;
         private bool MoveUp;
+        private Color StarColour;
 
         public Star(float sX, float sY, float sZ, float sSpeed, bool left, bool up, float size=1.0f)
         {
@@ -32,6 +33,7 @@ namespace OpenGL
             width = size;
             MoveLeft = left;
             MoveUp = up;
+            StarColour = Color.White;
         }
 
         #region Dispose
@@ -107,6 +109,11 @@ namespace OpenGL
             return new Vector3(x, y, z);
         }
 
+        public void SetColour(Color StarC)
+        {
+            StarColour = StarC;
+        }
+
         public void Draw(string Date)
         {
             //GL.MatrixMode(MatrixMode.Projection);
@@ -115,7 +122,7 @@ namespace OpenGL
             
             GL.PointSize(width);
             GL.Begin(BeginMode.Points);
-            GL.Color4(Color.White);
+            GL.Color4(StarColour);
             GL.Vertex3(x, y, z); // bottom right
 
             GL.End();
@@ -184,6 +191,7 @@ namespace OpenGL
         /*private float minDepth;
         private float maxDepth;*/
 
+        private string oldDate;
         uint vboHandle, voaHandle;
         Vector3[] vertices;
         /*int vShader;
@@ -288,8 +296,56 @@ namespace OpenGL
         }
         #endregion
 
+        public void SetColour(Color StartColour)
+        {
+            foreach (Star s in Stars)
+            {
+                s.SetColour(StartColour);
+            }
+        }
+
         public void Draw(string Date)
         {
+            if (oldDate != Date)
+            {
+                switch (Util.Rnd.Next(0,1000)/100) // 0 to 10
+                { 
+                    case 0:
+                        SetColour(Color.Purple);
+                        break;
+                    case 1:
+                        SetColour(Color.Yellow);
+                        break;
+                    case 2:
+                        SetColour(Color.Red);
+                        break;
+                    case 3:
+                        SetColour(Color.Green);
+                        break;
+                    case 4:
+                        SetColour(Color.LightPink);
+                        break;
+                    case 5:
+                        SetColour(Color.LightYellow);
+                        break;
+                    case 6:
+                        SetColour(Color.Magenta);
+                        break;
+                    case 7:
+                        SetColour(Color.MediumPurple);
+                        break;
+                    case 8:
+                        SetColour(Color.MediumVioletRed);
+                        break;
+                    case 9:
+                        SetColour(Color.PaleVioletRed);
+                        break;
+                    default:
+                        SetColour(Color.White);
+                        break;
+                }
+                oldDate = Date;
+            }
             // 700-900 fps
             foreach (Star s in Stars)
             {

@@ -57,7 +57,7 @@
             this.btnChangeDate.Location = new System.Drawing.Point(3, 18);
             this.btnChangeDate.Name = "btnChangeDate";
             this.btnChangeDate.Size = new System.Drawing.Size(100, 25);
-            this.btnChangeDate.TabIndex = 0;
+            this.btnChangeDate.TabIndex = 10;
             this.btnChangeDate.Text = "Change settings";
             this.btnChangeDate.UseVisualStyleBackColor = true;
             this.btnChangeDate.Click += new System.EventHandler(this.btnChangeDate_Click);
@@ -67,7 +67,7 @@
             this.btncancel.Location = new System.Drawing.Point(142, 18);
             this.btncancel.Name = "btncancel";
             this.btncancel.Size = new System.Drawing.Size(50, 25);
-            this.btncancel.TabIndex = 1;
+            this.btncancel.TabIndex = 11;
             this.btncancel.Text = "Done";
             this.btncancel.UseVisualStyleBackColor = true;
             this.btncancel.Click += new System.EventHandler(this.btncancel_Click);
@@ -77,7 +77,7 @@
             this.btnAdd.Location = new System.Drawing.Point(13, 29);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(50, 25);
-            this.btnAdd.TabIndex = 2;
+            this.btnAdd.TabIndex = 9;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -98,7 +98,7 @@
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(197, 150);
-            this.panel1.TabIndex = 3;
+            this.panel1.TabIndex = 1;
             // 
             // cbResolution
             // 
@@ -106,7 +106,7 @@
             this.cbResolution.Location = new System.Drawing.Point(62, 116);
             this.cbResolution.Name = "cbResolution";
             this.cbResolution.Size = new System.Drawing.Size(110, 21);
-            this.cbResolution.TabIndex = 22;
+            this.cbResolution.TabIndex = 5;
             this.cbResolution.SelectedValueChanged += new System.EventHandler(this.cbResolution_SelectedValueChanged);
             // 
             // lblResolution
@@ -131,7 +131,7 @@
             this.cbRunTime.Location = new System.Drawing.Point(62, 85);
             this.cbRunTime.Name = "cbRunTime";
             this.cbRunTime.Size = new System.Drawing.Size(110, 21);
-            this.cbRunTime.TabIndex = 20;
+            this.cbRunTime.TabIndex = 4;
             // 
             // lblRunTime
             // 
@@ -148,7 +148,7 @@
             this.cbEndTimeDay.Location = new System.Drawing.Point(135, 48);
             this.cbEndTimeDay.Name = "cbEndTimeDay";
             this.cbEndTimeDay.Size = new System.Drawing.Size(39, 21);
-            this.cbEndTimeDay.TabIndex = 18;
+            this.cbEndTimeDay.TabIndex = 3;
             // 
             // cbStartTimeDay
             // 
@@ -156,7 +156,7 @@
             this.cbStartTimeDay.Location = new System.Drawing.Point(135, 17);
             this.cbStartTimeDay.Name = "cbStartTimeDay";
             this.cbStartTimeDay.Size = new System.Drawing.Size(39, 21);
-            this.cbStartTimeDay.TabIndex = 17;
+            this.cbStartTimeDay.TabIndex = 1;
             // 
             // cbEndTimeMonth
             // 
@@ -177,7 +177,7 @@
             this.cbEndTimeMonth.Location = new System.Drawing.Point(65, 48);
             this.cbEndTimeMonth.Name = "cbEndTimeMonth";
             this.cbEndTimeMonth.Size = new System.Drawing.Size(48, 21);
-            this.cbEndTimeMonth.TabIndex = 15;
+            this.cbEndTimeMonth.TabIndex = 2;
             this.cbEndTimeMonth.SelectedValueChanged += new System.EventHandler(this.cbEndTimeMonth_SelectedValueChanged);
             // 
             // cbStartTimeMonth
@@ -199,7 +199,7 @@
             this.cbStartTimeMonth.Location = new System.Drawing.Point(65, 17);
             this.cbStartTimeMonth.Name = "cbStartTimeMonth";
             this.cbStartTimeMonth.Size = new System.Drawing.Size(48, 21);
-            this.cbStartTimeMonth.TabIndex = 16;
+            this.cbStartTimeMonth.TabIndex = 0;
             this.cbStartTimeMonth.SelectedValueChanged += new System.EventHandler(this.cbStartTimeMonth_SelectedValueChanged);
             // 
             // lblEndDate
@@ -225,7 +225,7 @@
             this.listViewScrollers.Location = new System.Drawing.Point(215, 12);
             this.listViewScrollers.Name = "listViewScrollers";
             this.listViewScrollers.Size = new System.Drawing.Size(259, 150);
-            this.listViewScrollers.TabIndex = 4;
+            this.listViewScrollers.TabIndex = 6;
             this.listViewScrollers.UseCompatibleStateImageBehavior = false;
             // 
             // txtAddScroller
@@ -233,14 +233,14 @@
             this.txtAddScroller.Location = new System.Drawing.Point(13, 3);
             this.txtAddScroller.Name = "txtAddScroller";
             this.txtAddScroller.Size = new System.Drawing.Size(229, 20);
-            this.txtAddScroller.TabIndex = 5;
+            this.txtAddScroller.TabIndex = 8;
             // 
             // btnDel
             // 
             this.btnDel.Location = new System.Drawing.Point(192, 29);
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(50, 25);
-            this.btnDel.TabIndex = 6;
+            this.btnDel.TabIndex = 7;
             this.btnDel.Text = "Delete";
             this.btnDel.UseVisualStyleBackColor = true;
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
@@ -253,7 +253,7 @@
             this.panel2.Location = new System.Drawing.Point(12, 168);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(197, 65);
-            this.panel2.TabIndex = 7;
+            this.panel2.TabIndex = 8;
             // 
             // panel3
             // 
@@ -264,7 +264,7 @@
             this.panel3.Location = new System.Drawing.Point(215, 168);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(259, 65);
-            this.panel3.TabIndex = 8;
+            this.panel3.TabIndex = 7;
             // 
             // FrmAdmin
             // 

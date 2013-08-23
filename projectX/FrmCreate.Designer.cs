@@ -51,7 +51,7 @@
             this.btnCancel.Location = new System.Drawing.Point(12, 223);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(50, 25);
-            this.btnCancel.TabIndex = 6;
+            this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -62,7 +62,7 @@
             this.btnNext.Location = new System.Drawing.Point(162, 223);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(50, 25);
-            this.btnNext.TabIndex = 5;
+            this.btnNext.TabIndex = 8;
             this.btnNext.Text = "Ok";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
@@ -81,7 +81,7 @@
             this.datePanel.Location = new System.Drawing.Point(12, 102);
             this.datePanel.Name = "datePanel";
             this.datePanel.Size = new System.Drawing.Size(200, 115);
-            this.datePanel.TabIndex = 3;
+            this.datePanel.TabIndex = 2;
             // 
             // cbRunTime
             // 
@@ -96,7 +96,7 @@
             this.cbRunTime.Location = new System.Drawing.Point(61, 87);
             this.cbRunTime.Name = "cbRunTime";
             this.cbRunTime.Size = new System.Drawing.Size(110, 21);
-            this.cbRunTime.TabIndex = 7;
+            this.cbRunTime.TabIndex = 6;
             // 
             // cbEndTimeDay
             // 
@@ -104,7 +104,7 @@
             this.cbEndTimeDay.Location = new System.Drawing.Point(132, 44);
             this.cbEndTimeDay.Name = "cbEndTimeDay";
             this.cbEndTimeDay.Size = new System.Drawing.Size(39, 21);
-            this.cbEndTimeDay.TabIndex = 14;
+            this.cbEndTimeDay.TabIndex = 5;
             // 
             // cbStartTimeDay
             // 
@@ -112,7 +112,7 @@
             this.cbStartTimeDay.Location = new System.Drawing.Point(132, 13);
             this.cbStartTimeDay.Name = "cbStartTimeDay";
             this.cbStartTimeDay.Size = new System.Drawing.Size(39, 21);
-            this.cbStartTimeDay.TabIndex = 13;
+            this.cbStartTimeDay.TabIndex = 3;
             // 
             // cbEndTimeMonth
             // 
@@ -133,7 +133,7 @@
             this.cbEndTimeMonth.Location = new System.Drawing.Point(62, 44);
             this.cbEndTimeMonth.Name = "cbEndTimeMonth";
             this.cbEndTimeMonth.Size = new System.Drawing.Size(48, 21);
-            this.cbEndTimeMonth.TabIndex = 12;
+            this.cbEndTimeMonth.TabIndex = 4;
             this.cbEndTimeMonth.SelectedValueChanged += new System.EventHandler(this.cbEndTimeMonth_SelectedValueChanged);
             // 
             // cbStartTimeMonth
@@ -155,7 +155,7 @@
             this.cbStartTimeMonth.Location = new System.Drawing.Point(62, 13);
             this.cbStartTimeMonth.Name = "cbStartTimeMonth";
             this.cbStartTimeMonth.Size = new System.Drawing.Size(48, 21);
-            this.cbStartTimeMonth.TabIndex = 12;
+            this.cbStartTimeMonth.TabIndex = 2;
             this.cbStartTimeMonth.SelectedValueChanged += new System.EventHandler(this.cbStartTimeMonth_SelectedValueChanged);
             // 
             // lblRunTime
@@ -192,7 +192,7 @@
             this.gBoxSpringOrFall.Location = new System.Drawing.Point(12, 12);
             this.gBoxSpringOrFall.Name = "gBoxSpringOrFall";
             this.gBoxSpringOrFall.Size = new System.Drawing.Size(200, 72);
-            this.gBoxSpringOrFall.TabIndex = 2;
+            this.gBoxSpringOrFall.TabIndex = 1;
             this.gBoxSpringOrFall.TabStop = false;
             // 
             // rbtnFall

@@ -1,0 +1,22 @@
+﻿Test Systems:
+1.
+2.
+3. Windows 7 64-bit, Intel I7-920, 16 GB RAM, Nvidia GeForce GTX 560 1 GB
+4. Linux/Fedora 17 64-bit (Virtual Machine), Intel I7-920 (2 cores with 2 cpus each), 8 GB RAM, -*
+5. Windows Vista 32-bit, AMD Sempron SI-42, 2 GB RAM, Radeon HD 3200 Max 800 MB**
+6. Linux/Fedora 16 64-bit, Intel Pentium Dual Core E5500, 2 GB RAM, Gainward GeForce 8400GS 256MB*
+* Window and fullscreen switching is bugged, OpenTK error or something, is not the top most window in some window managers.
+** With some stops just when a new day comes and on fast moving objects synclines comes, this is a 1 CPU computer.
+
+
+Tests okey:
+1 Hour (Test): 3, 4, 5, 6
+3 Hours: 
+3.5 Hours: 
+4 Hours: 
+4.5 Hours: 
+5 Hours: 
+
+
+
+
