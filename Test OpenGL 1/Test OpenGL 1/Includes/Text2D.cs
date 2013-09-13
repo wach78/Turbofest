@@ -362,6 +362,55 @@ namespace OpenGL
             return Vector2.Multiply(ToScale, Scale);
         }
 
+        /// <summary>
+        /// NOT tested and not done missing centering bits :D
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <param name="Font"></param>
+        /// <param name="Position"></param>
+        /// <param name="CharSize"></param>
+        /// <param name="MaxSize"></param>
+        /// <param name="Scale"></param>
+        public void DrawCenter(string Text, FontName Font, Vector3 Position, Vector2 CharSize, Vector2 MaxSize, float Scale = 1.0f)
+        {
+            CharSize = Vector2.Multiply(CharSize, Scale); // scale the char size
+            Vector2[] texVec = new Vector2[4];
+            float X, Y;
+            string[] splitText = SplitFitString(Text, CharSize.X, MaxSize.X); // Split the text to fit in MaxSize use this to make centering text as well.
+
+            /*
+             * Take the longest row as the one to center after
+             * Use Position.X for left side then space out with CharSize.X to center the row except the longest row.
+             * */
+
+            GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha); //(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.BindTexture(TextureTarget.Texture2D, texture[(int)Font]);
+            GL.Begin(BeginMode.Quads);
+
+            X = Position.X;
+            Y = Position.Y;
+            for (int y = 0; y < splitText.Length; y++)
+            {
+                //fill in with extra space for centering???
+                for (int i = 0; i < splitText[y].Length; i++)
+                {
+                    texVec = TextureCoordinates(splitText[y][i], Font);
+                    GL.TexCoord2(texVec[0]); GL.Vertex3(X - ((i + 1) * CharSize.X), Y - CharSize.Y, Position.Z); // bottom right
+                    GL.TexCoord2(texVec[1]); GL.Vertex3(X - ((i + 1) * CharSize.X), Y, Position.Z); // top right
+                    GL.TexCoord2(texVec[2]); GL.Vertex3(X - (i * CharSize.X), Y, Position.Z); // top left
+                    GL.TexCoord2(texVec[3]); GL.Vertex3(X - (i * CharSize.X), Y - CharSize.Y, Position.Z); // bottom left
+                }
+                //Y -= 0.1f;
+                Y -= CharSize.Y;
+            }
+
+            GL.End();
+            GL.Disable(EnableCap.Blend);
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+        }
+
         public void Draw(string Text, FontName Font, Vector3 Position, Vector2 CharSize, Vector2 MaxSize, float Scale = 1.0f)
         {
             CharSize = Vector2.Multiply(CharSize, Scale); // scale the char size
