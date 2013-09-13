@@ -409,6 +409,7 @@ namespace projectX
                 date = new DateTime(year, 8, 8);
                 xmlStuff2.writeFeastToXmlFile("Kräftpremiär", getShortDate(date), "Effect");
 
+
             }
 
         }//createparty

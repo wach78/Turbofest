@@ -184,10 +184,23 @@ namespace OpenGL
 
         private void drawText(string name)
         {
-            text.Draw(name, (Text2D.FontName)randomFontt, new Vector3(1.0f, 0.2f, 1.0f), new Vector2(0.2f, 0.2f), new Vector2());
+            float y = 0.0f;
+            string[] names = name.Split('\n');
+
+            foreach (var n in names)
+            {
+                float middle = n.Length / 2.0f;
+                text.Draw(n, (Text2D.FontName)randomFontt, new Vector3(middle * 0.2f, 0.2f-y, 1.0f), new Vector2(0.2f, 0.2f), new Vector2());
+                y += 0.15f;
+            }
+            
+
+            
+
+           
         }
 
-
+       
         public void Draw(string Date)
         {
             Play(Date);

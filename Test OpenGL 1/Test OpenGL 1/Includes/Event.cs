@@ -149,6 +149,8 @@ namespace OpenGL.Event
         CrayFish crayfish;
         TeknatStyle ts;
 
+        private bool star;
+
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
         System.Collections.Generic.List<string> randomEvent;
@@ -197,8 +199,8 @@ namespace OpenGL.Event
             crayfish = new CrayFish();
             ts = new TeknatStyle(ref chess, ref sound, ref text);
 
-
-            randomEvent = new List<string>(new string[] {/*"","TS","", "Hajk","","bumbi","", "BB", "", "", "smurf","", "sune","","dif","", "sune","", "dif", "","fbk", "","rms","","", "scrollers", "","scrollers", "", "scrollers", "","turbologo", "","winlinux", "", "creators","" */"scrollers" });
+            star = false;
+            randomEvent = new List<string>(new string[] {"starfield","TS","", "Hajk","bumbi", "BB", "", "smurf","", "sune","dif","", "sune","", "dif", "","fbk", "","rms", "scrollers", "sune", "scrollers", "","turbologo","winlinux", "creators"});
 
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
@@ -235,6 +237,7 @@ namespace OpenGL.Event
                 name = date = type = string.Empty;
             }
             
+            
             // Random effects on dates with no effects.
             DateTime dt = ClockStart;
             while (dt <= ClockEnd)
@@ -242,7 +245,20 @@ namespace OpenGL.Event
                 date = dt.ToShortDateString();
                 if (!events.ContainsKey(date))
                 {
-                    EventItem ei = new EventItem(randomEvent[Util.Rnd.Next(0, randomEvent.Count)], "random", date);
+                    EventItem ei;
+
+                    if (star)
+                    {
+                        ei = new EventItem(randomEvent [0], "random", date);
+                        star = false;
+                    }
+                    else
+                    {
+                        ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
+                        star = true;
+                    }
+
+                   
                     List<EventItem> list = new List<EventItem>(); // seems most bad in my eyes...
                     events.Add(date, list);
                     events[date].Add(ei);
@@ -499,8 +515,8 @@ namespace OpenGL.Event
                                 if (sommar(nowDate))
                                     hajk.Draw(nowDate);
                                 break;
-                            case "Krafta":
-                                crayfish.Draw(nowDate);
+                            case "starfield":
+                                sf.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)
@@ -518,7 +534,18 @@ namespace OpenGL.Event
                         birthday.Draw(nowDate, ei.Name); 
                         break;
                     case "text":
-                        text.Draw(ei.Name, Text2D.FontName.Coolfont, new OpenTK.Vector3(1.0f, 0.0f, 0.4f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(),1.5f); // fix in name...
+
+                        string[] words = text.SplitFitString(ei.Name, 1.5f, 4.0f);
+                        float y = 0.0f;
+                        foreach (var n in words)
+                        {
+                            float middle = n.Length / 2.0f;
+                            text.Draw(n, Text2D.FontName.Coolfont, new OpenTK.Vector3(middle * 0.15f, 0.2f - y, 0.4f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(4.0f, 0.0f), 1.5f); // fix in name...
+                            y += 0.15f;
+                            Debug.WriteLine(n);
+                        }
+
+                       
                         break;
                     default:
                         if (nowDate != lastDate)

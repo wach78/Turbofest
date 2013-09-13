@@ -1,4 +1,9 @@
-﻿ljud 
+﻿splitt text behöver ses över center text
+matrix ??
+
+
+
+ljud 
 ljud test
 1. Starta programet och starta en gång, detta tycks fungera utan ljud störningar.
 2. Starta programmet och starta 2 gånger ljudet blir då snabbt och mycket irriterande.
