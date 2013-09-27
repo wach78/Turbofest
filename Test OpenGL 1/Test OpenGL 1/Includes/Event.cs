@@ -148,6 +148,7 @@ namespace OpenGL.Event
         Walpurgis wp;
         CrayFish crayfish;
         TeknatStyle ts;
+        Matrix m;
 
         private bool star;
 
@@ -198,9 +199,10 @@ namespace OpenGL.Event
             wp = new Walpurgis();
             crayfish = new CrayFish();
             ts = new TeknatStyle(ref chess, ref sound, ref text);
+            m = new Matrix(ref text);
 
             star = false;
-            randomEvent = new List<string>(new string[] {"starfield","TS","", "Hajk","bumbi", "BB", "", "smurf","", "sune","dif","", "sune","", "dif", "","fbk", "","rms", "scrollers", "sune", "scrollers", "","turbologo","winlinux", "creators"});
+            randomEvent = new List<string>(new string[] {"starfield","TS","", "Hajk",/*"bumbi", "BB", "", "smurf","", "sune","dif","", "sune","", "dif", "","fbk", "","rms", "scrollers", "sune", "scrollers", "","turbologo","winlinux", "creators"*/});
 
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
@@ -321,7 +323,7 @@ namespace OpenGL.Event
                     if (wp != null) wp.Dispose(); // 1 texturer
                     if (crayfish != null) crayfish.Dispose(); // 8 texturer
                     if (ts != null) ts.Dispose(); // 3 textur
-
+                    if (m != null) m.Dispose(); 
                     // Main effects
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
@@ -481,11 +483,15 @@ namespace OpenGL.Event
                                 break;
                             case "dif":
                                 if (difFbk(nowDate))
-                                     dif.Draw(nowDate);
+                                    dif.Draw(nowDate);
+                                else
+                                    m.Draw(nowDate);
                                 break;
                             case "fbk":
                                 if (difFbk(nowDate))
                                     fbk.Draw(nowDate);
+                                else
+                                    m.Draw(nowDate);
                                 break;
                             case "rms":
                                 richard.Draw(nowDate);
@@ -514,6 +520,8 @@ namespace OpenGL.Event
                             case "Hajk":
                                 if (sommar(nowDate))
                                     hajk.Draw(nowDate);
+                                else
+                                    m.Draw(nowDate);
                                 break;
                             case "starfield":
                                 sf.Draw(nowDate);
@@ -535,13 +543,13 @@ namespace OpenGL.Event
                         break;
                     case "text":
 
-                        string[] words = text.SplitFitString(ei.Name, 1.5f, 4.0f);
+                        string[] words = text.SplitFitString(ei.Name, 1.5f, 25.0f);
                         float y = 0.0f;
                         foreach (var n in words)
                         {
                             float middle = n.Length / 2.0f;
                             text.Draw(n, Text2D.FontName.Coolfont, new OpenTK.Vector3(middle * 0.15f, 0.2f - y, 0.4f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(4.0f, 0.0f), 1.5f); // fix in name...
-                            y += 0.15f;
+                            y += 0.25f;
                             Debug.WriteLine(n);
                         }
 

@@ -331,7 +331,7 @@ namespace projectX
 
                 year--; //justering av year 
                 date = new DateTime(year,m,d);
-                xmlStuff2.writeFeastToXmlFile("Välkommen till \n\n Turbophesten", getShortDate(date), "Text");
+                xmlStuff2.writeFeastToXmlFile("Välkommen till Turbophesten", getShortDate(date), "Text");
             
                 date = new DateTime(year, 10, 24);
                 xmlStuff2.writeFeastToXmlFile("FN-dagen", getShortDate(date), "Text");
@@ -385,7 +385,7 @@ namespace projectX
                 int m = int.Parse(monthNumber(startDate.Substring(0, startDate.IndexOf(" "))));
                 int d = int.Parse(startDate.Substring(startDate.IndexOf(" "), startDate.Length - startDate.IndexOf(" ")));
                 date = new DateTime(year, m, d);
-                xmlStuff2.writeFeastToXmlFile("Välkommen till \n\n Turbophesten", getShortDate(date), "Text");
+                xmlStuff2.writeFeastToXmlFile("Välkommen till Turbophesten", getShortDate(date), "Text");
 
                 date = new DateTime(year,3,25);
                 xmlStuff2.writeFeastToXmlFile("Våffeldagen", getShortDate(date), "Effect");
@@ -427,12 +427,9 @@ namespace projectX
 
             xmlStuff2.writeScrollerToXmlFile("turbophest");
             xmlStuff2.writeScrollerToXmlFile("detta är en liten text som scrollar förbi i rutan");
-            xmlStuff2.writeScrollerToXmlFile("turbophest");
             xmlStuff2.writeScrollerToXmlFile("hoppas ni trivs.");
-            xmlStuff2.writeScrollerToXmlFile("turbophest");
             xmlStuff2.writeScrollerToXmlFile("idag händer ingenting");
             xmlStuff2.writeScrollerToXmlFile("teknatsektionens sexmästeri");
-            xmlStuff2.writeScrollerToXmlFile("oj vilken fin effekt");
             xmlStuff2.writeScrollerToXmlFile("hur många dagar visas turbologgan totalt?");
 
         }//createScrollers

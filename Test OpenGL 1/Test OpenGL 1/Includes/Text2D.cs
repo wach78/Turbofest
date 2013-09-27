@@ -60,6 +60,22 @@ namespace OpenGL
             Dispose(false);
         }
 
+        public int getTexture(FontName m)
+        {
+            return texture[(int)m];
+        }
+
+        public string getAllowedChars(FontName m)
+        {
+            return AllowedChars[(int)m];
+        }
+
+        public float[] fontSize(FontName m)
+        {
+            float[] x = new float[] { FontSize[(int)m, 0], FontSize[(int)m, 1] };
+            return x;
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -268,34 +284,45 @@ namespace OpenGL
             }
             else
             {
+
+                
                 for (int i = 0; i < Rows.Count; i++)
                 {
-                    string escReg = System.Text.RegularExpressions.Regex.Escape(".");
-                    string[] split = System.Text.RegularExpressions.Regex.Split(Rows[i], "( |-|,|" + escReg + ")");
-                    int ii = i;
-                    string newRow = "";
-                    for (int y = 0; y < split.Length; y++)
+
+                    if (MeasureString(Rows[i], Size) <= MaxWidth)
                     {
-                        if (split[y] == "")
-                        {
-                            continue;
-                        }
-                        if (MeasureString(newRow + split[y], Size) >= MaxWidth && newRow != "")
-                        {
-                            RealRow.Add(newRow.Trim());
-                            y--;
-                            newRow = "";
-                        }
-                        else
-                        {
-                            newRow += split[y];
-                        }
+                        RealRow.Add(Rows[i].Trim());
                     }
-                    /*if (newRow != "")
-                    {*/
+                    else
+                    {
+
+                        string escReg = System.Text.RegularExpressions.Regex.Escape(".");
+                        string[] split = System.Text.RegularExpressions.Regex.Split(Rows[i], "( |-|,|" + escReg + ")");
+                        int ii = i;
+                        string newRow = "";
+                        for (int y = 0; y < split.Length; y++)
+                        {
+                            if (split[y] == "")
+                            {
+                                continue;
+                            }
+                            if (MeasureString(newRow + split[y], Size) >= MaxWidth && newRow != "")
+                            {
+                                RealRow.Add(newRow.Trim());
+                                y--;
+                                newRow = "";
+                            }
+                            else
+                            {
+                                newRow += split[y];
+                            }
+                        }
+                        /*if (newRow != "")
+                        {*/
                         RealRow.Add(newRow.Trim());
                         newRow = "";
-                    //}
+                        //}
+                    }
                 }
             }
             return RealRow.ToArray<string>();

@@ -100,6 +100,7 @@
     <Compile Include="Includes\Event.cs" />
     <Compile Include="Includes\Hajk.cs" />
     <Compile Include="Includes\Lucia.cs" />
+    <Compile Include="Includes\Matrix.cs" />
     <Compile Include="Includes\midsummer.cs" />
     <Compile Include="Includes\National.cs" />
     <Compile Include="Includes\NewYear.cs" />
