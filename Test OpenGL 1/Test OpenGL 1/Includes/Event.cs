@@ -202,7 +202,7 @@ namespace OpenGL.Event
             m = new Matrix(ref text);
 
             star = false;
-            randomEvent = new List<string>(new string[] {"starfield","TS","", "Hajk",/*"bumbi", "BB", "", "smurf","", "sune","dif","", "sune","", "dif", "","fbk", "","rms", "scrollers", "sune", "scrollers", "","turbologo","winlinux", "creators"*/});
+            randomEvent = new List<string>(new string[] {"starfield", "TS","", "Hajk","bumbi", "BB", "", "smurf","", "sune","dif","", "sune","", "dif", "","fbk", "","rms", "scrollers", "sune", "scrollers", "","turbologo","winlinux", "creators"});
 
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
