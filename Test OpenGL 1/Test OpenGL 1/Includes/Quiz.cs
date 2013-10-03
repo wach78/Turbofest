@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Drawing;
+using System.Drawing.Text;
+using System.Drawing.Imaging;
 
-namespace OpenGL
+namespace OpenGL 
 {
-    class SuneTxtHandler : IEffect
+    class Quiz : IEffect
     {
         private static List<string> listquotes;
         private static List<int> indexList;
@@ -23,14 +24,16 @@ namespace OpenGL
         private string currentString;
         private bool builtInFont;
 
-        public SuneTxtHandler(ref Text2D Text, bool BuiltInFont)
+        private string LastPlayedDate;
+
+        public Quiz (ref Text2D Text, bool BuiltInFont)
         {
             listquotes = new List<string>();
             indexList = new List<int>();
             maxIndexValue = 0;
             text = Text;
             builtInFont = BuiltInFont;
-           
+
             readFromXml();
             drawInit(builtInFont);
         }
@@ -43,27 +46,27 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
             System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
         }
-    
+
         public static void readFromXml()
         {
-            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Sune/sune.xml" ;
-            
+            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Quiz/quiz.xml";
+
 
             System.Xml.Linq.XDocument xDoc = System.Xml.Linq.XDocument.Load(path);
-         
+
             var quotes = (
-                        from x in xDoc.Elements("quotes")
+                        from x in xDoc.Elements("questions")
                         select x
                         ).FirstOrDefault();
 
-            foreach (var x in quotes.Elements("quote"))
+            foreach (var x in quotes.Elements("question"))
             {
-                listquotes.Add(x.Element("date").Value + "\n\n" + x.Element("txt").Value);
+                listquotes.Add(x.Element("id").Value + "." + x.Element("txt").Value);
                 maxIndexValue++;
             }
         }//readFromXml
 
-        public string getOneRandomQuote()
+        public string getOneRandomquestion()
         {
             int index = 0;
             bool again = true;
@@ -81,15 +84,13 @@ namespace OpenGL
                 {
                     indexList.Add(index);
                     again = false;
-                }      
-     
-            }while(again);
+                }
 
-            return listquotes[index]; 
-        }//getOneRandomQuote
+            } while (again);
 
+            return listquotes[index];
+        }//getOneRandomquestion
 
-   
         public void drawInit(bool BuiltIn)
         {
             if (BuiltIn)
@@ -103,12 +104,12 @@ namespace OpenGL
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
                 GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, textBmp.Width, textBmp.Height, 0,
-                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero); 
+                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero);
                 Graphics gfx = Graphics.FromImage(textBmp);
                 gfx.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
                 gfx.Clear(Color.Transparent);
-                gfx.DrawString(getOneRandomQuote(), font, System.Drawing.Brushes.White, new System.Drawing.Rectangle(0, 0, textBmp.Width, textBmp.Height));
+                gfx.DrawString(getOneRandomquestion(), font, System.Drawing.Brushes.White, new System.Drawing.Rectangle(0, 0, textBmp.Width, textBmp.Height));
                 gfx.Dispose();
 
                 BitmapData data = textBmp.LockBits(new Rectangle(0, 0, textBmp.Width, textBmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -121,12 +122,24 @@ namespace OpenGL
             }
             else
             {
-                currentString = getOneRandomQuote();
+                currentString = getOneRandomquestion();
             }
+        }
+
+        private void random(string Date)
+        {
+            if (LastPlayedDate != Date)
+            {
+                drawInit(false);
+                LastPlayedDate = Date;
+            }
+
         }
 
         public void Draw(string Date)
         {
+            random(Date);   
+
             if (builtInFont)
             {
                 GL.BindTexture(TextureTarget.Texture2D, textTexture);
@@ -148,8 +161,9 @@ namespace OpenGL
             }
             else
             {
-                text.Draw(currentString, Text2D.FontName.TypeFont, new OpenTK.Vector3(0.8f, 0.10f, 1.0f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(2.8f, 2.0f), 1.0f);
+                text.Draw(currentString, Text2D.FontName.TypeFont, new OpenTK.Vector3(1.4f, 0.10f, 1.0f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(2.8f, 2.0f), 1.2f);
             }
         }
+            
     }//class
 }//namespace

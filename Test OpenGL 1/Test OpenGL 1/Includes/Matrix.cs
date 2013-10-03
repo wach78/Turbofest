@@ -51,7 +51,7 @@ namespace OpenGL
 
             for (int i = 0; i < columns; i++)
             {
-                textureCoordsSpeed.Add((Util.Rnd.Next(100, 1000) / 100000.0f) * -1.0f);
+                textureCoordsSpeed.Add((Util.Rnd.Next(100, 1000) / 75000.0f) * -1.0f);
                 textureCoordsStart.Add(0.0f);
                 textureCoords.Add(0.0f);
             }

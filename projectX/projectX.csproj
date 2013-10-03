@@ -182,6 +182,9 @@
     <Content Include="DLL\Validate.dll" />
     <Content Include="Documentation\Tests.txt" />
     <Content Include="Documentation\TODO.txt" />
+    <Content Include="XMLFiles\Quiz\quiz.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="XMLFiles\Scrollers\Scrollers.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -149,6 +149,7 @@ namespace OpenGL.Event
         CrayFish crayfish;
         TeknatStyle ts;
         Matrix m;
+        Quiz q;
 
         private bool star;
 
@@ -200,9 +201,10 @@ namespace OpenGL.Event
             crayfish = new CrayFish();
             ts = new TeknatStyle(ref chess, ref sound, ref text);
             m = new Matrix(ref text);
+            q = new Quiz(ref text, false);
 
             star = false;
-            randomEvent = new List<string>(new string[] {"starfield", "TS","", "Hajk","bumbi", "BB", "", "smurf","", "sune","dif","", "sune","", "dif", "","fbk", "","rms", "scrollers", "sune", "scrollers", "","turbologo","winlinux", "creators"});
+            randomEvent = new List<string>(new string[] {/*"starfield", "TS", "Hajk","bumbi", "BB", "", "smurf","", "sune",*/"dif","dif"/*,"", "sune","", "dif", "","fbk", "","rms", "scrollers", "sune", "scrollers", "","turbologo","winlinux", "creators"*/});
 
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
@@ -485,7 +487,7 @@ namespace OpenGL.Event
                                 if (difFbk(nowDate))
                                     dif.Draw(nowDate);
                                 else
-                                    m.Draw(nowDate);
+                                    q.Draw(nowDate);
                                 break;
                             case "fbk":
                                 if (difFbk(nowDate))

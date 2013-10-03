@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<questions>
+	<question>
+		<id>1</id>
+		<txt>Detta är en fråga?</txt>
+	</question>
+  <question>
+    <id>2</id>
+    <txt>Detta är en fråga till ?</txt>
+  </question>
+  <question>
+    <id>3</id>
+    <txt>Detta är ännu en fråga?</txt>
+  </question>
+</questions>
