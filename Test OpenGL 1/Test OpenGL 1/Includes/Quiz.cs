@@ -61,7 +61,7 @@ namespace OpenGL
 
             foreach (var x in quotes.Elements("question"))
             {
-                listquotes.Add(x.Element("id").Value + "." + x.Element("txt").Value);
+                listquotes.Add(x.Element("id").Value + "\n" + x.Element("txt").Value);
                 maxIndexValue++;
             }
         }//readFromXml
@@ -161,7 +161,7 @@ namespace OpenGL
             }
             else
             {
-                text.Draw(currentString, Text2D.FontName.TypeFont, new OpenTK.Vector3(1.4f, 0.10f, 1.0f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(2.8f, 2.0f), 1.2f);
+                text.Draw(currentString, Text2D.FontName.TypeFont, new OpenTK.Vector3(1.4f, 0.10f, 1.0f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(3.0f, 2.0f), 1.3f);
             }
         }
             

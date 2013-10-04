@@ -204,7 +204,7 @@ namespace OpenGL.Event
             q = new Quiz(ref text, false);
 
             star = false;
-            randomEvent = new List<string>(new string[] {/*"starfield", "TS", "Hajk","bumbi", "BB", "", "smurf","", "sune",*/"dif","dif"/*,"", "sune","", "dif", "","fbk", "","rms", "scrollers", "sune", "scrollers", "","turbologo","winlinux", "creators"*/});
+            randomEvent = new List<string>(new string[] {"starfield", "TS", "Hajk","bumbi", "BB", "", "smurf","", "sune","dif","", "sune","", "dif", "","fbk", "","rms", "scrollers", "sune", "scrollers", "","turbologo","winlinux", "bumbi","creators"});
 
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
@@ -493,7 +493,7 @@ namespace OpenGL.Event
                                 if (difFbk(nowDate))
                                     fbk.Draw(nowDate);
                                 else
-                                    m.Draw(nowDate);
+                                    q.Draw(nowDate);
                                 break;
                             case "rms":
                                 richard.Draw(nowDate);

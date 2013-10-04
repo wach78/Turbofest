@@ -17,11 +17,11 @@
     <type>scroll</type>
   </scroller>
   <scroller>
-    <name>hoppas ni trivs.</name>
+    <name>hoppas ni trivs</name>
     <type>scroll</type>
   </scroller>
   <scroller>
-    <name>oldschool sexmästareri </name>
+    <name>oldschool sexmästeri</name>
     <type>scroll</type>
   </scroller>
   <scroller>
@@ -41,7 +41,11 @@
     <type>scroll</type>
   </scroller>
   <scroller>
-    <name>i sense a disturbance in the party  drink more water?</name>
+    <name>i sense a disturbance in the party drink more water?</name>
+    <type>scroll</type>
+  </scroller>
+  <scroller>
+    <name>TekNat</name>
     <type>scroll</type>
   </scroller>
 </scrollers>

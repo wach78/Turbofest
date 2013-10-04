@@ -184,6 +184,7 @@
     <Content Include="Documentation\TODO.txt" />
     <Content Include="XMLFiles\Quiz\quiz.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="XMLFiles\Scrollers\Scrollers.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

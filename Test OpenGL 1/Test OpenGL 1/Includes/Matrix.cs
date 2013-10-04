@@ -22,6 +22,8 @@ namespace OpenGL
         private List<float> textureCoordsStart;
         private List<float> textureCoordsSpeed;
 
+        private string LastPlayedDate;
+
         public Matrix(ref Text2D txt)
         {
             writeFont = new Font("Tahoma", 8.0f, FontStyle.Bold);
@@ -146,15 +148,28 @@ namespace OpenGL
                 GL.Disable(EnableCap.Texture2D);
 
                 textureCoords[i] += textureCoordsSpeed[i];
-                if (textureCoords[i] <= -1.0f)
+              
+            }
+        }
+
+        private void resetPosSpeed(string Date)
+        {
+            if (LastPlayedDate != Date)
+            {
+                for (int i = 0; i < columns; i++)
                 {
+                    textureCoordsSpeed[i] =((Util.Rnd.Next(100, 1000) / 75000.0f) * -1.0f);
+                    textureCoordsStart[i] = 0.0f;
                     textureCoords[i] = 0.0f;
                 }
+                LastPlayedDate = Date;
             }
+
         }
 
         public void Draw(string Date)
         {
+            resetPosSpeed(Date);
             DrawImage();
         }
     }//class
