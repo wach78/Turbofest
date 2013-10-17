@@ -70,17 +70,15 @@ namespace OpenGL
             int texVxShader = 0;
             int texFragSh = 0;
             int texFixedPipe = 0;
-            int texMaxSize = 0;
             GL.GetInteger(GetPName.MaxVertexTextureImageUnits, out texVxShader);
             GL.GetInteger(GetPName.MaxTextureImageUnits, out texFragSh);
             GL.GetInteger(GetPName.MaxTextureUnits, out texFixedPipe);
-            GL.GetInteger(GetPName.MaxTextureSize, out texMaxSize);
             System.Diagnostics.Debug.WriteLine(GL.GetString(StringName.Version) + ", " + GL.GetString(StringName.ShadingLanguageVersion) + ", " + GL.GetString(StringName.Renderer) + ", " + GL.GetString(StringName.Extensions));
             System.Diagnostics.Debug.WriteLine("Max combinde textures: " + Util.MaxCombindeTextures + ", Currently using genTextures: " + Util.CurrentUsedTextures + ", Max Draw Buffers: " + Util.MaxBuffers);
             System.Diagnostics.Debug.WriteLine("Max texture units in a vertex shader: " + texVxShader);
             System.Diagnostics.Debug.WriteLine("Max texture units in a fragment shader: " + texFragSh);
             System.Diagnostics.Debug.WriteLine("Max texture units in a fixed pipe: " + texFixedPipe);
-            System.Diagnostics.Debug.WriteLine("Max texture size: " + texMaxSize); // make this a Util-tool as this we need to use to see so that our textures can fit the opengl target of the machine...
+            System.Diagnostics.Debug.WriteLine("Max texture size: " + Util.MaxTexturesSizeWidth); // make this a Util-tool as this we need to use to see so that our textures can fit the opengl target of the machine...
         }
 
         protected override void OnLoad(EventArgs e)
@@ -95,8 +93,8 @@ namespace OpenGL
             GL.Enable(EnableCap.DepthTest);
 
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
-            GL.Enable(EnableCap.CullFace);
             GL.FrontFace(FrontFaceDirection.Ccw);
+            GL.Enable(EnableCap.CullFace);
             GL.ShadeModel(ShadingModel.Smooth);
             GL.Enable(EnableCap.ColorMaterial);
             GL.Enable(EnableCap.AlphaTest);

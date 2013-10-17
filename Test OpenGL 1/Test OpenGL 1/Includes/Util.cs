@@ -16,6 +16,7 @@ namespace OpenGL
         private static int maxShaderVertexTextures; // Max combinde shader - and vertex texture.
         private static int maxBuffers; //color buffers
         private static int currentTextureBuffers; // the number of current generated Texture buffers created
+        private static int texMaxSize;
         public static bool Lightning;
         public static bool Fog;
         public static bool Fullscreen;
@@ -39,6 +40,7 @@ namespace OpenGL
         {
             GL.GetInteger(GetPName.MaxCombinedTextureImageUnits, out maxShaderVertexTextures);
             GL.GetInteger(GetPName.MaxDrawBuffers, out maxBuffers);
+            GL.GetInteger(GetPName.MaxTextureSize, out texMaxSize);
             currentTextureBuffers = 0;
             Lightning = false;
             Fog = true;
@@ -79,12 +81,15 @@ namespace OpenGL
             {
                 //Console.WriteLine("-----> " + filename);
                 bitmap = new Bitmap(filename, false);
+                if (bitmap.Width >= Util.MaxTexturesSizeWidth || bitmap.Height >= Util.MaxTexturesSizeWidth)
+                {
+                    throw new Exception("GFX/Texture is to large it excides the allowed size by your hardware (" + Util.MaxTexturesSizeWidth + " x " + Util.MaxTexturesSizeWidth + "), " + filename);
+                }
             }
             else
             {
                 throw new Exception("Missing Bitmap-file!");
             }
-            
 
             return LoadTexture(bitmap, MinFilter, MagFilter, WrapS, WrapT, Transparant);
         }//LoadTexture
@@ -101,6 +106,11 @@ namespace OpenGL
             if (!Transparant.IsEmpty)
             {
                 bitmap.MakeTransparent(Transparant);
+            }
+            
+            if (bitmap.Width >= Util.MaxTexturesSizeWidth || bitmap.Height >= Util.MaxTexturesSizeWidth)
+            {
+                throw new Exception("GFX/Texture is to large it excides the allowed size by your hardware (" + Util.MaxTexturesSizeWidth + " x " + Util.MaxTexturesSizeWidth + ")");
             }
             //GL.GenTextures(1, out tex);
             //currentTextureBuffers++;
@@ -424,6 +434,18 @@ namespace OpenGL
             get
             {
                 return maxShaderVertexTextures;
+            }
+        }
+
+        /// <summary>
+        /// Get the maximum width of a texture that fits on the texture memory.
+        /// There is not way to get the Height of it except if using proxy texture...
+        /// </summary>
+        public static int MaxTexturesSizeWidth
+        {
+            get
+            {
+                return texMaxSize;
             }
         }
 
