@@ -2,18 +2,99 @@
 <questions>
 	<question>
 		<id>Fråga 1</id>
-		<txt>Detta är en fråga?</txt>
+		<txt>Hur många varv ska en LP/SP spelas med?</txt>
+    <answer>33/45</answer>
 	</question>
   <question>
     <id>Fråga 2</id>
-    <txt>Detta är en fråga till ?</txt>
+    <txt>Hur många ämnen finns det i periodiska systemet?</txt>
+    <answer>118?</answer>
   </question>
   <question>
     <id>Fråga 3</id>
-    <txt>Detta är ännu en fråga fast mera text xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx?</txt>
+    <txt>Vad innebär GreNoLi?</txt>
+    <answer></answer>
   </question>
   <question>
     <id>Fråga 4</id>
-    <txt>Detta är ännu en fråga4 fast mera text xxxxxxx xxxxxxxxxxx xxxxxx xxxxxxxx?</txt>
+    <txt>När har Hagge namnsdag?</txt>
+    <answer>29:e januari</answer>
+  </question>
+  <question>
+    <id>Fråga 5</id>
+    <txt>Hur många pubar/svartkrogar har det funnits som mest på studentgatan?</txt>
+    <answer>5</answer>
+  </question>
+  <question>
+    <id>Fråga 6</id>
+    <txt>När dracks fatta fatet på fat senast?</txt>
+    <answer></answer>
+  </question>
+  <question>
+    <id>Fråga 7</id>
+    <txt>När blev Örebro högskola universitet?</txt>
+    <answer>1999</answer>
+  </question>
+  <question>
+    <id>Fråga 8</id>
+    <txt>Vilket är det bästa hockeylaget i Sveriget?</txt>
+    <answer>FBK</answer>
+  </question>
+  <question>
+    <id>Fråga 9</id>
+    <txt>När startades Lösnummer?</txt>
+    <answer>1966</answer>
+  </question>
+  <question>
+    <id>Fråga 10</id>
+    <txt>Vad heter rektorn på Örebro Universitet?</txt>
+    <answer>Jens schollin</answer>
+  </question>
+  <question>
+    <id>Fråga 11</id>
+    <txt>Vilket fotbolls lag håller Wach som enda tekonolog på?</txt>
+    <answer>Degerfors IF</answer>
+  </question>
+  <question>
+    <id>Fråga 12</id>
+    <txt>Vilken är den största stjärnan i solsystemet?</txt>
+    <answer>Solen</answer>
+  </question>
+  <question>
+    <id>Fråga 13</id>
+    <txt>Vilken färg har Sobra?</txt>
+    <answer>Ingen, svart är ingen färg</answer>
+  </question>
+  <question>
+    <id>Fråga 14</id>
+    <txt>Hur många djur tog Moses med sig på arken?</txt>
+    <answer>Inga! det var Noa som hade arken</answer>
+  </question>
+  <question>
+    <id>Fråga 15</id>
+    <txt>Ju mer man fyller mig desto lättare blir jag. Vad kan det vara?</txt>
+    <answer>Ballong</answer>
+  </question>
+  <question>
+    <id>Fråga 16</id>
+    <txt>Varför ramlade flaskan omkull?</txt>
+    <answer>Den var full</answer>
+  </question>
+  <question>
+    <id>Fråga 17</id>
+    <txt>Är alkohol nyttigt?</txt>
+    <answer>Alkohol kan ge positiva hälsoeffekter för människor över 60 år, men kan samtidigt ge risk för andra skador exempelvis fallskador</answer>
+  </question>
+  <question>
+    <id>Fråga 18</id>
+    <txt>Varför tål kvinnor alkohol sämre än män?</txt>
+    <answer>Det beror på att alkoholen är fettlöslig. Kvinnor har mer fett än män, även smala kvinnor. Män börjar bryta ned alkohol redan i magsäcken och det fungerar sämre hos kvinnor.</answer>
+  </question>
+  <question>
+    <id>Fråga 19</id>
+    <txt>Vad skriver echo ut? echo "Hej alla glada och fulla";</txt>
+    <answer>Hej alla glada och fulla</answer>
   </question>
 </questions>
+
+

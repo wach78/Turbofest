@@ -201,10 +201,10 @@ namespace OpenGL.Event
             crayfish = new CrayFish();
             ts = new TeknatStyle(ref chess, ref sound, ref text);
             m = new Matrix(ref text);
-            q = new Quiz(ref text, false);
+            q = new Quiz(ref text, false, ref sound);
 
             star = false;
-            randomEvent = new List<string>(new string[] {"starfield", "TS", "Hajk","bumbi", "BB", "", "smurf","", "sune","dif","", "sune","", "dif", "","fbk", "","rms", "scrollers", "sune", "scrollers", "","turbologo","winlinux", "bumbi","creators"});
+            randomEvent = new List<string>(new string[] {"starfield", "TS", "Hajk","bumbi", "BB","Q", "smurf","Q", "sune","dif","", "sune","Q", "dif", "","fbk", "Q","rms", "scrollers", "sune", "scrollers", "Q","turbologo","winlinux", "bumbi","creators"});
 
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
@@ -487,7 +487,7 @@ namespace OpenGL.Event
                                 if (difFbk(nowDate))
                                     dif.Draw(nowDate);
                                 else
-                                    q.Draw(nowDate);
+                                    m.Draw(nowDate);
                                 break;
                             case "fbk":
                                 if (difFbk(nowDate))
@@ -527,6 +527,10 @@ namespace OpenGL.Event
                                 break;
                             case "starfield":
                                 sf.Draw(nowDate);
+                                break;
+
+                            case"Q":
+                                q.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)

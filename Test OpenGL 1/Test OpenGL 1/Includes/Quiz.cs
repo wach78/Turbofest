@@ -21,18 +21,22 @@ namespace OpenGL
         int textTexture;
         private Font font;
         private Text2D text;
+        private Sound snd;
         private string currentString;
         private bool builtInFont;
 
         private string LastPlayedDate;
+        private string LastDate;
 
-        public Quiz (ref Text2D Text, bool BuiltInFont)
+        public Quiz(ref Text2D Text, bool BuiltInFont, ref Sound sound)
         {
             listquotes = new List<string>();
             indexList = new List<int>();
             maxIndexValue = 0;
             text = Text;
             builtInFont = BuiltInFont;
+            snd = sound;
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Yoda.ogg", "YODA");
 
             readFromXml();
             drawInit(builtInFont);
@@ -136,8 +140,18 @@ namespace OpenGL
 
         }
 
+        public void Play(String Date)
+        {
+            if (LastDate != Date && snd.PlayingName() != "YODA")
+            {
+                snd.Play("YODA");
+                LastDate = Date;
+            }
+        }
+
         public void Draw(string Date)
         {
+            Play(Date);
             random(Date);   
 
             if (builtInFont)
