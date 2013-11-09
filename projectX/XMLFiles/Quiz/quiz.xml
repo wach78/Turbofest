@@ -37,7 +37,7 @@
   </question>
   <question>
     <id>Fråga 8</id>
-    <txt>Vilket är det bästa hockeylaget i Sveriget?</txt>
+    <txt>Vilket är det bästa hockeylaget i Sverige?</txt>
     <answer>FBK</answer>
   </question>
   <question>
@@ -52,7 +52,7 @@
   </question>
   <question>
     <id>Fråga 11</id>
-    <txt>Vilket fotbolls lag håller Wach som enda tekonolog på?</txt>
+    <txt>Vilket fotbolls lag håller Wach som enda teknolog på?</txt>
     <answer>Degerfors IF</answer>
   </question>
   <question>
@@ -94,6 +94,21 @@
     <id>Fråga 19</id>
     <txt>Vad skriver echo ut? echo "Hej alla glada och fulla";</txt>
     <answer>Hej alla glada och fulla</answer>
+  </question>
+  <question>
+    <id>Fråga 20</id>
+    <txt>Hur många elementar partiklar finns det i standard modellen</txt>
+    <answer>17 Stycken </answer>
+  </question>
+  <question>
+    <id>Fråga 21</id>
+    <txt>Vilket är det minsta antalet dimensioner som krävs enligt gällande strängteorier?</txt>
+    <answer>10 Stycken (Om någons verkligen hävad 11 så kan du säga att det är bara om Edward Witten är korrect)</answer>
+  </question>
+  <question>
+    <id>Fråga 22</id>
+    <txt>Vid hur många grader Kelvin kokar vatten i en atmosförs tryck?</txt>
+    <answer>373 Kelvin</answer>
   </question>
 </questions>
 

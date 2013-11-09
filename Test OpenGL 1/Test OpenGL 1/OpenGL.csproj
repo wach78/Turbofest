@@ -103,6 +103,7 @@
     <Compile Include="Includes\Matrix.cs" />
     <Compile Include="Includes\midsummer.cs" />
     <Compile Include="Includes\National.cs" />
+    <Compile Include="Includes\Effect.cs" />
     <Compile Include="Includes\NewYear.cs" />
     <Compile Include="Includes\Quiz.cs" />
     <Compile Include="Includes\Raindrops.cs" />

@@ -204,7 +204,7 @@ namespace OpenGL.Event
             q = new Quiz(ref text, false, ref sound);
 
             star = false;
-            randomEvent = new List<string>(new string[] {"starfield", "TS", "Hajk","bumbi", "BB","Q", "smurf","Q", "sune","dif","", "sune","Q", "dif", "","fbk", "Q","rms", "scrollers", "sune", "scrollers", "Q","turbologo","winlinux", "bumbi","creators"});
+            randomEvent = new List<string>(new string[] { "starfield", "TS", "Hajk", "bumbi", "BB", "Q", "smurf", "Q", "sune", "dif", "creators", "sune", "Q", "dif", "Q", "fbk", "Q", "rms", "scrollers", "sune", "scrollers", "Q", "turbologo", "winlinux", "bumbi", "creators" });
 
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
@@ -466,7 +466,7 @@ namespace OpenGL.Event
                             case "Valborgsmässoafton":
                                 wp.Draw(nowDate);
                                 break;
-                            case "Krafta":
+                            case "Kräftpremiär":
                                 crayfish.Draw(nowDate);
                                 break;
                             default:
