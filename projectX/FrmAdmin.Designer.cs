@@ -47,6 +47,8 @@
             this.btnDel = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.eventP = new System.Windows.Forms.Button();
+            this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -266,11 +268,22 @@
             this.panel3.Size = new System.Drawing.Size(259, 65);
             this.panel3.TabIndex = 7;
             // 
+            // eventP
+            // 
+            this.eventP.Location = new System.Drawing.Point(170, 262);
+            this.eventP.Name = "eventP";
+            this.eventP.Size = new System.Drawing.Size(75, 23);
+            this.eventP.TabIndex = 9;
+            this.eventP.Text = "Event properties";
+            this.eventP.UseVisualStyleBackColor = true;
+            this.eventP.Click += new System.EventHandler(this.eventP_Click);
+            // 
             // FrmAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 260);
+            this.ClientSize = new System.Drawing.Size(481, 297);
+            this.Controls.Add(this.eventP);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.listViewScrollers);
@@ -311,5 +324,7 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ComboBox cbResolution;
         private System.Windows.Forms.Label lblResolution;
+        private System.Windows.Forms.Button eventP;
+        private System.DirectoryServices.DirectoryEntry directoryEntry1;
     }
 }

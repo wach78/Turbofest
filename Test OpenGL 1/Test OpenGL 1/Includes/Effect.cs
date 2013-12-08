@@ -30,6 +30,8 @@ namespace OpenGL
             this.text = txt;
             this.chess = chess;
             this.noMoreRun = false;
+            //var set from xml
+            //...
         }
         public bool Veto
         {

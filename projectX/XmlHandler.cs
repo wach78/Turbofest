@@ -12,6 +12,7 @@ using System.Web;
 using System.Windows.Forms;
 using System.Data;
 using System.Drawing.Printing;
+using System.Collections;
 
 namespace projectX
 {
@@ -22,29 +23,27 @@ namespace projectX
         private XmlWriter xWriter;
         private string path;
 
-        public XmlHandler(string fileName,string createOrLoadOrDelete)
+        public XmlHandler(string fileName, string createOrLoadOrDelete, string optional = "turbo")
         {
             // System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + filename
             try
             {
                 if ("Create".Equals(createOrLoadOrDelete))
-                {  
-                    path = fixPath(fileName + ".xml");
+                {
+                    path = fixPath(fileName + ".xml", optional);
                     XmlWriterSettings settings = new XmlWriterSettings();
                     settings.Indent = true;
                     settings.IndentChars = "\t";
                     xWriter = XmlWriter.Create(path, settings);                   
                 }
-
                 else if ("Load".Equals(createOrLoadOrDelete) || "XEle".Equals(createOrLoadOrDelete))
                 {
-                    path = fixPath(fileName);
+                    path = fixPath(fileName, optional);
                     xEle = XElement.Load(path);
                 }
-
                 else if ("Delete".Equals(createOrLoadOrDelete) || "XDoc".Equals(createOrLoadOrDelete))
                 {
-                    path = fixPath(fileName);
+                    path = fixPath(fileName, optional);
                     xDoc = XDocument.Load(path);
                 }
                 
@@ -67,13 +66,25 @@ namespace projectX
             File.SetAttributes(filePath, FileAttributes.Normal);
         }//writeToFileAccepted
 
-       public static string fixPath(string file)
+        public static string fixPath(string file, string optional = "turbo")
        {
            if (File.Exists(file))
            {
                return file;
            }
-           return  System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/" + file;
+           else  if ("turbo".Equals(optional))
+           {
+               return System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/" + file;
+           }
+           else if ("eff".Equals(optional))
+           {
+               return System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Effects/" + file;
+           }
+           else
+           {
+               return file;
+           }
+
        }//fixPath
 
        public IEnumerable<XElement> getParticipant()
@@ -224,7 +235,7 @@ namespace projectX
           //  xWriter.WriteStartElement("participant");
           //  xWriter.WriteFullEndElement(); ;//participant
            
-            xWriter.WriteFullEndElement(); ;//participants
+            xWriter.WriteFullEndElement(); //participants
 
 
             xWriter.WriteEndElement(); //turbo
@@ -380,6 +391,84 @@ namespace projectX
             //Debug.WriteLine(newDoc);
             return newDoc;
         }//sortXml
+
+        public void createXmlFileEffecs(ArrayList list)
+        {
+            xWriter.WriteStartDocument();
+            xWriter.WriteStartElement("effects");
+
+            foreach (eventdata obj in list)
+            {
+
+                xWriter.WriteStartElement("effect");
+                xWriter.WriteStartElement("Name");
+                xWriter.WriteString(obj.Name);
+                xWriter.WriteEndElement(); //name
+
+                xWriter.WriteStartElement("Veto");
+                xWriter.WriteString(obj.Veto.ToString());
+                xWriter.WriteEndElement(); //Veto
+
+                xWriter.WriteStartElement("Prio");
+                xWriter.WriteString(obj.Prio.ToString());
+                xWriter.WriteEndElement(); //Prio
+
+                ArrayList listname = new ArrayList(obj.Namelist);
+                ArrayList listruns = new ArrayList(obj.Runslist);
+                ArrayList listrunallowed = new ArrayList(obj.RunAllowedlist);
+
+                int len = listname.Count;
+                 xWriter.WriteStartElement("Months");
+                 for (int i = 0; i < len; i++)
+                 {
+                     xWriter.WriteStartElement("Month");
+                     xWriter.WriteStartElement("Name");
+                     xWriter.WriteString(listname[i].ToString());
+                     xWriter.WriteEndElement(); //Name
+
+                     xWriter.WriteStartElement("Runs");
+                     xWriter.WriteString(listruns[i].ToString());
+                     xWriter.WriteEndElement(); //runs
+
+                     xWriter.WriteStartElement("RunAllowed");
+                     xWriter.WriteString(listrunallowed[i].ToString());
+                     xWriter.WriteEndElement(); //RunAllowed
+
+                     xWriter.WriteEndElement(); //Month
+                 }
+                xWriter.WriteEndElement(); //Months
+
+                xWriter.WriteEndElement();//effect
+
+            }
+          //  xWriter.WriteFullEndElement(); // name
+
+            xWriter.WriteEndElement(); // effects
+            xWriter.WriteEndDocument();
+            xWriter.Close();  
+        }
+
+        public ArrayList Loadeffectdata()
+        {
+            ArrayList objlist = new ArrayList();
+            var effects = xDoc.Descendants("effect");
+
+            foreach (var effect in effects)
+            {
+                eventdata ev = new eventdata(effect.Element("Name").Value, bool.Parse(effect.Element("Veto").Value), Int16.Parse(effect.Element("Prio").Value));
+             
+                var months = effect.Descendants("Month");
+
+                foreach (var m in months)
+                {
+                    ev.setDataMonth(m.Element("Name").Value, Int16.Parse(m.Element("Runs").Value), bool.Parse(m.Element("RunAllowed").Value));
+                }
+
+                objlist.Add(ev);
+            }
+
+            return objlist;
+        }
 
     }//class
 }//namespace

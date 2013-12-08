@@ -169,5 +169,11 @@ namespace projectX
         {
             resolution = cbResolution.Text;
         }
+
+        private void eventP_Click(object sender, EventArgs e)
+        {
+            FrmEvents effects = new FrmEvents();
+            effects.ShowDialog();
+        }
     }//class
 }//namespace
