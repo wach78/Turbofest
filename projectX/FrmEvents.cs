@@ -74,48 +74,9 @@ namespace projectX
 
         }
 
-        private void cmbEvents_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int index = searchObj(objlist, cmbEvents.Text);
-            eventdata obj = new eventdata();
-            if (index != -1)
-            {
-                obj = (eventdata)objlist[index];
-                chbVeto.Checked = obj.Veto;
-                cmbPrio.Text = obj.Prio.ToString();
-
-                int n = 0;
-                int m = 0;
-                foreach (var control in this.Controls) 
-                {
-
-                    if (control is CheckBox)
-                    {
-                        string chkbname = "check" + obj.Namelist[n];
-                        if (((CheckBox)control).Name == chkbname)
-                        {
-                            ((CheckBox)control).Checked = (bool)obj.RunAllowedlist[n];
-                            n++;
-                            break;
-                        }
-                   }
-                    else if (control is ComboBox)
-                    {
-                        string combname = "cmb" + obj.Namelist[m];
-                        if (((ComboBox)control).Name == combname)
-                        {
-                            ((ComboBox)control).SelectedText = obj.Runslist[m].ToString();
-                            m++;
-                            break;
-                        }
-                    }
-             }
-
-
-
-            }
+        
          
-        }
+        
         private void cmbEvents_DropDown(object sender, EventArgs e)
         {
          
@@ -191,35 +152,89 @@ namespace projectX
                 chbVeto.Checked = obj.Veto;
                 cmbPrio.Text = obj.Prio.ToString();
 
+                /*
                 int n = 0;
                 int m = 0;
+                
                 foreach (var control in this.Controls)
                 {
-
+                    
                     if (control is CheckBox)
                     {
                         string chkbname = "check" + obj.Namelist[n];
+                       
                         if (((CheckBox)control).Name == chkbname)
                         {
                             ((CheckBox)control).Checked = (bool)obj.RunAllowedlist[n];
                             n++;
-                            break;
+                            Debug.WriteLine("n" +n);
+                           
                         }
                     }
                     else if (control is ComboBox)
                     {
                         string combname = "cmb" + obj.Namelist[m];
+                    
                         if (((ComboBox)control).Name == combname)
                         {
-                            ((ComboBox)control).SelectedItem = Int16.Parse(obj.Runslist[m].ToString());
+                            ((ComboBox)control).Text = obj.Runslist[m].ToString();
                             m++;
+                            if (m == 7)
+                                m = 0;
+                            Debug.WriteLine(m);
+                             MessageBox.Show(combname);
+                        }
+                    }
+                }
+                
+                */
+               
+                ArrayList ckeckBoxList = new ArrayList();
+                ArrayList comboBoxList = new ArrayList();
+                foreach (var control in this.Controls)
+                {
+                    if (control is CheckBox)
+                    {
+                        ckeckBoxList.Add(((CheckBox)control));
+                        
+                    }
+                    else if (control is ComboBox)
+                    {
+                        comboBoxList.Add(((ComboBox)control)); 
+                    }
+                }
+
+                int len = comboBoxList.Count;
+                int namelen = obj.Namelist.Count;
+               
+
+                ComboBox cmb;
+                for (int i = 0; i < len; i++)
+                {
+                    cmb = (ComboBox)comboBoxList[i];
+                    for (int j = 0; j < namelen; j++)
+                    {
+                        if (cmb.Name == ("cmb" +obj.Namelist[i]))
+                        {
+                            cmb.Text = obj.Runslist[j].ToString();
                             break;
                         }
                     }
                 }
-
-
-
+                CheckBox ckb;
+                for (int i = 0; i < len; i++)
+                {
+                    ckb = (CheckBox)comboBoxList[i];
+                    for (int j = 0; j < namelen; j++)
+                    {
+                        if (ckb.Name == ("check" + obj.Namelist[i]))
+                        {
+                            ckb.Checked = (bool)obj.RunAllowedlist[i];
+                            break;
+                        }
+                    }
+                }
+                
             }
         }
     }//class
