@@ -46,6 +46,8 @@ namespace projectX
             {
                xml = new XmlHandler("randomeffects" + FrmMain.SpringOrFall, "Create", "eff");
                xml.createDefoultXmlFileEffecs(eventlist, monthstlist);
+
+               xml = new XmlHandler("randomeffects" + FrmMain.SpringOrFall + ".xml", "XDoc", "eff");
              
             }
         
