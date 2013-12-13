@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,14 +17,43 @@ namespace projectX
     public partial class FrmEvents : Form
     {
         private ArrayList objlist;
+        private XmlHandler xml;
         public FrmEvents()
         {
             InitializeComponent();
-            XmlHandler xml = new XmlHandler("randomeffects.xml", "XDoc", "eff");
-            
-            objlist = new ArrayList(xml.Loadeffectdata());
+            string[] monthstlist;
+
+            if ("Spring".Equals(FrmMain.SpringOrFall))
+            {
+                monthstlist = new string[] {"mar","apr","maj","jun","jul","aug","sep" };
+            }
+            else
+            {
+                monthstlist = new string[] {"sep","oct","nov","dec","jan","feb","mar"};
+            }
+
             string[] eventlist = new string[] { "TS", "Hajk", "bumbi", "BB", "smurf", "creators", "sune", "dif", "fbk", "rms", "scrollers", "Q", "turbologo", "winlinux" };
             Array.Sort(eventlist);
+
+            string path = XmlHandler.fixPath("randomeffects" + FrmMain.SpringOrFall +  ".xml","eff");
+            string fileName = Path.GetFullPath(path);
+
+            if (File.Exists(fileName))
+            {
+               xml = new XmlHandler("randomeffects" + FrmMain.SpringOrFall + ".xml", "XDoc", "eff");
+            }
+            else
+            {
+               xml = new XmlHandler("randomeffects" + FrmMain.SpringOrFall, "Create", "eff");
+               xml.createDefoultXmlFileEffecs(eventlist, monthstlist);
+             
+            }
+        
+
+            
+            
+            objlist = new ArrayList(xml.Loadeffectdata());
+           
             cmbEvents.Items.AddRange(eventlist);
             cmbEvents.SelectedIndex = 0;
          
@@ -79,7 +109,6 @@ namespace projectX
         
         private void cmbEvents_DropDown(object sender, EventArgs e)
         {
-         
             eventdata ev = new eventdata(cmbEvents.Text, chbVeto.Checked, Int16.Parse(cmbPrio.Text));
 
             if ("Spring".Equals(FrmMain.SpringOrFall))
@@ -107,7 +136,6 @@ namespace projectX
             if (index != -1)
                 objlist.RemoveAt(index);
 
-
             objlist.Add(ev);
            
         }
@@ -119,10 +147,39 @@ namespace projectX
 
         private void btnsave_Click(object sender, EventArgs e)
         {
+            eventdata ev = new eventdata(cmbEvents.Text, chbVeto.Checked, Int16.Parse(cmbPrio.Text));
+
+            if ("Spring".Equals(FrmMain.SpringOrFall))
+            {
+                ev.setDataMonth("sep", Int16.Parse(cmbsep.Text), checksep.Checked);
+                ev.setDataMonth("okt", Int16.Parse(cmboct.Text), checkoct.Checked);
+                ev.setDataMonth("nov", Int16.Parse(cmbnov.Text), checknov.Checked);
+                ev.setDataMonth("dec", Int16.Parse(cmbdec.Text), checkdec.Checked);
+                ev.setDataMonth("jan", Int16.Parse(cmbjan.Text), checkjan.Checked);
+                ev.setDataMonth("feb", Int16.Parse(cmbfeb.Text), checkfeb.Checked);
+                ev.setDataMonth("mar", Int16.Parse(cmbmar.Text), checkmar.Checked);
+            }
+            else if ("Fall".Equals(FrmMain.SpringOrFall))
+            {
+                ev.setDataMonth("sep", Int16.Parse(cmbsep.Text), checksep.Checked);
+                ev.setDataMonth("aug", Int16.Parse(cmbaug.Text), checkaug.Checked);
+                ev.setDataMonth("jul", Int16.Parse(cmbjul.Text), checkjul.Checked);
+                ev.setDataMonth("jun", Int16.Parse(cmbjun.Text), checkjun.Checked);
+                ev.setDataMonth("maj", Int16.Parse(cmbmaj.Text), checkmaj.Checked);
+                ev.setDataMonth("apr", Int16.Parse(cmbapr.Text), checkapr.Checked);
+                ev.setDataMonth("mar", Int16.Parse(cmbmar.Text), checkmar.Checked);
+            }
+
+            int index = searchObj(objlist, cmbEvents.Text);
+            if (index != -1)
+                objlist.RemoveAt(index);
+
+            objlist.Add(ev);
+
             objlist.Sort();
-            XmlHandler xml = new XmlHandler("randomeffects", "Create","eff");
+            XmlHandler xml = new XmlHandler("randomeffects" + FrmMain.SpringOrFall, "Create", "eff");
             xml.createXmlFileEffecs(objlist);
-          //  this.Close();
+            this.Close();
         }
 
         public int searchObj(ArrayList list, string searchString)
@@ -152,43 +209,6 @@ namespace projectX
                 chbVeto.Checked = obj.Veto;
                 cmbPrio.Text = obj.Prio.ToString();
 
-                /*
-                int n = 0;
-                int m = 0;
-                
-                foreach (var control in this.Controls)
-                {
-                    
-                    if (control is CheckBox)
-                    {
-                        string chkbname = "check" + obj.Namelist[n];
-                       
-                        if (((CheckBox)control).Name == chkbname)
-                        {
-                            ((CheckBox)control).Checked = (bool)obj.RunAllowedlist[n];
-                            n++;
-                            Debug.WriteLine("n" +n);
-                           
-                        }
-                    }
-                    else if (control is ComboBox)
-                    {
-                        string combname = "cmb" + obj.Namelist[m];
-                    
-                        if (((ComboBox)control).Name == combname)
-                        {
-                            ((ComboBox)control).Text = obj.Runslist[m].ToString();
-                            m++;
-                            if (m == 7)
-                                m = 0;
-                            Debug.WriteLine(m);
-                             MessageBox.Show(combname);
-                        }
-                    }
-                }
-                
-                */
-               
                 ArrayList ckeckBoxList = new ArrayList();
                 ArrayList comboBoxList = new ArrayList();
                 foreach (var control in this.Controls)
@@ -214,7 +234,7 @@ namespace projectX
                     cmb = (ComboBox)comboBoxList[i];
                     for (int j = 0; j < namelen; j++)
                     {
-                        if (cmb.Name == ("cmb" +obj.Namelist[i]))
+                        if (cmb.Name == ("cmb" +obj.Namelist[j]))
                         {
                             cmb.Text = obj.Runslist[j].ToString();
                             break;
@@ -222,14 +242,15 @@ namespace projectX
                     }
                 }
                 CheckBox ckb;
-                for (int i = 0; i < len; i++)
+                int len2 = ckeckBoxList.Count;
+                for (int i = 0; i < len2; i++)
                 {
-                    ckb = (CheckBox)comboBoxList[i];
+                    ckb = (CheckBox)ckeckBoxList[i];
                     for (int j = 0; j < namelen; j++)
                     {
-                        if (ckb.Name == ("check" + obj.Namelist[i]))
+                        if (ckb.Name == ("check" + obj.Namelist[j]))
                         {
-                            ckb.Checked = (bool)obj.RunAllowedlist[i];
+                            ckb.Checked = (bool)obj.RunAllowedlist[j];
                             break;
                         }
                     }

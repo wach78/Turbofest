@@ -448,6 +448,58 @@ namespace projectX
             xWriter.Close();  
         }
 
+        public void createDefoultXmlFileEffecs(string[] list, string[] mlist)
+        {
+            xWriter.WriteStartDocument();
+            xWriter.WriteStartElement("effects");
+
+            foreach (string str in list)
+            {
+                xWriter.WriteStartElement("effect");
+                xWriter.WriteStartElement("Name");
+                xWriter.WriteString(str);
+                xWriter.WriteEndElement(); //name
+
+                xWriter.WriteStartElement("Veto");
+                xWriter.WriteString("false");
+                xWriter.WriteEndElement(); //Veto
+
+                xWriter.WriteStartElement("Prio");
+                xWriter.WriteString("1");
+                xWriter.WriteEndElement(); //Prio
+
+                int len = mlist.Length;
+                xWriter.WriteStartElement("Months");
+                for (int i = 0; i < len; i++)
+                {
+                    xWriter.WriteStartElement("Month");
+                    xWriter.WriteStartElement("Name");
+                    xWriter.WriteString(mlist[i]);
+                    xWriter.WriteEndElement(); //Name
+
+                    xWriter.WriteStartElement("Runs");
+                    xWriter.WriteString("1");
+                    xWriter.WriteEndElement(); //runs
+
+                    xWriter.WriteStartElement("RunAllowed");
+                    xWriter.WriteString("false");
+                    xWriter.WriteEndElement(); //RunAllowed
+
+                    xWriter.WriteEndElement(); //Month
+                }
+                xWriter.WriteEndElement(); //Months
+
+                xWriter.WriteEndElement();//effect
+
+            }
+            //  xWriter.WriteFullEndElement(); // name
+
+            xWriter.WriteEndElement(); // effects
+            xWriter.WriteEndDocument();
+            xWriter.Close();  
+        }
+
+
         public ArrayList Loadeffectdata()
         {
             ArrayList objlist = new ArrayList();
