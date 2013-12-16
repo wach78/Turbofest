@@ -192,6 +192,9 @@
     <Content Include="DLL\Validate.dll" />
     <Content Include="Documentation\Tests.txt" />
     <Content Include="Documentation\TODO.txt" />
+    <Content Include="XMLFiles\Effects\randomeffects.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="XMLFiles\Quiz\quiz.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -206,9 +209,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="XMLFiles\Effects\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\MonthValidate\MonthValidate\Validate.csproj">
       <Project>{508e3b4e-e181-4202-b26d-cf24fcab555f}</Project>

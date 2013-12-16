@@ -17,6 +17,8 @@ namespace OpenGL
         public double increments, clock;
         public DateTime dtStart;
         public DateTime dtEnd;
+        public DateTime dtOld;
+        public DateTime dtNew;
         Vector2[,] texTimeVert = new Vector2[8, 4];
         Vector2[,] texDateVert = new Vector2[10, 4];
 
@@ -27,12 +29,15 @@ namespace OpenGL
         private OpenTK.Vector2[] retVal = new Vector2[4]; // used for texture coordinates
         private bool _disposed = false;
 
+        //Event delegates
+        public delegate void NewDateDelegate();
+        public event NewDateDelegate NewDate;
 
         public PartyClock(DateTime start, DateTime end, int runtime)
         {
             clock = 0;
             ticks = old_ticks = 0;
-            dtStart = start;
+            dtOld = dtStart = start;
             dtEnd = end;
             this.runtime = runtime;//4; //0.25 * runtime / 4  /**0.017*/; // 0.25 25 mins rt
             TimeSpan tsDiff = dtEnd.Subtract(dtStart);
@@ -47,7 +52,7 @@ namespace OpenGL
             m_tex[0] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/clockfont40x70.bmp");
             m_tex[1] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/clockfont80x140.bmp");
 
-
+            NewDate += PartyClock_NewDate;
         }
 
         ~PartyClock()
@@ -87,23 +92,32 @@ namespace OpenGL
             }
         }
 
+        
+
+
         public bool updateClock()
         {
-            bool update = true;
+            //bool update = true;
             this.ticks = System.DateTime.Now.Ticks * 10 / TimeSpan.TicksPerSecond; // this is not good but it works again...
 
             if (this.old_ticks != 0)
             {
                 //System.Diagnostics.Debug.WriteLine(this.clock + " , " + this.increments + " , " + this.ticks + " , " + this.old_ticks + " , " + (this.increments * (this.ticks - this.old_ticks)) / TimeSpan.TicksPerSecond);
-
                 this.clock += (this.increments * (this.ticks - this.old_ticks)) / 10 /*/ TimeSpan.TicksPerSecond*/; // seconds use the tickspersecond to go faster more correct but to fast...
-                if ((this.ticks - this.old_ticks) > 1)
-                    update = true;
+                //if ((this.ticks - this.old_ticks) > 1)
+                //    update = true;
             }
-
             this.old_ticks = this.ticks;
 
-            return update;
+            dtOld = dtNew;
+            if (dtOld.Date != CurrentClock().Date)
+            {
+                //dtNew = CurrentClock();
+                NewDate();
+            }
+
+            //return update;
+            return true;
         }
 
         public DateTime CurrentClock()
@@ -121,6 +135,12 @@ namespace OpenGL
             {
                 return true;
             }
+        }
+
+        public void PartyClock_NewDate()
+        {
+            dtNew = CurrentClock();
+            System.Diagnostics.Debug.WriteLine("New date event triggerd.");
         }
         
         /// <summary>

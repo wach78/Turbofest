@@ -151,7 +151,7 @@ namespace OpenGL.Event
         Matrix m;
         Quiz q;
 
-        private bool star;
+        private EventItem eventCurrent;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -203,9 +203,12 @@ namespace OpenGL.Event
             m = new Matrix(ref text);
             q = new Quiz(ref text, false, ref sound);
 
-            star = false;
+            eventCurrent = null; // event item for events to be triggerd in clock_NewDate
             randomEvent = new List<string>(new string[] { "starfield", "TS", "Hajk", "bumbi", "BB", "Q", "smurf", "Q", "sune", "dif", "creators", "sune", "Q", "dif", "Q", "fbk", "Q", "rms", "scrollers", "sune", "scrollers", "Q", "turbologo", "winlinux", "bumbi", "creators" });
 
+            // Effect file to load...
+
+            clock.NewDate += clock_NewDate; // Event listener
 
             if (ch.CrashDialogResult == System.Windows.Forms.DialogResult.Yes)
             {
@@ -234,16 +237,25 @@ namespace OpenGL.Event
                         e.Name += "\n\n" + ei.Name;
                         events[date][i] = e;
                     }
-
                 }
                 events[date].Add(ei);
-              
                 name = date = type = string.Empty;
             }
+
+            // this needs to be fixed nicer...
+            if (events.ContainsKey(ClockEnd.ToShortDateString()))
+            {
+                events[ClockEnd.ToShortDateString()].Clear(); // force this to be top..
+                events[ClockEnd.ToShortDateString()].Add( new EventItem("outro", "outro", ClockEnd.ToShortDateString()) );
+            }
+            else
+            {
+                events.Add(ClockEnd.ToShortDateString(), new List<EventItem>() { new EventItem("outro", "outro", ClockEnd.ToShortDateString()) });
+            }
             
-            
-            // Random effects on dates with no effects.
+            // Random effects on dates with no effects and check against new list of allowed things for them...
             DateTime dt = ClockStart;
+            bool star = (Util.Rnd.Next(0, 1000) < 500? true:false); // make this random at the start too?
             while (dt <= ClockEnd)
             {
                 date = dt.ToShortDateString();
@@ -254,17 +266,13 @@ namespace OpenGL.Event
                     if (star)
                     {
                         ei = new EventItem(randomEvent [0], "random", date);
-                        star = false;
                     }
                     else
                     {
                         ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
-                        star = true;
                     }
-
-                   
-                    List<EventItem> list = new List<EventItem>(); // seems most bad in my eyes...
-                    events.Add(date, list);
+                    star = !star;
+                    events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
                 }
                 dt = dt.AddDays(1);
@@ -338,6 +346,41 @@ namespace OpenGL.Event
         }
         #endregion
 
+        /// <summary>
+        /// Event trigger on new date and this is to be done...
+        /// </summary>
+        public void clock_NewDate()
+        {
+            lastDate = nowDate;
+            nowDate = clock.CurrentClock().ToShortDateString(); // change to dtNew?
+            ch.update(clock.clock, clock.CurrentClock());
+
+            sound.StopSound(); // this needs to be checked agains last and new event if there is no sound lets play it out?
+            
+            if (events.ContainsKey(nowDate))
+            {
+                // make this so that we can use more then one...
+                eventCurrent = events[nowDate][0];
+                if (events[nowDate].Count > 1)
+                {
+                    for (int i = 0; i < events[nowDate].Count; i++)
+                    {
+                        if ("effect".Equals(events[nowDate][i].Type)) // effects prio over birthday and other things...
+                        {
+                            eventCurrent = events[nowDate][i];
+                            break;
+                        }
+                    }
+                }
+            }
+            else // safty if moved to event trigger...
+            {
+                eventCurrent = null;
+            }
+
+            System.Diagnostics.Debug.WriteLine("Date updated in events.");
+        }
+
         public void StopSound()
         {
             sound.StopThread();
@@ -345,9 +388,6 @@ namespace OpenGL.Event
 
         public void Draw()
         {
-
-            
-
             if (!clock.EndOfRuntime())
             {
                 clock.updateClock();
@@ -356,65 +396,13 @@ namespace OpenGL.Event
                     clock.Draw();
                 }
             }
-            if (clock.EndOfRuntime()) //else //<runtime>13737632</runtime>
-            {
-                if (Util.ShowClock)
-                {
-                    System.Diagnostics.Debug.WriteLine("Outro stop sound");
-                    sound.StopSound();
-                }
-                Util.ShowClock = false;
-                outro.Draw(nowDate);
-                return;
-            }
 
-            // Draw effects and events here
-            nowDate = clock.CurrentClock().ToShortDateString();
-            if (nowDate != lastDate)
+            if (eventCurrent != null)
             {
-                ch.update(clock.clock, clock.CurrentClock());
-                
-                /*if (sound.PlayingName() != string.Empty)
-                {
-                    sound.StopSound();
-                }*/
-                
-                sound.StopSound();
-                lastDate = nowDate;
-                //System.Diagnostics.Debug.WriteLine(nowDate);
-                //sune.NewQoute(); // flytta in detta i sune...
-                //scroller.getRandomScrollerStuff(); // flytta in detta i scroller
-            }
-
-            EventItem ei = null;
-            if (events.ContainsKey(nowDate))
-            {
-               // make this so that we can use more then one...
-
-                if (events[nowDate].Count > 1)
-                {
-                    ei = events[nowDate][0];
-                    for (int i = 0; i < events[nowDate].Count; i++)
-                    {
-                        if ("effect".Equals(events[nowDate][i].Type))
-                        {
-                            ei = events[nowDate][i];
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    ei = events[nowDate][0];
-                }
-            }
-
-            if (ei != null)
-            {
-                switch (ei.Type)
+                switch (eventCurrent.Type)
                 {
                     case "effect":
-                        switch (ei.Name)
+                        switch (eventCurrent.Name)
                         {
                             case "Advent 1":
                                 advent.Draw(nowDate, Advent.WhatAdvent.First);
@@ -446,23 +434,18 @@ namespace OpenGL.Event
                             case "Valentine":
                                 valentine.Draw(nowDate);
                                 break;
-
                             case "Nationaldagen":
                                 NDay.Draw(nowDate);
                                 break;
-
                             case "påsk":
                                 easter.Draw(nowDate);
                                 break;
-
                             case "Midsommar":
                                 mid.Draw(nowDate);
                                 break;
-
                             case "Våffeldagen":
                                 vaf.Draw(nowDate);
                                 break;
-
                             case "Valborgsmässoafton":
                                 wp.Draw(nowDate);
                                 break;
@@ -478,7 +461,7 @@ namespace OpenGL.Event
                         }
                         break;
                     case "random":
-                        switch (ei.Name)
+                        switch (eventCurrent.Name)
                         {
                             case "smurf":
                                 smurf.Draw(nowDate);
@@ -528,9 +511,11 @@ namespace OpenGL.Event
                             case "starfield":
                                 sf.Draw(nowDate);
                                 break;
-
                             case"Q":
                                 q.Draw(nowDate);
+                                break;
+                            case "TS":
+                                ts.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)
@@ -538,18 +523,13 @@ namespace OpenGL.Event
                                     Debug.WriteLine("No random effect");
                                 }
                                 break;
-
-                            case "TS":
-                                ts.Draw(nowDate);
-                                break;
                         }
                         break;
                     case "birthday":
-                        birthday.Draw(nowDate, ei.Name); 
+                        birthday.Draw(nowDate, eventCurrent.Name); 
                         break;
                     case "text":
-
-                        string[] words = text.SplitFitString(ei.Name, 1.5f, 25.0f);
+                        string[] words = text.SplitFitString(eventCurrent.Name, 1.5f, 25.0f);
                         float y = 0.0f;
                         foreach (var n in words)
                         {
@@ -558,8 +538,9 @@ namespace OpenGL.Event
                             y += 0.25f;
                             Debug.WriteLine(n);
                         }
-
-                       
+                        break;
+                    case "outro":
+                        outro.Draw(nowDate);
                         break;
                     default:
                         if (nowDate != lastDate)
@@ -568,7 +549,6 @@ namespace OpenGL.Event
                         }
                         break;
                 }
-                
             }
 
         }

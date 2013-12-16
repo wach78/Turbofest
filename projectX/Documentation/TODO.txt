@@ -1,4 +1,11 @@
-﻿splitt text behöver ses över center text
+﻿Inför nästa års fest
+Event hanteraren mer användar kontrollerad, dvs. välj vilka effekt som skall köras när och hur många gånger.
+En BSOD effekt i mitten av körtiden?
+
+
+
+
+splitt text behöver ses över center text
 matrix ??
 
 
