@@ -28,9 +28,10 @@ namespace OpenGL
         private int[] Resolution;
 
         // OpenGL version after 3.0 needs there own matrix libs so we need to create them if we run over 3.0!!! if ser major and minor to 0 we can get around it?!
-        public GLWindow(System.Xml.Linq.XDocument Events, string runtime, int[] res, ref CrashHandler Crash) : base(res[0], res[1], new OpenTK.Graphics.GraphicsMode(/*new OpenTK.Graphics.ColorFormat(32), 24, 8, 0*/)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
+        public GLWindow(System.Xml.Linq.XDocument Events, string SpringOrFall, string runtime, int[] res, ref CrashHandler Crash) : base(res[0], res[1], new OpenTK.Graphics.GraphicsMode(/*new OpenTK.Graphics.ColorFormat(32), 24, 8, 0*/)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
         {
             this.WindowBorder = OpenTK.WindowBorder.Fixed;
+            Util.SpringOrFall = SpringOrFall;
 #if !DEBUG
             //OpenTK.DisplayDevice.Default.ChangeResolution(this.Width, this.Height, OpenTK.DisplayDevice.AvailableDisplays[0].BitsPerPixel, OpenTK.DisplayDevice.AvailableDisplays[0].RefreshRate);
             WindowState = OpenTK.WindowState.Fullscreen;

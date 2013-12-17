@@ -218,6 +218,7 @@
     <ProjectReference Include="..\Test OpenGL 1\Test OpenGL 1\OpenGL.csproj">
       <Project>{8aefee3a-28d8-4a81-a48e-bd3a812523f8}</Project>
       <Name>OpenGL</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using System.IO;
 using OpenTK;
+using System.Xml.Linq;
 
 namespace OpenGL
 {
-    static class Util
+    static public class Util
     {
         private static int maxShaderVertexTextures; // Max combinde shader - and vertex texture.
         private static int maxBuffers; //color buffers
@@ -21,6 +22,8 @@ namespace OpenGL
         public static bool Fog;
         public static bool Fullscreen;
         public static bool ShowClock;
+
+        private static string springOrFall;
 
         private static bool MVP_changed;
         private static bool Viewport_changed;
@@ -50,6 +53,7 @@ namespace OpenGL
             Viewport_changed = true;
             viewport = new float[4];
             Rnd = new Random();
+            springOrFall = string.Empty;
         }
         #endregion
 
@@ -456,6 +460,127 @@ namespace OpenGL
                 return maxBuffers;
             }
         }
+
+        public static string SpringOrFall
+        {
+            get { return springOrFall; }
+            set { springOrFall = value; }
+        }
         #endregion
+        
     }//class
+
+    public static class UtilXML
+    {
+        public class EventData
+        {
+            #region Variables
+            private string strName;
+            private bool blnVeto;
+            private int intPrio;
+            private List<string> namelist;
+            private List<int> runslist;
+            private List<bool> runAllowedlist;
+            #endregion
+
+            #region Constructor
+            public EventData(string Name, bool Veto, int Prio)
+            {
+                strName = Name;
+                blnVeto = Veto;
+                intPrio = Prio;
+                namelist = new List<string>();
+                runslist = new List<int>();
+                runAllowedlist = new List<bool>();
+            }
+
+            public EventData()
+            {
+                namelist = new List<string>();
+                runslist = new List<int>();
+                runAllowedlist = new List<bool>();
+            }
+            #endregion
+
+            #region Properties
+            public string Name
+            {
+                get { return strName; }
+            }
+
+            public bool Veto
+            {
+                get { return blnVeto; }
+            }
+
+            public int Prio
+            {
+                get { return intPrio; }
+            }
+
+            public List<string> Namelist
+            {
+                get { return namelist; }
+            }
+
+            public List<int> Runslist
+            {
+                get { return runslist; }
+            }
+
+            public List<bool> RunAllowedlist
+            {
+                get { return runAllowedlist; }
+            }
+            #endregion
+
+            #region Methods
+            public void setDataMonth(string name, int runs, bool allowed)
+            {
+                namelist.Add(name);
+                runslist.Add(runs);
+                runAllowedlist.Add(allowed);
+            }
+
+            public int CompareTo(object obj)
+            {
+                EventData Compare = (EventData)obj;
+                int result = this.Name.CompareTo(Compare.Name);
+                /*if (result == 0)
+                    result = this.Name.CompareTo(Compare.Name);*/
+                return result;
+            }
+            #endregion
+        }
+
+        static UtilXML()
+        { 
+        
+        }
+
+        public static List<EventData> Loadeffectdata()
+        {
+            List<EventData> objlist = new List<EventData>();
+
+            XDocument xDoc = XDocument.Load(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Effects/randomeffects"+ Util.SpringOrFall  +".xml");
+
+            var effects = xDoc.Descendants("effect");
+
+            foreach (var effect in effects)
+            {
+                EventData ev = new EventData(effect.Element("Name").Value, bool.Parse(effect.Element("Veto").Value), Int16.Parse(effect.Element("Prio").Value));
+
+                var months = effect.Descendants("Month");
+
+                foreach (var m in months)
+                {
+                    ev.setDataMonth(m.Element("Name").Value, Int16.Parse(m.Element("Runs").Value), bool.Parse(m.Element("RunAllowed").Value));
+                }
+
+                objlist.Add(ev);
+            }
+
+            return objlist;
+        }
+    }
 }//namespace

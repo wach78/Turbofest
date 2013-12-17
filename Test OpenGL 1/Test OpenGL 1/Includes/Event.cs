@@ -186,7 +186,7 @@ namespace OpenGL.Event
             scroller = new Scroller(ref chess, ref sf, ref text); // random
             semla = new Semla();
             sune = new SuneAnimation(ref sound, ref text);
-            tl = new TurboLogo(ref sound, ref chess, ((ClockStart.Month >= 1 && ClockStart.Month <= 8)? false:true) ); // vilken termin är det? jan till början av augusti VT, resten HT... random
+            tl = new TurboLogo(ref sound, ref chess, (OpenGL.Util.SpringOrFall.Equals("Spring")? true:false)/*((ClockStart.Month >= 1 && ClockStart.Month <= 8)? false:true)*/ ); // vilken termin är det? jan till början av augusti VT, resten HT... random
             valentine = new Valentine(ref sound);
             wl = new WinLinux(ref chess); //random
             creators = new Self(ref sound); // random
@@ -205,6 +205,8 @@ namespace OpenGL.Event
 
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
             randomEvent = new List<string>(new string[] { "starfield", "TS", "Hajk", "bumbi", "BB", "Q", "smurf", "Q", "sune", "dif", "creators", "sune", "Q", "dif", "Q", "fbk", "Q", "rms", "scrollers", "sune", "scrollers", "Q", "turbologo", "winlinux", "bumbi", "creators" });
+
+             List<UtilXML.EventData> ed = UtilXML.Loadeffectdata();
 
             // Effect file to load...
 
@@ -347,7 +349,7 @@ namespace OpenGL.Event
         #endregion
 
         /// <summary>
-        /// Event trigger on new date and this is to be done...
+        /// Event listener on new date and this is to be done...
         /// </summary>
         public void clock_NewDate()
         {
@@ -550,7 +552,7 @@ namespace OpenGL.Event
                         break;
                 }
             }
-
+            lastDate = nowDate;
         }
         
         private bool difFbk(string nowDate)

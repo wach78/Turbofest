@@ -201,7 +201,7 @@ namespace projectX
             OpenGL.CrashHandler ch = new OpenGL.CrashHandler();
             if (ch.CheckCrash() != System.Windows.Forms.DialogResult.Cancel)
             {
-                gw = new OpenGL.GLWindow(xmlStuff.sortXml(), xmlStuff.getDataFromXml(), FrmAdmin.Resolution, ref ch);
+                gw = new OpenGL.GLWindow(xmlStuff.sortXml(), SpringOrFall, xmlStuff.getDataFromXml(), FrmAdmin.Resolution, ref ch);
                 gw.Run(); // possible to start in another thread??
             }
             if (ch.Exit)
