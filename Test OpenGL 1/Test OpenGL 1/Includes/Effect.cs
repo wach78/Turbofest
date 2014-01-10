@@ -20,29 +20,126 @@ namespace OpenGL
         private bool noMoreRun;
         private int prio;
         private int norpm; //number of runs per/months
-        private string[] runInThisMonths;
 
-        public Effect(string name,object obj,ref Sound sound, ref Text2D txt, ref Chess chess)
+        private List<string> namelist;
+        private List<int> runslist;
+        private List<bool> runAllowedlist;
+
+        public Effect(object obj, UtilXML.EventData data, ref Sound sound, ref Text2D txt, ref Chess chess)
         {
-            this.name = name;
+            this.name = data.Name;
             this.obj = obj;
             this.snd = sound;
             this.text = txt;
             this.chess = chess;
             this.noMoreRun = false;
-            //var set from xml
-            //...
+
+            this.veto = data.Veto;
+            this.prio = data.Prio;
+            this.namelist = new List<string>(data.Namelist);
+            this.runslist = new List<int>(data.Runslist);
+            this.runAllowedlist = new List<bool>(data.RunAllowedlist);
+        }
+
+        public Effect(object obj, UtilXML.EventData data)
+        {
+            this.name = data.Name;
+            this.obj = obj;
+            this.snd = null;
+            this.text = null;
+            this.chess = null;
+            this.noMoreRun = false;
+            
+            this.veto = data.Veto;
+            this.prio = data.Prio;
+            this.namelist = new List<string>(data.Namelist);
+            this.runslist = new List<int>(data.Runslist);
+            this.runAllowedlist = new List<bool>(data.RunAllowedlist);
+            
+        }
+        public Effect(object obj, UtilXML.EventData data, ref Sound sound, ref Text2D txt)
+        {
+            this.name = data.Name;
+            this.obj = obj;
+            this.snd = sound;
+            this.text = txt;
+            this.chess = null;
+            this.noMoreRun = false;
+            
+            this.veto = data.Veto;
+            this.prio = data.Prio;
+            this.namelist = new List<string>(data.Namelist);
+            this.runslist = new List<int>(data.Runslist);
+            this.runAllowedlist = new List<bool>(data.RunAllowedlist);
+        }
+        public Effect(object obj, UtilXML.EventData data, ref Sound sound)
+        {
+            this.name = data.Name;
+            this.obj = obj;
+            this.snd = sound;
+            this.text = null;
+            this.chess = null;
+            this.noMoreRun = false;
+           
+            this.veto = data.Veto;
+            this.prio = data.Prio;
+            this.namelist = new List<string>(data.Namelist);
+            this.runslist = new List<int>(data.Runslist);
+            this.runAllowedlist = new List<bool>(data.RunAllowedlist);
+        }
+        public Effect(object obj, UtilXML.EventData data, ref Sound sound, ref Chess chess)
+        {
+            this.name = data.Name;
+            this.obj = obj;
+            this.snd = sound;
+            this.text = null;
+            this.chess = chess;
+            this.noMoreRun = false;
+            
+            this.veto = data.Veto;
+            this.prio = data.Prio;
+            this.namelist = new List<string>(data.Namelist);
+            this.runslist = new List<int>(data.Runslist);
+            this.runAllowedlist = new List<bool>(data.RunAllowedlist);
+        }
+        public Effect(object obj, UtilXML.EventData data, ref Text2D txt, ref Chess chess)
+        {
+            this.name = data.Name;
+            this.obj = obj;
+            this.snd = null;
+            this.text = txt;
+            this.chess = chess;
+            this.noMoreRun = false;
+            
+            this.veto = data.Veto;
+            this.prio = data.Prio;
+            this.namelist = new List<string>(data.Namelist);
+            this.runslist = new List<int>(data.Runslist);
+            this.runAllowedlist = new List<bool>(data.RunAllowedlist);
+        }
+        public Effect(object obj, UtilXML.EventData data, ref Chess chess)
+        {
+            this.name = data.Name;
+            this.obj = obj;
+            this.snd = null;
+            this.text = null;
+            this.chess = chess;
+            this.noMoreRun = false;
+            
+            this.veto = data.Veto;
+            this.prio = data.Prio;
+            this.namelist = new List<string>(data.Namelist);
+            this.runslist = new List<int>(data.Runslist);
+            this.runAllowedlist = new List<bool>(data.RunAllowedlist);
         }
         public bool Veto
         {
             get { return veto; }
-            set { veto = value; }
         }
 
         public int Prio
         {
             get { return prio; }
-            set { prio = value; }
         }
 
         public int Norpm
@@ -51,11 +148,21 @@ namespace OpenGL
             set { norpm = value; }
         }
 
-        public string[] RunInThisMonths
+        public List<string> Namelist
         {
-            get { return runInThisMonths; }
-            set { runInThisMonths = value; }
+            get { return namelist; }
         }
+
+        public List<int> Runslist
+        {
+            get { return runslist; }
+        }
+
+        public List<bool> RunAllowedlist
+        {
+            get { return runAllowedlist; }
+        }
+       
 
         public void init()
         {

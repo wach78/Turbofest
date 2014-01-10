@@ -32,7 +32,9 @@ namespace projectX
                 monthstlist = new string[] {"sep","oct","nov","dec","jan","feb","mar"};
             }
 
-            string[] eventlist = new string[] { "TS", "Hajk", "bumbi", "BB", "smurf", "creators", "sune", "dif", "fbk", "rms", "scrollers", "Q", "turbologo", "winlinux" };
+          //  string[] eventlist = new string[] { "TS", "Hajk", "bumbi", "BB", "smurf", "creators", "sune", "dif", "fbk", "rms", "scrollers", "Q", "turbologo", "winlinux" };
+
+            string[] eventlist = new string[] { "SuneAnimation", "Dif", "Fbk", "TurboLogo", "Datasmurf", "RMS", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "Hajk", "TeknatStyle", "Matrix", "Quiz" };
             Array.Sort(eventlist);
 
             string path = XmlHandler.fixPath("randomeffects" + FrmMain.SpringOrFall +  ".xml","eff");

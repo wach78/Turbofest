@@ -118,6 +118,7 @@ namespace OpenGL.Event
         OpenGL.Chess chess;
         OpenGL.Starfield sf;
 
+        
         //Effects
         SuneAnimation sune;
         Dif dif;
