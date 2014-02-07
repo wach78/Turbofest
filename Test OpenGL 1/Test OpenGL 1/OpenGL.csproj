@@ -104,6 +104,7 @@
     <Compile Include="Includes\midsummer.cs" />
     <Compile Include="Includes\National.cs" />
     <Compile Include="Includes\Effect.cs" />
+    <Compile Include="Includes\Nerdy.cs" />
     <Compile Include="Includes\NewYear.cs" />
     <Compile Include="Includes\Quiz.cs" />
     <Compile Include="Includes\Raindrops.cs" />
@@ -390,6 +391,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\HAJK.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Samples\Nerdy.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\ts.ogg">

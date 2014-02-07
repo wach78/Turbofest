@@ -74,6 +74,22 @@ namespace OpenGL.Event
         }
     }*/
 
+    class objdata
+    {
+        private string name;
+        private bool veto;
+        private int prio;
+        private int runs;
+
+        public objdata(string name, bool veto, int prio, int runs)
+        {
+            this.name = name;
+            this.veto = veto;
+            this.prio = prio;
+            this.runs = runs;
+        }
+    }
+
     class EventItem
     {
         private string mName;
@@ -207,9 +223,55 @@ namespace OpenGL.Event
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
             randomEvent = new List<string>(new string[] { "starfield", "TS", "Hajk", "bumbi", "BB", "Q", "smurf", "Q", "sune", "dif", "creators", "sune", "Q", "dif", "Q", "fbk", "Q", "rms", "scrollers", "sune", "scrollers", "Q", "turbologo", "winlinux", "bumbi", "creators" });
 
+            //new stuff
              List<UtilXML.EventData> ed = UtilXML.Loadeffectdata();
 
             // Effect file to load...
+          //  "SuneAnimation", "Dif", "Fbk", "TurboLogo", "Datasmurf", "RMS", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "Hajk", "TeknatStyle", "Matrix", "Quiz"
+
+          //  Effect Nerdy = new Effect(nerdy, ed.Find(e => e.Name == "Nerdy"));
+
+            Dictionary<string, Effect> effects = new Dictionary<string, Effect>()
+            {
+                {"SuneAnimation", new Effect(sune,ed.Find(e => e.Name == "SuneAnimation"))},
+                {"Dif",new Effect(dif, ed.Find(e => e.Name == "Dif"))},
+                {"Fbk",new Effect(fbk, ed.Find(e => e.Name == "Fbk"))},
+                {"TurboLogo",new Effect(tl, ed.Find(e => e.Name == "TurboLogo"))},
+                {"Datasmurf", new Effect(smurf, ed.Find(e => e.Name == "Datasmurf"))},
+                {"RMS",new Effect(richard, ed.Find(e => e.Name == "RMS"))},
+                {"WinLinux",new Effect(wl, ed.Find(e => e.Name == "WinLinux"))},
+                {"Scroller",new Effect(scroller, ed.Find(e => e.Name == "Scroller"))},
+                {"Self",new Effect(creators, ed.Find(e => e.Name == "Self"))},
+                {"BB",new Effect(bb, ed.Find(e => e.Name == "BB"))},
+                {"GummiBears",new Effect(GM, ed.Find(e => e.Name == "GummiBears"))},
+                {"Hajk",new Effect(hajk, ed.Find(e => e.Name == "Hajk"))},
+                {"TeknatStyle",new Effect(ts, ed.Find(e => e.Name == "TeknatStyle"))},
+                {"Matrix",new Effect(m, ed.Find(e => e.Name == "Matrix"))},
+                {"Quiz",new Effect(q, ed.Find(e => e.Name == "Quiz"))}
+            };
+
+            Dictionary<string, List<objdata>> runEffectInMonth = new Dictionary<string, List<objdata>>();
+
+            string[] months = Util.monthlist(); 
+            int counter;
+            foreach (KeyValuePair<string, Effect> pair in effects)
+            {
+                counter = 0;
+                foreach (bool b in pair.Value.RunAllowedlist)
+                {
+                    if (b == true)
+                    {
+                        if (!runEffectInMonth.ContainsKey(months[counter]))
+                        {
+                            runEffectInMonth.Add(months[counter], new List<objdata>());
+                        }
+
+                        runEffectInMonth[months[counter]].Add(new objdata(pair.Key, pair.Value.Veto, pair.Value.Prio, pair.Value.Runslist[counter]));  
+                    }
+                    counter++; 
+                }
+            }
+
 
             clock.NewDate += clock_NewDate; // Event listener
 
