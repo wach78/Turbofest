@@ -474,11 +474,12 @@ namespace OpenGL
 
             if ("Spring".Equals(springOrFall))
             {
-                monthstlist = new string[] { "mar", "apr", "maj", "jun", "jul", "aug", "sep" };
+               
+                monthstlist = new string[] { "sep", "oct", "nov", "dec", "jan", "feb", "mar" };
             }
             else
             {
-                monthstlist = new string[] { "sep", "oct", "nov", "dec", "jan", "feb", "mar" };
+                monthstlist = new string[] { "mar", "apr", "maj", "jun", "jul", "aug", "sep" };
             }
             return monthstlist;
         }

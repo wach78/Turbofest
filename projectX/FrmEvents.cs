@@ -25,11 +25,12 @@ namespace projectX
 
             if ("Spring".Equals(FrmMain.SpringOrFall))
             {
-                monthstlist = new string[] {"mar","apr","maj","jun","jul","aug","sep" };
+               
+                monthstlist = new string[] { "sep", "oct", "nov", "dec", "jan", "feb", "mar" };
             }
             else
             {
-                monthstlist = new string[] {"sep","oct","nov","dec","jan","feb","mar"};
+                monthstlist = new string[] { "mar", "apr", "maj", "jun", "jul", "aug", "sep" };
             }
 
           //  string[] eventlist = new string[] { "TS", "Hajk", "bumbi", "BB", "smurf", "creators", "sune", "dif", "fbk", "rms", "scrollers", "Q", "turbologo", "winlinux" };
@@ -92,7 +93,7 @@ namespace projectX
 
             foreach (eventdata obj in objlist)
             {
-
+                //???
             }
             
            

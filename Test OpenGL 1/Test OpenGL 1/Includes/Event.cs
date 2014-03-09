@@ -74,7 +74,7 @@ namespace OpenGL.Event
         }
     }*/
 
-    class objdata
+    class objdata : IComparable
     {
         private string name;
         private bool veto;
@@ -87,6 +87,48 @@ namespace OpenGL.Event
             this.veto = veto;
             this.prio = prio;
             this.runs = runs;
+        }
+        public string Name
+        {
+            get { return name; }
+        }
+        public bool Veto
+        {
+            get { return veto; }
+        }
+
+        public int Prio
+        {
+            get { return prio; }
+        }
+        public int Runs
+        {
+            get { return runs; }
+        }
+
+        public void decRuns()
+        {
+            this.runs--;
+        }
+
+        public void noMoreVeto()
+        {
+            this.veto = false;
+            this.runs = 0;
+        }
+
+        public int CompareTo(object obj)
+        {
+            objdata Compare = (objdata)obj;
+            int result = this.prio.CompareTo(Compare.prio);
+            if (result == 0)
+            {
+                result = Util.Rnd.Next(0,1);
+                if (result == 0)
+                    result = -1;
+            }
+              
+            return result;
         }
     }
 
@@ -169,6 +211,7 @@ namespace OpenGL.Event
         Quiz q;
 
         private EventItem eventCurrent;
+        private Dictionary<string, List<objdata>> runEffectInMonth;
 
         //Event Date list
         System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
@@ -250,7 +293,7 @@ namespace OpenGL.Event
                 {"Quiz",new Effect(q, ed.Find(e => e.Name == "Quiz"))}
             };
 
-            Dictionary<string, List<objdata>> runEffectInMonth = new Dictionary<string, List<objdata>>();
+            runEffectInMonth = new Dictionary<string, List<objdata>>();
 
             string[] months = Util.monthlist(); 
             int counter;
@@ -334,7 +377,71 @@ namespace OpenGL.Event
                     }
                     else
                     {
-                        ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
+                        //ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
+
+                        string month = "";
+                        if (dt != null)
+                            month = dt.Month.ToString();
+
+                        switch (month)
+                        {
+                            case "1": month = "jan"; break;
+                            case "2": month = "feb"; break;
+                            case "3": month = "mar"; break;
+                            case "4": month = "apr"; break;
+                            case "5": month = "maj"; break;
+                            case "6": month = "jun"; break;
+                            case "7": month = "jul"; break;
+                            case "8": month = "aug"; break;
+                            case "9": month = "sep"; break;
+                            case "10": month = "okt"; break;
+                            case "11": month = "nov"; break;
+                            case "12": month = "dec"; break;
+                        }//switch
+
+                        if (runEffectInMonth.ContainsKey(month))
+                        {
+                            List<objdata> mobj = runEffectInMonth[month];
+
+                            List<objdata> vetolist = new List<objdata>();
+                            List<objdata> novetolist = new List<objdata>();
+
+                            foreach (objdata n in mobj)
+                            {
+                                if (n.Veto == true)
+                                {
+                                    if (n.Runs > 0)
+                                        vetolist.Add(n);
+                                }
+                                else
+                                {
+                                    if (n.Runs > 0)
+                                        novetolist.Add(n);
+                                }
+                            }
+
+                            vetolist.Sort();
+                            novetolist.Sort();
+
+                            if (vetolist.Count > 0)
+                            {
+                                ei = new EventItem(vetolist[0].Name, "random", date);
+                                vetolist[0].noMoreVeto();
+                            }
+                            else if (novetolist.Count > 0)
+                            {
+                                ei = new EventItem(novetolist[0].Name, "random", date);
+                                novetolist[0].decRuns();
+                            }
+                            else
+                            {
+                                ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
+                            }
+                        }
+                        else
+                        {
+                            ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
+                        }
                     }
                     star = !star;
                     events.Add(date, new List<EventItem>());
@@ -425,6 +532,8 @@ namespace OpenGL.Event
             if (events.ContainsKey(nowDate))
             {
                 // make this so that we can use more then one...
+
+                
                 eventCurrent = events[nowDate][0];
                 if (events[nowDate].Count > 1)
                 {
@@ -437,7 +546,8 @@ namespace OpenGL.Event
                         }
                     }
                 }
-            }
+                 
+            }  
             else // safty if moved to event trigger...
             {
                 eventCurrent = null;
@@ -445,6 +555,8 @@ namespace OpenGL.Event
 
             System.Diagnostics.Debug.WriteLine("Date updated in events.");
         }
+
+       
 
         public void StopSound()
         {
