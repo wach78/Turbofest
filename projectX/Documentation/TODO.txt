@@ -1,4 +1,10 @@
-﻿Inför nästa års fest
+﻿
+xml fil fixa så det sparas
+bildspel till nerdy
+ljud spela över star sluta efter star
+prio lista
+
+Inför nästa års fest
 Event hanteraren mer användar kontrollerad, dvs. välj vilka effekt som skall köras när och hur många gånger.
 En BSOD effekt i mitten av körtiden?
 

@@ -264,7 +264,7 @@ namespace OpenGL.Event
             q = new Quiz(ref text, false, ref sound);
 
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
-            randomEvent = new List<string>(new string[] { "starfield", "TS", "Hajk", "bumbi", "BB", "Q", "smurf", "Q", "sune", "dif", "creators", "sune", "Q", "dif", "Q", "fbk", "Q", "rms", "scrollers", "sune", "scrollers", "Q", "turbologo", "winlinux", "bumbi", "creators" });
+            randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "Dif", "Fbk", "TurboLogo", "Datasmurf", "RMS", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "TeknatStyle", "Matrix", "Quiz" });
 
             //new stuff
              List<UtilXML.EventData> ed = UtilXML.Loadeffectdata();
@@ -422,7 +422,7 @@ namespace OpenGL.Event
 
                             vetolist.Sort();
                             novetolist.Sort();
-
+                            
                             if (vetolist.Count > 0)
                             {
                                 ei = new EventItem(vetolist[0].Name, "random", date);
@@ -442,6 +442,7 @@ namespace OpenGL.Event
                         {
                             ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
                         }
+                        
                     }
                     star = !star;
                     events.Add(date, new List<EventItem>());
@@ -637,62 +638,58 @@ namespace OpenGL.Event
                                 break;
                         }
                         break;
+                      
                     case "random":
                         switch (eventCurrent.Name)
                         {
-                            case "smurf":
+                            case "Datasmurf":
                                 smurf.Draw(nowDate);
                                 break;
-                            case "dif":
-                                if (difFbk(nowDate))
-                                    dif.Draw(nowDate);
-                                else
-                                    m.Draw(nowDate);
+                            case "Dif":             
+                                    dif.Draw(nowDate);                
                                 break;
-                            case "fbk":
-                                if (difFbk(nowDate))
-                                    fbk.Draw(nowDate);
-                                else
-                                    q.Draw(nowDate);
+                            case "Fbk":  
+                                    fbk.Draw(nowDate);                             
                                 break;
-                            case "rms":
+                            case "RMS":
                                 richard.Draw(nowDate);
                                 break;
-                            case "scrollers":
+                            case "Scroller":
                                 scroller.Draw(nowDate);
                                 break;
-                            case "sune":
+                            case "SuneAnimation":
                                 sune.Draw(nowDate);
                                 break;
-                            case "turbologo":
+                            case "TurboLogo":
                                 tl.Draw(nowDate);
                                 break;
-                            case "winlinux":
+                            case "WinLinux":
                                 wl.Draw(nowDate);
                                 break;
-                            case "creators":
+                            case "Self":
                                 creators.Draw(nowDate);
                                 break;
                             case "BB":
                                 bb.Draw(nowDate);
                                 break;
-                            case "bumbi":
+                            case "GummiBears":
                                 GM.Draw(nowDate);
                                 break;
-                            case "Hajk":
-                                if (sommar(nowDate))
+                            case "Hajk":                       
                                     hajk.Draw(nowDate);
-                                else
-                                    m.Draw(nowDate);
+
                                 break;
                             case "starfield":
                                 sf.Draw(nowDate);
                                 break;
-                            case"Q":
+                            case"Quiz":
                                 q.Draw(nowDate);
                                 break;
-                            case "TS":
+                            case "TeknatStyle":
                                 ts.Draw(nowDate);
+                                break;
+                            case "Matrix":
+                                  m.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)
