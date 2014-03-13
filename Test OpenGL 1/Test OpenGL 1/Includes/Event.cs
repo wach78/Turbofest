@@ -528,7 +528,8 @@ namespace OpenGL.Event
             nowDate = clock.CurrentClock().ToShortDateString(); // change to dtNew?
             ch.update(clock.clock, clock.CurrentClock());
 
-            sound.StopSound(); // this needs to be checked agains last and new event if there is no sound lets play it out?
+
+            //sound.StopSound(); // this needs to be checked agains last and new event if there is no sound lets play it out?
             
             if (events.ContainsKey(nowDate))
             {
@@ -543,9 +544,15 @@ namespace OpenGL.Event
                         if ("effect".Equals(events[nowDate][i].Type)) // effects prio over birthday and other things...
                         {
                             eventCurrent = events[nowDate][i];
+                           
                             break;
                         }
                     }
+                }
+                // Double events with sound buggs this out...
+                if (eventCurrent.Name != "starfield" || eventCurrent.Type == "effect" || eventCurrent.Type == "birthday" || eventCurrent.Type == "text" || eventCurrent.Type == "outro") // birth day or special day too....
+                {
+                    sound.StopSound();
                 }
                  
             }  
@@ -710,7 +717,7 @@ namespace OpenGL.Event
                             float middle = n.Length / 2.0f;
                             text.Draw(n, Text2D.FontName.Coolfont, new OpenTK.Vector3(middle * 0.15f, 0.2f - y, 0.4f), new OpenTK.Vector2(0.1f, 0.1f), new OpenTK.Vector2(4.0f, 0.0f), 1.5f); // fix in name...
                             y += 0.25f;
-                            Debug.WriteLine(n);
+                            //Debug.WriteLine(n);
                         }
                         break;
                     case "outro":
