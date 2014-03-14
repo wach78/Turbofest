@@ -528,6 +528,7 @@ namespace OpenGL.Event
             nowDate = clock.CurrentClock().ToShortDateString(); // change to dtNew?
             ch.update(clock.clock, clock.CurrentClock());
 
+            EventItem LastEvent = null;
 
             //sound.StopSound(); // this needs to be checked agains last and new event if there is no sound lets play it out?
             
@@ -535,7 +536,8 @@ namespace OpenGL.Event
             {
                 // make this so that we can use more then one...
 
-                
+                LastEvent = eventCurrent;
+
                 eventCurrent = events[nowDate][0];
                 if (events[nowDate].Count > 1)
                 {
@@ -550,7 +552,9 @@ namespace OpenGL.Event
                     }
                 }
                 // Double events with sound buggs this out...
-                if (eventCurrent.Name != "starfield" || eventCurrent.Type == "effect" || eventCurrent.Type == "birthday" || eventCurrent.Type == "text" || eventCurrent.Type == "outro") // birth day or special day too....
+                if ((eventCurrent.Name != "starfield" || eventCurrent.Type == "effect" || eventCurrent.Type == "birthday" ||
+                    eventCurrent.Type == "text" || eventCurrent.Type == "outro") || 
+                    (LastEvent.Type == "random" && eventCurrent.Type == "random" && eventCurrent.Name != "starfield")) // birth day or special day too....
                 {
                     sound.StopSound();
                 }
@@ -558,7 +562,7 @@ namespace OpenGL.Event
             }  
             else // safty if moved to event trigger...
             {
-                eventCurrent = null;
+                eventCurrent = null; // this might be bugging stuff out if we are unlucky
             }
 
             System.Diagnostics.Debug.WriteLine("Date updated in events.");
