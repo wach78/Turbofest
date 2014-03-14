@@ -71,31 +71,31 @@
             this.cmbdec = new System.Windows.Forms.ComboBox();
             this.btnsave = new System.Windows.Forms.Button();
             this.btncancel = new System.Windows.Forms.Button();
-            this.checkVetoDec = new System.Windows.Forms.CheckBox();
-            this.checkVetoNov = new System.Windows.Forms.CheckBox();
-            this.checkVetoOkt = new System.Windows.Forms.CheckBox();
-            this.checkVetoSep = new System.Windows.Forms.CheckBox();
-            this.checkVetoApr = new System.Windows.Forms.CheckBox();
-            this.checkVetoJul = new System.Windows.Forms.CheckBox();
-            this.checkVetoJun = new System.Windows.Forms.CheckBox();
-            this.checkVetoMaj = new System.Windows.Forms.CheckBox();
-            this.checkVetoAug = new System.Windows.Forms.CheckBox();
-            this.checkVetoMar = new System.Windows.Forms.CheckBox();
-            this.checkVetoFeb = new System.Windows.Forms.CheckBox();
-            this.checkVetoJan = new System.Windows.Forms.CheckBox();
+            this.checkVetodec = new System.Windows.Forms.CheckBox();
+            this.checkVetonov = new System.Windows.Forms.CheckBox();
+            this.checkVetookt = new System.Windows.Forms.CheckBox();
+            this.checkVetosep = new System.Windows.Forms.CheckBox();
+            this.checkVetoapr = new System.Windows.Forms.CheckBox();
+            this.checkVetojul = new System.Windows.Forms.CheckBox();
+            this.checkVetojun = new System.Windows.Forms.CheckBox();
+            this.checkVetomaj = new System.Windows.Forms.CheckBox();
+            this.checkVetoaug = new System.Windows.Forms.CheckBox();
+            this.checkVetomar = new System.Windows.Forms.CheckBox();
+            this.checkVetofeb = new System.Windows.Forms.CheckBox();
+            this.checkVetojan = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.cmbPrioDec = new System.Windows.Forms.ComboBox();
-            this.cmbPrioNov = new System.Windows.Forms.ComboBox();
-            this.cmbPrioOkt = new System.Windows.Forms.ComboBox();
-            this.cmbPrioSep = new System.Windows.Forms.ComboBox();
-            this.cmbPrioAug = new System.Windows.Forms.ComboBox();
-            this.cmbPrioJul = new System.Windows.Forms.ComboBox();
-            this.cmbPrioJun = new System.Windows.Forms.ComboBox();
-            this.cmbPrioMaj = new System.Windows.Forms.ComboBox();
-            this.cmbPrioApr = new System.Windows.Forms.ComboBox();
-            this.cmbPrioMar = new System.Windows.Forms.ComboBox();
-            this.cmbPrioFeb = new System.Windows.Forms.ComboBox();
-            this.cmbPrioJan = new System.Windows.Forms.ComboBox();
+            this.cmbPriodec = new System.Windows.Forms.ComboBox();
+            this.cmbPrionov = new System.Windows.Forms.ComboBox();
+            this.cmbPriookt = new System.Windows.Forms.ComboBox();
+            this.cmbPriosep = new System.Windows.Forms.ComboBox();
+            this.cmbPrioaug = new System.Windows.Forms.ComboBox();
+            this.cmbPriojul = new System.Windows.Forms.ComboBox();
+            this.cmbPriojun = new System.Windows.Forms.ComboBox();
+            this.cmbPriomaj = new System.Windows.Forms.ComboBox();
+            this.cmbPrioapr = new System.Windows.Forms.ComboBox();
+            this.cmbPriomar = new System.Windows.Forms.ComboBox();
+            this.cmbPriofeb = new System.Windows.Forms.ComboBox();
+            this.cmbPriojan = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -562,113 +562,113 @@
             this.btncancel.UseVisualStyleBackColor = true;
             this.btncancel.Click += new System.EventHandler(this.btncancel_Click);
             // 
-            // checkVetoDec
+            // checkVetodec
             // 
-            this.checkVetoDec.AutoSize = true;
-            this.checkVetoDec.Location = new System.Drawing.Point(111, 434);
-            this.checkVetoDec.Name = "checkVetoDec";
-            this.checkVetoDec.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoDec.TabIndex = 59;
-            this.checkVetoDec.UseVisualStyleBackColor = true;
+            this.checkVetodec.AutoSize = true;
+            this.checkVetodec.Location = new System.Drawing.Point(111, 434);
+            this.checkVetodec.Name = "checkVetodec";
+            this.checkVetodec.Size = new System.Drawing.Size(15, 14);
+            this.checkVetodec.TabIndex = 59;
+            this.checkVetodec.UseVisualStyleBackColor = true;
             // 
-            // checkVetoNov
+            // checkVetonov
             // 
-            this.checkVetoNov.AutoSize = true;
-            this.checkVetoNov.Location = new System.Drawing.Point(111, 407);
-            this.checkVetoNov.Name = "checkVetoNov";
-            this.checkVetoNov.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoNov.TabIndex = 58;
-            this.checkVetoNov.UseVisualStyleBackColor = true;
+            this.checkVetonov.AutoSize = true;
+            this.checkVetonov.Location = new System.Drawing.Point(111, 407);
+            this.checkVetonov.Name = "checkVetonov";
+            this.checkVetonov.Size = new System.Drawing.Size(15, 14);
+            this.checkVetonov.TabIndex = 58;
+            this.checkVetonov.UseVisualStyleBackColor = true;
             // 
-            // checkVetoOkt
+            // checkVetookt
             // 
-            this.checkVetoOkt.AutoSize = true;
-            this.checkVetoOkt.Location = new System.Drawing.Point(111, 380);
-            this.checkVetoOkt.Name = "checkVetoOkt";
-            this.checkVetoOkt.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoOkt.TabIndex = 57;
-            this.checkVetoOkt.UseVisualStyleBackColor = true;
+            this.checkVetookt.AutoSize = true;
+            this.checkVetookt.Location = new System.Drawing.Point(111, 380);
+            this.checkVetookt.Name = "checkVetookt";
+            this.checkVetookt.Size = new System.Drawing.Size(15, 14);
+            this.checkVetookt.TabIndex = 57;
+            this.checkVetookt.UseVisualStyleBackColor = true;
             // 
-            // checkVetoSep
+            // checkVetosep
             // 
-            this.checkVetoSep.AutoSize = true;
-            this.checkVetoSep.Location = new System.Drawing.Point(111, 360);
-            this.checkVetoSep.Name = "checkVetoSep";
-            this.checkVetoSep.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoSep.TabIndex = 56;
-            this.checkVetoSep.UseVisualStyleBackColor = true;
+            this.checkVetosep.AutoSize = true;
+            this.checkVetosep.Location = new System.Drawing.Point(111, 360);
+            this.checkVetosep.Name = "checkVetosep";
+            this.checkVetosep.Size = new System.Drawing.Size(15, 14);
+            this.checkVetosep.TabIndex = 56;
+            this.checkVetosep.UseVisualStyleBackColor = true;
             // 
-            // checkVetoApr
+            // checkVetoapr
             // 
-            this.checkVetoApr.AutoSize = true;
-            this.checkVetoApr.Location = new System.Drawing.Point(111, 223);
-            this.checkVetoApr.Name = "checkVetoApr";
-            this.checkVetoApr.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoApr.TabIndex = 55;
-            this.checkVetoApr.UseVisualStyleBackColor = true;
+            this.checkVetoapr.AutoSize = true;
+            this.checkVetoapr.Location = new System.Drawing.Point(111, 223);
+            this.checkVetoapr.Name = "checkVetoapr";
+            this.checkVetoapr.Size = new System.Drawing.Size(15, 14);
+            this.checkVetoapr.TabIndex = 55;
+            this.checkVetoapr.UseVisualStyleBackColor = true;
             // 
-            // checkVetoJul
+            // checkVetojul
             // 
-            this.checkVetoJul.AutoSize = true;
-            this.checkVetoJul.Location = new System.Drawing.Point(111, 307);
-            this.checkVetoJul.Name = "checkVetoJul";
-            this.checkVetoJul.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoJul.TabIndex = 54;
-            this.checkVetoJul.UseVisualStyleBackColor = true;
+            this.checkVetojul.AutoSize = true;
+            this.checkVetojul.Location = new System.Drawing.Point(111, 307);
+            this.checkVetojul.Name = "checkVetojul";
+            this.checkVetojul.Size = new System.Drawing.Size(15, 14);
+            this.checkVetojul.TabIndex = 54;
+            this.checkVetojul.UseVisualStyleBackColor = true;
             // 
-            // checkVetoJun
+            // checkVetojun
             // 
-            this.checkVetoJun.AutoSize = true;
-            this.checkVetoJun.Location = new System.Drawing.Point(111, 278);
-            this.checkVetoJun.Name = "checkVetoJun";
-            this.checkVetoJun.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoJun.TabIndex = 53;
-            this.checkVetoJun.UseVisualStyleBackColor = true;
+            this.checkVetojun.AutoSize = true;
+            this.checkVetojun.Location = new System.Drawing.Point(111, 278);
+            this.checkVetojun.Name = "checkVetojun";
+            this.checkVetojun.Size = new System.Drawing.Size(15, 14);
+            this.checkVetojun.TabIndex = 53;
+            this.checkVetojun.UseVisualStyleBackColor = true;
             // 
-            // checkVetoMaj
+            // checkVetomaj
             // 
-            this.checkVetoMaj.AutoSize = true;
-            this.checkVetoMaj.Location = new System.Drawing.Point(111, 250);
-            this.checkVetoMaj.Name = "checkVetoMaj";
-            this.checkVetoMaj.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoMaj.TabIndex = 52;
-            this.checkVetoMaj.UseVisualStyleBackColor = true;
+            this.checkVetomaj.AutoSize = true;
+            this.checkVetomaj.Location = new System.Drawing.Point(111, 250);
+            this.checkVetomaj.Name = "checkVetomaj";
+            this.checkVetomaj.Size = new System.Drawing.Size(15, 14);
+            this.checkVetomaj.TabIndex = 52;
+            this.checkVetomaj.UseVisualStyleBackColor = true;
             // 
-            // checkVetoAug
+            // checkVetoaug
             // 
-            this.checkVetoAug.AutoSize = true;
-            this.checkVetoAug.Location = new System.Drawing.Point(111, 333);
-            this.checkVetoAug.Name = "checkVetoAug";
-            this.checkVetoAug.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoAug.TabIndex = 51;
-            this.checkVetoAug.UseVisualStyleBackColor = true;
+            this.checkVetoaug.AutoSize = true;
+            this.checkVetoaug.Location = new System.Drawing.Point(111, 333);
+            this.checkVetoaug.Name = "checkVetoaug";
+            this.checkVetoaug.Size = new System.Drawing.Size(15, 14);
+            this.checkVetoaug.TabIndex = 51;
+            this.checkVetoaug.UseVisualStyleBackColor = true;
             // 
-            // checkVetoMar
+            // checkVetomar
             // 
-            this.checkVetoMar.AutoSize = true;
-            this.checkVetoMar.Location = new System.Drawing.Point(111, 196);
-            this.checkVetoMar.Name = "checkVetoMar";
-            this.checkVetoMar.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoMar.TabIndex = 50;
-            this.checkVetoMar.UseVisualStyleBackColor = true;
+            this.checkVetomar.AutoSize = true;
+            this.checkVetomar.Location = new System.Drawing.Point(111, 196);
+            this.checkVetomar.Name = "checkVetomar";
+            this.checkVetomar.Size = new System.Drawing.Size(15, 14);
+            this.checkVetomar.TabIndex = 50;
+            this.checkVetomar.UseVisualStyleBackColor = true;
             // 
-            // checkVetoFeb
+            // checkVetofeb
             // 
-            this.checkVetoFeb.AutoSize = true;
-            this.checkVetoFeb.Location = new System.Drawing.Point(111, 169);
-            this.checkVetoFeb.Name = "checkVetoFeb";
-            this.checkVetoFeb.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoFeb.TabIndex = 49;
-            this.checkVetoFeb.UseVisualStyleBackColor = true;
+            this.checkVetofeb.AutoSize = true;
+            this.checkVetofeb.Location = new System.Drawing.Point(111, 169);
+            this.checkVetofeb.Name = "checkVetofeb";
+            this.checkVetofeb.Size = new System.Drawing.Size(15, 14);
+            this.checkVetofeb.TabIndex = 49;
+            this.checkVetofeb.UseVisualStyleBackColor = true;
             // 
-            // checkVetoJan
+            // checkVetojan
             // 
-            this.checkVetoJan.AutoSize = true;
-            this.checkVetoJan.Location = new System.Drawing.Point(111, 142);
-            this.checkVetoJan.Name = "checkVetoJan";
-            this.checkVetoJan.Size = new System.Drawing.Size(15, 14);
-            this.checkVetoJan.TabIndex = 48;
-            this.checkVetoJan.UseVisualStyleBackColor = true;
+            this.checkVetojan.AutoSize = true;
+            this.checkVetojan.Location = new System.Drawing.Point(111, 142);
+            this.checkVetojan.Name = "checkVetojan";
+            this.checkVetojan.Size = new System.Drawing.Size(15, 14);
+            this.checkVetojan.TabIndex = 48;
+            this.checkVetojan.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -679,10 +679,10 @@
             this.label5.TabIndex = 47;
             this.label5.Text = "Veto";
             // 
-            // cmbPrioDec
+            // cmbPriodec
             // 
-            this.cmbPrioDec.FormattingEnabled = true;
-            this.cmbPrioDec.Items.AddRange(new object[] {
+            this.cmbPriodec.FormattingEnabled = true;
+            this.cmbPriodec.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -693,16 +693,16 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioDec.Location = new System.Drawing.Point(146, 438);
-            this.cmbPrioDec.Name = "cmbPrioDec";
-            this.cmbPrioDec.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioDec.TabIndex = 72;
-            this.cmbPrioDec.Text = "1";
+            this.cmbPriodec.Location = new System.Drawing.Point(146, 438);
+            this.cmbPriodec.Name = "cmbPriodec";
+            this.cmbPriodec.Size = new System.Drawing.Size(36, 21);
+            this.cmbPriodec.TabIndex = 72;
+            this.cmbPriodec.Text = "1";
             // 
-            // cmbPrioNov
+            // cmbPrionov
             // 
-            this.cmbPrioNov.FormattingEnabled = true;
-            this.cmbPrioNov.Items.AddRange(new object[] {
+            this.cmbPrionov.FormattingEnabled = true;
+            this.cmbPrionov.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -713,16 +713,16 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioNov.Location = new System.Drawing.Point(146, 411);
-            this.cmbPrioNov.Name = "cmbPrioNov";
-            this.cmbPrioNov.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioNov.TabIndex = 71;
-            this.cmbPrioNov.Text = "1";
+            this.cmbPrionov.Location = new System.Drawing.Point(146, 411);
+            this.cmbPrionov.Name = "cmbPrionov";
+            this.cmbPrionov.Size = new System.Drawing.Size(36, 21);
+            this.cmbPrionov.TabIndex = 71;
+            this.cmbPrionov.Text = "1";
             // 
-            // cmbPrioOkt
+            // cmbPriookt
             // 
-            this.cmbPrioOkt.FormattingEnabled = true;
-            this.cmbPrioOkt.Items.AddRange(new object[] {
+            this.cmbPriookt.FormattingEnabled = true;
+            this.cmbPriookt.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -733,16 +733,16 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioOkt.Location = new System.Drawing.Point(146, 384);
-            this.cmbPrioOkt.Name = "cmbPrioOkt";
-            this.cmbPrioOkt.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioOkt.TabIndex = 70;
-            this.cmbPrioOkt.Text = "1";
+            this.cmbPriookt.Location = new System.Drawing.Point(146, 384);
+            this.cmbPriookt.Name = "cmbPriookt";
+            this.cmbPriookt.Size = new System.Drawing.Size(36, 21);
+            this.cmbPriookt.TabIndex = 70;
+            this.cmbPriookt.Text = "1";
             // 
-            // cmbPrioSep
+            // cmbPriosep
             // 
-            this.cmbPrioSep.FormattingEnabled = true;
-            this.cmbPrioSep.Items.AddRange(new object[] {
+            this.cmbPriosep.FormattingEnabled = true;
+            this.cmbPriosep.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -753,16 +753,16 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioSep.Location = new System.Drawing.Point(146, 357);
-            this.cmbPrioSep.Name = "cmbPrioSep";
-            this.cmbPrioSep.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioSep.TabIndex = 69;
-            this.cmbPrioSep.Text = "1";
+            this.cmbPriosep.Location = new System.Drawing.Point(146, 357);
+            this.cmbPriosep.Name = "cmbPriosep";
+            this.cmbPriosep.Size = new System.Drawing.Size(36, 21);
+            this.cmbPriosep.TabIndex = 69;
+            this.cmbPriosep.Text = "1";
             // 
-            // cmbPrioAug
+            // cmbPrioaug
             // 
-            this.cmbPrioAug.FormattingEnabled = true;
-            this.cmbPrioAug.Items.AddRange(new object[] {
+            this.cmbPrioaug.FormattingEnabled = true;
+            this.cmbPrioaug.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -773,16 +773,16 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioAug.Location = new System.Drawing.Point(146, 330);
-            this.cmbPrioAug.Name = "cmbPrioAug";
-            this.cmbPrioAug.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioAug.TabIndex = 68;
-            this.cmbPrioAug.Text = "1";
+            this.cmbPrioaug.Location = new System.Drawing.Point(146, 330);
+            this.cmbPrioaug.Name = "cmbPrioaug";
+            this.cmbPrioaug.Size = new System.Drawing.Size(36, 21);
+            this.cmbPrioaug.TabIndex = 68;
+            this.cmbPrioaug.Text = "1";
             // 
-            // cmbPrioJul
+            // cmbPriojul
             // 
-            this.cmbPrioJul.FormattingEnabled = true;
-            this.cmbPrioJul.Items.AddRange(new object[] {
+            this.cmbPriojul.FormattingEnabled = true;
+            this.cmbPriojul.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -793,16 +793,16 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioJul.Location = new System.Drawing.Point(146, 304);
-            this.cmbPrioJul.Name = "cmbPrioJul";
-            this.cmbPrioJul.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioJul.TabIndex = 67;
-            this.cmbPrioJul.Text = "1";
+            this.cmbPriojul.Location = new System.Drawing.Point(146, 304);
+            this.cmbPriojul.Name = "cmbPriojul";
+            this.cmbPriojul.Size = new System.Drawing.Size(36, 21);
+            this.cmbPriojul.TabIndex = 67;
+            this.cmbPriojul.Text = "1";
             // 
-            // cmbPrioJun
+            // cmbPriojun
             // 
-            this.cmbPrioJun.FormattingEnabled = true;
-            this.cmbPrioJun.Items.AddRange(new object[] {
+            this.cmbPriojun.FormattingEnabled = true;
+            this.cmbPriojun.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -813,16 +813,16 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioJun.Location = new System.Drawing.Point(146, 275);
-            this.cmbPrioJun.Name = "cmbPrioJun";
-            this.cmbPrioJun.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioJun.TabIndex = 66;
-            this.cmbPrioJun.Text = "1";
+            this.cmbPriojun.Location = new System.Drawing.Point(146, 275);
+            this.cmbPriojun.Name = "cmbPriojun";
+            this.cmbPriojun.Size = new System.Drawing.Size(36, 21);
+            this.cmbPriojun.TabIndex = 66;
+            this.cmbPriojun.Text = "1";
             // 
-            // cmbPrioMaj
+            // cmbPriomaj
             // 
-            this.cmbPrioMaj.FormattingEnabled = true;
-            this.cmbPrioMaj.Items.AddRange(new object[] {
+            this.cmbPriomaj.FormattingEnabled = true;
+            this.cmbPriomaj.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -833,16 +833,16 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioMaj.Location = new System.Drawing.Point(146, 247);
-            this.cmbPrioMaj.Name = "cmbPrioMaj";
-            this.cmbPrioMaj.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioMaj.TabIndex = 65;
-            this.cmbPrioMaj.Text = "1";
+            this.cmbPriomaj.Location = new System.Drawing.Point(146, 247);
+            this.cmbPriomaj.Name = "cmbPriomaj";
+            this.cmbPriomaj.Size = new System.Drawing.Size(36, 21);
+            this.cmbPriomaj.TabIndex = 65;
+            this.cmbPriomaj.Text = "1";
             // 
-            // cmbPrioApr
+            // cmbPrioapr
             // 
-            this.cmbPrioApr.FormattingEnabled = true;
-            this.cmbPrioApr.Items.AddRange(new object[] {
+            this.cmbPrioapr.FormattingEnabled = true;
+            this.cmbPrioapr.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -853,16 +853,16 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioApr.Location = new System.Drawing.Point(146, 220);
-            this.cmbPrioApr.Name = "cmbPrioApr";
-            this.cmbPrioApr.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioApr.TabIndex = 64;
-            this.cmbPrioApr.Text = "1";
+            this.cmbPrioapr.Location = new System.Drawing.Point(146, 220);
+            this.cmbPrioapr.Name = "cmbPrioapr";
+            this.cmbPrioapr.Size = new System.Drawing.Size(36, 21);
+            this.cmbPrioapr.TabIndex = 64;
+            this.cmbPrioapr.Text = "1";
             // 
-            // cmbPrioMar
+            // cmbPriomar
             // 
-            this.cmbPrioMar.FormattingEnabled = true;
-            this.cmbPrioMar.Items.AddRange(new object[] {
+            this.cmbPriomar.FormattingEnabled = true;
+            this.cmbPriomar.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -873,16 +873,16 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioMar.Location = new System.Drawing.Point(146, 193);
-            this.cmbPrioMar.Name = "cmbPrioMar";
-            this.cmbPrioMar.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioMar.TabIndex = 63;
-            this.cmbPrioMar.Text = "1";
+            this.cmbPriomar.Location = new System.Drawing.Point(146, 193);
+            this.cmbPriomar.Name = "cmbPriomar";
+            this.cmbPriomar.Size = new System.Drawing.Size(36, 21);
+            this.cmbPriomar.TabIndex = 63;
+            this.cmbPriomar.Text = "1";
             // 
-            // cmbPrioFeb
+            // cmbPriofeb
             // 
-            this.cmbPrioFeb.FormattingEnabled = true;
-            this.cmbPrioFeb.Items.AddRange(new object[] {
+            this.cmbPriofeb.FormattingEnabled = true;
+            this.cmbPriofeb.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -893,16 +893,16 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioFeb.Location = new System.Drawing.Point(146, 166);
-            this.cmbPrioFeb.Name = "cmbPrioFeb";
-            this.cmbPrioFeb.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioFeb.TabIndex = 62;
-            this.cmbPrioFeb.Text = "1";
+            this.cmbPriofeb.Location = new System.Drawing.Point(146, 166);
+            this.cmbPriofeb.Name = "cmbPriofeb";
+            this.cmbPriofeb.Size = new System.Drawing.Size(36, 21);
+            this.cmbPriofeb.TabIndex = 62;
+            this.cmbPriofeb.Text = "1";
             // 
-            // cmbPrioJan
+            // cmbPriojan
             // 
-            this.cmbPrioJan.FormattingEnabled = true;
-            this.cmbPrioJan.Items.AddRange(new object[] {
+            this.cmbPriojan.FormattingEnabled = true;
+            this.cmbPriojan.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -913,11 +913,11 @@
             "8",
             "9",
             "10"});
-            this.cmbPrioJan.Location = new System.Drawing.Point(146, 139);
-            this.cmbPrioJan.Name = "cmbPrioJan";
-            this.cmbPrioJan.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrioJan.TabIndex = 61;
-            this.cmbPrioJan.Text = "1";
+            this.cmbPriojan.Location = new System.Drawing.Point(146, 139);
+            this.cmbPriojan.Name = "cmbPriojan";
+            this.cmbPriojan.Size = new System.Drawing.Size(36, 21);
+            this.cmbPriojan.TabIndex = 61;
+            this.cmbPriojan.Text = "1";
             // 
             // label6
             // 
@@ -933,31 +933,31 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(297, 507);
-            this.Controls.Add(this.cmbPrioDec);
-            this.Controls.Add(this.cmbPrioNov);
-            this.Controls.Add(this.cmbPrioOkt);
-            this.Controls.Add(this.cmbPrioSep);
-            this.Controls.Add(this.cmbPrioAug);
-            this.Controls.Add(this.cmbPrioJul);
-            this.Controls.Add(this.cmbPrioJun);
-            this.Controls.Add(this.cmbPrioMaj);
-            this.Controls.Add(this.cmbPrioApr);
-            this.Controls.Add(this.cmbPrioMar);
-            this.Controls.Add(this.cmbPrioFeb);
-            this.Controls.Add(this.cmbPrioJan);
+            this.Controls.Add(this.cmbPriodec);
+            this.Controls.Add(this.cmbPrionov);
+            this.Controls.Add(this.cmbPriookt);
+            this.Controls.Add(this.cmbPriosep);
+            this.Controls.Add(this.cmbPrioaug);
+            this.Controls.Add(this.cmbPriojul);
+            this.Controls.Add(this.cmbPriojun);
+            this.Controls.Add(this.cmbPriomaj);
+            this.Controls.Add(this.cmbPrioapr);
+            this.Controls.Add(this.cmbPriomar);
+            this.Controls.Add(this.cmbPriofeb);
+            this.Controls.Add(this.cmbPriojan);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.checkVetoDec);
-            this.Controls.Add(this.checkVetoNov);
-            this.Controls.Add(this.checkVetoOkt);
-            this.Controls.Add(this.checkVetoSep);
-            this.Controls.Add(this.checkVetoApr);
-            this.Controls.Add(this.checkVetoJul);
-            this.Controls.Add(this.checkVetoJun);
-            this.Controls.Add(this.checkVetoMaj);
-            this.Controls.Add(this.checkVetoAug);
-            this.Controls.Add(this.checkVetoMar);
-            this.Controls.Add(this.checkVetoFeb);
-            this.Controls.Add(this.checkVetoJan);
+            this.Controls.Add(this.checkVetodec);
+            this.Controls.Add(this.checkVetonov);
+            this.Controls.Add(this.checkVetookt);
+            this.Controls.Add(this.checkVetosep);
+            this.Controls.Add(this.checkVetoapr);
+            this.Controls.Add(this.checkVetojul);
+            this.Controls.Add(this.checkVetojun);
+            this.Controls.Add(this.checkVetomaj);
+            this.Controls.Add(this.checkVetoaug);
+            this.Controls.Add(this.checkVetomar);
+            this.Controls.Add(this.checkVetofeb);
+            this.Controls.Add(this.checkVetojan);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btncancel);
             this.Controls.Add(this.btnsave);
@@ -1055,31 +1055,31 @@
         private System.Windows.Forms.ComboBox cmbdec;
         private System.Windows.Forms.Button btnsave;
         private System.Windows.Forms.Button btncancel;
-        private System.Windows.Forms.CheckBox checkVetoDec;
-        private System.Windows.Forms.CheckBox checkVetoNov;
-        private System.Windows.Forms.CheckBox checkVetoOkt;
-        private System.Windows.Forms.CheckBox checkVetoSep;
-        private System.Windows.Forms.CheckBox checkVetoApr;
-        private System.Windows.Forms.CheckBox checkVetoJul;
-        private System.Windows.Forms.CheckBox checkVetoJun;
-        private System.Windows.Forms.CheckBox checkVetoMaj;
-        private System.Windows.Forms.CheckBox checkVetoAug;
-        private System.Windows.Forms.CheckBox checkVetoMar;
-        private System.Windows.Forms.CheckBox checkVetoFeb;
-        private System.Windows.Forms.CheckBox checkVetoJan;
+        private System.Windows.Forms.CheckBox checkVetodec;
+        private System.Windows.Forms.CheckBox checkVetonov;
+        private System.Windows.Forms.CheckBox checkVetookt;
+        private System.Windows.Forms.CheckBox checkVetosep;
+        private System.Windows.Forms.CheckBox checkVetoapr;
+        private System.Windows.Forms.CheckBox checkVetojul;
+        private System.Windows.Forms.CheckBox checkVetojun;
+        private System.Windows.Forms.CheckBox checkVetomaj;
+        private System.Windows.Forms.CheckBox checkVetoaug;
+        private System.Windows.Forms.CheckBox checkVetomar;
+        private System.Windows.Forms.CheckBox checkVetofeb;
+        private System.Windows.Forms.CheckBox checkVetojan;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cmbPrioDec;
-        private System.Windows.Forms.ComboBox cmbPrioNov;
-        private System.Windows.Forms.ComboBox cmbPrioOkt;
-        private System.Windows.Forms.ComboBox cmbPrioSep;
-        private System.Windows.Forms.ComboBox cmbPrioAug;
-        private System.Windows.Forms.ComboBox cmbPrioJul;
-        private System.Windows.Forms.ComboBox cmbPrioJun;
-        private System.Windows.Forms.ComboBox cmbPrioMaj;
-        private System.Windows.Forms.ComboBox cmbPrioApr;
-        private System.Windows.Forms.ComboBox cmbPrioMar;
-        private System.Windows.Forms.ComboBox cmbPrioFeb;
-        private System.Windows.Forms.ComboBox cmbPrioJan;
+        private System.Windows.Forms.ComboBox cmbPriodec;
+        private System.Windows.Forms.ComboBox cmbPrionov;
+        private System.Windows.Forms.ComboBox cmbPriookt;
+        private System.Windows.Forms.ComboBox cmbPriosep;
+        private System.Windows.Forms.ComboBox cmbPrioaug;
+        private System.Windows.Forms.ComboBox cmbPriojul;
+        private System.Windows.Forms.ComboBox cmbPriojun;
+        private System.Windows.Forms.ComboBox cmbPriomaj;
+        private System.Windows.Forms.ComboBox cmbPrioapr;
+        private System.Windows.Forms.ComboBox cmbPriomar;
+        private System.Windows.Forms.ComboBox cmbPriofeb;
+        private System.Windows.Forms.ComboBox cmbPriojan;
         private System.Windows.Forms.Label label6;
     }
 }
