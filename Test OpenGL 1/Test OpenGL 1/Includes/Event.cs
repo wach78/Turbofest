@@ -109,12 +109,56 @@ namespace OpenGL.Event
         public void decRuns()
         {
             this.runs--;
+            this.prio--;
         }
 
         public void noMoreVeto()
         {
             this.veto = false;
             this.runs = 0;
+        }
+
+        private int  p(int prio)
+        {
+            int value = 0;
+            switch (prio)
+            {
+                case 1: ; break;
+                case 2: ; break;
+                case 3: ; break;
+                case 4: ; break;
+                case 5: ; break;
+                case 6: ; break;
+                case 7: ; break;
+                case 8: ; break;
+                case 9:; break;
+                case 10: value = 1; break;
+            }
+
+            return value;
+        }
+        public void newPrio(objdata ob)
+        {
+            switch (ob.Name) 
+            {
+                case "SuneAnimation":
+                case "Dif":
+                case "Fbk":
+                case "TurboLogo":
+                case "Datasmurf":
+                case "RMS":
+                case "WinLinux":
+                case "Scroller":
+                case "Self":
+                case "BB":
+                case "GummiBears":
+                case "TeknatStyle":
+                case "Matrix":
+                case "Quiz":
+                break;
+            }
+
+            
         }
 
         public int CompareTo(object obj)
@@ -309,7 +353,7 @@ namespace OpenGL.Event
                             runEffectInMonth.Add(months[counter], new List<objdata>());
                         }
 
-                        runEffectInMonth[months[counter]].Add(new objdata(pair.Key, pair.Value.Veto, pair.Value.Prio, pair.Value.Runslist[counter]));  
+                        runEffectInMonth[months[counter]].Add(new objdata(pair.Key, pair.Value.Vetolist[counter], pair.Value.Priolist[counter], pair.Value.Runslist[counter]));  
                     }
                     counter++; 
                 }
@@ -422,6 +466,7 @@ namespace OpenGL.Event
 
                             vetolist.Sort();
                             novetolist.Sort();
+                            novetolist.Reverse();
                             
                             if (vetolist.Count > 0)
                             {

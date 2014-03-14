@@ -10,15 +10,15 @@ namespace OpenGL
 {
     class Effect
     {
-        private Sound snd;
-        private Text2D text;
-        private Chess chess;
+       // private Sound snd;
+        //private Text2D text;
+        //private Chess chess;
 
         private object obj;
         private string name;
-        private bool veto;
+        //private bool veto;
         private bool noMoreRun;
-        private int prio;
+       // private int prio;
         private int norpm; //number of runs per/months
 
         private List<string> namelist;
@@ -44,7 +44,7 @@ namespace OpenGL
 
         }
 
-       
+       /*
         public bool Veto
         {
             get { return veto; }
@@ -54,7 +54,7 @@ namespace OpenGL
         {
             get { return prio; }
         }
-
+        */
         public int Norpm
         {
             get { return norpm; }
@@ -74,6 +74,15 @@ namespace OpenGL
         public List<bool> RunAllowedlist
         {
             get { return runAllowedlist; }
+        }
+        public List<int> Priolist
+        {
+            get { return priolist; }
+        }
+
+        public List<bool> Vetolist
+        {
+            get { return vetolist; }
         }
        
 
