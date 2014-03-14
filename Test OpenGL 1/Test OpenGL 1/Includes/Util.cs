@@ -492,22 +492,26 @@ namespace OpenGL
         {
             #region Variables
             private string strName;
-            private bool blnVeto;
-            private int intPrio;
+            //private bool blnVeto;
+           // private int intPrio;
             private List<string> namelist;
             private List<int> runslist;
             private List<bool> runAllowedlist;
+            private List<int> priolist;
+            private List<bool> vetolist;
             #endregion
 
             #region Constructor
-            public EventData(string Name, bool Veto, int Prio)
+            public EventData(string Name)
             {
                 strName = Name;
-                blnVeto = Veto;
-                intPrio = Prio;
+               // blnVeto = Veto;
+                //intPrio = Prio;
                 namelist = new List<string>();
                 runslist = new List<int>();
                 runAllowedlist = new List<bool>();
+                priolist = new List<int>();
+                vetolist = new List<bool>();
             }
 
             public EventData()
@@ -515,6 +519,8 @@ namespace OpenGL
                 namelist = new List<string>();
                 runslist = new List<int>();
                 runAllowedlist = new List<bool>();
+                priolist = new List<int>();
+                vetolist = new List<bool>();
             }
             #endregion
 
@@ -524,15 +530,7 @@ namespace OpenGL
                 get { return strName; }
             }
 
-            public bool Veto
-            {
-                get { return blnVeto; }
-            }
-
-            public int Prio
-            {
-                get { return intPrio; }
-            }
+           
 
             public List<string> Namelist
             {
@@ -548,14 +546,26 @@ namespace OpenGL
             {
                 get { return runAllowedlist; }
             }
+            public List<int> Priolist
+            {
+                get { return priolist; }
+            }
+
+            public List<bool> VetoList
+            {
+                get { return vetolist; }
+            }
             #endregion
 
             #region Methods
-            public void setDataMonth(string name, int runs, bool allowed)
+
+            public void setData(string name, int runs, bool allowed, bool veto, int prio)
             {
                 namelist.Add(name);
                 runslist.Add(runs);
                 runAllowedlist.Add(allowed);
+                priolist.Add(prio);
+                vetolist.Add(veto);
             }
 
             public int CompareTo(object obj)
@@ -584,13 +594,13 @@ namespace OpenGL
 
             foreach (var effect in effects)
             {
-                EventData ev = new EventData(effect.Element("Name").Value, bool.Parse(effect.Element("Veto").Value), Int16.Parse(effect.Element("Prio").Value));
+                EventData ev = new EventData(effect.Element("Name").Value);
 
                 var months = effect.Descendants("Month");
 
                 foreach (var m in months)
                 {
-                    ev.setDataMonth(m.Element("Name").Value, Int16.Parse(m.Element("Runs").Value), bool.Parse(m.Element("RunAllowed").Value));
+                    ev.setData(m.Element("Name").Value, Int16.Parse(m.Element("Runs").Value), bool.Parse(m.Element("RunAllowed").Value), bool.Parse(m.Element("Veto").Value), Int16.Parse(m.Element("Prio").Value));
                 }
 
                 objlist.Add(ev);

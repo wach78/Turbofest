@@ -404,7 +404,7 @@ namespace projectX
                 xWriter.WriteStartElement("Name");
                 xWriter.WriteString(obj.Name);
                 xWriter.WriteEndElement(); //name
-
+                /*
                 xWriter.WriteStartElement("Veto");
                 xWriter.WriteString(obj.Veto.ToString());
                 xWriter.WriteEndElement(); //Veto
@@ -412,10 +412,12 @@ namespace projectX
                 xWriter.WriteStartElement("Prio");
                 xWriter.WriteString(obj.Prio.ToString());
                 xWriter.WriteEndElement(); //Prio
-
+                */
                 ArrayList listname = new ArrayList(obj.Namelist);
                 ArrayList listruns = new ArrayList(obj.Runslist);
                 ArrayList listrunallowed = new ArrayList(obj.RunAllowedlist);
+                ArrayList listprio = new ArrayList(obj.Priolist);
+                ArrayList listveto = new ArrayList(obj.Vetolist);
 
                 int len = listname.Count;
                  xWriter.WriteStartElement("Months");
@@ -433,6 +435,15 @@ namespace projectX
                      xWriter.WriteStartElement("RunAllowed");
                      xWriter.WriteString(listrunallowed[i].ToString());
                      xWriter.WriteEndElement(); //RunAllowed
+
+                     xWriter.WriteStartElement("Veto");
+                     xWriter.WriteString(listveto[i].ToString());
+                     xWriter.WriteEndElement();
+
+                     xWriter.WriteStartElement("Prio");
+                     xWriter.WriteString(listprio[i].ToString());
+                     xWriter.WriteEndElement(); 
+
 
                      xWriter.WriteEndElement(); //Month
                  }
@@ -459,7 +470,7 @@ namespace projectX
                 xWriter.WriteStartElement("Name");
                 xWriter.WriteString(str);
                 xWriter.WriteEndElement(); //name
-
+                /*
                 xWriter.WriteStartElement("Veto");
                 xWriter.WriteString("false");
                 xWriter.WriteEndElement(); //Veto
@@ -467,7 +478,7 @@ namespace projectX
                 xWriter.WriteStartElement("Prio");
                 xWriter.WriteString("1");
                 xWriter.WriteEndElement(); //Prio
-
+                */
                 int len = mlist.Length;
                 xWriter.WriteStartElement("Months");
                 for (int i = 0; i < len; i++)
@@ -484,6 +495,16 @@ namespace projectX
                     xWriter.WriteStartElement("RunAllowed");
                     xWriter.WriteString("false");
                     xWriter.WriteEndElement(); //RunAllowed
+
+                    xWriter.WriteStartElement("Veto");
+                    xWriter.WriteString("false");
+                    xWriter.WriteEndElement(); //Veto
+
+                    xWriter.WriteStartElement("Prio");
+                    xWriter.WriteString("1");
+                    xWriter.WriteEndElement(); //Prio
+
+
 
                     xWriter.WriteEndElement(); //Month
                 }
@@ -507,13 +528,13 @@ namespace projectX
 
             foreach (var effect in effects)
             {
-                eventdata ev = new eventdata(effect.Element("Name").Value, bool.Parse(effect.Element("Veto").Value), Int16.Parse(effect.Element("Prio").Value));
+                eventdata ev = new eventdata(effect.Element("Name").Value);
              
                 var months = effect.Descendants("Month");
 
                 foreach (var m in months)
                 {
-                    ev.setDataMonth(m.Element("Name").Value, Int16.Parse(m.Element("Runs").Value), bool.Parse(m.Element("RunAllowed").Value));
+                    ev.setData(m.Element("Name").Value, Int16.Parse(m.Element("Runs").Value), bool.Parse(m.Element("RunAllowed").Value), bool.Parse(m.Element("Veto").Value), Int16.Parse(m.Element("Prio").Value));
                 }
 
                 objlist.Add(ev);

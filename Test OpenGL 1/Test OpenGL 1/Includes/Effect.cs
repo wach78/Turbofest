@@ -25,17 +25,23 @@ namespace OpenGL
         private List<int> runslist;
         private List<bool> runAllowedlist;
 
+        private List<int> priolist;
+        private List<bool> vetolist;
+
         public Effect(object obj, UtilXML.EventData data)
         {
             this.name = data.Name;
             this.obj = obj;
             this.noMoreRun = false;
 
-            this.veto = data.Veto;
-            this.prio = data.Prio;
+           // this.veto = data.Veto;
+            //this.prio = data.Prio;
             this.namelist = new List<string>(data.Namelist);
             this.runslist = new List<int>(data.Runslist);
             this.runAllowedlist = new List<bool>(data.RunAllowedlist);
+            this.priolist = new List<int>(data.Priolist);
+            this.vetolist = new List<bool>(data.VetoList);
+
         }
 
        
