@@ -254,8 +254,8 @@ namespace projectX
 
                 int len = comboBoxList.Count;
                 int namelen = obj.Namelist.Count;
-               
 
+                string strtmp;
                 ComboBox cmb;
                 for (int i = 0; i < len; i++)
                 {
@@ -265,6 +265,11 @@ namespace projectX
                         if (cmb.Name == ("cmb" +obj.Namelist[j]))
                         {
                             cmb.Text = obj.Runslist[j].ToString();
+                            break;
+                        }
+                        else if (cmb.Name == ("cmbPrio" + obj.Namelist[j]))
+                        {
+                            cmb.Text = obj.Priolist[j].ToString();
                             break;
                         }
                     }
@@ -279,6 +284,11 @@ namespace projectX
                         if (ckb.Name == ("check" + obj.Namelist[j]))
                         {
                             ckb.Checked = (bool)obj.RunAllowedlist[j];
+                            break;
+                        }
+                        else if (ckb.Name == ("checkVeto" + obj.Namelist[j]))
+                        {
+                            ckb.Checked = (bool)obj.Vetolist[j];
                             break;
                         }
                     }

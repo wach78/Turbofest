@@ -30,10 +30,6 @@
         {
             this.cmbEvents = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.chbVeto = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cmbPrio = new System.Windows.Forms.ComboBox();
             this.Month = new System.Windows.Forms.Label();
             this.Mjan = new System.Windows.Forms.Label();
             this.Mfeb = new System.Windows.Forms.Label();
@@ -121,49 +117,6 @@
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Event";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 60);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Veto";
-            // 
-            // chbVeto
-            // 
-            this.chbVeto.AutoSize = true;
-            this.chbVeto.Location = new System.Drawing.Point(100, 60);
-            this.chbVeto.Name = "chbVeto";
-            this.chbVeto.Size = new System.Drawing.Size(15, 14);
-            this.chbVeto.TabIndex = 3;
-            this.chbVeto.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 89);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(24, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "prio";
-            // 
-            // cmbPrio
-            // 
-            this.cmbPrio.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.cmbPrio.FormattingEnabled = true;
-            this.cmbPrio.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbPrio.Location = new System.Drawing.Point(100, 81);
-            this.cmbPrio.Name = "cmbPrio";
-            this.cmbPrio.Size = new System.Drawing.Size(36, 21);
-            this.cmbPrio.TabIndex = 5;
-            this.cmbPrio.Text = "1";
             // 
             // Month
             // 
@@ -1047,10 +1000,6 @@
             this.Controls.Add(this.Mfeb);
             this.Controls.Add(this.Mjan);
             this.Controls.Add(this.Month);
-            this.Controls.Add(this.cmbPrio);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.chbVeto);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbEvents);
             this.Name = "FrmEvents";
@@ -1065,10 +1014,6 @@
 
         private System.Windows.Forms.ComboBox cmbEvents;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox chbVeto;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cmbPrio;
         private System.Windows.Forms.Label Month;
         private System.Windows.Forms.Label Mjan;
         private System.Windows.Forms.Label Mfeb;
