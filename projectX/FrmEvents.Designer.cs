@@ -58,7 +58,7 @@
             this.checkjul = new System.Windows.Forms.CheckBox();
             this.checkapr = new System.Windows.Forms.CheckBox();
             this.checksep = new System.Windows.Forms.CheckBox();
-            this.checkoct = new System.Windows.Forms.CheckBox();
+            this.checkokt = new System.Windows.Forms.CheckBox();
             this.checknov = new System.Windows.Forms.CheckBox();
             this.checkdec = new System.Windows.Forms.CheckBox();
             this.cmbjan = new System.Windows.Forms.ComboBox();
@@ -70,7 +70,7 @@
             this.cmbjul = new System.Windows.Forms.ComboBox();
             this.cmbaug = new System.Windows.Forms.ComboBox();
             this.cmbsep = new System.Windows.Forms.ComboBox();
-            this.cmboct = new System.Windows.Forms.ComboBox();
+            this.cmbokt = new System.Windows.Forms.ComboBox();
             this.cmbnov = new System.Windows.Forms.ComboBox();
             this.cmbdec = new System.Windows.Forms.ComboBox();
             this.btnsave = new System.Windows.Forms.Button();
@@ -237,7 +237,7 @@
             this.Moct.Name = "Moct";
             this.Moct.Size = new System.Drawing.Size(24, 13);
             this.Moct.TabIndex = 16;
-            this.Moct.Text = "Oct";
+            this.Moct.Text = "Okt";
             // 
             // Mnov
             // 
@@ -356,14 +356,14 @@
             this.checksep.TabIndex = 29;
             this.checksep.UseVisualStyleBackColor = true;
             // 
-            // checkoct
+            // checkokt
             // 
-            this.checkoct.AutoSize = true;
-            this.checkoct.Location = new System.Drawing.Point(100, 380);
-            this.checkoct.Name = "checkoct";
-            this.checkoct.Size = new System.Drawing.Size(15, 14);
-            this.checkoct.TabIndex = 30;
-            this.checkoct.UseVisualStyleBackColor = true;
+            this.checkokt.AutoSize = true;
+            this.checkokt.Location = new System.Drawing.Point(100, 380);
+            this.checkokt.Name = "checkokt";
+            this.checkokt.Size = new System.Drawing.Size(15, 14);
+            this.checkokt.TabIndex = 30;
+            this.checkokt.UseVisualStyleBackColor = true;
             // 
             // checknov
             // 
@@ -518,20 +518,20 @@
             this.cmbsep.TabIndex = 41;
             this.cmbsep.Text = "1";
             // 
-            // cmboct
+            // cmbokt
             // 
-            this.cmboct.FormattingEnabled = true;
-            this.cmboct.Items.AddRange(new object[] {
+            this.cmbokt.FormattingEnabled = true;
+            this.cmbokt.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
             "4",
             "5"});
-            this.cmboct.Location = new System.Drawing.Point(164, 380);
-            this.cmboct.Name = "cmboct";
-            this.cmboct.Size = new System.Drawing.Size(36, 21);
-            this.cmboct.TabIndex = 42;
-            this.cmboct.Text = "1";
+            this.cmbokt.Location = new System.Drawing.Point(164, 380);
+            this.cmbokt.Name = "cmbokt";
+            this.cmbokt.Size = new System.Drawing.Size(36, 21);
+            this.cmbokt.TabIndex = 42;
+            this.cmbokt.Text = "1";
             // 
             // cmbnov
             // 
@@ -592,7 +592,7 @@
             this.Controls.Add(this.btnsave);
             this.Controls.Add(this.cmbdec);
             this.Controls.Add(this.cmbnov);
-            this.Controls.Add(this.cmboct);
+            this.Controls.Add(this.cmbokt);
             this.Controls.Add(this.cmbsep);
             this.Controls.Add(this.cmbaug);
             this.Controls.Add(this.cmbjul);
@@ -604,7 +604,7 @@
             this.Controls.Add(this.cmbjan);
             this.Controls.Add(this.checkdec);
             this.Controls.Add(this.checknov);
-            this.Controls.Add(this.checkoct);
+            this.Controls.Add(this.checkokt);
             this.Controls.Add(this.checksep);
             this.Controls.Add(this.checkapr);
             this.Controls.Add(this.checkjul);
@@ -675,7 +675,7 @@
         private System.Windows.Forms.CheckBox checkjul;
         private System.Windows.Forms.CheckBox checkapr;
         private System.Windows.Forms.CheckBox checksep;
-        private System.Windows.Forms.CheckBox checkoct;
+        private System.Windows.Forms.CheckBox checkokt;
         private System.Windows.Forms.CheckBox checknov;
         private System.Windows.Forms.CheckBox checkdec;
         private System.Windows.Forms.ComboBox cmbjan;
@@ -687,7 +687,7 @@
         private System.Windows.Forms.ComboBox cmbjul;
         private System.Windows.Forms.ComboBox cmbaug;
         private System.Windows.Forms.ComboBox cmbsep;
-        private System.Windows.Forms.ComboBox cmboct;
+        private System.Windows.Forms.ComboBox cmbokt;
         private System.Windows.Forms.ComboBox cmbnov;
         private System.Windows.Forms.ComboBox cmbdec;
         private System.Windows.Forms.Button btnsave;

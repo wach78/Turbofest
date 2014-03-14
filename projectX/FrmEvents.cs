@@ -83,8 +83,8 @@ namespace projectX
                 cmbfeb.Enabled = false;
                 checkfeb.Enabled = false;
 
-                cmboct.Enabled = false;
-                checkoct.Enabled = false;
+                cmbokt.Enabled = false;
+                checkokt.Enabled = false;
                 cmbnov.Enabled = false;
                 checknov.Enabled = false;
                 cmbdec.Enabled = false;
@@ -119,7 +119,7 @@ namespace projectX
             if ("Spring".Equals(FrmMain.SpringOrFall))
             {
                 ev.setDataMonth("sep", Int16.Parse(cmbsep.Text), checksep.Checked);
-                ev.setDataMonth("okt", Int16.Parse(cmboct.Text), checkoct.Checked);
+                ev.setDataMonth("okt", Int16.Parse(cmbokt.Text), checkokt.Checked);
                 ev.setDataMonth("nov", Int16.Parse(cmbnov.Text), checknov.Checked);
                 ev.setDataMonth("dec", Int16.Parse(cmbdec.Text), checkdec.Checked);
                 ev.setDataMonth("jan", Int16.Parse(cmbjan.Text), checkjan.Checked);
@@ -157,7 +157,7 @@ namespace projectX
             if ("Spring".Equals(FrmMain.SpringOrFall))
             {
                 ev.setDataMonth("sep", Int16.Parse(cmbsep.Text), checksep.Checked);
-                ev.setDataMonth("okt", Int16.Parse(cmboct.Text), checkoct.Checked);
+                ev.setDataMonth("okt", Int16.Parse(cmbokt.Text), checkokt.Checked);
                 ev.setDataMonth("nov", Int16.Parse(cmbnov.Text), checknov.Checked);
                 ev.setDataMonth("dec", Int16.Parse(cmbdec.Text), checkdec.Checked);
                 ev.setDataMonth("jan", Int16.Parse(cmbjan.Text), checkjan.Checked);
