@@ -118,6 +118,12 @@ namespace OpenGL.Event
             this.runs = 0;
         }
 
+        public void vetoAgain()
+        {
+            this.veto = true;
+            this.runs = 1;
+        }
+
         private int  p(int prio)
         {
             int value = 0;
