@@ -124,48 +124,7 @@ namespace OpenGL.Event
             this.runs = 1;
         }
 
-        private int  p(int prio)
-        {
-            int value = 0;
-            switch (prio)
-            {
-                case 1: ; break;
-                case 2: ; break;
-                case 3: ; break;
-                case 4: ; break;
-                case 5: ; break;
-                case 6: ; break;
-                case 7: ; break;
-                case 8: ; break;
-                case 9:; break;
-                case 10: value = 1; break;
-            }
-
-            return value;
-        }
-        public void newPrio(objdata ob)
-        {
-            switch (ob.Name) 
-            {
-                case "SuneAnimation":
-                case "Dif":
-                case "Fbk":
-                case "TurboLogo":
-                case "Datasmurf":
-                case "RMS":
-                case "WinLinux":
-                case "Scroller":
-                case "Self":
-                case "BB":
-                case "GummiBears":
-                case "TeknatStyle":
-                case "Matrix":
-                case "Quiz":
-                break;
-            }
-
-            
-        }
+       
 
         public int CompareTo(object obj)
         {
@@ -217,6 +176,7 @@ namespace OpenGL.Event
     class Event
     {
         private bool disposed = false;
+        private static int eventnum = 0;
         CrashHandler ch;
         // Time
         OpenGL.PartyClock clock;
@@ -314,7 +274,7 @@ namespace OpenGL.Event
             q = new Quiz(ref text, false, ref sound);
 
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
-            randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "Dif", "Fbk", "TurboLogo", "Datasmurf", "RMS", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "TeknatStyle", "Matrix", "Quiz" });
+            randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "TeknatStyle", "Matrix"});
 
             //new stuff
              List<UtilXML.EventData> ed = UtilXML.Loadeffectdata();
@@ -458,6 +418,14 @@ namespace OpenGL.Event
 
                             foreach (objdata n in mobj)
                             {
+                                
+                                if ("Quiz".Equals(n.Name) && eventnum == 4)
+                                {
+                                    n.vetoAgain();
+                                    eventnum = 0;
+                                }
+                                
+
                                 if (n.Veto == true)
                                 {
                                     if (n.Runs > 0)
@@ -472,7 +440,7 @@ namespace OpenGL.Event
 
                             vetolist.Sort();
                             novetolist.Sort();
-                            novetolist.Reverse();
+                            Console.WriteLine("num" + eventnum);
                             
                             if (vetolist.Count > 0)
                             {
@@ -483,6 +451,8 @@ namespace OpenGL.Event
                             {
                                 ei = new EventItem(novetolist[0].Name, "random", date);
                                 novetolist[0].decRuns();
+                                if (eventnum < 4)
+                                    eventnum++;
                             }
                             else
                             {
@@ -499,6 +469,7 @@ namespace OpenGL.Event
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
                 }
+               
                 dt = dt.AddDays(1);
                 date = string.Empty;
             }
