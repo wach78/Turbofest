@@ -110,6 +110,7 @@
     <Compile Include="Includes\Raindrops.cs" />
     <Compile Include="Includes\Scroller.cs" />
     <Compile Include="Includes\Self.cs" />
+    <Compile Include="Includes\Talespin.cs" />
     <Compile Include="Includes\TeknatStyle.cs" />
     <Compile Include="Includes\Vaffla.cs" />
     <Compile Include="Includes\Walpurgis.cs" />
@@ -229,6 +230,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\rain.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\seaduck.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\vaffla.bmp">
@@ -394,6 +398,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\Nerdy.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Samples\Talespin.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\ts.ogg">

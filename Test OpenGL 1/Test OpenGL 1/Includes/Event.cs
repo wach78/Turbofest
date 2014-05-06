@@ -220,6 +220,8 @@ namespace OpenGL.Event
         Matrix m;
         Quiz q;
 
+        Talespin talepsin;
+
         private EventItem eventCurrent;
         private Dictionary<string, List<objdata>> runEffectInMonth;
 
@@ -272,9 +274,10 @@ namespace OpenGL.Event
             ts = new TeknatStyle(ref chess, ref sound, ref text);
             m = new Matrix(ref text);
             q = new Quiz(ref text, false, ref sound);
+            talepsin = new Talespin(ref sound);
 
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
-            randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "TeknatStyle", "Matrix"});
+            randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "BB", "GummiBears", "TeknatStyle", "Matrix"});
 
             //new stuff
              List<UtilXML.EventData> ed = UtilXML.Loadeffectdata();
@@ -300,7 +303,8 @@ namespace OpenGL.Event
                 {"Hajk",new Effect(hajk, ed.Find(e => e.Name == "Hajk"))},
                 {"TeknatStyle",new Effect(ts, ed.Find(e => e.Name == "TeknatStyle"))},
                 {"Matrix",new Effect(m, ed.Find(e => e.Name == "Matrix"))},
-                {"Quiz",new Effect(q, ed.Find(e => e.Name == "Quiz"))}
+                {"Quiz",new Effect(q, ed.Find(e => e.Name == "Quiz"))},
+                {"Talespin",new Effect(q, ed.Find(e => e.Name == "Talespin"))}
             };
 
             runEffectInMonth = new Dictionary<string, List<objdata>>();
@@ -465,6 +469,8 @@ namespace OpenGL.Event
                         }
                         
                     }
+
+                    ei = new EventItem("Talespin", "random", date);
                     star = !star;
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
@@ -528,7 +534,8 @@ namespace OpenGL.Event
                     if (wp != null) wp.Dispose(); // 1 texturer
                     if (crayfish != null) crayfish.Dispose(); // 8 texturer
                     if (ts != null) ts.Dispose(); // 3 textur
-                    if (m != null) m.Dispose(); 
+                    if (m != null) m.Dispose();
+                    if (talepsin != null) talepsin.Dispose();
                     // Main effects
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
@@ -723,6 +730,9 @@ namespace OpenGL.Event
                                 break;
                             case "Matrix":
                                   m.Draw(nowDate);
+                                break;
+                            case "Talespin":
+                                talepsin.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)
