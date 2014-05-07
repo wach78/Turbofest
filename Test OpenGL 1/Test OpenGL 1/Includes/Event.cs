@@ -221,6 +221,9 @@ namespace OpenGL.Event
         Quiz q;
 
         Talespin talepsin;
+        ChipAndDale cd;
+        Nerdy nerd;
+        Trex trex;
 
         private EventItem eventCurrent;
         private Dictionary<string, List<objdata>> runEffectInMonth;
@@ -275,6 +278,9 @@ namespace OpenGL.Event
             m = new Matrix(ref text);
             q = new Quiz(ref text, false, ref sound);
             talepsin = new Talespin(ref sound);
+            cd = new ChipAndDale(ref sound, ref chess);
+            nerd = new Nerdy(ref chess, ref sound);
+            trex = new Trex(ref sound);
 
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
             randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "BB", "GummiBears", "TeknatStyle", "Matrix"});
@@ -304,7 +310,10 @@ namespace OpenGL.Event
                 {"TeknatStyle",new Effect(ts, ed.Find(e => e.Name == "TeknatStyle"))},
                 {"Matrix",new Effect(m, ed.Find(e => e.Name == "Matrix"))},
                 {"Quiz",new Effect(q, ed.Find(e => e.Name == "Quiz"))},
-                {"Talespin",new Effect(q, ed.Find(e => e.Name == "Talespin"))}
+                {"Talespin",new Effect(q, ed.Find(e => e.Name == "Talespin"))},
+                {"ChipDale",new Effect(q, ed.Find(e => e.Name == "ChipDale"))},
+                {"Nerdy",new Effect(q, ed.Find(e => e.Name == "Nerdy"))},
+                {"Trex",new Effect(q, ed.Find(e => e.Name == "Trex"))}
             };
 
             runEffectInMonth = new Dictionary<string, List<objdata>>();
@@ -470,7 +479,10 @@ namespace OpenGL.Event
                         
                     }
 
-                    ei = new EventItem("Talespin", "random", date);
+                   // ei = new EventItem("Nerdy", "random", date);
+                    //ei = new EventItem("Talespin", "random", date);
+                    //ei = new EventItem("ChipDale", "random", date);
+                    ei = new EventItem("Trex", "random", date);
                     star = !star;
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
@@ -536,10 +548,14 @@ namespace OpenGL.Event
                     if (ts != null) ts.Dispose(); // 3 textur
                     if (m != null) m.Dispose();
                     if (talepsin != null) talepsin.Dispose();
+                    if (cd != null) cd.Dispose();
+                    if (nerd != null) nerd.Dispose();
+                    if (trex != null) trex.Dispose();
                     // Main effects
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
                     if (chess != null) chess.Dispose(); // 7 texturer
+                    
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -733,6 +749,16 @@ namespace OpenGL.Event
                                 break;
                             case "Talespin":
                                 talepsin.Draw(nowDate);
+                                break;
+
+                            case "ChipDale":
+                                cd.Draw(nowDate);
+                                break;
+                            case "Nerdy":
+                                nerd.Draw(nowDate);
+                                break;
+                            case "Trex":
+                                trex.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)

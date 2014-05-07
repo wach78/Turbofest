@@ -89,6 +89,7 @@
     <Compile Include="Includes\Ballons.cs" />
     <Compile Include="Includes\BB.cs" />
     <Compile Include="Includes\Birthday.cs" />
+    <Compile Include="Includes\ChipAndDale.cs" />
     <Compile Include="Includes\Christmas.cs" />
     <Compile Include="Includes\Advent.cs" />
     <Compile Include="Includes\CrayFish.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Includes\Self.cs" />
     <Compile Include="Includes\Talespin.cs" />
     <Compile Include="Includes\TeknatStyle.cs" />
+    <Compile Include="Includes\Trex.cs" />
     <Compile Include="Includes\Vaffla.cs" />
     <Compile Include="Includes\Walpurgis.cs" />
     <Compile Include="Includes\WinLinux.cs" />
@@ -175,6 +177,9 @@
     <Content Include="gfx\chicken.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="gfx\chipanddale.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\eggs.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -214,6 +219,24 @@
     <Content Include="gfx\mid.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="gfx\n1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\n2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\n3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\n4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\n5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\n6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\part1.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -229,10 +252,19 @@
     <Content Include="gfx\part5.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="gfx\pony.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\rain.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\seaduck.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\this_is.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\Trex.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\vaffla.bmp">
@@ -382,6 +414,9 @@
     <Content Include="Samples\GummiBears-Swedish.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Samples\chipanddale.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Samples\Du gamla du fria %28Black Ingvars%29.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

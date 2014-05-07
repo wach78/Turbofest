@@ -10,14 +10,17 @@ namespace OpenGL
 {
     class Nerdy : IEffect
     {
-        private int slideshowImage1;
-        private int slideshowImage2;
-        private int slideshowImage3;
+        private int n1;
+        private int n2;
+        private int n3;
+        private int n4;
+        private int n5;
+        private int n6;
         private int currentImage;
-        private int currentSlideShow;
+     
         private Sound snd;
         private Chess bakground;
-        private Text2D text;
+   
 
         private bool disposed;
 
@@ -25,19 +28,22 @@ namespace OpenGL
         private long ticks;
         private long oldTicks;
 
-        public Nerdy(ref Chess chess, ref Sound sound, ref Text2D txt)
+        public Nerdy(ref Chess chess, ref Sound sound)
         {
             disposed = false;
-            slideshowImage1 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/Nerdybildspel1.jpg");
-            slideshowImage2 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/Nerdyspel2.jpg");
-            slideshowImage3 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/Nerdyspel3.jpg");
+            n1 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n1.jpg");
+            n2 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n2.jpg");
+            n3 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n3.jpg");
+            n4 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n4.jpg");
+            n5 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n5.png");
+            n6 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n6.png");
             snd = sound;
             bakground = chess;
-            text = txt;
+           
 
             snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Nerdy.ogg", "Nerdy");
             currentImage = 0;
-            currentSlideShow = 0;
+           
 
             LastDate = string.Empty;
             ticks = 0;
@@ -62,12 +68,14 @@ namespace OpenGL
                 if (disposing)
                 {
                     // free managed resources
-                    Util.DeleteTexture(ref slideshowImage1);
-                    Util.DeleteTexture(ref slideshowImage2);
-                    Util.DeleteTexture(ref slideshowImage3);
-
+                    Util.DeleteTexture(ref n1);
+                    Util.DeleteTexture(ref n2);
+                    Util.DeleteTexture(ref n3);
+                    Util.DeleteTexture(ref n4);
+                    Util.DeleteTexture(ref n5);
+                    Util.DeleteTexture(ref n6);
                     currentImage = 0;
-                    currentSlideShow = 0;
+                
                     ticks = 0;
                     oldTicks = 0;
                 }
@@ -82,25 +90,37 @@ namespace OpenGL
         {
             GL.Enable(EnableCap.Texture2D);
 
-            if (currentSlideShow == 0)
+            if (currentImage == 0)
             {
-                GL.BindTexture(TextureTarget.Texture2D, slideshowImage1);
+                GL.BindTexture(TextureTarget.Texture2D, n1);
             }
-            else if (currentSlideShow == 1)
+            else if (currentImage == 1)
             {
-                GL.BindTexture(TextureTarget.Texture2D, slideshowImage2);
+                GL.BindTexture(TextureTarget.Texture2D, n2);
             }
-            else if (currentSlideShow == 2)
+            else if (currentImage == 2)
             {
-                GL.BindTexture(TextureTarget.Texture2D, slideshowImage3);
+                GL.BindTexture(TextureTarget.Texture2D, n3);
+            }
+            else if (currentImage == 3)
+            {
+                GL.BindTexture(TextureTarget.Texture2D, n4);
+            }
+            else if (currentImage == 4)
+            {
+                GL.BindTexture(TextureTarget.Texture2D, n5);
+            }
+            else if (currentImage == 5)
+            {
+                GL.BindTexture(TextureTarget.Texture2D, n6);
             }
 
             GL.Begin(BeginMode.Quads);
 
-            GL.TexCoord2(0.0f + (currentImage * 0.25f), 1.0f); GL.Vertex3(1.0f, -1.25f, 1.0f); // bottom left // x y z alla i mitten Y-led 
-            GL.TexCoord2(0.25f + (currentImage * 0.25f), 1.0f); GL.Vertex3(-1.0f, -1.25f, 1.0f); // bottom right // alla till vänster x-led
-            GL.TexCoord2(0.25f + (currentImage * 0.25f), 0.0f); GL.Vertex3(-1.0f, 0.0f, 1.0f);// top right
-            GL.TexCoord2(0.0f + (currentImage * 0.25f), 0.0f); GL.Vertex3(1.0f, 0.0f, 1.0f); // top left 
+            GL.TexCoord2(0.0f , 1.0f); GL.Vertex3(1.0f, -1.25f, 1.0f); // bottom left // x y z alla i mitten Y-led 
+            GL.TexCoord2(1.0f  , 1.0f); GL.Vertex3(-1.0f, -1.25f, 1.0f); // bottom right // alla till vänster x-led
+            GL.TexCoord2(1.0f , 0.0f); GL.Vertex3(-1.0f, 0.0f, 1.0f);// top right
+            GL.TexCoord2(0.0f  , 0.0f); GL.Vertex3(1.0f, 0.0f, 1.0f); // top left 
 
             GL.End();
             GL.Disable(EnableCap.Texture2D);
@@ -123,19 +143,14 @@ namespace OpenGL
 
             if (this.oldTicks != 0)
             {
-                if ((this.ticks - this.oldTicks) > 2000)
+                if ((this.ticks - this.oldTicks) > 6000)
                 {
                     currentImage++;
 
-                    if (currentImage > 3)
+                    if (currentImage > 5)
                     {
                         currentImage = 0;
-                        currentSlideShow++;
                     }
-
-                    if (currentSlideShow > 2)
-                        currentSlideShow = 0;
-
 
                     oldTicks = ticks;
                 }//inner if
@@ -153,7 +168,6 @@ namespace OpenGL
             if (LastDate != Date)
             {
                 currentImage = 0;
-                currentSlideShow = 0;
             }
 
             Play(Date);

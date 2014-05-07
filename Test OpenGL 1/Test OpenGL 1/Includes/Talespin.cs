@@ -12,7 +12,6 @@ namespace OpenGL
     {
         private Sound snd;
         private int seaDuck;
-      //  private int piratePlane;
         private float x;
         private float y;
         private bool disposed = false;
@@ -28,7 +27,7 @@ namespace OpenGL
             seaDuck = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/seaDuck.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
 
             snd = sound;
-            //snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Talespin.ogg", "Talespin");
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Talespin.ogg", "Talespin");
             LastDate = string.Empty;
 
         }
