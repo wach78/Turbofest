@@ -97,6 +97,7 @@
     <Compile Include="Includes\Easter.cs" />
     <Compile Include="Includes\Eggs.cs" />
     <Compile Include="Includes\FireWorks.cs" />
+    <Compile Include="Includes\GhostBusters.cs" />
     <Compile Include="Includes\Gummi.cs" />
     <Compile Include="Includes\Event.cs" />
     <Compile Include="Includes\Hajk.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Includes\NewYear.cs" />
     <Compile Include="Includes\Quiz.cs" />
     <Compile Include="Includes\Raindrops.cs" />
+    <Compile Include="Includes\Sailormoon.cs" />
     <Compile Include="Includes\Scroller.cs" />
     <Compile Include="Includes\Self.cs" />
     <Compile Include="Includes\Talespin.cs" />
@@ -186,6 +188,9 @@
     <Content Include="gfx\flagga.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="gfx\ghostbusters.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\gladpask.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -258,7 +263,13 @@
     <Content Include="gfx\rain.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="gfx\sailormoon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gfx\seaduck.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\slimer.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\this_is.png">
@@ -423,6 +434,9 @@
     <None Include="Samples\Du gamla du fria %28Sven-Erik Magnusson%29.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Samples\GhostBuster.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Samples\grodorna.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -433,6 +447,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\Nerdy.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Samples\SailorJap.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\Talespin.ogg">

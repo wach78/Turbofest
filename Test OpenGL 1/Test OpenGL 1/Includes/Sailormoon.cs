@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    class ChipAndDale : IEffect
+    class Sailormoon : IEffect
     {
         private Sound snd;
         private Chess bakground;
@@ -16,18 +16,18 @@ namespace OpenGL
         private bool disposed = false;
         private string LastDate;
 
-        public ChipAndDale(ref Sound sound,ref Chess chess)
+        public Sailormoon(ref Sound sound,ref Chess chess)
         {
-            img = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chipanddale.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            img = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/sailormoon.jpg");
 
             bakground = chess;
             snd = sound;
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/chipanddale.ogg", "Chip");
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/SailorJap.ogg", "Moon");
             LastDate = string.Empty;
 
         }
 
-        ~ChipAndDale()
+        ~Sailormoon()
         {
             Dispose(false);
             System.GC.SuppressFinalize(this);
@@ -45,7 +45,7 @@ namespace OpenGL
                 {
                     // free managed resources
                     Util.DeleteTexture(ref img);
-                  
+                    //Util.DeleteTexture(ref piratePlane);
                     
                 }
                 // free native resources if there are any.
@@ -54,7 +54,6 @@ namespace OpenGL
                 disposed = true;
             }
         }
-
         private void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -66,7 +65,7 @@ namespace OpenGL
 
             // x y z
             // alla i mitten Y-led  alla till vänster x-led
-        
+
             GL.TexCoord2(0.0, 1.0); GL.Vertex3(0.8f, -0.8f, 1.0f); // bottom left  
             GL.TexCoord2(1.0, 1.0); GL.Vertex3(-0.8f, -0.8f, 1.0f); // bottom right 
             GL.TexCoord2(1.0, 0.0); GL.Vertex3(-0.8f, -0.00f, 1.0f);// top right
@@ -81,17 +80,17 @@ namespace OpenGL
         }//DrawImage
         private void Play(String Date)
         {
-            if (LastDate != Date && snd.PlayingName() != "Chip") // this will start once the last sound is done, ie looping.
+            if (LastDate != Date && snd.PlayingName() != "Moon") // this will start once the last sound is done, ie looping.
             {
-                snd.Play("Chip");
+                snd.Play("Moon");
                 LastDate = Date;
             }
         }
         public void Draw(string Date)
         {
             Play(Date);
-            bakground.Draw(Date, Chess.ChessColor.BlueBlack);
+            bakground.Draw(Date, Chess.ChessColor.BlackWhite);
             DrawImage();
         }//Draw
     }//class
-}//namespale
+}//namespace 

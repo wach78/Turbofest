@@ -220,6 +220,8 @@ namespace OpenGL.Event
         Matrix m;
         Quiz q;
 
+        GhostBusters gb;
+        Sailormoon sailormoon;
         Talespin talepsin;
         ChipAndDale cd;
         Nerdy nerd;
@@ -281,6 +283,8 @@ namespace OpenGL.Event
             cd = new ChipAndDale(ref sound, ref chess);
             nerd = new Nerdy(ref chess, ref sound);
             trex = new Trex(ref sound);
+            sailormoon = new Sailormoon(ref sound,ref chess);
+            gb = new GhostBusters(ref sound);
 
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
             randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "BB", "GummiBears", "TeknatStyle", "Matrix"});
@@ -313,7 +317,9 @@ namespace OpenGL.Event
                 {"Talespin",new Effect(q, ed.Find(e => e.Name == "Talespin"))},
                 {"ChipDale",new Effect(q, ed.Find(e => e.Name == "ChipDale"))},
                 {"Nerdy",new Effect(q, ed.Find(e => e.Name == "Nerdy"))},
-                {"Trex",new Effect(q, ed.Find(e => e.Name == "Trex"))}
+                {"Trex",new Effect(q, ed.Find(e => e.Name == "Trex"))},
+                {"Sailormoon",new Effect(q, ed.Find(e => e.Name == "Sailormoon"))},
+                {"GhostBusters",new Effect(q, ed.Find(e => e.Name == "GhostBusters"))}
             };
 
             runEffectInMonth = new Dictionary<string, List<objdata>>();
@@ -482,7 +488,9 @@ namespace OpenGL.Event
                    // ei = new EventItem("Nerdy", "random", date);
                     //ei = new EventItem("Talespin", "random", date);
                     //ei = new EventItem("ChipDale", "random", date);
-                    ei = new EventItem("Trex", "random", date);
+                    //ei = new EventItem("Trex", "random", date);
+                    //ei = new EventItem("Sailormoon", "random", date);
+                    ei = new EventItem("GhostBusters", "random", date);
                     star = !star;
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
@@ -551,6 +559,8 @@ namespace OpenGL.Event
                     if (cd != null) cd.Dispose();
                     if (nerd != null) nerd.Dispose();
                     if (trex != null) trex.Dispose();
+                    if (sailormoon != null) sailormoon.Dispose();
+                    if (gb != null) gb.Dispose();
                     // Main effects
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
@@ -759,6 +769,13 @@ namespace OpenGL.Event
                                 break;
                             case "Trex":
                                 trex.Draw(nowDate);
+                                break;
+
+                            case "Sailormoon":
+                                sailormoon.Draw(nowDate);
+                                break;
+                            case "GhostBusters":
+                                gb.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)
