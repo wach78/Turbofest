@@ -1,0 +1,137 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using OpenTK.Graphics.OpenGL;
+
+namespace OpenGL
+{
+    class Zelda : IEffect
+    {
+        private Sound snd;
+        private Chess bakground;
+        private int zelda;
+        private int link;
+        private int ganon;
+        private bool disposed = false;
+        private string LastDate;
+
+        public Zelda(ref Sound sound,ref Chess chess)
+        {
+            zelda = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/Zelda.png", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            link = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/Link.png", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            ganon = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/Ganon.png", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            bakground = chess;
+            snd = sound;
+            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/zeldaNES.ogg", "Zelda");
+            LastDate = string.Empty;
+
+        }
+
+        ~Zelda()
+        {
+            Dispose(false);
+            System.GC.SuppressFinalize(this);
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            System.GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    // free managed resources
+                    Util.DeleteTexture(ref zelda);
+                    Util.DeleteTexture(ref link);
+                    Util.DeleteTexture(ref ganon);
+                }
+                // free native resources if there are any.
+                Debug.WriteLine(this.GetType().ToString() + " disposed.");
+
+                disposed = true;
+            }
+        }
+        private void DrawImage()
+        {
+            GL.Enable(EnableCap.Texture2D);
+            GL.BindTexture(TextureTarget.Texture2D, zelda);
+            GL.Enable(EnableCap.Blend); //       
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha); //
+
+            GL.Begin(BeginMode.Quads);
+
+            // x y z
+            // alla i mitten Y-led  alla till vänster x-led
+
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.8f, -0.8f, 1.0f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(1.0f, -0.8f, 1.0f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(1.0f, -0.00f, 1.0f);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.8f, -0.00f, 1.0f); // top left 
+
+
+            GL.End();
+
+            
+            GL.Enable(EnableCap.Texture2D);
+            GL.BindTexture(TextureTarget.Texture2D, link);
+            GL.Enable(EnableCap.Blend); //       
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha); //
+
+            GL.Begin(BeginMode.Quads);
+
+            // x y z
+            // alla i mitten Y-led  alla till vänster x-led
+
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(-0.8f, -0.8f, 1.0f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.8f, -0.8f, 1.0f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.8f, -0.00f, 1.0f);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(-0.8f, -0.00f, 1.0f); // top left 
+
+
+            GL.End();
+
+            GL.Enable(EnableCap.Texture2D);
+            GL.BindTexture(TextureTarget.Texture2D, ganon);
+            GL.Enable(EnableCap.Blend); //       
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha); //
+
+            GL.Begin(BeginMode.Quads);
+
+            // x y z
+            // alla i mitten Y-led  alla till vänster x-led
+
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(0.8f, -0.8f, 1.0f); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-0.8f, -0.8f, 1.0f); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-0.8f, 0.2f, 1.0f);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(0.8f, 0.2f, 1.0f); // top left 
+
+            GL.End();
+            
+            GL.Disable(EnableCap.Blend);//
+            GL.Disable(EnableCap.Texture2D);
+
+
+        }//DrawImage
+        private void Play(String Date)
+        {
+            if (LastDate != Date && snd.PlayingName() != "Zelda") // this will start once the last sound is done, ie looping.
+            {
+                snd.Play("Zelda");
+                LastDate = Date;
+            }
+        }
+        public void Draw(string Date)
+        {
+            Play(Date);
+            bakground.Draw(Date, Chess.ChessColor.Triforce);
+            DrawImage();
+        }//Draw
+
+    }//class
+}//namespace

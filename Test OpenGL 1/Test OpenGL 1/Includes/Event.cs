@@ -220,6 +220,9 @@ namespace OpenGL.Event
         Matrix m;
         Quiz q;
 
+        Fuck fuck;
+        Tardis tardis;
+        Zelda zelda;
         GhostBusters gb;
         Sailormoon sailormoon;
         Talespin talepsin;
@@ -285,6 +288,9 @@ namespace OpenGL.Event
             trex = new Trex(ref sound);
             sailormoon = new Sailormoon(ref sound,ref chess);
             gb = new GhostBusters(ref sound);
+            zelda = new Zelda(ref sound, ref chess);
+            tardis = new Tardis(ref sound);
+            fuck = new Fuck(ref sound, ref chess);
 
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
             randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "BB", "GummiBears", "TeknatStyle", "Matrix"});
@@ -295,7 +301,7 @@ namespace OpenGL.Event
             // Effect file to load...
           //  "SuneAnimation", "Dif", "Fbk", "TurboLogo", "Datasmurf", "RMS", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "Hajk", "TeknatStyle", "Matrix", "Quiz"
 
-          //  Effect Nerdy = new Effect(nerdy, ed.Find(e => e.Name == "Nerdy"));
+        
 
             Dictionary<string, Effect> effects = new Dictionary<string, Effect>()
             {
@@ -319,7 +325,10 @@ namespace OpenGL.Event
                 {"Nerdy",new Effect(q, ed.Find(e => e.Name == "Nerdy"))},
                 {"Trex",new Effect(q, ed.Find(e => e.Name == "Trex"))},
                 {"Sailormoon",new Effect(q, ed.Find(e => e.Name == "Sailormoon"))},
-                {"GhostBusters",new Effect(q, ed.Find(e => e.Name == "GhostBusters"))}
+                {"GhostBusters",new Effect(q, ed.Find(e => e.Name == "GhostBusters"))},
+                {"Zelda",new Effect(q, ed.Find(e => e.Name == "Zelda"))},
+                {"Tardis",new Effect(q, ed.Find(e => e.Name == "Tardis"))},
+                {"Fuck",new Effect(q, ed.Find(e => e.Name == "Fuck"))}
             };
 
             runEffectInMonth = new Dictionary<string, List<objdata>>();
@@ -489,8 +498,11 @@ namespace OpenGL.Event
                     //ei = new EventItem("Talespin", "random", date);
                     //ei = new EventItem("ChipDale", "random", date);
                     //ei = new EventItem("Trex", "random", date);
-                    //ei = new EventItem("Sailormoon", "random", date);
-                    ei = new EventItem("GhostBusters", "random", date);
+                   // ei = new EventItem("Sailormoon", "random", date);
+                   // ei = new EventItem("GhostBusters", "random", date);
+                    //ei = new EventItem("Zelda", "random", date);
+                    //ei = new EventItem("Tardis", "random", date);
+                    ei = new EventItem("Fuck", "random", date);
                     star = !star;
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
@@ -561,6 +573,9 @@ namespace OpenGL.Event
                     if (trex != null) trex.Dispose();
                     if (sailormoon != null) sailormoon.Dispose();
                     if (gb != null) gb.Dispose();
+                    if (zelda != null)
+                    if (tardis != null) tardis.Dispose();
+                    if (fuck != null) fuck.Dispose();
                     // Main effects
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
@@ -776,6 +791,15 @@ namespace OpenGL.Event
                                 break;
                             case "GhostBusters":
                                 gb.Draw(nowDate);
+                                break;
+                            case "Zelda":
+                                zelda.Draw(nowDate);
+                                break;
+                            case "Tardis":
+                                tardis.Draw(nowDate);
+                                break;
+                            case "Fuck":
+                                fuck.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)
