@@ -8,6 +8,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Zelda effect
+    /// </summary>
     class Zelda : IEffect
     {
         private Sound snd;
@@ -18,6 +21,11 @@ namespace OpenGL
         private bool disposed = false;
         private string LastDate;
 
+        /// <summary>
+        /// Constructor for Zelda effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
+        /// <param name="chess">Chessboard</param>
         public Zelda(ref Sound sound,ref Chess chess)
         {
             zelda = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/Zelda.png", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
@@ -30,16 +38,28 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Zelda()
         {
             Dispose(false);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -57,6 +77,10 @@ namespace OpenGL
                 disposed = true;
             }
         }
+
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -118,6 +142,11 @@ namespace OpenGL
 
 
         }//DrawImage
+
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         private void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "Zelda") // this will start once the last sound is done, ie looping.
@@ -126,6 +155,11 @@ namespace OpenGL
                 LastDate = Date;
             }
         }
+
+        /// <summary>
+        /// Draw Zelda effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);

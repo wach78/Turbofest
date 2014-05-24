@@ -9,7 +9,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
-
+    /// <summary>
+    /// Ballons effect
+    /// </summary>
     class Ballons : IEffect
     {
         private float x;
@@ -17,15 +19,22 @@ namespace OpenGL
         private float speedY;
         private float z;
         private float XLed;
-
         private float Xpos;
-
         private int BallonsImage;
-
         private Vector2[] vecTex;
         private Vector3[] vecPos;
         private bool disposed = false;
 
+        /// <summary>
+        /// Constuctor for the Ballons effect
+        /// </summary>
+        /// <param name="x">X position on screen</param>
+        /// <param name="y">Y position on screen</param>
+        /// <param name="speedY">What speed is it going with</param>
+        /// <param name="BallonsImage">The TextureID to be used</param>
+        /// <param name="vecTex">Texture coordinates on the image</param>
+        /// <param name="XLed">?</param>
+        /// <param name="z">The Z-deept to place the ballon at</param>
         public Ballons(float x, float y, float speedY, int BallonsImage, Vector2[] vecTex, float XLed, float z)
         {
             this.x = x;
@@ -45,17 +54,27 @@ namespace OpenGL
                                         };
         }
 
+        /// <summary>
+        /// Distructor
+        /// </summary>
         ~Ballons()
-         {
+        {
             Dispose(false);
-         }
+        }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -73,7 +92,10 @@ namespace OpenGL
             }
         }
 
-
+        /// <summary>
+        /// Draw ballons on screen
+        /// </summary>
+        /// <param name="Date">What date is it?</param>
         public void Draw(string Date)
         {
             GL.Enable(EnableCap.Texture2D);

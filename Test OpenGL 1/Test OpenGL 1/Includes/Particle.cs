@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Particle effect
+    /// </summary>
     class Particle
     {
         Vector4[] colorSet; /*= {
@@ -30,7 +32,10 @@ namespace OpenGL
         float time;
         float deltatime;
 
-
+        /// <summary>
+        /// Constructor for Particle effect
+        /// </summary>
+        /// <param name="NumberOfPoints">Number of particles</param>
         public Particle(int NumberOfPoints=50) 
         {
             this.m_vec3points = new List<Vector3>();
@@ -73,6 +78,9 @@ namespace OpenGL
             //System.Diagnostics.Debug.WriteLine("in particle constructor");
         }
 
+        /// <summary>
+        /// Update the positions of the particles
+        /// </summary>
         public void updateParticles()
         {
             float distance;
@@ -108,6 +116,9 @@ namespace OpenGL
             time += deltatime;
         }
 
+        /// <summary>
+        /// Draw particles on screen
+        /// </summary>
         public void drawParticles()
         {
             updateParticles();

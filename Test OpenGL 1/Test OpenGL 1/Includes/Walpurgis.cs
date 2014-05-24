@@ -8,29 +8,45 @@ using System.Diagnostics;
 
 namespace OpenGL 
 {
+    /// <summary>
+    /// Walpurgis effect
+    /// </summary>
     class Walpurgis : IEffect
     {
         private bool disposed = false;
         private int image;
         private MoreFireWorks mfw;
 
+        /// <summary>
+        /// Cosntructor for Walpurgis effect
+        /// </summary>
         public Walpurgis()
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/bonefire.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/bonefire.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             mfw = new MoreFireWorks();
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Walpurgis()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -48,6 +64,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -66,6 +85,10 @@ namespace OpenGL
 
         }//DrawImage
 
+        /// <summary>
+        /// Draw Walpurgis effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             drawImage();

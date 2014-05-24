@@ -11,6 +11,9 @@ using System.Drawing.Imaging;
 
 namespace OpenGL 
 {
+    /// <summary>
+    /// Matrix effect
+    /// </summary>
     class Matrix : IEffect
     {
         private int textureID;
@@ -21,9 +24,12 @@ namespace OpenGL
         private List<float> textureCoords;
         private List<float> textureCoordsStart;
         private List<float> textureCoordsSpeed;
-
         private string LastPlayedDate;
 
+        /// <summary>
+        /// Constructor for Matrix effect
+        /// </summary>
+        /// <param name="txt">Text printer</param>
         public Matrix(ref Text2D txt)
         {
             writeFont = new Font("Tahoma", 8.0f, FontStyle.Bold);
@@ -61,17 +67,27 @@ namespace OpenGL
             createImage(randomChars, ref txt);
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Matrix()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -85,7 +101,9 @@ namespace OpenGL
                     Util.DeleteTexture(ref matrixTexture[3]);
                     Util.DeleteTexture(ref matrixTexture[4]);
                     textureID = 0;
+                    writeFont.Dispose();
                 }
+                
                 // free native resources if there are any.
                 Debug.WriteLine(this.GetType().ToString() + " disposed.");
 
@@ -93,6 +111,11 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Created the images for the scrolling characters
+        /// </summary>
+        /// <param name="randomChars">Characters to make in to a image</param>
+        /// <param name="txt">Text printer</param>
         private void createImage(string[] randomChars, ref Text2D txt)
         {
             for (int i = 0; i < randomChars.Length; i++)
@@ -133,6 +156,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         public void DrawImage()
         {
             for (int i = 0; i < columns; i++)
@@ -152,6 +178,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Reset Matrix
+        /// </summary>
+        /// <param name="Date">New date?</param>
         private void resetPosSpeed(string Date)
         {
             if (LastPlayedDate != Date)
@@ -167,6 +197,10 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// draw Matrix effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             resetPosSpeed(Date);

@@ -210,7 +210,6 @@ namespace projectX
             }
             ch.Dispose();
             ch = null;
-            
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)

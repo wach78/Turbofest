@@ -9,10 +9,14 @@ using OpenTK;
 
 namespace OpenGL
 {
-
+    /// <summary>
+    /// Fireworks class
+    /// </summary>
     class FireWorks
     {
-
+        /// <summary>
+        /// Fireworks particles
+        /// </summary>
         private class particle
         {
             public float x;
@@ -22,6 +26,9 @@ namespace OpenGL
 
             public float z;
 
+            /// <summary>
+            /// Constructor for Fireworks particles
+            /// </summary>
             public particle()
             {
 
@@ -33,27 +40,24 @@ namespace OpenGL
         private float fade;
         private float sfade;
         private float xv;
-        float angel;
-
+        private float angel;
         private int image;
-
         private bool disposed = false;
-
         private const int NFW = 15;
+        private particle[] part;
 
-        particle[] part;
-
+        /// <summary>
+        /// constructor for Fireworks effect
+        /// </summary>
+        /// <param name="image">What TextureID to be used</param>
         public FireWorks(int image)
         {
-
             this.image = image;
             this.fade = 1.1f;
             float z = 0.4f;
             angel = 360.0f /(float)NFW;
             angel = (float) (angel * (Math.PI/180) );
-
             part = new particle[NFW];
-
             sfade = (0.5f + ( Util.Rnd.Next() / (Int32.MaxValue + 1.0f))) / 50.0f;
 
             float x = Util.Rnd.Next(-18,18)/10;
@@ -68,28 +72,33 @@ namespace OpenGL
                 //v = (float)Math.PI * 2.0f * (Util.Rnd.Next() / (Int32.MaxValue + 1.0f));
                 xv =  0.7f + 0.1f * (Util.Rnd.Next() / (Int32.MaxValue + 1.0f));
 
-             
-
                 part[i].sx = 0.005f * (float)Math.Cos(angel * i) * xv;
                 part[i].sy = 0.005f * (float)Math.Sin(angel * i) * xv;
                 z -= 0.0001f;
-
             }
-
-
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~FireWorks()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -106,6 +115,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw Fireworks effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             GL.PushAttrib(AttribMask.CurrentBit);
@@ -164,6 +177,9 @@ namespace OpenGL
         }
     }//class
 
+    /// <summary>
+    /// Helper class for Fireworks
+    /// </summary>
     class MoreFireWorks
     {
         private int fw1;
@@ -171,18 +187,19 @@ namespace OpenGL
         private int fw3;
         private int fw4;
         private int fw5;
+        private FireWorks[] fw;
+        private bool disposed = false;
 
-       private FireWorks[] fw;
-
-       private bool disposed = false;
-
+        /// <summary>
+        /// Constructor for Fireworks
+        /// </summary>
         public MoreFireWorks()
         {
-            fw1 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/part1.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
-            fw2 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/part2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
-            fw3 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/part3.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
-            fw4 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/part4.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
-            fw5 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/part5.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
+            fw1 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/part1.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
+            fw2 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/part2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
+            fw3 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/part3.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
+            fw4 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/part4.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
+            fw5 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/part5.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.Black);
 
             fw = new FireWorks[5];
             fw[0] = new FireWorks(fw1);
@@ -192,17 +209,27 @@ namespace OpenGL
             fw[4] = new FireWorks(fw5);
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~MoreFireWorks()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -224,6 +251,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw Fireworks on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(String Date)
         {
             for (int i = 0; i < fw.Length; i++)

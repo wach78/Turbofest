@@ -8,6 +8,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Chip and Dale effect
+    /// </summary>
     class ChipAndDale : IEffect
     {
         private Sound snd;
@@ -16,27 +19,44 @@ namespace OpenGL
         private bool disposed = false;
         private string LastDate;
 
+        /// <summary>
+        /// Constructor for Chip and Dale effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
+        /// <param name="chess">Chessboard</param>
         public ChipAndDale(ref Sound sound,ref Chess chess)
         {
-            img = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chipanddale.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            img = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/chipanddale.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
 
             bakground = chess;
             snd = sound;
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/chipanddale.ogg", "Chip");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/chipanddale.ogg", "Chip");
             LastDate = string.Empty;
 
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~ChipAndDale()
         {
             Dispose(false);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -55,6 +75,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image on screen
+        /// </summary>
         private void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -79,6 +102,11 @@ namespace OpenGL
 
 
         }//DrawImage
+
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         private void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "Chip") // this will start once the last sound is done, ie looping.
@@ -87,6 +115,11 @@ namespace OpenGL
                 LastDate = Date;
             }
         }
+
+        /// <summary>
+        /// Draw Chip and Dale effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);

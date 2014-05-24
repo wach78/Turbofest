@@ -9,21 +9,30 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    class Text2D
+    /// <summary>
+    /// For printing text on screen with bitmaps and internal fonts
+    /// </summary>
+    class Text2D : IDisposable
     {
         private bool _disposed = false;
-        string m_strText;
-        string[] AllowedChars;
-        char[] splitChars;
-        int[] texture;
-        float[,] textureSize;
-        float[,] FontSize;
-        System.Drawing.Font m_font;
-        int[] m_drawSize;
+        private string m_strText;
+        private string[] AllowedChars;
+        private char[] splitChars;
+        private int[] texture;
+        private float[,] textureSize;
+        private float[,] FontSize;
+        private System.Drawing.Font m_font;
+        private int[] m_drawSize;
         //string oldDate;
 
+        /// <summary>
+        /// FontName enum
+        /// </summary>
         public enum FontName { Coolfont=0, CandyBlue, CandyGreen, CandyGrey, CandyPink, CandyPurple, CandyYellow, TypeFont, Other };
 
+        /// <summary>
+        /// Constructor for Text2D printing
+        /// </summary>
         public Text2D()
         {
             texture = new int[9];
@@ -32,15 +41,15 @@ namespace OpenGL
             AllowedChars = new string[9];
             //use the enum or not that is the question :D
                                  
-            texture[(int)FontName.Coolfont] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/coolfont_db.bmp", out textureSize[0, 0], out textureSize[0, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
-            texture[(int)FontName.CandyBlue] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_blue.bmp", out textureSize[1, 0], out textureSize[1, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
-            texture[(int)FontName.CandyGreen] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_green.bmp", out textureSize[2, 0], out textureSize[2, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
-            texture[(int)FontName.CandyGrey] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_grey.bmp", out textureSize[3, 0], out textureSize[3, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
-            texture[(int)FontName.CandyPink] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_pink.bmp", out textureSize[4, 0], out textureSize[4, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
-            texture[(int)FontName.CandyPurple] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_purple.bmp", out textureSize[5, 0], out textureSize[5, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
-            texture[(int)FontName.CandyYellow] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/scroller2_db_yellow.bmp", out textureSize[6, 0], out textureSize[6, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
-            texture[(int)FontName.TypeFont] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/typefont15x25.bmp", out textureSize[7, 0], out textureSize[7, 1], TextureMinFilter.Nearest, TextureMagFilter.Filter4Sgis, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
-            //texture[(int)FontName.TypeFont] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/typefont15x25.bmp", out textureSize[7, 0], out textureSize[7, 1], TextureMinFilter.Linear, TextureMagFilter.LinearSharpenSgis, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
+            texture[(int)FontName.Coolfont] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/coolfont_db.bmp", out textureSize[0, 0], out textureSize[0, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
+            texture[(int)FontName.CandyBlue] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/scroller2_db_blue.bmp", out textureSize[1, 0], out textureSize[1, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
+            texture[(int)FontName.CandyGreen] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/scroller2_db_green.bmp", out textureSize[2, 0], out textureSize[2, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
+            texture[(int)FontName.CandyGrey] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/scroller2_db_grey.bmp", out textureSize[3, 0], out textureSize[3, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
+            texture[(int)FontName.CandyPink] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/scroller2_db_pink.bmp", out textureSize[4, 0], out textureSize[4, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
+            texture[(int)FontName.CandyPurple] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/scroller2_db_purple.bmp", out textureSize[5, 0], out textureSize[5, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
+            texture[(int)FontName.CandyYellow] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/scroller2_db_yellow.bmp", out textureSize[6, 0], out textureSize[6, 1], TextureMinFilter.Nearest, TextureMagFilter.Nearest, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
+            texture[(int)FontName.TypeFont] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/typefont15x25.bmp", out textureSize[7, 0], out textureSize[7, 1], TextureMinFilter.Nearest, TextureMagFilter.Linear/*Filter4Sgis*/, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
+            //texture[(int)FontName.TypeFont] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/typefont15x25.bmp", out textureSize[7, 0], out textureSize[7, 1], TextureMinFilter.Linear, TextureMagFilter.LinearSharpenSgis, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(0, 0, 0));
             texture[(int)FontName.Other] = Util.GenTextureID(); // used for builtintext generation
 
             FontSize[0, 0] = FontSize[0, 1] = 32; // 32 x 32 size of char
@@ -56,27 +65,18 @@ namespace OpenGL
             splitChars = new char[] { ' ', '.', '-', '\n' }; // set this to each Font as not all have them..
         }
 
+        #region Dispose
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Text2D()
         {
             Dispose(false);
         }
 
-        public int getTexture(FontName m)
-        {
-            return texture[(int)m];
-        }
-
-        public string getAllowedChars(FontName m)
-        {
-            return AllowedChars[(int)m];
-        }
-
-        public float[] fontSize(FontName m)
-        {
-            float[] x = new float[] { FontSize[(int)m, 0], FontSize[(int)m, 1] };
-            return x;
-        }
-
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -87,6 +87,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             // If you need thread safety, use a lock around these  
@@ -107,7 +111,9 @@ namespace OpenGL
                         Util.DeleteTexture(ref texture[6]);
                         Util.DeleteTexture(ref texture[7]);
                         Util.DeleteTexture(ref texture[8]);
+                        if (m_font != null) m_font.Dispose();
                     }
+                    
                     System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
                 }
 
@@ -116,8 +122,45 @@ namespace OpenGL
                 _disposed = true;
             }
         }
+        #endregion
 
+        /// <summary>
+        /// Gets the TextureID of the specific font
+        /// </summary>
+        /// <param name="m">FontName enum to return the TextureID off</param>
+        /// <returns>Integer with the TextureID</returns>
+        public int getTexture(FontName m)
+        {
+            return texture[(int)m];
+        }
 
+        /// <summary>
+        /// What characters can be used
+        /// </summary>
+        /// <param name="m">FontName enum to get what characters can be used in that font</param>
+        /// <returns>String with characters allowed to be used</returns>
+        public string getAllowedChars(FontName m)
+        {
+            return AllowedChars[(int)m];
+        }
+
+        /// <summary>
+        /// How large is the font
+        /// </summary>
+        /// <param name="m">FontName enum to get fontsize</param>
+        /// <returns></returns>
+        public float[] fontSize(FontName m)
+        {
+            float[] x = new float[] { FontSize[(int)m, 0], FontSize[(int)m, 1] };
+            return x;
+        }
+
+        /// <summary>
+        /// Where is the character on the image
+        /// </summary>
+        /// <param name="Character">What character to look for</param>
+        /// <param name="Font">In what FontName is the character</param>
+        /// <returns>Vector2-array with the texture-position of the character</returns>
         public Vector2[] TextureCoordinates(char Character, FontName Font)
         {
             Vector2[] texVec = new Vector2[4];
@@ -171,6 +214,12 @@ namespace OpenGL
             return texVec;
         }
 
+        /// <summary>
+        /// Where is the characters on the image
+        /// </summary>
+        /// <param name="Text">What characters to look for</param>
+        /// <param name="Font">In what FontName is the character</param>
+        /// <returns>Vector2-array with the texture-position of the character</returns>
         public Vector2[,] TextureCoordinates(string Text, FontName Font)
         {
             Vector2[,] texVec = new Vector2[Text.Length, 4];
@@ -186,6 +235,15 @@ namespace OpenGL
             return texVec;
         }
 
+        /// <summary>
+        /// Make the vertix that is needed to print the string
+        /// </summary>
+        /// <param name="Text">String to be printed</param>
+        /// <param name="Font">FontName to be used</param>
+        /// <param name="Size">Size of the text</param>
+        /// <param name="StartPosition">Where do the text start on screen</param>
+        /// <param name="WidthHeight">Max area to be used for printing</param>
+        /// <returns>Vector3 array, with the vectors to be used for printing</returns>
         public Vector3[] TextVertix(string Text, FontName Font, float Size, Vector3 StartPosition = new Vector3(), Vector2 WidthHeight = new Vector2())
         {
             Vector3[] TextVec = new Vector3[Text.Length*4];
@@ -260,11 +318,24 @@ namespace OpenGL
             return TextVec;
         }
 
+        /// <summary>
+        /// Measure the string
+        /// </summary>
+        /// <param name="Text">String to measure</param>
+        /// <param name="Size">Size of the font</param>
+        /// <returns>What width will it be in the end</returns>
         public float MeasureString(string Text, float Size)
         {
             return Text.Length * Size;
         }
 
+        /// <summary>
+        /// Split string to fit width
+        /// </summary>
+        /// <param name="Text">String to fit</param>
+        /// <param name="Size">Size of font</param>
+        /// <param name="MaxWidth">How wide can the string be</param>
+        /// <returns>String array with the fitted outcome</returns>
         public string[] SplitFitString(string Text, float Size, float MaxWidth=0.0f)
         {
             List<string> RealRow = new List<string>();
@@ -285,8 +356,6 @@ namespace OpenGL
             }
             else
             {
-
-                
                 for (int i = 0; i < Rows.Count; i++)
                 {
 
@@ -334,6 +403,7 @@ namespace OpenGL
         /// </summary>
         /// <param name="width">Width of the area to write on</param>
         /// <param name="height">Height of the area to write on</param>
+        /// <param name="ToPrint">The text to be printed out</param>
         public void BuiltinText(int width, int height, string ToPrint)
         {
             m_strText = ToPrint;
@@ -385,6 +455,12 @@ namespace OpenGL
             Draw(Text, Font, new Vector3(X, Y, Z), new Vector2(-2.0f, 0.0f), new Vector2(-2.0f, 0.0f));
         }*/
 
+        /// <summary>
+        /// Scaling of 2 vectors
+        /// </summary>
+        /// <param name="ToScale">What Vector2 to be scaled</param>
+        /// <param name="Scale">Scaling float</param>
+        /// <returns>Returns scaled Vector2</returns>
         private Vector2 ScaleVector2(Vector2 ToScale, float Scale)
         {
             return Vector2.Multiply(ToScale, Scale);
@@ -439,6 +515,15 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
+        /// <summary>
+        /// Draw string on screen
+        /// </summary>
+        /// <param name="Text">String to be printed</param>
+        /// <param name="Font">FontName to be used</param>
+        /// <param name="Position">STart position</param>
+        /// <param name="CharSize">Size of font</param>
+        /// <param name="MaxSize">Size of area to be writen too</param>
+        /// <param name="Scale">Scaling if needed</param>
         public void Draw(string Text, FontName Font, Vector3 Position, Vector2 CharSize, Vector2 MaxSize, float Scale = 1.0f)
         {
             CharSize = Vector2.Multiply(CharSize, Scale); // scale the char size
@@ -475,6 +560,10 @@ namespace OpenGL
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
+        /// <summary>
+        /// Draw on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             GL.Enable(EnableCap.Texture2D);

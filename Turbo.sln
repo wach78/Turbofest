@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "projectX", "projectX\projectX.csproj", "{8718B7BA-177E-4364-B90B-E29F10943BFC}"
+# Visual Studio Express 2012 for Windows Desktop
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectX", "projectX\ProjectX.csproj", "{8718B7BA-177E-4364-B90B-E29F10943BFC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8AEFEE3A-28D8-4A81-A48E-BD3A812523F8} = {8AEFEE3A-28D8-4A81-A48E-BD3A812523F8}
 		{508E3B4E-E181-4202-B26D-CF24FCAB555F} = {508E3B4E-E181-4202-B26D-CF24FCAB555F}

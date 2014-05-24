@@ -8,34 +8,48 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
-  
+    /// <summary>
+    /// Vaffla effect
+    /// </summary>
     class Vaffla : IEffect
     {
         private bool disposed;
         private int image;
         private float x;
         private float y;
-
         private long tick;
 
+        /// <summary>
+        /// Construtor for Vaffla effect
+        /// </summary>
         public Vaffla ()
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/vaffla.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/vaffla.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
          
             disposed = false; 
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Vaffla()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -53,6 +67,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -82,7 +99,10 @@ namespace OpenGL
             y += 0.37f;
         }//DrawImage
 
-
+        /// <summary>
+        /// Draw Vaffla effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             DrawImage();

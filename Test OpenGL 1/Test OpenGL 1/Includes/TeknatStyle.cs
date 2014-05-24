@@ -8,6 +8,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// TeknatStyle effect
+    /// </summary>
     class TeknatStyle : IEffect
     {
         private int slideshowImage1;
@@ -18,24 +21,28 @@ namespace OpenGL
         private Sound snd;
         private Chess bakground;
         private Text2D text;
-
         private bool disposed;
-
         private string LastDate;
         private long ticks;
         private long oldTicks;
 
+        /// <summary>
+        /// Constructor for TeknatStyle effect
+        /// </summary>
+        /// <param name="chess">Chessboard</param>
+        /// <param name="sound">Sound system</param>
+        /// <param name="txt">Text printer</param>
         public TeknatStyle(ref Chess chess, ref Sound sound, ref Text2D txt)
         {
             disposed = false;
-            slideshowImage1 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/bildspel1.jpg");
-            slideshowImage2 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/bildspel2.jpg");
-            slideshowImage3 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/bildspel3.jpg");
+            slideshowImage1 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/bildspel1.jpg");
+            slideshowImage2 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/bildspel2.jpg");
+            slideshowImage3 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/bildspel3.jpg");
             snd = sound;
             bakground = chess;
             text = txt;
 
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/ts.ogg", "TS");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/ts.ogg", "TS");
             currentImage = 0;
             currentSlideShow = 0;
 
@@ -44,10 +51,17 @@ namespace OpenGL
             oldTicks = 0;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
        ~TeknatStyle()
         {
             Dispose(false);
         }
+
+       /// <summary>
+       /// Dispose method
+       /// </summary>
 
         public void Dispose()
         {
@@ -55,6 +69,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -78,7 +96,9 @@ namespace OpenGL
             }
         }
 
-
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         public void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -108,6 +128,10 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void Play(string Date)
         {
             if (LastDate != Date && snd.PlayingName() != "TS")
@@ -117,6 +141,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Change showing image
+        /// </summary>
         public void updateImages()
         {
             ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
@@ -144,11 +171,12 @@ namespace OpenGL
 
             if (oldTicks == 0)
                 oldTicks = ticks;
-
-         
-
         }
 
+        /// <summary>
+        /// Draw TeknatStyle on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             if (LastDate != Date)

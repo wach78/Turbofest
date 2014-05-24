@@ -20,7 +20,6 @@ namespace OpenGL
     class CrayFish : IEffect
     {
         private bool disposed = false;
-        
         private int[] texture;
         private Vector3[] Shellfish;
         private SizeF Size;
@@ -35,20 +34,29 @@ namespace OpenGL
         private int CurrentImage;
         private int CurrentImageSequence;
         private string oldDate;
+        /// <summary>
+        /// Where is it moving
+        /// </summary>
         private enum MoveState { Intro=0, MoveRight, MoveLeft, Stop };
+        /// <summary>
+        /// What are we showing the image as?
+        /// </summary>
         private enum ImageState { Normal = 0, NormalStop, Steroid, SteroidStop };
 
+        /// <summary>
+        /// Constructor for Crayfish
+        /// </summary>
         public CrayFish()
         {
             texture = new int[8];
-            texture[0] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/krafta0.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            texture[1] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/krafta1.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            texture[2] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/krafta2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            texture[3] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/krafta3.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            texture[4] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/krafta4.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            texture[5] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/krafta5.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            texture[6] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/krafta6.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            texture[7] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/krafta7.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            texture[0] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/krafta0.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            texture[1] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/krafta1.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            texture[2] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/krafta2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            texture[3] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/krafta3.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            texture[4] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/krafta4.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            texture[5] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/krafta5.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            texture[6] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/krafta6.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            texture[7] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/krafta7.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
 
 
             Shellfish = new Vector3[4];
@@ -76,6 +84,9 @@ namespace OpenGL
             Console.WriteLine(Pixel.ToString());*/
         }
 
+        /// <summary>
+        /// Initialization method
+        /// </summary>
         public void Init()
         {
             Speed = Util.Rnd.Next(4000, 6200) / 1000000.0f;
@@ -92,11 +103,17 @@ namespace OpenGL
             Z = 0.45f;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~CrayFish()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             //base.Finalize();
@@ -104,6 +121,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -121,8 +142,9 @@ namespace OpenGL
                     Util.DeleteTexture(ref texture[7]);
                 }
                 // free native resources if there are any.
-                disposed = true;
+                
                 System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
+                disposed = true;
             }
         }
 
@@ -317,6 +339,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw to screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             // Spiders that draws after eachother and end ontop durring run will be hidden...

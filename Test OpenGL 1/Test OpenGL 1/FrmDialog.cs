@@ -10,8 +10,17 @@ using System.Windows.Forms;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class FrmDialog : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <param name="Caption"></param>
+        /// <param name="Buttons"></param>
         public FrmDialog(/*IWin32Window Parent,*/ string Text, string Caption, MessageBoxButtons Buttons)
         {
             //this.Parent = (Control)Parent;

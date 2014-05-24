@@ -11,12 +11,14 @@ using System.Drawing.Imaging;
 
 namespace OpenGL 
 {
+    /// <summary>
+    /// Quiz effect
+    /// </summary>
     class Quiz : IEffect
     {
         private static List<string> listquotes;
         private static List<int> indexList;
         private static int maxIndexValue;
-
         private Bitmap textBmp;
         int textTexture;
         private Font font;
@@ -24,10 +26,15 @@ namespace OpenGL
         private Sound snd;
         private string currentString;
         private bool builtInFont;
-
         private string LastPlayedDate;
         private string LastDate;
 
+        /// <summary>
+        /// Constructor for Quiz effect
+        /// </summary>
+        /// <param name="Text">Text printer</param>
+        /// <param name="BuiltInFont">Use build in fonts for the text?</param>
+        /// <param name="sound">Sound system</param>
         public Quiz(ref Text2D Text, bool BuiltInFont, ref Sound sound)
         {
             listquotes = new List<string>();
@@ -36,24 +43,35 @@ namespace OpenGL
             text = Text;
             builtInFont = BuiltInFont;
             snd = sound;
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Yoda.ogg", "YODA");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/Yoda.ogg", "YODA");
 
             readFromXml();
             drawInit(builtInFont);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             //base.Finalize();
             if (textTexture > 0)
+            {
                 Util.DeleteTexture(ref textTexture);
+            }
+            if (textBmp != null) textBmp.Dispose();
+            if (font != null) font.Dispose();
+            
             System.GC.SuppressFinalize(this);
             System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
         }
 
+        /// <summary>
+        /// Read in quiz data from XML-file
+        /// </summary>
         public static void readFromXml()
         {
-            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Quiz/quiz.xml";
+            string path = Util.CurrentExecutionPath + "/XMLFiles/Quiz/quiz.xml";
 
 
             System.Xml.Linq.XDocument xDoc = System.Xml.Linq.XDocument.Load(path);
@@ -70,6 +88,10 @@ namespace OpenGL
             }
         }//readFromXml
 
+        /// <summary>
+        /// Get a random question
+        /// </summary>
+        /// <returns>String for the question</returns>
         public string getOneRandomquestion()
         {
             int index = 0;
@@ -95,6 +117,10 @@ namespace OpenGL
             return listquotes[index];
         }//getOneRandomquestion
 
+        /// <summary>
+        /// Setup drawing of the Quiz effect
+        /// </summary>
+        /// <param name="BuiltIn">Use built in fonts</param>
         public void drawInit(bool BuiltIn)
         {
             if (BuiltIn)
@@ -130,6 +156,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Randomise it all on new date
+        /// </summary>
+        /// <param name="Date">New date?</param>
         private void random(string Date)
         {
             if (LastPlayedDate != Date)
@@ -140,6 +170,10 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "YODA")
@@ -149,6 +183,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw Quiz effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);

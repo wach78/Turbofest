@@ -8,6 +8,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Ghostbuster effect
+    /// </summary>
     class GhostBusters : IEffect
     {
         private Sound snd;
@@ -15,37 +18,50 @@ namespace OpenGL
         private int slime;
         private bool disposed = false;
         private string LastDate;
-
         private float x;
         private float y;
-
         private long tick;
 
+        /// <summary>
+        /// Constructor for Ghostbusters effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
         public GhostBusters(ref Sound sound)
         {
-            img = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/ghostbusters.jpg");
-            slime = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/slimer.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-         
+            img = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/ghostbusters.jpg");
+            slime = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/slimer.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+
             snd = sound;
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GhostBuster.ogg", "GhostBusters");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/GhostBuster.ogg", "GhostBusters");
             LastDate = string.Empty;
 
             this.x = -1.0f;
             this.y = 0.0f;
             this.tick = 0;
-
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~GhostBusters()
         {
             Dispose(false);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -64,6 +80,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void DrawImage()
         {
             
@@ -108,6 +127,9 @@ namespace OpenGL
 
         }//DrawImage
 
+        /// <summary>
+        /// Change image to show
+        /// </summary>
         private void updateImge()
         {
             this.tick++;
@@ -118,6 +140,10 @@ namespace OpenGL
             y += 0.37f;
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         private void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "GhostBusters") // this will start once the last sound is done, ie looping.
@@ -126,6 +152,11 @@ namespace OpenGL
                 LastDate = Date;
             }
         }
+
+        /// <summary>
+        /// Draw GhostBuster effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);

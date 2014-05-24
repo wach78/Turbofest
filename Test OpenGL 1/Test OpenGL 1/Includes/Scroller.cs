@@ -9,19 +9,21 @@ using OpenTK;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Scroller effect
+    /// Moving/eolling/bouncy text over the screen
+    /// </summary>
     class Scroller : IEffect
     {
         private Chess c;
         private Starfield sf;
         private Text2D text;
         private bool disposed = false;
-
         private float x;
         private float y;
         private float z;
         private float startY;
         private long tick;
-
         private static List<string> listScrollers;
         private static List<int> indexList;
         private static int maxIndexValue;
@@ -29,11 +31,15 @@ namespace OpenGL
         private int randomBackground;
         private int randomScrollMove;
         private int randomFont;
-
         private string LastPlayedDate; 
-        
         private string strScroll;
 
+        /// <summary>
+        /// Constructor for Scroller effect
+        /// </summary>
+        /// <param name="chess">Chessboard</param>
+        /// <param name="star">Starfield</param>
+        /// <param name="txt">Text printer</param>
         public Scroller(ref Chess chess, ref Starfield star, ref Text2D txt)
         {
             c = chess;
@@ -57,17 +63,27 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Scroller()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -85,6 +101,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Setup scroller effect
+        /// </summary>
         public void getRandomScrollerStuff()
         {
             chessNumber = Util.Rnd.Next(0, 6);
@@ -93,17 +112,18 @@ namespace OpenGL
             randomFont = Util.Rnd.Next(0, 6);
             strScroll = getOneRandomScrollers();
 
-
-
             x = 0.0f;
             y = 0.0f;
             z = 0.0f;
             tick = 0;
         }
 
+        /// <summary>
+        /// Read in data from a XML-file
+        /// </summary>
         private static void readFromXml()
         {
-            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Scrollers/Scrollers.xml";
+            string path = Util.CurrentExecutionPath + "/XMLFiles/Scrollers/Scrollers.xml";
 
             System.Xml.Linq.XDocument xDoc = System.Xml.Linq.XDocument.Load(path);
 
@@ -119,6 +139,10 @@ namespace OpenGL
             }
         }//readFromXml
 
+        /// <summary>
+        /// Get random scroller text
+        /// </summary>
+        /// <returns>String with the text to show</returns>
         private string getOneRandomScrollers()
         {
             int index = 0;
@@ -144,7 +168,9 @@ namespace OpenGL
             return listScrollers[index]; 
         }//getOneRandomScrollers
 
-
+        /// <summary>
+        /// Draw text to screen
+        /// </summary>
         private void DrawText()
         {
             this.tick++;
@@ -201,7 +227,10 @@ namespace OpenGL
             text.Draw(strScroll, (Text2D.FontName)randomFont , new Vector3(-1.5f + x,startY + y, 0.4f + z), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 1.5f);
         }
 
-
+        /// <summary>
+        /// Reset scroller with random stuff
+        /// </summary>
+        /// <param name="Date">New date?</param>
         private void allRandom(string Date)
         {
             if (LastPlayedDate != Date)
@@ -209,25 +238,27 @@ namespace OpenGL
                 getRandomScrollerStuff();
                 LastPlayedDate = Date;
             }
-           
         }
 
-       public void Draw(string Date)
-       {
-           allRandom(Date);
-        
-           if (randomBackground == 0 || randomBackground == 1)
-           {
-               sf.Draw(Date);
-           }
+        /// <summary>
+        /// Draw Scroller effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
+        public void Draw(string Date)
+        {
+            allRandom(Date);
 
-           else if (randomBackground >= 2)
-           {
-               c.Draw(Date, (Chess.ChessColor)chessNumber);
-           }
+            if (randomBackground == 0 || randomBackground == 1)
+            {
+                sf.Draw(Date);
+            }
+            else if (randomBackground >= 2)
+            {
+                c.Draw(Date, (Chess.ChessColor)chessNumber);
+            }
 
-           DrawText();
+            DrawText();
 
-       }//Draw
+        }//Draw
     }//class
 }//namespace

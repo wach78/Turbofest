@@ -8,6 +8,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// T-rex effect
+    /// </summary>
     class Trex : IEffect
     {
         private int pony;
@@ -21,30 +24,29 @@ namespace OpenGL
         private long tick2;
         private float y;
         private float x;
-
         private float yt;
         private float xt;
-
-
         private bool ponyrun;
         private bool trexrun;
-
         private bool showend;
-
         private Sound snd;
 
+        /// <summary>
+        /// Constructor for T-rex effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
         public Trex(ref Sound sound)
         {
             disposed = false;
             ponyrun = false;
             trexrun = false;
             showend = false;
-            pony = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/pony.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            t = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/Trex.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/this_is.png");
+            pony = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/pony.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            t = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/Trex.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/this_is.png");
           
             snd = sound;
-            //snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Nerdy.ogg", "Nerdy");
+            //snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/Nerdy.ogg", "Nerdy");
          
             LastDate = string.Empty;
             ticks = 0;
@@ -52,17 +54,27 @@ namespace OpenGL
             oldTicks = 0;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Trex()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -87,6 +99,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -166,6 +181,10 @@ namespace OpenGL
             
 
         }
+
+        /// <summary>
+        /// Update images positions
+        /// </summary>
         public void updateImages()
         {
             ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
@@ -196,6 +215,10 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void Play(string Date)
         {
             if (LastDate != Date && snd.PlayingName() != "")
@@ -204,6 +227,11 @@ namespace OpenGL
                 LastDate = Date;
             }
         }
+
+        /// <summary>
+        /// Draw T-rex effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             if (LastDate != Date)

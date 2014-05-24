@@ -20,6 +20,10 @@ namespace OpenGL
     /// </summary>
     class Halloween : IEffect
     {
+
+        /// <summary>
+        /// Internal Spider class
+        /// </summary>
         class Spider : IEffect
         {
             private bool disposed = false;
@@ -32,6 +36,14 @@ namespace OpenGL
             private int Texture;
             private Vector3 Speed;
 
+            /// <summary>
+            /// Constructor for Spider
+            /// </summary>
+            /// <param name="Start">Starting position</param>
+            /// <param name="Width">Width of spider</param>
+            /// <param name="Height">Height of spider</param>
+            /// <param name="SizeOfSpider">Scale of spider</param>
+            /// <param name="TextureOfSpider">TextureID to use</param>
             public Spider(Vector3 Start, float Width, float Height, float SizeOfSpider, int TextureOfSpider)
             {
                 vSpiders = new Vector3[4];
@@ -48,6 +60,14 @@ namespace OpenGL
                 vSpiders[3] = new Vector3(Start.X, Start.Y + Height, Start.Z); // top left
             }
 
+            /// <summary>
+            /// Constructor for Spider
+            /// </summary>
+            /// <param name="Width">Width of spider</param>
+            /// <param name="Height">Height of spider</param>
+            /// <param name="Z">Z-positon</param>
+            /// <param name="SizeOfSpider">Scale of spider</param>
+            /// <param name="TextureOfSpider">TextureID to use</param>
             public Spider(float Width, float Height, float Z, float SizeOfSpider, int TextureOfSpider)
             {
                 vSpiders = new Vector3[4];
@@ -97,17 +117,27 @@ namespace OpenGL
                 vSpiders[3] = new Vector3(X + Size.Width, Y + Size.Height, this.Z); // top left
             }
 
+            /// <summary>
+            /// Destructor
+            /// </summary>
             ~Spider()
             {
                 Dispose(false);
             }
 
+            /// <summary>
+            /// Dispose method
+            /// </summary>
             public void Dispose()
             {
                 Dispose(true);
                 System.GC.SuppressFinalize(this);
             }
 
+            /// <summary>
+            /// Dispose method
+            /// </summary>
+            /// <param name="disposing">Is it disposing?</param>
             protected virtual void Dispose(bool disposing)
             {
                 if (!this.disposed)
@@ -124,6 +154,9 @@ namespace OpenGL
                 }
             }
 
+            /// <summary>
+            /// Move spider
+            /// </summary>
             public void Move()
             {
                 //float X = this.X + (float)Math.Sin( (this.Y* (this.Y<0? -1:1)) / 3.0f);
@@ -150,6 +183,10 @@ namespace OpenGL
                 vSpiders[3].Xy = new Vector2(X + Size.Width, this.Y + Size.Height);
             }
 
+            /// <summary>
+            /// Draw Spider on screen
+            /// </summary>
+            /// <param name="Date"></param>
             public void Draw(string Date)
             {
                 GL.BindTexture(TextureTarget.Texture2D, Texture);
@@ -185,8 +222,8 @@ namespace OpenGL
         }
 
         private bool disposed = false;
-        Chess chess;
-        Sound snd;
+        private Chess chess;
+        private Sound snd;
         private int textureSpider;
         private int textureGhost;
         private int MaxSpiders; // not really needed...
@@ -196,17 +233,22 @@ namespace OpenGL
         private float X;
         private float Y;
         private float Z;
-        long tick = 0;
+        private long tick = 0;
         private string LastPlayedDate;
 
-        // missing sound?
+        /// <summary>
+        /// Constructor for Halloween effect
+        /// </summary>
+        /// <param name="chessboard">Chessboard background</param>
+        /// <param name="sound">Sound system</param>
+        /// <param name="NumberOfSpiders">How many spiders to show on screen</param>
         public Halloween(ref Chess chessboard, ref Sound sound, int NumberOfSpiders)
         {
             chess = chessboard;
             snd = sound;
-            textureSpider = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/spider.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.Black);
-            textureGhost = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/halloween.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255,0,255));
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/scary.ogg", "Scary");
+            textureSpider = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/spider.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.Black);
+            textureGhost = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/halloween.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255,0,255));
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/scary.ogg", "Scary");
             MaxSpiders = NumberOfSpiders;
             Spiders = new Spider[MaxSpiders];
             Ghost = new Vector3[4];
@@ -227,11 +269,17 @@ namespace OpenGL
             LastPlayedDate = string.Empty;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Halloween()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             //base.Finalize();
@@ -239,6 +287,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -250,18 +302,20 @@ namespace OpenGL
                     Util.DeleteTexture(ref textureGhost);
                     for (int i = 0; i < MaxSpiders; i++)
                     {
-                        Spiders[i].Dispose();
-                        Spiders[i] = null;
+                        if (Spiders[i] != null) Spiders[i].Dispose();
+                        //Spiders[i] = null;
                     }
                     chess = null;
                 }
                 // free native resources if there are any.
                 disposed = true;
                 Debug.WriteLine(this.GetType().ToString() + " disposed.");
-
             }
         }
         
+        /// <summary>
+        /// Move Ghost
+        /// </summary>
         public void Move()
         {
             tick++;
@@ -274,6 +328,10 @@ namespace OpenGL
             Ghost[3].Xy = new Vector2(X + Size.Width, Y);
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void Play(string Date)
         {
             if (LastPlayedDate != Date && snd.PlayingName() != "Scary")
@@ -283,6 +341,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw Halloween effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);

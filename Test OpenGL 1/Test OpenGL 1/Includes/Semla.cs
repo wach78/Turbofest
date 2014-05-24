@@ -9,29 +9,39 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Semla effect
+    /// </summary>
     class Semla : IEffect
     {
         private int image;
         private float x;
         private float y;
-
         private long tick;
-
         private bool disposed = false;
 
+        /// <summary>
+        /// Constructor for Semla effect
+        /// </summary>
         public Semla()
         {
             x = -1.0f;
             y = 0.0f;
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/semla.bmp",TextureMinFilter.Linear,TextureMagFilter.Linear,TextureWrapMode.Clamp,TextureWrapMode.Clamp,System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/semla.bmp",TextureMinFilter.Linear,TextureMagFilter.Linear,TextureWrapMode.Clamp,TextureWrapMode.Clamp,System.Drawing.Color.FromArgb(255, 0, 255));
             tick = 0;
-
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Semla()
-         {
+        {
             Dispose(false);
-         }
+        }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -39,6 +49,10 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -56,6 +70,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -79,10 +96,12 @@ namespace OpenGL
 
         }//DrawImage
 
-
+        /// <summary>
+        /// Draw Semla effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
-          
             this.tick++;
            // x = (float)Math.Sin(tick / 22.1f) * 0.6f - Size.Width / 2;
            // y = (float)Math.Cos(tick / 22.1f) * 0.4f - Size.Height / 2;
@@ -96,8 +115,6 @@ namespace OpenGL
             x -= 1.2f;
             y = (float)(0.004 * Math.Sin((this.tick / 42.1) * 3.1415) * 125);
             y += 0.37f;
-
-        
 
             DrawImage();
         }//Draw
