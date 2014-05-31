@@ -220,6 +220,7 @@ namespace OpenGL.Event
         Matrix m;
         Quiz q;
 
+        SilverFang silverFang;
         Fuck fuck;
         Tardis tardis;
         Zelda zelda;
@@ -291,6 +292,7 @@ namespace OpenGL.Event
             zelda = new Zelda(ref sound, ref chess);
             tardis = new Tardis(ref sound);
             fuck = new Fuck(ref sound, ref chess);
+            silverFang = new SilverFang(ref sound);
 
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
             randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "BB", "GummiBears", "TeknatStyle", "Matrix"});
@@ -328,7 +330,8 @@ namespace OpenGL.Event
                 {"GhostBusters",new Effect(q, ed.Find(e => e.Name == "GhostBusters"))},
                 {"Zelda",new Effect(q, ed.Find(e => e.Name == "Zelda"))},
                 {"Tardis",new Effect(q, ed.Find(e => e.Name == "Tardis"))},
-                {"Fuck",new Effect(q, ed.Find(e => e.Name == "Fuck"))}
+                {"Fuck",new Effect(q, ed.Find(e => e.Name == "Fuck"))},
+                {"SilverFang",new Effect(q, ed.Find(e => e.Name == "SilverFang"))}
             };
 
             runEffectInMonth = new Dictionary<string, List<objdata>>();
@@ -500,9 +503,10 @@ namespace OpenGL.Event
                     //ei = new EventItem("Trex", "random", date);
                    // ei = new EventItem("Sailormoon", "random", date);
                    // ei = new EventItem("GhostBusters", "random", date);
-                    //ei = new EventItem("Zelda", "random", date);
+                    ei = new EventItem("Zelda", "random", date);
                     //ei = new EventItem("Tardis", "random", date);
-                    ei = new EventItem("Fuck", "random", date);
+                    //ei = new EventItem("Fuck", "random", date);
+                    //ei = new EventItem("SilverFang", "random", date);
                     star = !star;
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
@@ -576,6 +580,7 @@ namespace OpenGL.Event
                     if (zelda != null)
                     if (tardis != null) tardis.Dispose();
                     if (fuck != null) fuck.Dispose();
+                    if (silverFang != null) silverFang.Dispose();
                     // Main effects
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
@@ -800,6 +805,10 @@ namespace OpenGL.Event
                                 break;
                             case "Fuck":
                                 fuck.Draw(nowDate);
+                                break;
+
+                            case "SilverFang":
+                                silverFang.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)

@@ -35,7 +35,7 @@ namespace projectX
 
           //  string[] eventlist = new string[] { "TS", "Hajk", "bumbi", "BB", "smurf", "creators", "sune", "dif", "fbk", "rms", "scrollers", "Q", "turbologo", "winlinux" };
 
-            string[] eventlist = new string[] { "SuneAnimation", "Dif", "Fbk", "TurboLogo", "Datasmurf", "RMS", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "Hajk", "TeknatStyle", "Matrix", "Quiz", "Talespin", "ChipDale", "Nerdy", "Trex", "Sailormoon", "GhostBusters", "Zelda","Tardis","Fuck" };
+            string[] eventlist = new string[] { "SuneAnimation", "Dif", "Fbk", "TurboLogo", "Datasmurf", "RMS", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "Hajk", "TeknatStyle", "Matrix", "Quiz", "Talespin", "ChipDale", "Nerdy", "Trex", "Sailormoon", "GhostBusters", "Zelda","Tardis","Fuck","SilverFang" };
             Array.Sort(eventlist);
 
             string path = XmlHandler.fixPath("randomeffects" + FrmMain.SpringOrFall +  ".xml","eff");
