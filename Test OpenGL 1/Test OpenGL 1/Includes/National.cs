@@ -7,20 +7,25 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    
+    /// <summary>
+    /// National day effect
+    /// </summary>
     class National : IEffect
     {
         private Chess bakground;
         private Sound snd;
         private int currentImage;
         private int image;
-
         private long ticks;
         private long oldTicks;
-
         private string LastDate;
         private bool disposed = false;
 
+        /// <summary>
+        /// constructor of National day effect
+        /// </summary>
+        /// <param name="chess">Chessboard</param>
+        /// <param name="sound">Sound system</param>
         public National(ref Chess chess, ref Sound sound)
         {
             ticks = 0;
@@ -31,15 +36,21 @@ namespace OpenGL
             snd = sound;
             LastDate = string.Empty;
 
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/flagga.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Du gamla du fria (Black Ingvars).ogg", "National");
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/flagga.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/Du gamla du fria (Black Ingvars).ogg", "National");
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~National()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -47,6 +58,10 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -64,6 +79,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Change the image that is showing
+        /// </summary>
         public void updateImages()
         {
             ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
@@ -85,6 +103,10 @@ namespace OpenGL
                 oldTicks = ticks;
 
         }
+
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         public void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -106,7 +128,10 @@ namespace OpenGL
 
         }
 
-
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "National")
@@ -116,6 +141,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw National day effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);

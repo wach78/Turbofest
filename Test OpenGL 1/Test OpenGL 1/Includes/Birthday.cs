@@ -9,6 +9,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Birthday effect
+    /// </summary>
     class Birthday : IEffect
     {
         private int image;
@@ -16,7 +19,6 @@ namespace OpenGL
         private Sound snd;
         private Text2D text;
         private Chess chess;
-
         private int currentImage;
         private Ballons[] b;
         private const int NUMBEROFBALLONS = 20;
@@ -25,16 +27,21 @@ namespace OpenGL
         private long tick;
         private float y;
         private float x;
-
         private bool leftborder;
         private bool rightborder;
         private string LastPlayedDate;
-
         private int randomFontt;
+
+        /// <summary>
+        /// Constructor for Birthday effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
+        /// <param name="txt">Text printing done with this</param>
+        /// <param name="chess">Chessboard</param>
         public Birthday(ref Sound sound, ref Text2D txt, ref Chess chess)
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/tarta.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            ballonsImage = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/ballons2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/tarta.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            ballonsImage = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/ballons2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snd = sound;
             text = txt;
             this.chess = chess;
@@ -44,13 +51,11 @@ namespace OpenGL
             randomFontt = 0;
             randomFont();
 
-           // snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/birthday.wav", "Birthday");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/birthday.ogg", "Birthday");
+            //snd.CreateSound(Sound.FileType.WAV, Util.CurrentExecutionPath + "/Samples/birthday.wav", "Birthday");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/birthday.ogg", "Birthday");
             currentImage = 0;
-
             
             b = new Ballons[NUMBEROFBALLONS];
-
             float z = 0.4f;
 
             for (int i = 0; i < NUMBEROFBALLONS; i++)
@@ -69,21 +74,29 @@ namespace OpenGL
                     currentImage = 0;
 
             }//for
-
-
-           
         }
-        ~Birthday()
-         {
-            Dispose(false);
-         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
+        ~Birthday()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -109,11 +122,18 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Randomizes the font used
+        /// </summary>
         private void randomFont()
         {
             randomFontt = Util.Rnd.Next(0, 6);
             chessNumber = Util.Rnd.Next(0, 6);
         }
+
+        /// <summary>
+        /// Draw image on screen
+        /// </summary>
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -171,6 +191,11 @@ namespace OpenGL
             
 
         }//DrawImage
+
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">Is it a new day?</param>
         public void Play(string Date)
         {
   
@@ -182,6 +207,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw text on screen
+        /// </summary>
+        /// <param name="name">String to be printed on screen</param>
         private void drawText(string name)
         {
             float y = 0.0f;
@@ -193,30 +222,31 @@ namespace OpenGL
                 text.Draw(n, (Text2D.FontName)randomFontt, new Vector3(middle * 0.2f, 0.2f-y, 1.0f), new Vector2(0.2f, 0.2f), new Vector2());
                 y += 0.15f;
             }
-            
-
-            
-
-           
         }
 
-       
+       /// <summary>
+       /// Draw Birthday on screen
+       /// </summary>
+       /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);
             chess.Draw(Date, (Chess.ChessColor)chessNumber);
             drawText("Grattis!");
             drawImage();
-
         }//Draw
 
+        /// <summary>
+        /// Draw Birthday on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
+        /// <param name="names">String to be printed on screen</param>
         public void Draw(string Date, string names)
         {       
             Play(Date); 
             chess.Draw(Date, (Chess.ChessColor)chessNumber);
             drawText("Grattis!\n\n" + names);
             drawImage();
-            
         }//Draw
 
     }//class

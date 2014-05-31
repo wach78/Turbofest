@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-//using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -35,6 +33,12 @@ namespace OpenGL
         private int numPlayedSound = 0;
         private string LastPlayedDate = string.Empty;
 
+        /// <summary>
+        /// Constructor for TurboLogo effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
+        /// <param name="chess">Chessboard</param>
+        /// <param name="VT">Vårtermin?</param>
         public TurboLogo(ref Sound sound, ref Chess chess,bool VT = true)
         {
    
@@ -59,8 +63,8 @@ namespace OpenGL
             snd = sound;
             randomChess();
 
-            //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.wav", "roadrunner");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/roadrunner.ogg", "roadrunner");
+            //snd.CreateSound(Sound.FileType.WAV, Util.CurrentExecutionPath + "/Samples/roadrunner.wav", "roadrunner");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/roadrunner.ogg", "roadrunner");
 
             VTColour = VT;
 
@@ -69,7 +73,7 @@ namespace OpenGL
             X = Y = 0.0f;
 
             //Bitmaps for making the 4 different layouts
-            Bitmap bitmap = new Bitmap(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/roadrunner.bmp");
+            Bitmap bitmap = new Bitmap(Util.CurrentExecutionPath + "/gfx/roadrunner.bmp");
             Bitmap bmSprite = new Bitmap(bitmap.Width*2,bitmap.Height*2);
 
             Graphics g = Graphics.FromImage(bmSprite);
@@ -134,16 +138,20 @@ namespace OpenGL
             
             //data = null;
             GL.BindTexture(TextureTarget.Texture2D, 0);
-
-           
-
         }
 
+        #region Dispose
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~TurboLogo()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             //base.Finalize();
@@ -151,6 +159,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -165,7 +177,11 @@ namespace OpenGL
                 System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
             }
         }
+        #endregion
 
+        /// <summary>
+        /// Pick a random chess pattern
+        /// </summary>
         public void randomChess()
         {
             chessNumber = Util.Rnd.Next(0, 6);
@@ -180,6 +196,10 @@ namespace OpenGL
             }
         }*/
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void PlaySound(string Date)
         {
             if (LastPlayedDate != Date)
@@ -196,6 +216,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Update when at "edge" of screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void FrameUpdate(string Date)
         {
             if (Math.Round(X, 2) >= 1.15)
@@ -219,9 +243,12 @@ namespace OpenGL
             Y = Y + (moveUp ? 1 : -1) * moveY;
         }
 
+        /// <summary>
+        /// Draw TurboLogo effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
-
             bakground.Draw(Date, (Chess.ChessColor)chessNumber);
 
             float[] viewport = Util.GetViewport();

@@ -8,6 +8,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Tardis effect
+    /// </summary>
     class Tardis : IEffect
     {
         private Sound snd;
@@ -17,19 +20,18 @@ namespace OpenGL
         private int lightning2;
         private bool disposed = false;
         private string LastDate;
-
         private long ticks;
         private long oldTicks;
-
         private float x;
         private float y;
         private long tick;
-
         private float z1;
         private float z2;
 
-
-
+        /// <summary>
+        /// Constructor for Tardis effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
         public Tardis(ref Sound sound)
         {
             vortex = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/timeVortex.jpg");
@@ -48,20 +50,30 @@ namespace OpenGL
             this.oldTicks = 0;
             this.z1 = 0.3f;
             this.z2 = 0.5f;
-    
-
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Tardis()
         {
             Dispose(false);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -81,6 +93,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void DrawImage()
         {
 
@@ -159,6 +174,9 @@ namespace OpenGL
 
         }//DrawImage
 
+        /// <summary>
+        /// Update position
+        /// </summary>
         private void updateImge()
         {
             this.tick++;
@@ -169,6 +187,9 @@ namespace OpenGL
             y += 0.37f;
         }
 
+        /// <summary>
+        /// Shall we show a lightning strike
+        /// </summary>
         private void toggleLightning()
         {
             ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
@@ -204,6 +225,10 @@ namespace OpenGL
                 oldTicks = ticks;
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         private void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "Tardis") // this will start once the last sound is done, ie looping.
@@ -212,6 +237,11 @@ namespace OpenGL
                 LastDate = Date;
             }
         }
+
+        /// <summary>
+        /// Draw Talespin effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);

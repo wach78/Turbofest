@@ -9,6 +9,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Hearts effect
+    /// </summary>
     class Hearts : IEffect
     {
         private float x;
@@ -16,15 +19,22 @@ namespace OpenGL
         private float speedY;
         private float z;
         private float XLed;
-
         private float Xpos;
-
         private int heartsImage;
-
         private Vector2[] vecTex;
         private Vector3[] vecPos;
         private bool disposed = false;
 
+        /// <summary>
+        /// Constructor for Hearts effect
+        /// </summary>
+        /// <param name="x">X-position</param>
+        /// <param name="y">Y-position</param>
+        /// <param name="speedY">Speed in the Y-axis</param>
+        /// <param name="heartsImage">TextureID to use</param>
+        /// <param name="vecTex">Texture position</param>
+        /// <param name="XLed">Speed in the X-axis</param>
+        /// <param name="z">Z-position</param>
         public Hearts(float x, float y, float speedY, int heartsImage, Vector2[] vecTex, float XLed, float z)
         {
             this.x = x;
@@ -44,17 +54,27 @@ namespace OpenGL
                                         };
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Hearts()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -71,6 +91,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw Hearts effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             GL.Enable(EnableCap.Texture2D);

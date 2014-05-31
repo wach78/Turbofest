@@ -8,6 +8,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Nerdy effect
+    /// </summary>
     class Nerdy : IEffect
     {
         private int n1;
@@ -17,50 +20,59 @@ namespace OpenGL
         private int n5;
         private int n6;
         private int currentImage;
-     
         private Sound snd;
         private Chess bakground;
-   
-
         private bool disposed;
-
         private string LastDate;
         private long ticks;
         private long oldTicks;
 
+        /// <summary>
+        /// Constructor for Nerdy effect
+        /// </summary>
+        /// <param name="chess">Chessboard</param>
+        /// <param name="sound">Sound system</param>
         public Nerdy(ref Chess chess, ref Sound sound)
         {
             disposed = false;
-            n1 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n1.jpg");
-            n2 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n2.jpg");
-            n3 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n3.jpg");
-            n4 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n4.jpg");
-            n5 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n5.png");
-            n6 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/n6.png");
+            n1 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/n1.jpg");
+            n2 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/n2.jpg");
+            n3 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/n3.jpg");
+            n4 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/n4.jpg");
+            n5 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/n5.png");
+            n6 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/n6.png");
             snd = sound;
             bakground = chess;
-           
 
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Nerdy.ogg", "Nerdy");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/Nerdy.ogg", "Nerdy");
             currentImage = 0;
-           
 
             LastDate = string.Empty;
             ticks = 0;
             oldTicks = 0;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Nerdy()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -86,6 +98,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         public void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -127,6 +142,10 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void Play(string Date)
         {
             if (LastDate != Date && snd.PlayingName() != "Nerdy")
@@ -136,14 +155,17 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Change visible image
+        /// </summary>
         public void updateImages()
         {
             ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 
 
-            if (this.oldTicks != 0)
+            if (oldTicks != 0)
             {
-                if ((this.ticks - this.oldTicks) > 6000)
+                if ((ticks - oldTicks) > 6000)
                 {
                     currentImage++;
 
@@ -158,16 +180,18 @@ namespace OpenGL
 
             if (oldTicks == 0)
                 oldTicks = ticks;
-
-
-
         }
 
+        /// <summary>
+        /// Draw Nerdy effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             if (LastDate != Date)
             {
                 currentImage = 0;
+                oldTicks = 0;
             }
 
             Play(Date);

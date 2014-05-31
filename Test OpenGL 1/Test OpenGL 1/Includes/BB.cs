@@ -8,6 +8,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Bärseback effect
+    /// </summary>
     class BB : IEffect
     {
         private bool disposed;
@@ -15,27 +18,41 @@ namespace OpenGL
         private Sound snd;
         private string LastDate;
 
+        /// <summary>
+        /// Constructor for Bärseback effect
+        /// </summary>
+        /// <param name="sound">Used for sound managment</param>
         public BB(ref Sound sound)
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/barseback3.png", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/barseback3.png", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snd = sound;
 
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/bb.ogg", "BB");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/bb.ogg", "BB");
             disposed = false;
             LastDate = string.Empty;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~BB()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -52,7 +69,9 @@ namespace OpenGL
             }
         }
 
-
+        /// <summary>
+        /// Draw image on screen
+        /// </summary>
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -71,6 +90,10 @@ namespace OpenGL
 
         }//DrawImage
 
+        /// <summary>
+        /// Play song
+        /// </summary>
+        /// <param name="Date">Date is new play again</param>
         public void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "BB")  
@@ -80,6 +103,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw BB on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);

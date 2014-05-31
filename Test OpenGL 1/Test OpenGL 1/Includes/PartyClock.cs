@@ -3,21 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    public class PartyClock : IDisposable
+    /// <summary>
+    /// Party clock and time holder
+    /// </summary>
+    class PartyClock : IDisposable
     {
         int[] m_tex;
         double runtime;
         double ticks, old_ticks;
-        public double increments, clock;
+        /// <summary>
+        /// How much to increment for each frame
+        /// </summary>
+        public double increments;
+        /// <summary>
+        /// Current time
+        /// </summary>
+        public double clock;
+        /// <summary>
+        /// Start DateTime
+        /// </summary>
         public DateTime dtStart;
+        /// <summary>
+        /// End DateTime
+        /// </summary>
         public DateTime dtEnd;
+        /// <summary>
+        /// Old time
+        /// </summary>
         public DateTime dtOld;
+        /// <summary>
+        /// New time
+        /// </summary>
         public DateTime dtNew;
         Vector2[,] texTimeVert = new Vector2[8, 4];
         Vector2[,] texDateVert = new Vector2[10, 4];
@@ -30,9 +51,21 @@ namespace OpenGL
         private bool _disposed = false;
 
         //Event delegates
+        /// <summary>
+        /// Method delegate to use for new date triggers
+        /// </summary>
         public delegate void NewDateDelegate();
+        /// <summary>
+        /// Event date trigger
+        /// </summary>
         public event NewDateDelegate NewDate;
 
+        /// <summary>
+        /// Constructor for PartyClock
+        /// </summary>
+        /// <param name="start">What time is the start?</param>
+        /// <param name="end">When does it end?</param>
+        /// <param name="runtime">Current runtime in seconds</param>
         public PartyClock(DateTime start, DateTime end, int runtime)
         {
             clock = 0;
@@ -49,17 +82,24 @@ namespace OpenGL
                 throw new Exception("Runtime is less or equal to 0!");
             }
 
-            m_tex[0] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/clockfont40x70.bmp");
-            m_tex[1] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/clockfont80x140.bmp");
+            m_tex[0] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/clockfont40x70.bmp");
+            m_tex[1] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/clockfont80x140.bmp");
 
             NewDate += PartyClock_NewDate;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~PartyClock()
         {
             //GL.DeleteBuffers(2, this.m_tex); // casts exception here
+            Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -69,7 +109,11 @@ namespace OpenGL
             
             System.GC.SuppressFinalize(this);
         }
-
+        
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Are we disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             // If you need thread safety, use a lock around these  
@@ -92,9 +136,10 @@ namespace OpenGL
             }
         }
 
-        
-
-
+        /// <summary>
+        /// Update current time
+        /// </summary>
+        /// <returns>Time is updated</returns>
         public bool updateClock()
         {
             //bool update = true;
@@ -120,11 +165,19 @@ namespace OpenGL
             return true;
         }
 
+        /// <summary>
+        /// The current runtime in DateTime
+        /// </summary>
+        /// <returns>DateTime of current runtime</returns>
         public DateTime CurrentClock()
         {
             return this.dtStart.AddSeconds(this.clock);
         }
 
+        /// <summary>
+        /// Is the end time reached
+        /// </summary>
+        /// <returns>At the end?</returns>
         public bool EndOfRuntime()
         {
             if (this.dtEnd.Subtract(this.CurrentClock()).TotalSeconds > 0)
@@ -137,6 +190,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Delegated method for triggering on new date.
+        /// </summary>
         public void PartyClock_NewDate()
         {
             dtNew = CurrentClock();
@@ -147,6 +203,7 @@ namespace OpenGL
         /// Where the texture starts
         /// </summary>
         /// <param name="Date">True if date charset, flase if clock charset</param>
+        /// <param name="TimeChar">Char of what to write?</param>
         /// <returns>Returns position on the texture for the Char parameter</returns>
         public OpenTK.Vector2[] CharPosition(bool Date, char TimeChar)
         {
@@ -219,7 +276,9 @@ namespace OpenGL
             return retVal;
         }
 
-
+        /// <summary>
+        /// Draw the current time on screen
+        /// </summary>
         public void DrawTime()
         {
             //OpenTK.Vector2[] texVert = new Vector2[4];
@@ -257,7 +316,9 @@ namespace OpenGL
             GL.Disable(EnableCap.Texture2D);
         }
 
-
+        /// <summary>
+        /// Draw the current date on screen
+        /// </summary>
         public void DrawDate()
         {
             /*float[] lightAmbient = new float[4] { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -311,6 +372,9 @@ namespace OpenGL
             GL.Disable(EnableCap.Lighting);*/
         }
 
+        /// <summary>
+        /// Draw PartyClock on screen
+        /// </summary>
         public void Draw()
         {
             // Time

@@ -20,7 +20,7 @@ namespace OpenGL
     class WinLinux : IEffect
     {
         private bool disposed = false;
-        Chess chess;
+        private Chess chess;
         private int texture;
         private Vector3[] Ghost;
         private SizeF Size;
@@ -29,10 +29,14 @@ namespace OpenGL
         private float Z;
         private long tick = 0;
 
+        /// <summary>
+        /// Constructor Windows and Linux effect
+        /// </summary>
+        /// <param name="chessboard">Chessboard</param>
         public WinLinux(ref Chess chessboard)
         {
             chess = chessboard;
-            texture = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/winlogo.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255,0,255));
+            texture = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/winlogo.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255,0,255));
 
             Ghost = new Vector3[4];
             Size = new SizeF(1.4f, 1.4f);
@@ -47,11 +51,17 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~WinLinux()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             //base.Finalize();
@@ -59,6 +69,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -75,7 +89,9 @@ namespace OpenGL
             }
         }
 
-        
+        /// <summary>
+        /// Move image
+        /// </summary>
         public void Move()
         {
             tick++;
@@ -88,6 +104,10 @@ namespace OpenGL
             Ghost[3].Xy = new Vector2(X + Size.Width, Y);
         }
 
+        /// <summary>
+        /// Draw Windows and Linux effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             chess.Draw(Date, Chess.ChessColor.WhiteRed);

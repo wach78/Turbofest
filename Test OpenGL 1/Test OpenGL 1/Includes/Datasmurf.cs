@@ -9,6 +9,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Datasmurf effect
+    /// </summary>
     class Datasmurf : IEffect
     {
         private Sound snd;
@@ -16,25 +19,28 @@ namespace OpenGL
         private int image;
         private float x;
         private float y;
-
         private bool disposed = false;
         private int tick;
         private string LastDate;
-
         private long ticks;
         private long oldTicks;
         private int currentImage;
 
+        /// <summary>
+        /// Constructor for Datasmurf effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
+        /// <param name="txt">Text printing</param>
         public Datasmurf(ref Sound sound, ref Text2D txt)
         {
             x = -1.0f;
             y = 0.0f;
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/dataSmurf.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255,0,255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/dataSmurf.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255,0,255));
 
             snd = sound;
             text = txt;
-            //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/datasmurf.wav", "Smurf");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/datasmurf.ogg", "Smurf");
+            //snd.CreateSound(Sound.FileType.WAV, Util.CurrentExecutionPath + "/Samples/datasmurf.wav", "Smurf");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/datasmurf.ogg", "Smurf");
 
             tick = 0;
             LastDate = string.Empty;
@@ -43,17 +49,28 @@ namespace OpenGL
             ticks = oldTicks = 0;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Datasmurf()
         {
             Dispose(false);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -71,8 +88,9 @@ namespace OpenGL
             }
         }
 
-      
-
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -96,6 +114,9 @@ namespace OpenGL
 
         }//DrawImage
 
+        /// <summary>
+        /// Move image
+        /// </summary>
         private void moveImage()
         {
             
@@ -108,12 +129,19 @@ namespace OpenGL
          
         }//moveImage
 
+        /// <summary>
+        /// Draw text to screen
+        /// </summary>
         private void drawText()
         {
             text.Draw("Smurfar", Text2D.FontName.Coolfont, new Vector3(0.8f, 0.0f, 0.5f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 2.0f);
             text.Draw("Internet", Text2D.FontName.Coolfont, new Vector3(0.8f, -0.4f, 0.5f ), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 2.0f);
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         private void Play(String Date)
         {
             if ( LastDate != Date && snd.PlayingName() != "Smurf") // this will start once the last sound is done, ie looping.
@@ -123,6 +151,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Change image ticks are over a set number
+        /// </summary>
         public void updateImages()
         {
             ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
@@ -142,10 +173,12 @@ namespace OpenGL
 
             if (oldTicks == 0)
                 oldTicks = ticks;
-
-           
-
         }
+
+        /// <summary>
+        /// Draw to screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             if (LastDate != Date)

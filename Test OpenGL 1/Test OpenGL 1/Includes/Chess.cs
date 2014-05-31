@@ -9,9 +9,58 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
-    public class Chess : IEffect
+    /// <summary>
+    /// Chessboard effect, can change colour on the board
+    /// </summary>
+    class Chess : IEffect
     {
-        public enum ChessColor {BlackWhite=0, BlueBlack, PurpleGreen, BlackGreen, BlackLightGreen, BlackPurple, WhiteRed, Swe, Triforce, Heart}; // this is after the constructor index...
+        #region Enum
+        /// <summary>
+        /// Enum for what colour the chessboard can have
+        /// </summary>
+        public enum ChessColor {
+            /// <summary>
+            /// Black and white colour
+            /// </summary>
+            BlackWhite=0, 
+            /// <summary>
+            /// Blue and black colour
+            /// </summary>
+            BlueBlack, 
+            /// <summary>
+            /// Purple and green colour
+            /// </summary>
+            PurpleGreen, 
+            /// <summary>
+            /// Black and green colour
+            /// </summary>
+            BlackGreen, 
+            /// <summary>
+            /// Black and light green colour
+            /// </summary>
+            BlackLightGreen, 
+            /// <summary>
+            /// Black and purple colour
+            /// </summary>
+            BlackPurple, 
+            /// <summary>
+            /// White and red colour
+            /// </summary>
+            WhiteRed, 
+            /// <summary>
+            /// Swedish flag colours
+            /// </summary>
+            Swe, 
+            /// <summary>
+            /// 
+            /// </summary>
+            Triforce,
+            /// <summary>
+            /// 
+            /// </summary>
+            Heart
+        }; // this is after the constructor index...
+        #endregion
         private bool disposed = false;
         private int[] texture;
         private double m_scrollX;
@@ -21,6 +70,9 @@ namespace OpenGL
         //private string vertShader;
         //private string fragShader;
 
+        /// <summary>
+        /// Constructor for Chessboard
+        /// </summary>
         public Chess()
         {
             m_vec = new Vector3[4]; // well well....
@@ -30,22 +82,17 @@ namespace OpenGL
             m_vec[3] = new Vector3(2.30f, -1.50f, 0.0f);
             texture = new int[10];
 
-            //GL.GenBuffers(1, out this.texture);
-            //this.texture = GL.GenTexture();
+            texture[0] = Util.LoadTexture(System.IO.Path.GetFullPath(Util.CurrentExecutionPath + "/gfx/chess_bw.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
+            texture[1] = Util.LoadTexture(System.IO.Path.GetFullPath(Util.CurrentExecutionPath + "/gfx/chess_blue.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
+            texture[2] = Util.LoadTexture(System.IO.Path.GetFullPath(Util.CurrentExecutionPath + "/gfx/chess_fbk.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
+            texture[3] = Util.LoadTexture(System.IO.Path.GetFullPath(Util.CurrentExecutionPath + "/gfx/chess_green.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
+            texture[4] = Util.LoadTexture(System.IO.Path.GetFullPath(Util.CurrentExecutionPath + "/gfx/chess_lightgreen.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
+            texture[5] = Util.LoadTexture(System.IO.Path.GetFullPath(Util.CurrentExecutionPath + "/gfx/chess_purple.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
+            texture[6] = Util.LoadTexture(System.IO.Path.GetFullPath(Util.CurrentExecutionPath + "/gfx/chess_red.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
+            texture[7] = Util.LoadTexture(System.IO.Path.GetFullPath(Util.CurrentExecutionPath + "/gfx/chess_swe.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
+            texture[8] = Util.LoadTexture(System.IO.Path.GetFullPath(Util.CurrentExecutionPath + "/gfx/triforce.jpg"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
+            texture[9] = Util.LoadTexture(System.IO.Path.GetFullPath(Util.CurrentExecutionPath + "/gfx/Heart.jpg"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
 
-            //System.Drawing.Bitmap bitmapChess = new System.Drawing.Bitmap(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess.gif"));
-
-
-            texture[0] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_bw.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
-            texture[1] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_blue.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
-            texture[2] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_fbk.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
-            texture[3] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_green.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
-            texture[4] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_lightgreen.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
-            texture[5] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_purple.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
-            texture[6] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_red.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
-            texture[7] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chess_swe.gif"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
-            texture[8] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/triforce.jpg"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
-            texture[9] = Util.LoadTexture(System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/Heart.jpg"), TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Repeat, TextureWrapMode.Repeat);
             /*GL.BindTexture(TextureTarget.Texture2D, texture);
             System.Drawing.Imaging.BitmapData data = bitmapChess.LockBits(new System.Drawing.Rectangle(0, 0, bitmapChess.Width, bitmapChess.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
@@ -74,11 +121,17 @@ namespace OpenGL
             ";*/
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Chess()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             //base.Finalize();
@@ -87,6 +140,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Are we disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -105,16 +162,32 @@ namespace OpenGL
                 disposed = true;
             }
         }
+
+        /// <summary>
+        /// Draw chessboard on screen
+        /// </summary>
+        /// <param name="date">What date is it?</param>
         public void Draw(string date)
         {
             Draw(false, true, ChessColor.BlackWhite);
         }
 
+        /// <summary>
+        /// Draw chessboard on screen
+        /// </summary>
+        /// <param name="date">What date is it?</param>
+        /// <param name="CC">What is the colour going to be displayed</param>
         public void Draw(string date, ChessColor CC)
         {
             Draw(false, true, CC);
         }
 
+        /// <summary>
+        /// Draw chessboard on screen
+        /// </summary>
+        /// <param name="scrollx">X direction to scroll</param>
+        /// <param name="scrolly">Y direction to scroll</param>
+        /// <param name="CC">What is the colour going to be displayed?</param>
         public void Draw(bool scrollx, bool scrolly, ChessColor CC)
         {
             if (scrolly) this.m_scrollY += 0.005;

@@ -29,12 +29,17 @@ namespace OpenGL
         private int DelayRow;
         private string LastPlayedDate;
 
+        /// <summary>
+        /// Constructor for Richard Stalman effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
+        /// <param name="text">Text printer</param>
         public RMS(ref Sound sound, ref Text2D text)
         {
             snd = sound;
             txt = text;
-            texture = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/rms.jpg", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.Yellow);
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/free.ogg", "rms");
+            texture = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/rms.jpg", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.Yellow);
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/free.ogg", "rms");
             SongText = new string[9];
             CurrentRow = -1;
             DelayRow = 3500; // milisecond
@@ -52,11 +57,17 @@ namespace OpenGL
             lastTick = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond; // lastTick is in milisecond
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~RMS()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             //base.Finalize();
@@ -64,6 +75,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -81,6 +96,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void PlaySound(string Date)
         {
             if (LastPlayedDate != Date && snd.PlayingName() != "rms")
@@ -91,6 +110,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw Richard Stalman effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             PlaySound(Date);

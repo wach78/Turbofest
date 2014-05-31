@@ -10,19 +10,27 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// SuneTxt effect
+    /// </summary>
     class SuneTxtHandler : IEffect
     {
         private static List<string> listquotes;
         private static List<int> indexList;
         private static int maxIndexValue;
-
         private Bitmap textBmp;
         int textTexture;
         private Font font;
         private Text2D text;
         private string currentString;
         private bool builtInFont;
+        private bool disposed = false;
 
+        /// <summary>
+        /// Constructor for SuneTxt effect
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <param name="BuiltInFont"></param>
         public SuneTxtHandler(ref Text2D Text, bool BuiltInFont)
         {
             listquotes = new List<string>();
@@ -35,18 +43,53 @@ namespace OpenGL
             drawInit(builtInFont);
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
+        ~SuneTxtHandler()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
-            //base.Finalize();
-            if (textTexture > 0)
-                Util.DeleteTexture(ref textTexture);
+            Dispose(true);
             System.GC.SuppressFinalize(this);
-            System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
+        }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    // free managed resources
+                    Util.DeleteTexture(ref textTexture);
+                    if (textBmp != null) textBmp.Dispose();
+                    if (font != null) font.Dispose();
+                    text = null;
+                    listquotes.Clear();
+                    indexList.Clear();
+                }
+                // free native resources if there are any.
+                System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " disposed.");
+                disposed = true;
+            }
         }
     
+        /// <summary>
+        /// Read data from XML-file
+        /// </summary>
         public static void readFromXml()
         {
-            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Sune/sune.xml" ;
+            string path = Util.CurrentExecutionPath + "/XMLFiles/Sune/sune.xml" ;
             
 
             System.Xml.Linq.XDocument xDoc = System.Xml.Linq.XDocument.Load(path);
@@ -63,6 +106,10 @@ namespace OpenGL
             }
         }//readFromXml
 
+        /// <summary>
+        /// Get a random qoute
+        /// </summary>
+        /// <returns>String with random qoute</returns>
         public string getOneRandomQuote()
         {
             int index = 0;
@@ -88,8 +135,10 @@ namespace OpenGL
             return listquotes[index]; 
         }//getOneRandomQuote
 
-
-   
+        /// <summary>
+        /// Draw setup
+        /// </summary>
+        /// <param name="BuiltIn">To use built in font or not</param>
         public void drawInit(bool BuiltIn)
         {
             if (BuiltIn)
@@ -125,6 +174,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw SuneTxt effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             if (builtInFont)
@@ -148,7 +201,7 @@ namespace OpenGL
             }
             else
             {
-                text.Draw(currentString, Text2D.FontName.TypeFont, new OpenTK.Vector3(0.8f, 0.10f, 1.0f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(2.8f, 2.0f), 1.0f);
+                text.Draw(currentString, Text2D.FontName.TypeFont, new OpenTK.Vector3(0.8f, 0.10f, 1.0f), new OpenTK.Vector2(0.20f, 0.25f), new OpenTK.Vector2(2.8f, 2.0f), 0.5f);
             }
         }
     }//class

@@ -14,6 +14,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// File to be streamed
+    /// </summary>
     class StreamFile : IDisposable
     {
         private bool disposed;
@@ -25,12 +28,18 @@ namespace OpenGL
         }
 
         #region Dispose
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~StreamFile()
         {
             System.Diagnostics.Debug.WriteLine("Sound Destructor / Finalizer");
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             System.Diagnostics.Debug.WriteLine("Sound Dispose");
@@ -38,7 +47,10 @@ namespace OpenGL
             GC.SuppressFinalize(this);
         }
 
-
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             //System.Diagnostics.Debug.WriteLine("Dispose called with "+ (disposed?"Disposing":"Not Disposing"));
@@ -58,6 +70,9 @@ namespace OpenGL
 
     }
 
+    /// <summary>
+    /// SoundType
+    /// </summary>
     class SoundType : IDisposable
     {
         private bool disposed;
@@ -68,6 +83,11 @@ namespace OpenGL
         private Info FileInfoVO;
         private ALFormat alf;
 
+        /// <summary>
+        /// Constructor for SoundType class
+        /// </summary>
+        /// <param name="FileName">String of the filepath</param>
+        /// <param name="IsToBeStreaming">Is it to be streamed?</param>
         public SoundType(string FileName, bool IsToBeStreaming)
         {
             if (!System.IO.File.Exists(FileName))
@@ -106,18 +126,27 @@ namespace OpenGL
 
 
         #region Dispose
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~SoundType()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -139,46 +168,66 @@ namespace OpenGL
             }
         }
         #endregion
-
+        #region Properties
+        /// <summary>
+        /// Property returning a bool for streaming or not
+        /// </summary>
         public bool ToBeStreamed
         {
             get { return Streaming; }
             set { }
         }
 
+        /// <summary>
+        /// Property returning a string with the file
+        /// </summary>
         public string Filename
         {
             get { return File; }
             set { }
         }
 
+        /// <summary>
+        /// Property returning a int for what openAL buffer is used
+        /// </summary>
         public int Buffer
         {
             get { return BufferID; }
             set { }
         }
 
+        /// <summary>
+        /// Property returning a VorbisFile
+        /// </summary>
         public VorbisFile FileData
         {
             get { return FileToBuffer; }
             set { }
         }
 
+        /// <summary>
+        /// Property returning a (Vorbis)Info
+        /// </summary>
         public Info FileInfo
         {
             get { return FileInfoVO; }
             set { }
         }
+
+        /// <summary>
+        /// Property returning a ALFormat for Sterio or mono sound
+        /// </summary>
         public ALFormat StereoMono
         {
             get { return alf; }
             set { }
         }
+        #endregion
     }
-}
 
-namespace OpenGL
-{
+    /// <summary>
+    /// Sound system
+    /// </summary>
     class Sound : IDisposable
     {
         /// <summary>
@@ -207,6 +256,10 @@ namespace OpenGL
         //int NextPlayingBuffer;
         //int numPLayedBuffer;
 
+        /// <summary>
+        /// Constructor for Sound class
+        /// </summary>
+        /// <param name="StartThread">Are we starting the sound thread?</param>
         public Sound(bool StartThread)
         {
             disposed = false;
@@ -244,17 +297,27 @@ namespace OpenGL
         }
 
         #region Dispose
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Sound()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -302,6 +365,10 @@ namespace OpenGL
         }
         #endregion
 
+        /// <summary>
+        /// Method for the sound thread to run
+        /// Here alot of the sound is read and played to the buffers
+        /// </summary>
         private void PlayThread()
         {
             int sourceState;
@@ -488,6 +555,9 @@ namespace OpenGL
             System.Diagnostics.Debug.WriteLine("Sound thread stopped.");
         }
 
+        /// <summary>
+        /// Method for starting the sound thread 
+        /// </summary>
         public void RunThread()
         {
             if (!tr.IsAlive)
@@ -498,11 +568,17 @@ namespace OpenGL
             
         }
 
+        /// <summary>
+        /// Stop the sound thread by making the loop stop
+        /// </summary>
         public void StopThread()
         {
             RunSoundThread = false;
         }
 
+        /// <summary>
+        /// Stop the sound from the sound thread but leave it running and waiting for new sound to play
+        /// </summary>
         public void StopSound()
         {
             System.Diagnostics.Debug.WriteLine("Stoping sound method");
@@ -516,8 +592,8 @@ namespace OpenGL
         /// Adds the specefied filename to a list with Name as key and a aduio buffer as value
         /// </summary>
         /// <param name="ft">Identifies what type of sound file it is</param>
-        /// <param name="filename"></param>
-        /// <param name="Name"></param>
+        /// <param name="filename">File to read when playing sound</param>
+        /// <param name="Name">Give this sound a good name to look up when you want to play it</param>
         public void CreateSound(FileType ft, string filename, string Name)
         { 
             //make this add to a static list what sound name and sound buffer.
@@ -574,8 +650,7 @@ namespace OpenGL
         /// <summary>
         /// Loads a RIFF WAV
         /// </summary>
-        /// <param name="filename">path and filename</param>
-        /// <returns>int AudioBuffer</returns>
+        /// <param name="sound">What soundtype is it</param>
         public void LoadWAV(SoundType sound)
         {
             //AudioContext context = new AudioContext(); // needed for playing sounds!!!
@@ -1069,11 +1144,23 @@ namespace OpenGL
             //return ab;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sound"></param>
         public void LoadStreamOGG(SoundType sound)
         { 
             
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="length"></param>
+        /// <param name="audioSampleRate"></param>
+        /// <param name="audioBitsPerSample"></param>
+        /// <param name="audioChannels"></param>
         private void WriteHeader(Stream stream, int length, int audioSampleRate, ushort audioBitsPerSample, ushort audioChannels)
         {
             int HEADER_SIZE = 36;
@@ -1108,7 +1195,10 @@ namespace OpenGL
                 //NextPlayingBuffer = SoundList[Name].Buffer; // fix me!!!
             }
         }
-
+        /// <summary>
+        /// What is the playing sound name
+        /// </summary>
+        /// <returns>String returning the name of the sound</returns>
         public string PlayingName()
         {
             return NowPlayingName;

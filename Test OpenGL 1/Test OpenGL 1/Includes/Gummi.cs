@@ -19,6 +19,9 @@ namespace OpenGL
     /// </summary>
     class GummiBears : IEffect
     {
+        /// <summary>
+        /// Bear class
+        /// </summary>
         class Bear : IEffect
         {
             private bool disposed = false;
@@ -30,6 +33,17 @@ namespace OpenGL
             private float Y;
             private bool MoveLeft;
 
+            /// <summary>
+            /// Constructor for a bear
+            /// </summary>
+            /// <param name="Width">Width of the bear</param>
+            /// <param name="Height">Height of the bear</param>
+            /// <param name="X">X-position</param>
+            /// <param name="Y">Y-position</param>
+            /// <param name="Z">Z-position</param>
+            /// <param name="SpeedX">Speed in Y-axis</param>
+            /// <param name="SpeedY">Speed in X-axis</param>
+            /// <param name="TextureID">TextureID to use</param>
             public Bear(float Width, float Height, float X, float Y, float Z, float SpeedX, float SpeedY, int TextureID)
             {
                 Texture = TextureID;
@@ -41,6 +55,13 @@ namespace OpenGL
                 MoveLeft = (Util.Rnd.Next(0, 100) < 50? true:false);
             }
 
+            /// <summary>
+            /// Constructor for a bear
+            /// </summary>
+            /// <param name="size">Size of the bear</param>
+            /// <param name="start">Start position</param>
+            /// <param name="SpeedXY">Speed in X- and Y-axis</param>
+            /// <param name="TextureID">TextureID to use</param>
             public Bear(SizeF size, Vector3 start, Vector2 SpeedXY, int TextureID)
             {
                 Texture = TextureID;
@@ -52,11 +73,17 @@ namespace OpenGL
                 MoveLeft = (Util.Rnd.Next(0, 1) == 1 ? true : false);
             }
 
+            /// <summary>
+            /// Destructor
+            /// </summary>
             ~Bear()
             {
                 Dispose(false);
             }
 
+            /// <summary>
+            /// Dispose method
+            /// </summary>
             public void Dispose()
             {
                 //base.Finalize();
@@ -64,6 +91,10 @@ namespace OpenGL
                 System.GC.SuppressFinalize(this);
             }
 
+            /// <summary>
+            /// Dispose method
+            /// </summary>
+            /// <param name="disposing">Is it disposing?</param>
             protected virtual void Dispose(bool disposing)
             {
                 if (!this.disposed)
@@ -80,6 +111,9 @@ namespace OpenGL
                 }
             }
 
+            /// <summary>
+            /// Move bear
+            /// </summary>
             public void Update()
             {
                 
@@ -97,6 +131,10 @@ namespace OpenGL
                 Y = (float)Math.Sin(X*700 / 42.1f) * 0.4f - fSize.Height * 1.45f;
             }
 
+            /// <summary>
+            /// Draw Bear on screen
+            /// </summary>
+            /// <param name="Date">Current date</param>
             public void Draw(string Date)
             {
                 GL.BindTexture(TextureTarget.Texture2D, Texture);
@@ -127,6 +165,10 @@ namespace OpenGL
         private string LastPlayedDate;
         private List<int> PlayedSongs;
 
+        /// <summary>
+        /// Constructor for GummiBears effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
         public GummiBears(ref Sound sound)
         {
             PlayedSongs = new List<int>();
@@ -143,21 +185,21 @@ namespace OpenGL
             songName[7] = "GummiRus";
 
             textures = new int[7]; // there are 7 in the "newer" gummi bears, 6 in the older (Gusto is a new one)...
-            textures[0] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/zummi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            textures[1] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/grammi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            textures[2] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/tummi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            textures[3] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/gruffi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            textures[4] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/sunni.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            textures[5] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/cubbi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            textures[6] = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/gusto.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Swedish.ogg", songName[0]);
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Danish.ogg", songName[1]);
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-English.ogg", songName[2]);
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-German.ogg", songName[3]);
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Japanese.ogg", songName[4]);
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Norwegian.ogg", songName[5]);
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Polish.ogg", songName[6]);
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/GummiBears-Russian.ogg", songName[7]);
+            textures[0] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/zummi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            textures[1] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/grammi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            textures[2] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/tummi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            textures[3] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/gruffi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            textures[4] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/sunni.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            textures[5] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/cubbi.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            textures[6] = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/gusto.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(255, 0, 255));
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/GummiBears-Swedish.ogg", songName[0]);
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/GummiBears-Danish.ogg", songName[1]);
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/GummiBears-English.ogg", songName[2]);
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/GummiBears-German.ogg", songName[3]);
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/GummiBears-Japanese.ogg", songName[4]);
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/GummiBears-Norwegian.ogg", songName[5]);
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/GummiBears-Polish.ogg", songName[6]);
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/GummiBears-Russian.ogg", songName[7]);
 
             currentSound = Util.Rnd.Next(0, songName.Length); // do this random and add to list of played?
             PlayedSongs.Add(currentSound);
@@ -174,11 +216,17 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~GummiBears()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             //base.Finalize();
@@ -186,6 +234,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -196,6 +248,7 @@ namespace OpenGL
                     for (int i = 0; i < textures.Length; i++)
                     {
                         Util.DeleteTexture(ref textures[i]);
+                        if (Bears[i] != null) Bears[i].Dispose();
                     }
                     snd = null;
                 }
@@ -205,6 +258,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void PlaySound(string Date)
         {
             if (LastPlayedDate != Date && !songName.Contains( snd.PlayingName()))
@@ -221,6 +278,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Update bears position
+        /// </summary>
         public void UpdateSceen()
         {
             foreach (Bear item in Bears)
@@ -229,6 +289,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw GummiBears effect on screen
+        /// </summary>
+        /// <param name="Date"></param>
         public void Draw(string Date)
         {
             PlaySound(Date);

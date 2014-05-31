@@ -8,33 +8,51 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Färjestad BK effect
+    /// </summary>
     class Fbk : IEffect
     {
         private bool disposed;
         private int image;
         private Sound snd;
         private string LastDate;
+
+        /// <summary>
+        /// Constructor for Färjestad BK effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
         public Fbk(ref Sound sound)
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/fbk2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/fbk2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snd = sound;
-            //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.wav", "FBK");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/fbk.ogg", "FBK");
+            //snd.CreateSound(Sound.FileType.WAV, Util.CurrentExecutionPath + "/Samples/fbk.wav", "FBK");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/fbk.ogg", "FBK");
             disposed = false;
             LastDate = string.Empty;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Fbk()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -51,7 +69,9 @@ namespace OpenGL
             }
         }
 
-
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -70,6 +90,10 @@ namespace OpenGL
 
         }//DrawImage
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void Play(string Date)
         {
             if ( LastDate != Date && snd.PlayingName() != "FBK") 
@@ -79,6 +103,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw Färjestad BK effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);

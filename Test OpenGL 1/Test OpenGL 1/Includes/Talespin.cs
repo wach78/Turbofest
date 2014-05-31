@@ -8,6 +8,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Talespin effect
+    /// </summary>
     class Talespin : IEffect
     {
         private Sound snd;
@@ -16,32 +19,45 @@ namespace OpenGL
         private float y;
         private bool disposed = false;
         private string LastDate;
-
         private long tick;
  
-
+        /// <summary>
+        /// Constructor for Talespin effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
         public Talespin(ref Sound sound)
         {
             x = -1.0f;
             y = 0.0f;
-            seaDuck = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/seaDuck.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            seaDuck = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/seaDuck.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
 
             snd = sound;
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Talespin.ogg", "Talespin");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/Talespin.ogg", "Talespin");
             LastDate = string.Empty;
-
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Talespin()
         {
             Dispose(false);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -60,6 +76,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Update positions
+        /// </summary>
         private void moveImage()
         {
             this.tick++;
@@ -71,6 +90,9 @@ namespace OpenGL
 
         }//moveImage
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -99,6 +121,11 @@ namespace OpenGL
 
 
         }//DrawImage
+
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         private void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "Talespin") // this will start once the last sound is done, ie looping.
@@ -107,6 +134,11 @@ namespace OpenGL
                 LastDate = Date;
             }
         }
+
+        /// <summary>
+        /// Draw Talespin effect on screen
+        /// </summary>
+        /// <param name="Date"></param>
         public void Draw(string Date)
         {
           
@@ -114,6 +146,5 @@ namespace OpenGL
             moveImage();
             DrawImage();
         }//Draw
-
     }//class
 }//namespace

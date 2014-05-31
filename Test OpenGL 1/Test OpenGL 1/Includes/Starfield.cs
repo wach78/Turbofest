@@ -9,6 +9,9 @@ using System.Drawing;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Star class
+    /// </summary>
     class Star : IEffect
     {
         private bool disposed = false;
@@ -24,6 +27,16 @@ namespace OpenGL
         private bool MoveUp;
         private Color StarColour;
 
+        /// <summary>
+        /// Constructor for Star
+        /// </summary>
+        /// <param name="sX">Start X-position</param>
+        /// <param name="sY">Start Y-position</param>
+        /// <param name="sZ">Start Z-position</param>
+        /// <param name="sSpeed">Speed in Z-axis</param>
+        /// <param name="left">?</param>
+        /// <param name="up">?</param>
+        /// <param name="size">Size of star</param>
         public Star(float sX, float sY, float sZ, float sSpeed, bool left, bool up, float size=1.0f)
         {
             startx = x = sX;
@@ -37,11 +50,17 @@ namespace OpenGL
         }
 
         #region Dispose
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Star()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             //base.Finalize();
@@ -49,6 +68,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -64,6 +87,9 @@ namespace OpenGL
         }
         #endregion
 
+        /// <summary>
+        /// Property returning a float of the X-position
+        /// </summary>
         public float X
         {
             get
@@ -72,6 +98,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Property returning a float of the Y-position
+        /// </summary>
         public float Y
         {
             get
@@ -80,6 +109,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Property returning a float of the Z-position
+        /// </summary>
         public float Z
         {
             get
@@ -88,6 +120,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Property returning a flot with the speed movment of star
+        /// </summary>
         public float Speed
         {
             get
@@ -96,6 +131,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Property returning a float with the size of star
+        /// </summary>
         public float Size
         {
             get
@@ -104,16 +142,28 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Convert X, Y, Z-positions to a Vector3
+        /// </summary>
+        /// <returns>Vector3 with positional information</returns>
         public Vector3 ToVector3()
         {
             return new Vector3(x, y, z);
         }
 
+        /// <summary>
+        /// Set the colour of the Star
+        /// </summary>
+        /// <param name="StarC">What color is the star</param>
         public void SetColour(Color StarC)
         {
             StarColour = StarC;
         }
 
+        /// <summary>
+        /// Draw Star effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             //GL.MatrixMode(MatrixMode.Projection);
@@ -131,6 +181,9 @@ namespace OpenGL
             Move();
         }
 
+        /// <summary>
+        /// Move Star
+        /// </summary>
         public void Move()
         {
 
@@ -184,16 +237,18 @@ namespace OpenGL
     
     } //end Start
 
+    /// <summary>
+    /// Starfield effect
+    /// </summary>
     class Starfield : IEffect
     {
         private bool disposed = false;
         private Star[] Stars;
-        /*private float minDepth;
-        private float maxDepth;*/
-
         private string oldDate;
         uint vboHandle, voaHandle;
         Vector3[] vertices;
+        /*private float minDepth;
+        private float maxDepth;*/
         /*int vShader;
         int vsProgram;
         int locMVP;
@@ -215,6 +270,11 @@ namespace OpenGL
             }
             ";
         */
+
+        /// <summary>
+        /// Constructor for Starfield effect
+        /// </summary>
+        /// <param name="AmountOfStars">Integer numbers of stars to be drawn</param>
         public Starfield(int AmountOfStars = 100)
         {
             Stars = new Star[AmountOfStars];
@@ -258,11 +318,17 @@ namespace OpenGL
         }
 
         #region Dispose
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Starfield()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             //base.Finalize();
@@ -270,6 +336,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -296,6 +366,10 @@ namespace OpenGL
         }
         #endregion
 
+        /// <summary>
+        /// Set the colour of the Star
+        /// </summary>
+        /// <param name="StartColour">What color is the star</param>
         public void SetColour(Color StartColour)
         {
             foreach (Star s in Stars)
@@ -304,6 +378,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw Starfield effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             if (oldDate != Date)
@@ -421,8 +499,6 @@ namespace OpenGL
             //GL.EnableVertexAttribArray(locPosition);
             GL.DisableVertexAttribArray(0);
             GL.UseProgram(0);*/
-            
         }
-
     }//end Startfield
 }//end namespace

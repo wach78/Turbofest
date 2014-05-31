@@ -9,6 +9,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Easter effect
+    /// </summary>
     class Easter : IEffect
     {
         private int image;
@@ -16,42 +19,38 @@ namespace OpenGL
         private int eggImage;
         private int curruntEggImage;
         private int currentImage;
-
         private long ticks;
         private long oldTicks;
-
         private float x;
         private float y;
         private float xc;
-
         private bool disposed = false;
         private int tick;
-
         private Eggs[] egg;
         private const int NUMBEROFFEGGS = 40;
-
         private string LastDate;
         private Sound snd;
 
+        /// <summary>
+        /// Constructor for Easter effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
         public Easter(ref Sound sound)
         {
           
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/gladpask.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            image2 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/chicken.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            eggImage = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/eggs.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/gladpask.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image2 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/chicken.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            eggImage = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/eggs.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
 
             currentImage = 0;
             curruntEggImage = 0;
             ticks = 0;
             oldTicks = 0;
             snd = sound;
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Gullefjun.ogg", "Easter");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/Gullefjun.ogg", "Easter");
             xc = 0;
-
-
             LastDate = string.Empty;
             tick = 0;
-
             x = 1;
             y = 0;
 
@@ -74,21 +73,30 @@ namespace OpenGL
 
                 if (curruntEggImage == 4)
                     curruntEggImage = 0;
-
-
             }
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Easter()
         {
             Dispose(false);
         }
        
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -114,6 +122,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void drawImage()
         {
           
@@ -157,9 +168,11 @@ namespace OpenGL
             {
                 egg[i].Draw("");
             }
-            
-
         }//DrawImage
+
+        /// <summary>
+        /// Move image
+        /// </summary>
         private void moveImage()
         {
 
@@ -177,6 +190,9 @@ namespace OpenGL
 
         }//moveImage
 
+        /// <summary>
+        /// Change visible image
+        /// </summary>
         public void updateImages()
         {
             ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
@@ -201,6 +217,10 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "Easter")
@@ -210,6 +230,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw Easter effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             updateImages();
@@ -218,6 +242,5 @@ namespace OpenGL
             drawImage();
 
         }//Draw
-
     }//class
 }//namespace

@@ -9,35 +9,38 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Christmas effect
+    /// </summary>
     class Christmas : IEffect
     {
         private int image;
         private int image2;
         private int snowImage;
-
         private int currentImage;
         private Sound snd;
-
         private float x;
         private float y;
         private bool disposed = false;
         private int tick;
-        
         private SnowFlake[] sf;
         private const int NUMBEROFFLAKES = 150;
-
         private string LastDate;
 
+        /// <summary>
+        /// Constructor for Christmas effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
         public Christmas(ref Sound sound)
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/xmas.bmp");
-            image2 = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/godjul.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            snowImage = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/snow1_db.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/xmas.bmp");
+            image2 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/godjul.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            snowImage = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/snow1_db.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
 
             currentImage = 0;
             snd = sound;
-            //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/xmas.wav", "smurf");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/xmas.ogg", "XMAS");
+            //snd.CreateSound(Sound.FileType.WAV, Util.CurrentExecutionPath + "/Samples/xmas.wav", "smurf");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/xmas.ogg", "XMAS");
 
             LastDate = string.Empty;
             tick = 0;
@@ -45,7 +48,7 @@ namespace OpenGL
             x = 1;
             y = 0;
             
-        //    Random r = new Random();
+            //Random r = new Random();
             sf = new SnowFlake[NUMBEROFFLAKES];
 
             float z = 0.4f;
@@ -65,24 +68,30 @@ namespace OpenGL
 
                 if (currentImage == 4)
                     currentImage = 0;
-
-                  
             }
-             
-           
-            
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Christmas()
         {
             Dispose(false);
         }
        
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -107,6 +116,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -144,10 +156,11 @@ namespace OpenGL
             {
                 sf[i].Draw("");
             }
-            
-
         }//DrawImage
 
+        /// <summary>
+        /// Move image
+        /// </summary>
         private void moveImage()
         {
 
@@ -165,6 +178,10 @@ namespace OpenGL
 
         }//moveImage
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "XMAS") 
@@ -173,6 +190,11 @@ namespace OpenGL
                 LastDate = Date;
             }
         }
+
+        /// <summary>
+        /// Draw to screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);

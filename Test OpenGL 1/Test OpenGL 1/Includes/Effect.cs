@@ -8,31 +8,30 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// This class will have all the effects names to be used
+    /// </summary>
     class Effect
     {
-       // private Sound snd;
-        //private Text2D text;
-        //private Chess chess;
-
         private object obj;
         private string name;
-        //private bool veto;
-        private bool noMoreRun;
-       // private int prio;
         private int norpm; //number of runs per/months
-
         private List<string> namelist;
         private List<int> runslist;
         private List<bool> runAllowedlist;
-
         private List<int> priolist;
         private List<bool> vetolist;
 
+        /// <summary>
+        /// Constructor of the Effect list
+        /// </summary>
+        /// <param name="obj">A effect object</param>
+        /// <param name="data">Effect EventData</param>
         public Effect(object obj, UtilXML.EventData data)
         {
             this.name = data.Name;
             this.obj = obj;
-            this.noMoreRun = false;
+            //this.noMoreRun = false;
 
            // this.veto = data.Veto;
             //this.prio = data.Prio;
@@ -41,7 +40,6 @@ namespace OpenGL
             this.runAllowedlist = new List<bool>(data.RunAllowedlist);
             this.priolist = new List<int>(data.Priolist);
             this.vetolist = new List<bool>(data.VetoList);
-
         }
 
        /*
@@ -55,37 +53,59 @@ namespace OpenGL
             get { return prio; }
         }
         */
+
+        /// <summary>
+        /// Number of runs per month
+        /// </summary>
         public int Norpm
         {
             get { return norpm; }
             set { norpm = value; }
         }
 
+        /// <summary>
+        /// List of month names
+        /// </summary>
         public List<string> Namelist
         {
             get { return namelist; }
         }
 
+        /// <summary>
+        /// Number of runs per month
+        /// </summary>
         public List<int> Runslist
         {
             get { return runslist; }
         }
 
+        /// <summary>
+        /// Allowed to run on month
+        /// </summary>
         public List<bool> RunAllowedlist
         {
             get { return runAllowedlist; }
         }
+
+        /// <summary>
+        /// Priority on month
+        /// </summary>
         public List<int> Priolist
         {
             get { return priolist; }
         }
 
+        /// <summary>
+        /// Veto in a month or not
+        /// </summary>
         public List<bool> Vetolist
         {
             get { return vetolist; }
         }
        
-
+        /// <summary>
+        /// ...
+        /// </summary>
         public void init()
         {
 

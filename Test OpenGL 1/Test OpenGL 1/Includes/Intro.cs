@@ -8,6 +8,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Intro effect
+    /// </summary>
     class Intro : IEffect
     {
         private bool disposed;
@@ -16,14 +19,16 @@ namespace OpenGL
         private float ZA;
         private float ZT;
         private float ZW;
-
-
         private float XA;
         private float XT;
         private float XW;
-
         private bool XTBack;
 
+        /// <summary>
+        /// Constructor for Intro effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
+        /// <param name="txt">Text printer</param>
         public Intro(ref Sound sound, ref Text2D txt)
         {
             disposed = false;
@@ -42,17 +47,27 @@ namespace OpenGL
 
         }
 
-         ~Intro()
+        /// <summary>
+        /// Destructor
+        /// </summary>
+        ~Intro()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -68,6 +83,10 @@ namespace OpenGL
                 disposed = true;
             }
         }
+
+        /// <summary>
+        /// Play sound
+        /// </summary>
         private void Play()
         {
             if (snd.PlayingName() != "Intro") // this will start once the last sound is done, ie looping.
@@ -76,7 +95,9 @@ namespace OpenGL
             }
         }
 
-
+        /// <summary>
+        /// Draw text to screen
+        /// </summary>
         private void drawText()
         {
             text.Draw("KamikazE", Text2D.FontName.Coolfont, new Vector3(1.5f + XA, 1.0f, 4.0f - ZA), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 4.0f);
@@ -118,12 +139,12 @@ namespace OpenGL
                 XT += 0.025f;
                 ZT += 0.003f;
             }
-
-         
-           
-
         }
 
+        /// <summary>
+        /// Draw Intro effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play();

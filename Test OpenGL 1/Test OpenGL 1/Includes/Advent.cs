@@ -19,10 +19,13 @@ namespace OpenGL
     /// </summary>
     class Advent : IEffect
     {
+        /// <summary>
+        /// Enum for what advent it is, first to fourth advent.
+        /// </summary>
         public enum WhatAdvent { First = 1, Second, Third, Fourth };
 
         private bool disposed = false;
-        Sound snd;
+        private Sound snd;
         private int texture;
         private Vector3[] Ghost;
         private SizeF Size;
@@ -32,11 +35,15 @@ namespace OpenGL
         private float Z;
         private long tick = 0;
 
-        public Advent( ref Sound sound)
+        /// <summary>
+        /// Constructor for Advent effect
+        /// </summary>
+        /// <param name="sound">The sound system to play sounds</param>
+        public Advent(ref Sound sound)
         {
             snd = sound;
-            texture = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/ljus.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(244,143,143));
-            //snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/lucia.ogg", "lucia"); 
+            texture = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/ljus.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, Color.FromArgb(244,143,143));
+            //snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/lucia.ogg", "lucia"); 
 
             Ghost = new Vector3[4];
             Size = new SizeF(0.4f, 0.8f);
@@ -52,11 +59,17 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Advent()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             //base.Finalize();
@@ -64,6 +77,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it diposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -79,7 +96,9 @@ namespace OpenGL
             }
         }
 
-        
+        /// <summary>
+        /// Move the image on the screen
+        /// </summary>
         public void Move()
         {
             //kze: fix new movment pathern...
@@ -108,11 +127,20 @@ namespace OpenGL
             Ghost[3].Xy = new Vector2(X + Size.Width, Y);
         }
 
+        /// <summary>
+        /// Draw Advent effect on screen
+        /// </summary>
+        /// <param name="Date"></param>
         public void Draw(string Date)
         {
             Draw(Date, WhatAdvent.First);
         }
 
+        /// <summary>
+        /// Draw Advent effect on screen
+        /// </summary>
+        /// <param name="Date">What is the date</param>
+        /// <param name="adventnumber">Enum what advent number is it</param>
         public void Draw(string Date, WhatAdvent adventnumber)
         {
             // Spiders that draws after eachother and end ontop durring run will be hidden...

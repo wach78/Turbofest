@@ -8,6 +8,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Degerfors IF effect
+    /// </summary>
     class Dif : IEffect
     {
         private Chess bakground;
@@ -15,36 +18,49 @@ namespace OpenGL
         private int image;
         private float x;
         private float y;
-
         private bool disposed = false;
         private int tick;
         private string LastDate;
 
+        /// <summary>
+        /// Constructor for Degerfors IF effect
+        /// </summary>
+        /// <param name="chess"></param>
+        /// <param name="sound"></param>
         public Dif(ref Chess chess, ref Sound sound)
         {
             bakground = chess;
             x = 0.0f;
             y = 0.0f;
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/dif2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/dif2.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snd = sound;
             tick = 0;
             LastDate = string.Empty;
 
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/imperial.ogg", "Dif");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/imperial.ogg", "Dif");
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Dif()
         {
             Dispose(false);
         }
 
-
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -62,6 +78,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image on screen
+        /// </summary>
         private void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -84,6 +103,9 @@ namespace OpenGL
 
         }//DrawImage
    
+        /// <summary>
+        /// Move image
+        /// </summary>
         private void moveImage()
         {                   
             this.tick++;
@@ -95,6 +117,10 @@ namespace OpenGL
              
         }//moveImage
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "Dif") 
@@ -104,6 +130,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw on to screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);
@@ -112,6 +142,5 @@ namespace OpenGL
             DrawImage();
             
         }//Draw
-
     }//class
 }//namespace

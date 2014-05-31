@@ -8,32 +8,45 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// NewYear effect
+    /// </summary>
     class NewYear : IEffect
     {
-
         private bool disposed;
         private int image;
-
         private MoreFireWorks mfw;
 
+        /// <summary>
+        /// Constructor for NewYear effect
+        /// </summary>
         public NewYear()
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/newyear.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/newyear.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             mfw = new MoreFireWorks();
-
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~NewYear()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -50,6 +63,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -65,16 +81,16 @@ namespace OpenGL
 
             GL.End();
             GL.Disable(EnableCap.Texture2D);
-
-            
-
         }//DrawImage
 
+        /// <summary>
+        /// Draw NewYear effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             drawImage();
             mfw.Draw(Date);
-            
         }//Draw
     }//class
 }//namspace

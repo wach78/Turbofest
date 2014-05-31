@@ -9,23 +9,32 @@ using OpenTK;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Raindrops effect
+    /// </summary>
     class Raindrops : IEffect
     {
         private float x;
         private float y;
         private float speedY; // Y led gravity 
-
         private float z;
         private float Xpos;
         private float XLed;
-
         private int dropImage;
-
         private bool disposed = false;
-
         private Vector2[] vecTex;
         private Vector3[] vecPos;
 
+        /// <summary>
+        /// constructor for Raindrops effect
+        /// </summary>
+        /// <param name="x">X-position</param>
+        /// <param name="y">Y-position</param>
+        /// <param name="speedY">Movment in Y-axis</param>
+        /// <param name="dropImage">TextureID</param>
+        /// <param name="vecTex">Texture position</param>
+        /// <param name="XLed">Movment in X-axis</param>
+        /// <param name="z">Z-position</param>
         public Raindrops (float x, float y, float speedY, int dropImage, Vector2[] vecTex, float XLed, float z)
         {
             this.x = x;
@@ -46,17 +55,28 @@ namespace OpenGL
                                         };
 
         }
+
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Raindrops()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -73,7 +93,10 @@ namespace OpenGL
             }
         }
 
-
+        /// <summary>
+        /// Draw Raindorps on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             GL.Enable(EnableCap.Texture2D);

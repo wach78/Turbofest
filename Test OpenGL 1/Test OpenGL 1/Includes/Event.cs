@@ -7,73 +7,22 @@ using System.Diagnostics;
 
 namespace OpenGL.Event
 {
+    /// <summary>
+    /// What event type is this?
+    /// </summary>
     enum EventType {Effect, Text, Random};
 
-    interface IEventItem //: IDisposable
+    /// <summary>
+    /// Interface for eventitem
+    /// </summary>
+    interface IEventItem
     {
         void Draw(string Date);
     }
-
-    /*class Advent : IEventItem
-    {
-        private OpenGL.Advent item;
-        private OpenGL.Advent.WhatAdvent CurrentAdvent;
-
-        public Advent(ref OpenGL.Sound sound)
-        {
-            item = new OpenGL.Advent(ref sound);
-        }
-
-        public void Draw(string Date)
-        {
-            item.Draw(Date, CurrentAdvent);
-        }
-
-        public OpenGL.Advent.WhatAdvent Current
-        {
-            get { return CurrentAdvent; }
-            set { CurrentAdvent = value; }
-        }
-
-    }
-
-    class Birthday : IEventItem
-    {
-        private OpenGL.Birthday item;
-        private string Name;
-
-        public Birthday(ref OpenGL.Sound sound, ref OpenGL.Text2D text, ref OpenGL.Chess chess)
-        {
-            item = new OpenGL.Birthday(ref sound, ref text, ref chess);
-        }
-
-        public void Draw(string Date)
-        {
-            item.Draw(Date); // fixa ett namn in här
-        }
-
-        public string Current
-        {
-            get { return Name; }
-            set { Name = value; }
-        }
-    }
-
-    class RMS : IEventItem
-    {
-        private OpenGL.RMS item;
-
-        public RMS(ref OpenGL.Sound sound, ref OpenGL.Text2D text)
-        {
-            item = new OpenGL.RMS(ref sound, ref text);
-        }
-
-        public void Draw(string Date)
-        {
-            item.Draw(Date); // fixa ett namn in här
-        }
-    }*/
-
+    
+    /// <summary>
+    /// Event object
+    /// </summary>
     class objdata : IComparable
     {
         private string name;
@@ -173,7 +122,7 @@ namespace OpenGL.Event
         }
     }
 
-    class Event
+    class Event : IDisposable
     {
         private bool disposed = false;
         private static int eventnum = 0;
@@ -185,7 +134,6 @@ namespace OpenGL.Event
         OpenGL.Text2D text;
         OpenGL.Chess chess;
         OpenGL.Starfield sf;
-
         
         //Effects
         SuneAnimation sune;
@@ -212,7 +160,7 @@ namespace OpenGL.Event
         National NDay;
         Easter easter;
         Hajk hajk;
-        midsummer mid;
+        Midsummer mid;
         Vaffla vaf;
         Walpurgis wp;
         CrayFish crayfish;
@@ -235,10 +183,10 @@ namespace OpenGL.Event
         private Dictionary<string, List<objdata>> runEffectInMonth;
 
         //Event Date list
-        System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
-        System.Collections.Generic.List<string> randomEvent;
-        string lastDate;
-        string nowDate;
+        private System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<EventItem>> events;
+        private System.Collections.Generic.List<string> randomEvent;
+        private string lastDate;
+        private string nowDate;
 
         public Event(DateTime ClockStart, DateTime ClockEnd, int ClockRunTime, System.Xml.Linq.XDocument XMLEvents, ref CrashHandler Crash)
         {
@@ -276,10 +224,11 @@ namespace OpenGL.Event
             NDay = new National(ref chess, ref sound);
             easter = new Easter(ref sound);
             hajk = new Hajk(ref sound);
-            mid = new midsummer(ref sound);
+            mid = new Midsummer(ref sound);
             vaf = new Vaffla();
             wp = new Walpurgis();
             crayfish = new CrayFish();
+            
             ts = new TeknatStyle(ref chess, ref sound, ref text);
             m = new Matrix(ref text);
             q = new Quiz(ref text, false, ref sound);
@@ -292,18 +241,17 @@ namespace OpenGL.Event
             zelda = new Zelda(ref sound, ref chess);
             tardis = new Tardis(ref sound);
             fuck = new Fuck(ref sound, ref chess);
+<<<<<<< HEAD
             silverFang = new SilverFang(ref sound);
 
+=======
+            
+>>>>>>> c24fca2e5050bd718063acf99cea52491ae70f30
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
             randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "BB", "GummiBears", "TeknatStyle", "Matrix"});
 
             //new stuff
              List<UtilXML.EventData> ed = UtilXML.Loadeffectdata();
-
-            // Effect file to load...
-          //  "SuneAnimation", "Dif", "Fbk", "TurboLogo", "Datasmurf", "RMS", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "Hajk", "TeknatStyle", "Matrix", "Quiz"
-
-        
 
             Dictionary<string, Effect> effects = new Dictionary<string, Effect>()
             {
@@ -497,16 +445,25 @@ namespace OpenGL.Event
                         
                     }
 
-                   // ei = new EventItem("Nerdy", "random", date);
+                    ei = new EventItem("Nerdy", "random", date);
                     //ei = new EventItem("Talespin", "random", date);
                     //ei = new EventItem("ChipDale", "random", date);
                     //ei = new EventItem("Trex", "random", date);
+<<<<<<< HEAD
                    // ei = new EventItem("Sailormoon", "random", date);
                    // ei = new EventItem("GhostBusters", "random", date);
                     ei = new EventItem("Zelda", "random", date);
                     //ei = new EventItem("Tardis", "random", date);
                     //ei = new EventItem("Fuck", "random", date);
                     //ei = new EventItem("SilverFang", "random", date);
+=======
+                    //ei = new EventItem("Sailormoon", "random", date);
+                    //ei = new EventItem("GhostBusters", "random", date);
+                    //ei = new EventItem("Zelda", "random", date);
+                    //ei = new EventItem("Tardis", "random", date);
+                    //ei = new EventItem("BB", "random", date);
+
+>>>>>>> c24fca2e5050bd718063acf99cea52491ae70f30
                     star = !star;
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
@@ -540,14 +497,13 @@ namespace OpenGL.Event
                     if (sound != null) sound.Dispose();
 
                     if (clock != null) clock.Dispose(); // 2 texturer
-                    if (sune != null) sune.Dispose(); // 1-2 texturer
+                    if (sune != null) sune.Dispose(); // 1 texturer
                     if (fbk != null) fbk.Dispose(); // 1 textur
                     if (dif != null) dif.Dispose(); // 1 textur
                     if (xmas != null) xmas.Dispose(); // 3 texturer
                     if (semla != null) semla.Dispose(); // 1 textur
                     if (tl != null) tl.Dispose(); // 1 textur
                     if (smurf != null) smurf.Dispose(); // 1 textur
-                    if (sune != null) sune.Dispose(); // 1 textur
                     if (hw != null) hw.Dispose(); // 1 textur
                     if (valentine != null) valentine.Dispose(); // 2 texturer
                     if (outro != null) outro.Dispose(); // 1 textur
@@ -569,15 +525,16 @@ namespace OpenGL.Event
                     if (vaf != null) vaf.Dispose(); // 1 textur
                     if (wp != null) wp.Dispose(); // 1 texturer
                     if (crayfish != null) crayfish.Dispose(); // 8 texturer
-                    if (ts != null) ts.Dispose(); // 3 textur
+                    if (ts != null) ts.Dispose(); // 3 texturer
                     if (m != null) m.Dispose();
+                    if (q != null) q.Dispose();
                     if (talepsin != null) talepsin.Dispose();
                     if (cd != null) cd.Dispose();
                     if (nerd != null) nerd.Dispose();
                     if (trex != null) trex.Dispose();
                     if (sailormoon != null) sailormoon.Dispose();
                     if (gb != null) gb.Dispose();
-                    if (zelda != null)
+                    if (zelda != null) zelda.Dispose();
                     if (tardis != null) tardis.Dispose();
                     if (fuck != null) fuck.Dispose();
                     if (silverFang != null) silverFang.Dispose();
@@ -585,7 +542,6 @@ namespace OpenGL.Event
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
                     if (chess != null) chess.Dispose(); // 7 texturer
-                    
                 }
                 // free native resources if there are any.
                 disposed = true;

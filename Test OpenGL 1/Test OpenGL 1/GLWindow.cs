@@ -14,6 +14,9 @@ using System.Windows.Forms;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Class for making a OpenGL windows.
+    /// </summary>
     public class GLWindow : OpenTK.GameWindow
     {
         private const string TITLE = "Turbo";
@@ -28,6 +31,14 @@ namespace OpenGL
         private int[] Resolution;
 
         // OpenGL version after 3.0 needs there own matrix libs so we need to create them if we run over 3.0!!! if ser major and minor to 0 we can get around it?!
+        /// <summary>
+        /// Constructor method for a GLWindow
+        /// </summary>
+        /// <param name="Events">Events</param>
+        /// <param name="SpringOrFall">Is it spring or fall?</param>
+        /// <param name="runtime"></param>
+        /// <param name="res">Resolution?</param>
+        /// <param name="Crash">Crash handler</param>
         public GLWindow(System.Xml.Linq.XDocument Events, string SpringOrFall, string runtime, int[] res, ref CrashHandler Crash) : base(res[0], res[1], new OpenTK.Graphics.GraphicsMode(/*new OpenTK.Graphics.ColorFormat(32), 24, 8, 0*/)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
         {
             this.WindowBorder = OpenTK.WindowBorder.Fixed;
@@ -66,6 +77,9 @@ namespace OpenGL
             
         }
 
+        /// <summary>
+        /// Debug info for OpenGL...
+        /// </summary>
         public void _WriteVersion()
         {
             int texVxShader = 0;
@@ -82,6 +96,10 @@ namespace OpenGL
             System.Diagnostics.Debug.WriteLine("Max texture size: " + Util.MaxTexturesSizeWidth); // make this a Util-tool as this we need to use to see so that our textures can fit the opengl target of the machine...
         }
 
+        /// <summary>
+        /// OnLoad method setting up some off OpenGL environment.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -124,7 +142,11 @@ namespace OpenGL
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set the clear color to a black
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void OnClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
@@ -178,6 +200,10 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
@@ -186,10 +212,16 @@ namespace OpenGL
             if (events != null) events.Dispose();
             System.Diagnostics.Debug.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
             System.Diagnostics.Debug.WriteLine(this.GetType().ToString() + " closed.");
-
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
             this.Dispose(true);
+            System.Diagnostics.Debug.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
         }
 
+        /// <summary>
+        /// If we resize the drawing area this updates the OpenGL environment.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -225,6 +257,10 @@ namespace OpenGL
             Util.ViewportChanged(true);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnUpdateFrame(OpenTK.FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
@@ -235,6 +271,10 @@ namespace OpenGL
 
 
         // The rendering for the scene happens here.
+        /// <summary>
+        /// This renders frame.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnRenderFrame(OpenTK.FrameEventArgs e)
         {
             base.OnRenderFrame(e);
@@ -255,6 +295,11 @@ namespace OpenGL
             //System.Diagnostics.Debug.WriteLine(RenderFrequency);
         }
 
+        /// <summary>
+        /// Key pressed, this makes us able to interact with keyboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="key"></param>
         private void OnKeyboardKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs key)
         {
             //OpenTK.Input.MouseDevice asd = new OpenTK.Input.MouseDevice();
@@ -371,7 +416,7 @@ namespace OpenGL
                 bmp.UnlockBits(data);
                 bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
                 // break this out so it does that check on load???
-                string[] files = System.IO.Directory.GetFiles(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "img*.bmp", System.IO.SearchOption.TopDirectoryOnly);
+                string[] files = System.IO.Directory.GetFiles(Util.CurrentExecutionPath, "img*.bmp", System.IO.SearchOption.TopDirectoryOnly);
                 int maxFileName = 0;
                 int currentFileName = 0;
                 System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(/*@"(img([0-9]+).bmp)"*/ "([0-9]+)");
@@ -392,7 +437,7 @@ namespace OpenGL
                 mh = null;
                 maxFileName++;
                 //Save the screenshot to file.
-                bmp.Save(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "//img" + maxFileName + ".bmp");
+                bmp.Save(Util.CurrentExecutionPath + "//img" + maxFileName + ".bmp");
                 bmp.Dispose(); // clear the data so that we don't have leaks...
             }
         }

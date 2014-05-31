@@ -10,18 +10,18 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// SuneAnimation effect
+    /// </summary>
     class SuneAnimation : IEffect
     {
         private int image;
-
         private SuneTxtHandler sh;
-
         private long ticks;
         private long oldTicks;
         private long soundTicks;
         private long soundOldTicks;
         private int currentImage;
-
         private Sound snd;
         //private Text2D text;
         private bool soundTrue = false;
@@ -30,6 +30,11 @@ namespace OpenGL
         //private short soundTimes = 0;
         private string LastPlayedDate;
 
+        /// <summary>
+        /// Constructor for SuneAnimation
+        /// </summary>
+        /// <param name="sound">Sound system</param>
+        /// <param name="Text">Text printer</param>
         public SuneAnimation(ref Sound sound, ref Text2D Text)
         {
             ticks = 0;
@@ -41,24 +46,32 @@ namespace OpenGL
             snd = sound;
             //text = Text;
             LastPlayedDate = string.Empty;
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/sune_sprite.bmp");
-            //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/laugh.wav", "Sune");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/laugh.ogg", "Sune");
-            
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/sune_sprite.bmp");
+            //snd.CreateSound(Sound.FileType.WAV, Util.CurrentExecutionPath + "/Samples/laugh.wav", "Sune");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/laugh.ogg", "Sune");
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~SuneAnimation()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
-           
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -67,7 +80,8 @@ namespace OpenGL
                 {
                     // free managed resources
                     Util.DeleteTexture(ref image);
-                    sh.Dispose();
+                    sh.Dispose(); // bugging dispose out!?
+                    //sh.Close();
                     sh = null;
                     currentImage = 0;
                 }
@@ -77,6 +91,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         public void DrawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -93,6 +110,9 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Stop sound
+        /// </summary>
         public void stopSample()
         {
             soundTicks = System.DateTime.Now.Ticks / TimeSpan.TicksPerSecond;
@@ -114,6 +134,10 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Randomize effect
+        /// </summary>
+        /// <param name="Date">New date?</param>
         private void random(string Date)
         {
             if (LastPlayedDate != Date)
@@ -124,6 +148,9 @@ namespace OpenGL
 
         }
 
+        /// <summary>
+        /// Cahnge showing image
+        /// </summary>
         public void updateImages()
         {
             ticks = System.DateTime.Now.Ticks  / TimeSpan.TicksPerMillisecond; 
@@ -146,6 +173,9 @@ namespace OpenGL
            
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
         public void playSound()
         {
             if (!soundTrue && !soundDone)
@@ -160,6 +190,9 @@ namespace OpenGL
            // stopSample();
         }
 
+        /// <summary>
+        /// New qoute
+        /// </summary>
         public void NewQoute()
         {
             sh.drawInit(false);
@@ -167,6 +200,10 @@ namespace OpenGL
             soundDone = false;
         }
 
+        /// <summary>
+        /// Draw SuneAnimation on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             random(Date);

@@ -10,23 +10,32 @@ using OpenTK;
 
 namespace OpenGL 
 {
+    /// <summary>
+    /// Class for Eggs
+    /// </summary>
     class Eggs : IEffect
     {
         private float x;
         private float y;
         private float speedY; // Y led gravity 
-
         private float z;
         private float Xpos;
         private float XLed;
-
         private int snowImage;
-
         private bool disposed = false;
-
         private Vector2[] vecTex;
         private Vector3[] vecPos;
 
+        /// <summary>
+        /// constructor for Eggs
+        /// </summary>
+        /// <param name="x">X-position</param>
+        /// <param name="y">Y-position</param>
+        /// <param name="speedY">Y-speed</param>
+        /// <param name="snowImage">What TextureID to show</param>
+        /// <param name="vecTex">Texture coordinates</param>
+        /// <param name="XLed">?</param>
+        /// <param name="z">Z-position</param>
         public Eggs(float x, float y, float speedY, int snowImage, Vector2[] vecTex, float XLed, float z)
         {
             this.x = x;
@@ -45,19 +54,29 @@ namespace OpenGL
                                          new Vector3(x - 0.1f,y  + 0.0f,this.z),
                                          new Vector3(x + 0.0f,y  +0.0f,this.z)
                                         };
-
         }
+
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Eggs()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -74,6 +93,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             GL.Enable(EnableCap.Texture2D);

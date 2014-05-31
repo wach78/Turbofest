@@ -8,6 +8,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Outro effect
+    /// </summary>
     class Outro : IEffect
     {
         private bool disposed;
@@ -17,12 +20,16 @@ namespace OpenGL
         private long oldTicks;
         private bool delyed;
 
+        /// <summary>
+        /// Constructor for Outro effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
         public Outro(ref Sound sound)
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/BOSD.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/BOSD.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snd = sound;
-            //snd.CreateSound(Sound.FileType.WAV, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Blackheart.wav", "Outro");
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Blackheart.ogg", "Outro");
+            //snd.CreateSound(Sound.FileType.WAV, Util.CurrentExecutionPath + "/Samples/Blackheart.wav", "Outro");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/Blackheart.ogg", "Outro");
 
             disposed = false;
             ticks = 0;
@@ -30,17 +37,27 @@ namespace OpenGL
             delyed = false;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
          ~Outro()
         {
             Dispose(false);
         }
 
+         /// <summary>
+         /// Dispose method
+         /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -57,6 +74,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
         public void Play()
         {
             if (snd.PlayingName() != "Outro") // this will start once the last sound is done
@@ -66,7 +86,9 @@ namespace OpenGL
             }
         }
 
-
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -85,6 +107,10 @@ namespace OpenGL
 
         }//DrawImage
 
+        /// <summary>
+        /// Draw Outro effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerSecond;
@@ -110,7 +136,6 @@ namespace OpenGL
             }
             
             drawImage();
-
         }//Draw
     }//class
 }//namespace

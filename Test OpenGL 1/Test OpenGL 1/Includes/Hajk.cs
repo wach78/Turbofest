@@ -8,6 +8,9 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Hajk effect
+    /// </summary>
     class Hajk : IEffect
     {
         private bool disposed;
@@ -15,27 +18,41 @@ namespace OpenGL
         private Sound snd;
         private string LastDate;
 
+        /// <summary>
+        /// Constructor for Hajk effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
         public Hajk(ref Sound sound)
         {
-            image = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/Hajk.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            image = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/Hajk.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             snd = sound;
 
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/HAJK.ogg", "Hajk");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/HAJK.ogg", "Hajk");
             disposed = false;
             LastDate = string.Empty;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Hajk()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -53,6 +70,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -71,6 +91,10 @@ namespace OpenGL
 
         }//DrawImage
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
+        /// <param name="Date">New date?</param>
         public void Play(string Date)
         {
             if (LastDate != Date && snd.PlayingName() != "Hajk") // this will start once the last sound is done, ie looping.
@@ -80,6 +104,10 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Draw Hajk effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             Play(Date);

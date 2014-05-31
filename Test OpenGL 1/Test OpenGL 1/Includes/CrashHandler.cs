@@ -10,16 +10,23 @@ using System.Windows.Forms;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// This is for making crashing less painful as it keeps track on current time and writes it to a file, it can still fail as it is not 
+    /// sure if it can write or not...
+    /// </summary>
     public class CrashHandler : IDisposable
     {
         private bool disposed = false;
         private bool SelfExit;
         private double clock;
         private FileStream CrashFile;
-        DialogResult CrashPresentDialogresult;
+        private DialogResult CrashPresentDialogresult;
         private string FileName;
-        XmlDocument XD;
+        private XmlDocument XD;
 
+        /// <summary>
+        /// Constructor for the CrashHandler
+        /// </summary>
         public CrashHandler()
         {
             clock = 0.0;
@@ -38,11 +45,17 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// "Destructor" called my system GC.
+        /// </summary>
         ~CrashHandler()
         {
-            //Dispose(true);
+            Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose method.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -53,6 +66,10 @@ namespace OpenGL
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method.
+        /// </summary>
+        /// <param name="disposing">Are we disposing or is it done by system cleanup?</param>
         protected virtual void Dispose(bool disposing)
         {
             // If you need thread safety, use a lock around these  
@@ -76,22 +93,35 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// What DialogResult do we have as a value
+        /// </summary>
         public DialogResult CrashDialogResult
         {
             get { return CrashPresentDialogresult; }
         }
 
+        /// <summary>
+        /// Current time
+        /// </summary>
         public double CrashClock
         {
             get { return clock; }
         }
 
+        /// <summary>
+        /// Should we exit?
+        /// </summary>
         public bool Exit
         {
             get { return SelfExit; }
             set { SelfExit = value; }
         }
 
+        /// <summary>
+        /// Do we have a crash file should we start from it?
+        /// </summary>
+        /// <returns>DialogResult to say yes or no to start from crash file.</returns>
         public DialogResult CheckCrash()
         {
             if (File.Exists(FileName)) // make this dynamic for each xmlfile...
@@ -164,6 +194,9 @@ namespace OpenGL
             return CrashPresentDialogresult;
         }
 
+        /// <summary>
+        /// Clear the crash file.
+        /// </summary>
         public void Clear()
         {
             try
@@ -173,7 +206,6 @@ namespace OpenGL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
@@ -182,6 +214,11 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Update the crash file with new time
+        /// </summary>
+        /// <param name="current">Current time</param>
+        /// <param name="currentDateTime">Parsed current time</param>
         public void update(double current, DateTime currentDateTime)
         {
             clock = current;

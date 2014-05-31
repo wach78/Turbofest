@@ -12,33 +12,59 @@ using System.Xml.Linq;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Static helper class with some things to help control the OpenGL environment and system
+    /// </summary>
     static public class Util
     {
         private static int maxShaderVertexTextures; // Max combinde shader - and vertex texture.
         private static int maxBuffers; //color buffers
         private static int currentTextureBuffers; // the number of current generated Texture buffers created
         private static int texMaxSize;
+        /// <summary>
+        /// OpenGL Lightning active?
+        /// </summary>
         public static bool Lightning;
+        /// <summary>
+        /// OpenGL fog active?
+        /// </summary>
         public static bool Fog;
+        /// <summary>
+        /// Run/ning in fullscreen?
+        /// </summary>
         public static bool Fullscreen;
+        /// <summary>
+        /// Show PartyClock?
+        /// </summary>
         public static bool ShowClock;
 
         private static string springOrFall;
-
+        private static string strWorkingPath;
         private static bool MVP_changed;
         private static bool Viewport_changed;
         private static Matrix4 MVPMatrix;
         private static float[] viewport;
 
         //fix me...
+        /// <summary>
+        /// Field of view
+        /// </summary>
         public static float FOV = OpenTK.MathHelper.DegreesToRadians(60.0f);
+        /// <summary>
+        /// Aspec ratio
+        /// </summary>
         public static float Aspect = 1.6f;
 
-        //
+        /// <summary>
+        /// Premade random loaded
+        /// </summary>
         public static Random Rnd;
 
 
         #region Constructor
+        /// <summary>
+        /// Constructor for the static Utils
+        /// </summary>
         static Util()
         {
             GL.GetInteger(GetPName.MaxCombinedTextureImageUnits, out maxShaderVertexTextures);
@@ -54,10 +80,23 @@ namespace OpenGL
             viewport = new float[4];
             Rnd = new Random();
             springOrFall = string.Empty;
+            strWorkingPath = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
         }
         #endregion
 
         #region Method
+        /// <summary>
+        /// Load a texture to graphic memory
+        /// </summary>
+        /// <param name="filename">The filepath to the file to load</param>
+        /// <param name="Width">How wide is the image</param>
+        /// <param name="Height">How highe is the image</param>
+        /// <param name="MinFilter">What filter to use</param>
+        /// <param name="MagFilter">What filter to use</param>
+        /// <param name="WrapS">Wrap it X?</param>
+        /// <param name="WrapT">Wrap it Y?</param>
+        /// <param name="Transparant">Do we have a transparant colour in the image?</param>
+        /// <returns>TextureID from OpenGL</returns>
         public static int LoadTexture(string filename, out float Width, out float Height, TextureMinFilter MinFilter = TextureMinFilter.Linear, TextureMagFilter MagFilter = TextureMagFilter.Linear,
             TextureWrapMode WrapS = TextureWrapMode.Clamp, TextureWrapMode WrapT = TextureWrapMode.Clamp, Color Transparant = new Color())
         {
@@ -77,7 +116,17 @@ namespace OpenGL
             return LoadTexture(bitmap, MinFilter, MagFilter, WrapS, WrapT, Transparant);
         }//LoadTexture
 
-        public static int LoadTexture(string filename, TextureMinFilter MinFilter = TextureMinFilter.Linear, TextureMagFilter MagFilter = TextureMagFilter.Linear,
+        /// <summary>
+        /// Load a texture to graphic memory
+        /// </summary>
+        /// <param name="filename">The filepath to the file to load</param>
+        /// <param name="MinFilter">What filter to use</param>
+        /// <param name="MagFilter">What filter to use</param>
+        /// <param name="WrapS">Wrap it X?</param>
+        /// <param name="WrapT">Wrap it Y?</param>
+        /// <param name="Transparant">Do we have a transparant colour in the image?</param>
+        /// <returns>TextureID from OpenGL</returns>
+        public static int LoadTexture(string filename, TextureMinFilter MinFilter = TextureMinFilter.Nearest, TextureMagFilter MagFilter = TextureMagFilter.Linear,
             TextureWrapMode WrapS = TextureWrapMode.Clamp, TextureWrapMode WrapT = TextureWrapMode.Clamp, Color Transparant = new Color())
         {
             Bitmap bitmap = null;
@@ -98,7 +147,17 @@ namespace OpenGL
             return LoadTexture(bitmap, MinFilter, MagFilter, WrapS, WrapT, Transparant);
         }//LoadTexture
 
-        public static int LoadTexture(Bitmap bitmap, TextureMinFilter MinFilter = TextureMinFilter.Linear, TextureMagFilter MagFilter = TextureMagFilter.Linear,
+        /// <summary>
+        /// Load a texture to graphic memory
+        /// </summary>
+        /// <param name="bitmap">Bitmap data</param>
+        /// <param name="MinFilter">What filter to use</param>
+        /// <param name="MagFilter">What filter to use</param>
+        /// <param name="WrapS">Wrap it X?</param>
+        /// <param name="WrapT">Wrap it Y?</param>
+        /// <param name="Transparant">Do we have a transparant colour in the image?</param>
+        /// <returns>TextureID from OpenGL</returns>
+        public static int LoadTexture(Bitmap bitmap, TextureMinFilter MinFilter = TextureMinFilter.Nearest, TextureMagFilter MagFilter = TextureMagFilter.Linear,
             TextureWrapMode WrapS = TextureWrapMode.Clamp, TextureWrapMode WrapT = TextureWrapMode.Clamp, Color Transparant = new Color())
         {
             if (bitmap == null)
@@ -111,7 +170,7 @@ namespace OpenGL
             {
                 bitmap.MakeTransparent(Transparant);
             }
-            
+
             if (bitmap.Width >= Util.MaxTexturesSizeWidth || bitmap.Height >= Util.MaxTexturesSizeWidth)
             {
                 throw new Exception("GFX/Texture is to large it excides the allowed size by your hardware (" + Util.MaxTexturesSizeWidth + " x " + Util.MaxTexturesSizeWidth + ")");
@@ -135,9 +194,13 @@ namespace OpenGL
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)MagFilter);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)WrapS);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)WrapT);
-             return tex;
+            return tex;
         }//LoadTexture
 
+        /// <summary>
+        /// Generate a TextureID with OpenGL and keep count on how many we have made
+        /// </summary>
+        /// <returns>TextureID from OpenGL</returns>
         public static int GenTextureID()
         {
             /*if (CurrentUsedTextures >= 160)
@@ -150,6 +213,10 @@ namespace OpenGL
             return tex;
         }
 
+        /// <summary>
+        /// Generate a TextureID with OpenGL and keep count on how many we have made
+        /// </summary>
+        /// <param name="tid">TextureID from OpenGL</param>
         public static void GenTextureID(out int tid)
         {
             /*if (CurrentUsedTextures >= 160)
@@ -167,18 +234,21 @@ namespace OpenGL
         /// <param name="Texture">If cleard this is -1</param>
         public static void DeleteTexture(ref int Texture)
         {
-            /*if (GL.IsTexture(Texture))
-            {*/
-            //System.Diagnostics.Debug.WriteLine("Delete: " + Texture + ", " + currentTextureBuffers);
-                GL.DeleteTextures(1, ref Texture);
-                currentTextureBuffers--;
-                Texture = -1;
-                if (currentTextureBuffers < 0)
+            if (GL.IsTexture(Texture))
+            {
+                //System.Diagnostics.Debug.WriteLine("Delete: " + Texture + ", " + currentTextureBuffers);
+                if (Texture >= 0)
                 {
-                    throw new Exception("Can't be less then zero current textures.");
+                    GL.DeleteTextures(1, ref Texture);
+                    currentTextureBuffers--;
+                    Texture = -1;
+                    if (currentTextureBuffers < 0)
+                    {
+                        throw new Exception("Can't be less then zero current textures.");
+                    }
                 }
-            /*}
-            else
+            }
+            /*else
             {
                 throw new Exception("Not a texture, so can't delete it!");
             }*/
@@ -187,13 +257,17 @@ namespace OpenGL
         /// <summary>
         /// Might need to rethink this as this make my head spin on the same point as this isen't helping that mutch ;D
         /// </summary>
-        /// <param name="changed"></param>
-        /// <returns></returns>
+        /// <param name="changed">Have a change of view port happend?</param>
+        /// <returns>Is the change done?</returns>
         public static bool ViewportChanged(bool changed)
         {
             return (Viewport_changed = changed);
         }
 
+        /// <summary>
+        /// Get the current viewport 
+        /// </summary>
+        /// <returns>Current area of the viewport</returns>
         public static float[] GetViewport()
         {
             if (Viewport_changed)
@@ -204,11 +278,20 @@ namespace OpenGL
             return viewport;
         }
 
+        /// <summary>
+        /// Have the Viewport matrix changed?
+        /// </summary>
+        /// <param name="changed">Is it changed?</param>
+        /// <returns>Have the changed been done?</returns>
         public static bool MVPChanged(bool changed)
         {
             return (MVP_changed = changed);
         }
 
+        /// <summary>
+        /// Get the Viewport matrix
+        /// </summary>
+        /// <returns>Matrix4 of the viewport</returns>
         public static Matrix4 GetMVP()
         {
             /*//float[] viewport = new float[4];
@@ -371,7 +454,14 @@ namespace OpenGL
 
         // new test for get max with...
 
-
+        /// <summary>
+        /// UnProject the projection ie. flatten it on the screen
+        /// </summary>
+        /// <param name="projection"></param>
+        /// <param name="view"></param>
+        /// <param name="viewport"></param>
+        /// <param name="mouse"></param>
+        /// <returns>bad...</returns>
         public static Vector4 UnProject(Matrix4 projection, Matrix4 view, Size viewport, Vector3 mouse)
         {
             Vector4 vec;
@@ -397,6 +487,14 @@ namespace OpenGL
             return vec;
         }
 
+        /// <summary>
+        /// Project it on the screen
+        /// </summary>
+        /// <param name="objPos"></param>
+        /// <param name="projection"></param>
+        /// <param name="view"></param>
+        /// <param name="viewport"></param>
+        /// <returns>bad...</returns>
         public static Vector4 Project(OpenTK.Vector4 objPos, Matrix4 projection, Matrix4 view, Size viewport)
         {
             Vector4 vec = objPos;
@@ -425,6 +523,20 @@ namespace OpenGL
         #endregion
 
         #region Property
+        /// <summary>
+        /// How many textures have been created and are active still
+        /// </summary>
+        public static string CurrentExecutionPath
+        {
+            get
+            {
+                return strWorkingPath;
+            }
+        }
+
+        /// <summary>
+        /// How many textures have been created and are active still
+        /// </summary>
         public static int CurrentUsedTextures
         {
             get
@@ -433,6 +545,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// How many combined textures can there be on this system?
+        /// </summary>
         public static int MaxCombindeTextures
         {
             get
@@ -453,6 +568,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// How many buffers can there be on this system?
+        /// </summary>
         public static int MaxBuffers
         {
             get
@@ -461,6 +579,9 @@ namespace OpenGL
             }
         }
 
+        /// <summary>
+        /// Is it spring or fall?
+        /// </summary>
         public static string SpringOrFall
         {
             get { return springOrFall; }
@@ -468,13 +589,17 @@ namespace OpenGL
         }
         #endregion
 
+        /// <summary>
+        /// List of months
+        /// </summary>
+        /// <returns>A string array with the short names of the months in Swedish</returns>
         public static string[] monthlist()
         {
             string[] monthstlist;
 
             if ("Spring".Equals(springOrFall))
             {
-               
+
                 monthstlist = new string[] { "sep", "okt", "nov", "dec", "jan", "feb", "mar" };
             }
             else
@@ -483,17 +608,23 @@ namespace OpenGL
             }
             return monthstlist;
         }
-        
+
     }//class
 
+    /// <summary>
+    /// Helper class for XML file handling
+    /// </summary>
     public static class UtilXML
     {
+        /// <summary>
+        /// How we present event data to the program
+        /// </summary>
         public class EventData
         {
             #region Variables
             private string strName;
             //private bool blnVeto;
-           // private int intPrio;
+            // private int intPrio;
             private List<string> namelist;
             private List<int> runslist;
             private List<bool> runAllowedlist;
@@ -502,10 +633,14 @@ namespace OpenGL
             #endregion
 
             #region Constructor
+            /// <summary>
+            /// Constructor of the event
+            /// </summary>
+            /// <param name="Name">Name of event</param>
             public EventData(string Name)
             {
                 strName = Name;
-               // blnVeto = Veto;
+                // blnVeto = Veto;
                 //intPrio = Prio;
                 namelist = new List<string>();
                 runslist = new List<int>();
@@ -514,6 +649,9 @@ namespace OpenGL
                 vetolist = new List<bool>();
             }
 
+            /// <summary>
+            /// Constructor of empty event
+            /// </summary>
             public EventData()
             {
                 namelist = new List<string>();
@@ -525,32 +663,49 @@ namespace OpenGL
             #endregion
 
             #region Properties
+            /// <summary>
+            /// Name of Event
+            /// </summary>
             public string Name
             {
                 get { return strName; }
             }
 
-           
-
+            /// <summary>
+            /// Name of month
+            /// </summary>
             public List<string> Namelist
             {
                 get { return namelist; }
             }
 
+            /// <summary>
+            /// How many runs Event do
+            /// </summary>
             public List<int> Runslist
             {
                 get { return runslist; }
             }
 
+            /// <summary>
+            /// Allowed to run?
+            /// </summary>
             public List<bool> RunAllowedlist
             {
                 get { return runAllowedlist; }
             }
+
+            /// <summary>
+            /// Do this Event have high/low prio in the month?
+            /// </summary>
             public List<int> Priolist
             {
                 get { return priolist; }
             }
 
+            /// <summary>
+            /// This Event forced to run in this month?
+            /// </summary>
             public List<bool> VetoList
             {
                 get { return vetolist; }
@@ -558,7 +713,14 @@ namespace OpenGL
             #endregion
 
             #region Methods
-
+            /// <summary>
+            /// Set in what month it can be used
+            /// </summary>
+            /// <param name="name">Name of month</param>
+            /// <param name="runs">How many runs it can do</param>
+            /// <param name="allowed">Can this be used</param>
+            /// <param name="veto">Force this to run</param>
+            /// <param name="prio">What is the priority</param>
             public void setData(string name, int runs, bool allowed, bool veto, int prio)
             {
                 namelist.Add(name);
@@ -567,7 +729,11 @@ namespace OpenGL
                 priolist.Add(prio);
                 vetolist.Add(veto);
             }
-
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="obj"></param>
+            /// <returns></returns>
             public int CompareTo(object obj)
             {
                 EventData Compare = (EventData)obj;
@@ -580,15 +746,19 @@ namespace OpenGL
         }
 
         static UtilXML()
-        { 
-        
+        {
+
         }
 
+        /// <summary>
+        /// Load effect xml and get stuff oriented as they should
+        /// </summary>
+        /// <returns></returns>
         public static List<EventData> Loadeffectdata()
         {
             List<EventData> objlist = new List<EventData>();
 
-            XDocument xDoc = XDocument.Load(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/XMLFiles/Effects/randomeffects"+ Util.SpringOrFall  +".xml");
+            XDocument xDoc = XDocument.Load(Util.CurrentExecutionPath + "/XMLFiles/Effects/randomeffects" + Util.SpringOrFall + ".xml");
 
             var effects = xDoc.Descendants("effect");
 

@@ -10,12 +10,14 @@ using System.Diagnostics;
 
 namespace OpenGL
 {
-    class Self
+    /// <summary>
+    /// Self/Creator effect
+    /// </summary>
+    class Self : IEffect
     {
         private bool disposed = false;
         private int imageWach;
         private int imageKamikazE;
-
         private long tick;
         private float x;
         private float y;
@@ -23,14 +25,18 @@ namespace OpenGL
         private string CurrentDate;
         private Sound snd;
 
+        /// <summary>
+        /// Constructor for Self effect
+        /// </summary>
+        /// <param name="sound">Sound system</param>
         public Self(ref Sound sound)
         {
 
-            imageWach = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/wach.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
-            imageKamikazE = Util.LoadTexture(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/gfx/kze.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            imageWach = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/wach.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
+            imageKamikazE = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/kze.bmp", TextureMinFilter.Linear, TextureMagFilter.Linear, TextureWrapMode.Clamp, TextureWrapMode.Clamp, System.Drawing.Color.FromArgb(255, 0, 255));
             randomImage = (Util.Rnd.Next(0, 100)<50? 0:1);
             snd = sound;
-            snd.CreateSound(Sound.FileType.Ogg, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Samples/Tetris.ogg", "Self");
+            snd.CreateSound(Sound.FileType.Ogg, Util.CurrentExecutionPath + "/Samples/Tetris.ogg", "Self");
 
             tick = 0;
             x = 0.0f;
@@ -39,17 +45,27 @@ namespace OpenGL
             CurrentDate = string.Empty;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Self()
-         {
+        {
             Dispose(false);
-         }
+        }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        /// <param name="disposing">Is it disposing?</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -67,6 +83,9 @@ namespace OpenGL
         }
 
         // this needs to be set to not load new textures each time... quick and dirty way now...
+        /// <summary>
+        /// Change image
+        /// </summary>
         private void SetSelf()
         {
             if (randomImage == 0)
@@ -75,6 +94,9 @@ namespace OpenGL
                 randomImage = 0;
         }
 
+        /// <summary>
+        /// Draw image to screen
+        /// </summary>
         private void drawImage()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -100,6 +122,9 @@ namespace OpenGL
             y += 0.7f;
         }//DrawImage
 
+        /// <summary>
+        /// Play sound
+        /// </summary>
         public void Play()
         {
             if (snd.PlayingName() != "Self")
@@ -108,7 +133,10 @@ namespace OpenGL
             }
         }
 
-
+        /// <summary>
+        /// Draw Self effect on screen
+        /// </summary>
+        /// <param name="Date">Current date</param>
         public void Draw(string Date)
         {
             if (CurrentDate != Date)
