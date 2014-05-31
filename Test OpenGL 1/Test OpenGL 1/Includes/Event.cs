@@ -241,12 +241,12 @@ namespace OpenGL.Event
             zelda = new Zelda(ref sound, ref chess);
             tardis = new Tardis(ref sound);
             fuck = new Fuck(ref sound, ref chess);
-<<<<<<< HEAD
+
             silverFang = new SilverFang(ref sound);
 
-=======
+
             
->>>>>>> c24fca2e5050bd718063acf99cea52491ae70f30
+
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
             randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "BB", "GummiBears", "TeknatStyle", "Matrix"});
 
@@ -445,25 +445,19 @@ namespace OpenGL.Event
                         
                     }
 
-                    ei = new EventItem("Nerdy", "random", date);
+                   // ei = new EventItem("Nerdy", "random", date);
                     //ei = new EventItem("Talespin", "random", date);
                     //ei = new EventItem("ChipDale", "random", date);
                     //ei = new EventItem("Trex", "random", date);
-<<<<<<< HEAD
+
                    // ei = new EventItem("Sailormoon", "random", date);
                    // ei = new EventItem("GhostBusters", "random", date);
-                    ei = new EventItem("Zelda", "random", date);
-                    //ei = new EventItem("Tardis", "random", date);
-                    //ei = new EventItem("Fuck", "random", date);
-                    //ei = new EventItem("SilverFang", "random", date);
-=======
-                    //ei = new EventItem("Sailormoon", "random", date);
-                    //ei = new EventItem("GhostBusters", "random", date);
                     //ei = new EventItem("Zelda", "random", date);
                     //ei = new EventItem("Tardis", "random", date);
-                    //ei = new EventItem("BB", "random", date);
+                    //ei = new EventItem("Fuck", "random", date);
+                    ei = new EventItem("SilverFang", "random", date);
 
->>>>>>> c24fca2e5050bd718063acf99cea52491ae70f30
+
                     star = !star;
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);

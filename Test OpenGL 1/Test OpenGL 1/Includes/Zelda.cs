@@ -150,7 +150,7 @@ namespace OpenGL
 
         }//DrawImage
 
-<<<<<<< HEAD
+
         public void updateImages()
         {
             ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
@@ -175,12 +175,12 @@ namespace OpenGL
                 oldTicks = ticks;
 
         }
-=======
+
         /// <summary>
         /// Play sound
         /// </summary>
         /// <param name="Date">New date?</param>
->>>>>>> c24fca2e5050bd718063acf99cea52491ae70f30
+
         private void Play(String Date)
         {
             if (LastDate != Date && snd.PlayingName() != "Zelda") // this will start once the last sound is done, ie looping.
