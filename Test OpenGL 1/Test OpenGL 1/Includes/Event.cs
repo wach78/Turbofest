@@ -168,6 +168,7 @@ namespace OpenGL.Event
         Matrix m;
         Quiz q;
 
+        MoraT mt;
         SilverFang silverFang;
         Fuck fuck;
         Tardis tardis;
@@ -243,6 +244,7 @@ namespace OpenGL.Event
             fuck = new Fuck(ref sound, ref chess);
 
             silverFang = new SilverFang(ref sound);
+            mt = new MoraT(ref sound);
 
 
             
@@ -279,7 +281,8 @@ namespace OpenGL.Event
                 {"Zelda",new Effect(q, ed.Find(e => e.Name == "Zelda"))},
                 {"Tardis",new Effect(q, ed.Find(e => e.Name == "Tardis"))},
                 {"Fuck",new Effect(q, ed.Find(e => e.Name == "Fuck"))},
-                {"SilverFang",new Effect(q, ed.Find(e => e.Name == "SilverFang"))}
+                {"SilverFang",new Effect(q, ed.Find(e => e.Name == "SilverFang"))},
+                {"MoraT",new Effect(q, ed.Find(e => e.Name == "MoraT"))}
             };
 
             runEffectInMonth = new Dictionary<string, List<objdata>>();
@@ -455,8 +458,8 @@ namespace OpenGL.Event
                     //ei = new EventItem("Zelda", "random", date);
                     //ei = new EventItem("Tardis", "random", date);
                     //ei = new EventItem("Fuck", "random", date);
-                    ei = new EventItem("SilverFang", "random", date);
-
+                    //ei = new EventItem("SilverFang", "random", date);
+                    ei = new EventItem("MoraT", "random", date);
 
                     star = !star;
                     events.Add(date, new List<EventItem>());
@@ -532,6 +535,7 @@ namespace OpenGL.Event
                     if (tardis != null) tardis.Dispose();
                     if (fuck != null) fuck.Dispose();
                     if (silverFang != null) silverFang.Dispose();
+                    if (mt != null) mt.Dispose();
                     // Main effects
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
@@ -759,6 +763,9 @@ namespace OpenGL.Event
 
                             case "SilverFang":
                                 silverFang.Draw(nowDate);
+                                break;
+                            case "MoraT":
+                                mt.Draw(nowDate);
                                 break;
                             default:
                                 if (nowDate != lastDate)

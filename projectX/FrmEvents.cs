@@ -35,7 +35,7 @@ namespace projectX
 
           //  string[] eventlist = new string[] { "TS", "Hajk", "bumbi", "BB", "smurf", "creators", "sune", "dif", "fbk", "rms", "scrollers", "Q", "turbologo", "winlinux" };
 
-            string[] eventlist = new string[] { "SuneAnimation", "Dif", "Fbk", "TurboLogo", "Datasmurf", "RMS", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "Hajk", "TeknatStyle", "Matrix", "Quiz", "Talespin", "ChipDale", "Nerdy", "Trex", "Sailormoon", "GhostBusters", "Zelda","Tardis","Fuck","SilverFang" };
+            string[] eventlist = new string[] { "SuneAnimation", "Dif", "Fbk", "TurboLogo", "Datasmurf", "RMS", "WinLinux", "Scroller", "Self", "BB", "GummiBears", "Hajk", "TeknatStyle", "Matrix", "Quiz", "Talespin", "ChipDale", "Nerdy", "Trex", "Sailormoon", "GhostBusters", "Zelda","Tardis","Fuck","SilverFang", "MoraT" };
             Array.Sort(eventlist);
 
             string path = XmlHandler.fixPath("randomeffects" + FrmMain.SpringOrFall +  ".xml","eff");
@@ -64,15 +64,11 @@ namespace projectX
          
             if ("Spring".Equals(FrmMain.SpringOrFall))
             {
-                cmbapr.Enabled = false;
+             
                 checkapr.Enabled = false;
-                cmbmaj.Enabled = false;
                 checkmaj.Enabled = false;
-                cmbjun.Enabled = false;
                 checkjun.Enabled = false;
-                cmbjul.Enabled = false;
                 checkjul.Enabled = false;
-                cmbaug.Enabled = false;
                 checkaug.Enabled = false;
 
                 cmbPrioapr.Enabled = false;
@@ -89,16 +85,11 @@ namespace projectX
             }
             else if ("Fall".Equals(FrmMain.SpringOrFall))
             {
-                cmbjan.Enabled = false;
+               
                 checkjan.Enabled = false;
-                cmbfeb.Enabled = false;
                 checkfeb.Enabled = false;
-
-                cmbokt.Enabled = false;
                 checkokt.Enabled = false;
-                cmbnov.Enabled = false;
                 checknov.Enabled = false;
-                cmbdec.Enabled = false;
                 checkdec.Enabled = false;
 
                 cmbPriojan.Enabled = false;
@@ -141,23 +132,23 @@ namespace projectX
 
             if ("Spring".Equals(FrmMain.SpringOrFall))
             {
-                ev.setData("sep", Int16.Parse(cmbsep.Text), checksep.Checked, checkVetosep.Checked, Int16.Parse(cmbPriosep.Text));
-                ev.setData("okt", Int16.Parse(cmbokt.Text), checkokt.Checked, checkVetookt.Checked, Int16.Parse(cmbPriookt.Text));
-                ev.setData("nov", Int16.Parse(cmbnov.Text), checknov.Checked, checkVetonov.Checked, Int16.Parse(cmbPrionov.Text));
-                ev.setData("dec", Int16.Parse(cmbdec.Text), checkdec.Checked, checkVetodec.Checked, Int16.Parse(cmbPriodec.Text));
-                ev.setData("jan", Int16.Parse(cmbjan.Text), checkjan.Checked, checkVetojan.Checked, Int16.Parse(cmbPriojan.Text));
-                ev.setData("feb", Int16.Parse(cmbfeb.Text), checkfeb.Checked, checkVetofeb.Checked, Int16.Parse(cmbPriofeb.Text));
-                ev.setData("mar", Int16.Parse(cmbmar.Text), checkmar.Checked, checkVetomar.Checked, Int16.Parse(cmbPriomar.Text));
+                ev.setData("sep", 1, checksep.Checked, checkVetosep.Checked, Int16.Parse(cmbPriosep.Text));
+                ev.setData("okt", 1, checkokt.Checked, checkVetookt.Checked, Int16.Parse(cmbPriookt.Text));
+                ev.setData("nov", 1, checknov.Checked, checkVetonov.Checked, Int16.Parse(cmbPrionov.Text));
+                ev.setData("dec", 1, checkdec.Checked, checkVetodec.Checked, Int16.Parse(cmbPriodec.Text));
+                ev.setData("jan", 1, checkjan.Checked, checkVetojan.Checked, Int16.Parse(cmbPriojan.Text));
+                ev.setData("feb", 1, checkfeb.Checked, checkVetofeb.Checked, Int16.Parse(cmbPriofeb.Text));
+                ev.setData("mar", 1, checkmar.Checked, checkVetomar.Checked, Int16.Parse(cmbPriomar.Text));
             }
             else if ("Fall".Equals(FrmMain.SpringOrFall))
             {
-                ev.setData("sep", Int16.Parse(cmbsep.Text), checksep.Checked, checkVetosep.Checked, Int16.Parse(cmbPriosep.Text));
-                ev.setData("aug", Int16.Parse(cmbaug.Text), checkaug.Checked, checkVetoaug.Checked, Int16.Parse(cmbPrioaug.Text));
-                ev.setData("jul", Int16.Parse(cmbjul.Text), checkjul.Checked, checkVetojul.Checked, Int16.Parse(cmbPriojul.Text));
-                ev.setData("jun", Int16.Parse(cmbjun.Text), checkjun.Checked, checkVetojun.Checked, Int16.Parse(cmbPriojun.Text));
-                ev.setData("maj", Int16.Parse(cmbmaj.Text), checkmaj.Checked, checkVetomaj.Checked, Int16.Parse(cmbPriomaj.Text));
-                ev.setData("apr", Int16.Parse(cmbapr.Text), checkapr.Checked, checkVetoapr.Checked, Int16.Parse(cmbPrioapr.Text));
-                ev.setData("mar", Int16.Parse(cmbmar.Text), checkmar.Checked, checkVetomar.Checked, Int16.Parse(cmbPriomar.Text));
+                ev.setData("sep", 1, checksep.Checked, checkVetosep.Checked, Int16.Parse(cmbPriosep.Text));
+                ev.setData("aug", 1, checkaug.Checked, checkVetoaug.Checked, Int16.Parse(cmbPrioaug.Text));
+                ev.setData("jul", 1, checkjul.Checked, checkVetojul.Checked, Int16.Parse(cmbPriojul.Text));
+                ev.setData("jun", 1, checkjun.Checked, checkVetojun.Checked, Int16.Parse(cmbPriojun.Text));
+                ev.setData("maj", 1, checkmaj.Checked, checkVetomaj.Checked, Int16.Parse(cmbPriomaj.Text));
+                ev.setData("apr", 1, checkapr.Checked, checkVetoapr.Checked, Int16.Parse(cmbPrioapr.Text));
+                ev.setData("mar", 1, checkmar.Checked, checkVetomar.Checked, Int16.Parse(cmbPriomar.Text));
             }
 
             int index = searchObj(objlist, cmbEvents.Text);
@@ -179,23 +170,23 @@ namespace projectX
 
             if ("Spring".Equals(FrmMain.SpringOrFall))
             {
-                ev.setData("sep", Int16.Parse(cmbsep.Text), checksep.Checked, checkVetosep.Checked, Int16.Parse(cmbPriosep.Text));
-                ev.setData("okt", Int16.Parse(cmbokt.Text), checkokt.Checked, checkVetookt.Checked, Int16.Parse(cmbPriookt.Text));
-                ev.setData("nov", Int16.Parse(cmbnov.Text), checknov.Checked, checkVetonov.Checked, Int16.Parse(cmbPrionov.Text));
-                ev.setData("dec", Int16.Parse(cmbdec.Text), checkdec.Checked, checkVetodec.Checked, Int16.Parse(cmbPriodec.Text));
-                ev.setData("jan", Int16.Parse(cmbjan.Text), checkjan.Checked, checkVetojan.Checked, Int16.Parse(cmbPriojan.Text));
-                ev.setData("feb", Int16.Parse(cmbfeb.Text), checkfeb.Checked, checkVetofeb.Checked, Int16.Parse(cmbPriofeb.Text));
-                ev.setData("mar", Int16.Parse(cmbmar.Text), checkmar.Checked, checkVetomar.Checked, Int16.Parse(cmbPriomar.Text));
+                ev.setData("sep", 1, checksep.Checked, checkVetosep.Checked, Int16.Parse(cmbPriosep.Text));
+                ev.setData("okt", 1, checkokt.Checked, checkVetookt.Checked, Int16.Parse(cmbPriookt.Text));
+                ev.setData("nov", 1, checknov.Checked, checkVetonov.Checked, Int16.Parse(cmbPrionov.Text));
+                ev.setData("dec", 1, checkdec.Checked, checkVetodec.Checked, Int16.Parse(cmbPriodec.Text));
+                ev.setData("jan", 1, checkjan.Checked, checkVetojan.Checked, Int16.Parse(cmbPriojan.Text));
+                ev.setData("feb", 1, checkfeb.Checked, checkVetofeb.Checked, Int16.Parse(cmbPriofeb.Text));
+                ev.setData("mar", 1, checkmar.Checked, checkVetomar.Checked, Int16.Parse(cmbPriomar.Text));
             }
             else if ("Fall".Equals(FrmMain.SpringOrFall))
             {
-                ev.setData("sep", Int16.Parse(cmbsep.Text), checksep.Checked, checkVetosep.Checked, Int16.Parse(cmbPriosep.Text));
-                ev.setData("aug", Int16.Parse(cmbaug.Text), checkaug.Checked, checkVetoaug.Checked, Int16.Parse(cmbPrioaug.Text));
-                ev.setData("jul", Int16.Parse(cmbjul.Text), checkjul.Checked, checkVetojul.Checked, Int16.Parse(cmbPriojul.Text));
-                ev.setData("jun", Int16.Parse(cmbjun.Text), checkjun.Checked, checkVetojun.Checked, Int16.Parse(cmbPriojun.Text));
-                ev.setData("maj", Int16.Parse(cmbmaj.Text), checkmaj.Checked, checkVetomaj.Checked, Int16.Parse(cmbPriomaj.Text));
-                ev.setData("apr", Int16.Parse(cmbapr.Text), checkapr.Checked, checkVetoapr.Checked, Int16.Parse(cmbPrioapr.Text));
-                ev.setData("mar", Int16.Parse(cmbmar.Text), checkmar.Checked, checkVetomar.Checked, Int16.Parse(cmbPriomar.Text));
+                ev.setData("sep", 1, checksep.Checked, checkVetosep.Checked, Int16.Parse(cmbPriosep.Text));
+                ev.setData("aug", 1, checkaug.Checked, checkVetoaug.Checked, Int16.Parse(cmbPrioaug.Text));
+                ev.setData("jul", 1, checkjul.Checked, checkVetojul.Checked, Int16.Parse(cmbPriojul.Text));
+                ev.setData("jun", 1, checkjun.Checked, checkVetojun.Checked, Int16.Parse(cmbPriojun.Text));
+                ev.setData("maj", 1, checkmaj.Checked, checkVetomaj.Checked, Int16.Parse(cmbPriomaj.Text));
+                ev.setData("apr", 1, checkapr.Checked, checkVetoapr.Checked, Int16.Parse(cmbPrioapr.Text));
+                ev.setData("mar", 1, checkmar.Checked, checkVetomar.Checked, Int16.Parse(cmbPriomar.Text));
             }
 
             int index = searchObj(objlist, cmbEvents.Text);

@@ -107,6 +107,7 @@
     <Compile Include="Includes\Lucia.cs" />
     <Compile Include="Includes\Matrix.cs" />
     <Compile Include="Includes\Midsummer.cs" />
+    <Compile Include="Includes\MoraT.cs" />
     <Compile Include="Includes\National.cs" />
     <Compile Include="Includes\Effect.cs" />
     <Compile Include="Includes\Nerdy.cs" />
@@ -149,6 +150,9 @@
     <Compile Include="Includes\Zelda.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="gfx\MoraT.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ReadMe.txt" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -490,6 +494,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\HAJK.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Samples\MoraT.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\Nerdy.ogg">

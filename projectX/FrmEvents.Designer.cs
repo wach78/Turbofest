@@ -43,7 +43,6 @@
             this.Moct = new System.Windows.Forms.Label();
             this.Mnov = new System.Windows.Forms.Label();
             this.Mdec = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.checkjan = new System.Windows.Forms.CheckBox();
             this.checkfeb = new System.Windows.Forms.CheckBox();
@@ -57,18 +56,6 @@
             this.checkokt = new System.Windows.Forms.CheckBox();
             this.checknov = new System.Windows.Forms.CheckBox();
             this.checkdec = new System.Windows.Forms.CheckBox();
-            this.cmbjan = new System.Windows.Forms.ComboBox();
-            this.cmbfeb = new System.Windows.Forms.ComboBox();
-            this.cmbmar = new System.Windows.Forms.ComboBox();
-            this.cmbapr = new System.Windows.Forms.ComboBox();
-            this.cmbmaj = new System.Windows.Forms.ComboBox();
-            this.cmbjun = new System.Windows.Forms.ComboBox();
-            this.cmbjul = new System.Windows.Forms.ComboBox();
-            this.cmbaug = new System.Windows.Forms.ComboBox();
-            this.cmbsep = new System.Windows.Forms.ComboBox();
-            this.cmbokt = new System.Windows.Forms.ComboBox();
-            this.cmbnov = new System.Windows.Forms.ComboBox();
-            this.cmbdec = new System.Windows.Forms.ComboBox();
             this.btnsave = new System.Windows.Forms.Button();
             this.btncancel = new System.Windows.Forms.Button();
             this.checkVetodec = new System.Windows.Forms.CheckBox();
@@ -102,7 +89,7 @@
             // cmbEvents
             // 
             this.cmbEvents.FormattingEnabled = true;
-            this.cmbEvents.Location = new System.Drawing.Point(100, 21);
+            this.cmbEvents.Location = new System.Drawing.Point(76, 21);
             this.cmbEvents.Name = "cmbEvents";
             this.cmbEvents.Size = new System.Drawing.Size(121, 21);
             this.cmbEvents.TabIndex = 0;
@@ -236,15 +223,6 @@
             this.Mdec.TabIndex = 18;
             this.Mdec.Text = "Dec";
             // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(219, 114);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(32, 13);
-            this.label17.TabIndex = 19;
-            this.label17.Text = "Runs";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -362,186 +340,6 @@
             this.checkdec.TabIndex = 32;
             this.checkdec.UseVisualStyleBackColor = true;
             // 
-            // cmbjan
-            // 
-            this.cmbjan.FormattingEnabled = true;
-            this.cmbjan.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbjan.Location = new System.Drawing.Point(215, 139);
-            this.cmbjan.Name = "cmbjan";
-            this.cmbjan.Size = new System.Drawing.Size(36, 21);
-            this.cmbjan.TabIndex = 33;
-            this.cmbjan.Text = "1";
-            // 
-            // cmbfeb
-            // 
-            this.cmbfeb.FormattingEnabled = true;
-            this.cmbfeb.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbfeb.Location = new System.Drawing.Point(215, 166);
-            this.cmbfeb.Name = "cmbfeb";
-            this.cmbfeb.Size = new System.Drawing.Size(36, 21);
-            this.cmbfeb.TabIndex = 34;
-            this.cmbfeb.Text = "1";
-            // 
-            // cmbmar
-            // 
-            this.cmbmar.FormattingEnabled = true;
-            this.cmbmar.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbmar.Location = new System.Drawing.Point(215, 193);
-            this.cmbmar.Name = "cmbmar";
-            this.cmbmar.Size = new System.Drawing.Size(36, 21);
-            this.cmbmar.TabIndex = 35;
-            this.cmbmar.Text = "1";
-            // 
-            // cmbapr
-            // 
-            this.cmbapr.FormattingEnabled = true;
-            this.cmbapr.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbapr.Location = new System.Drawing.Point(215, 220);
-            this.cmbapr.Name = "cmbapr";
-            this.cmbapr.Size = new System.Drawing.Size(36, 21);
-            this.cmbapr.TabIndex = 36;
-            this.cmbapr.Text = "1";
-            // 
-            // cmbmaj
-            // 
-            this.cmbmaj.FormattingEnabled = true;
-            this.cmbmaj.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbmaj.Location = new System.Drawing.Point(215, 247);
-            this.cmbmaj.Name = "cmbmaj";
-            this.cmbmaj.Size = new System.Drawing.Size(36, 21);
-            this.cmbmaj.TabIndex = 37;
-            this.cmbmaj.Text = "1";
-            // 
-            // cmbjun
-            // 
-            this.cmbjun.FormattingEnabled = true;
-            this.cmbjun.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbjun.Location = new System.Drawing.Point(215, 275);
-            this.cmbjun.Name = "cmbjun";
-            this.cmbjun.Size = new System.Drawing.Size(36, 21);
-            this.cmbjun.TabIndex = 38;
-            this.cmbjun.Text = "1";
-            // 
-            // cmbjul
-            // 
-            this.cmbjul.FormattingEnabled = true;
-            this.cmbjul.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbjul.Location = new System.Drawing.Point(215, 304);
-            this.cmbjul.Name = "cmbjul";
-            this.cmbjul.Size = new System.Drawing.Size(36, 21);
-            this.cmbjul.TabIndex = 39;
-            this.cmbjul.Text = "1";
-            // 
-            // cmbaug
-            // 
-            this.cmbaug.FormattingEnabled = true;
-            this.cmbaug.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbaug.Location = new System.Drawing.Point(215, 330);
-            this.cmbaug.Name = "cmbaug";
-            this.cmbaug.Size = new System.Drawing.Size(36, 21);
-            this.cmbaug.TabIndex = 40;
-            this.cmbaug.Text = "1";
-            // 
-            // cmbsep
-            // 
-            this.cmbsep.FormattingEnabled = true;
-            this.cmbsep.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbsep.Location = new System.Drawing.Point(215, 357);
-            this.cmbsep.Name = "cmbsep";
-            this.cmbsep.Size = new System.Drawing.Size(36, 21);
-            this.cmbsep.TabIndex = 41;
-            this.cmbsep.Text = "1";
-            // 
-            // cmbokt
-            // 
-            this.cmbokt.FormattingEnabled = true;
-            this.cmbokt.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbokt.Location = new System.Drawing.Point(215, 384);
-            this.cmbokt.Name = "cmbokt";
-            this.cmbokt.Size = new System.Drawing.Size(36, 21);
-            this.cmbokt.TabIndex = 42;
-            this.cmbokt.Text = "1";
-            // 
-            // cmbnov
-            // 
-            this.cmbnov.FormattingEnabled = true;
-            this.cmbnov.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbnov.Location = new System.Drawing.Point(215, 411);
-            this.cmbnov.Name = "cmbnov";
-            this.cmbnov.Size = new System.Drawing.Size(36, 21);
-            this.cmbnov.TabIndex = 43;
-            this.cmbnov.Text = "1";
-            // 
-            // cmbdec
-            // 
-            this.cmbdec.FormattingEnabled = true;
-            this.cmbdec.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbdec.Location = new System.Drawing.Point(215, 438);
-            this.cmbdec.Name = "cmbdec";
-            this.cmbdec.Size = new System.Drawing.Size(36, 21);
-            this.cmbdec.TabIndex = 44;
-            this.cmbdec.Text = "1";
-            // 
             // btnsave
             // 
             this.btnsave.Location = new System.Drawing.Point(16, 472);
@@ -554,7 +352,7 @@
             // 
             // btncancel
             // 
-            this.btncancel.Location = new System.Drawing.Point(146, 472);
+            this.btncancel.Location = new System.Drawing.Point(111, 472);
             this.btncancel.Name = "btncancel";
             this.btncancel.Size = new System.Drawing.Size(75, 23);
             this.btncancel.TabIndex = 46;
@@ -932,7 +730,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(297, 507);
+            this.ClientSize = new System.Drawing.Size(204, 507);
             this.Controls.Add(this.cmbPriodec);
             this.Controls.Add(this.cmbPrionov);
             this.Controls.Add(this.cmbPriookt);
@@ -961,18 +759,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btncancel);
             this.Controls.Add(this.btnsave);
-            this.Controls.Add(this.cmbdec);
-            this.Controls.Add(this.cmbnov);
-            this.Controls.Add(this.cmbokt);
-            this.Controls.Add(this.cmbsep);
-            this.Controls.Add(this.cmbaug);
-            this.Controls.Add(this.cmbjul);
-            this.Controls.Add(this.cmbjun);
-            this.Controls.Add(this.cmbmaj);
-            this.Controls.Add(this.cmbapr);
-            this.Controls.Add(this.cmbmar);
-            this.Controls.Add(this.cmbfeb);
-            this.Controls.Add(this.cmbjan);
             this.Controls.Add(this.checkdec);
             this.Controls.Add(this.checknov);
             this.Controls.Add(this.checkokt);
@@ -986,7 +772,6 @@
             this.Controls.Add(this.checkfeb);
             this.Controls.Add(this.checkjan);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label17);
             this.Controls.Add(this.Mdec);
             this.Controls.Add(this.Mnov);
             this.Controls.Add(this.Moct);
@@ -1027,7 +812,6 @@
         private System.Windows.Forms.Label Moct;
         private System.Windows.Forms.Label Mnov;
         private System.Windows.Forms.Label Mdec;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox checkjan;
         private System.Windows.Forms.CheckBox checkfeb;
@@ -1041,18 +825,6 @@
         private System.Windows.Forms.CheckBox checkokt;
         private System.Windows.Forms.CheckBox checknov;
         private System.Windows.Forms.CheckBox checkdec;
-        private System.Windows.Forms.ComboBox cmbjan;
-        private System.Windows.Forms.ComboBox cmbfeb;
-        private System.Windows.Forms.ComboBox cmbmar;
-        private System.Windows.Forms.ComboBox cmbapr;
-        private System.Windows.Forms.ComboBox cmbmaj;
-        private System.Windows.Forms.ComboBox cmbjun;
-        private System.Windows.Forms.ComboBox cmbjul;
-        private System.Windows.Forms.ComboBox cmbaug;
-        private System.Windows.Forms.ComboBox cmbsep;
-        private System.Windows.Forms.ComboBox cmbokt;
-        private System.Windows.Forms.ComboBox cmbnov;
-        private System.Windows.Forms.ComboBox cmbdec;
         private System.Windows.Forms.Button btnsave;
         private System.Windows.Forms.Button btncancel;
         private System.Windows.Forms.CheckBox checkVetodec;
