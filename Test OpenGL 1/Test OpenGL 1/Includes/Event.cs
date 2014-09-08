@@ -126,6 +126,7 @@ namespace OpenGL.Event
     {
         private bool disposed = false;
         private static int eventnum = 0;
+       
         CrashHandler ch;
         // Time
         OpenGL.PartyClock clock;
@@ -250,8 +251,8 @@ namespace OpenGL.Event
             
 
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
-            randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "BB", "GummiBears", "TeknatStyle", "Matrix"});
-
+            //randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "BB", "GummiBears", "TeknatStyle", "Matrix"});
+            randomEvent = new List<string>(new string[] { "starfield", "Nerdy", "Talespin", "Sailormoon", "GhostBusters", "Zelda", "Tardis", "Fuck", "SilverFang", "MoraT" });
             //new stuff
              List<UtilXML.EventData> ed = UtilXML.Loadeffectdata();
 
@@ -355,7 +356,10 @@ namespace OpenGL.Event
             
             // Random effects on dates with no effects and check against new list of allowed things for them...
             DateTime dt = ClockStart;
-            bool star = (Util.Rnd.Next(0, 1000) < 500? true:false); // make this random at the start too?
+            bool star = (Util.Rnd.Next(0, 1000) < 500 ? true:false); // make this random at the start too?
+            int num = 0;
+         
+            
             while (dt <= ClockEnd)
             {
                 date = dt.ToShortDateString();
@@ -363,105 +367,100 @@ namespace OpenGL.Event
                 {
                     EventItem ei;
 
-                    if (star)
+                    if (num == 0 || num == 1)
                     {
-                        ei = new EventItem(randomEvent [0], "random", date);
+                        ei = new EventItem("starfield", "random", date);
+                      //  ei = new EventItem("Tardis", "random", date);
                     }
                     else
                     {
                         //ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
 
-                        string month = "";
-                        if (dt != null)
-                            month = dt.Month.ToString();
+                       
+                            string month = "";
+                            if (dt != null)
+                                month = dt.Month.ToString();
 
-                        switch (month)
-                        {
-                            case "1": month = "jan"; break;
-                            case "2": month = "feb"; break;
-                            case "3": month = "mar"; break;
-                            case "4": month = "apr"; break;
-                            case "5": month = "maj"; break;
-                            case "6": month = "jun"; break;
-                            case "7": month = "jul"; break;
-                            case "8": month = "aug"; break;
-                            case "9": month = "sep"; break;
-                            case "10": month = "okt"; break;
-                            case "11": month = "nov"; break;
-                            case "12": month = "dec"; break;
-                        }//switch
-
-                        if (runEffectInMonth.ContainsKey(month))
-                        {
-                            List<objdata> mobj = runEffectInMonth[month];
-
-                            List<objdata> vetolist = new List<objdata>();
-                            List<objdata> novetolist = new List<objdata>();
-
-                            foreach (objdata n in mobj)
+                            switch (month)
                             {
-                                
-                                if ("Quiz".Equals(n.Name) && eventnum == 4)
-                                {
-                                    n.vetoAgain();
-                                    eventnum = 0;
-                                }
-                                
+                                case "1": month = "jan"; break;
+                                case "2": month = "feb"; break;
+                                case "3": month = "mar"; break;
+                                case "4": month = "apr"; break;
+                                case "5": month = "maj"; break;
+                                case "6": month = "jun"; break;
+                                case "7": month = "jul"; break;
+                                case "8": month = "aug"; break;
+                                case "9": month = "sep"; break;
+                                case "10": month = "okt"; break;
+                                case "11": month = "nov"; break;
+                                case "12": month = "dec"; break;
+                            }//switch
 
-                                if (n.Veto == true)
+                            if (runEffectInMonth.ContainsKey(month))
+                            {
+                                List<objdata> mobj = runEffectInMonth[month];
+
+                                List<objdata> vetolist = new List<objdata>();
+                                List<objdata> novetolist = new List<objdata>();
+
+                                foreach (objdata n in mobj)
                                 {
-                                    if (n.Runs > 0)
-                                        vetolist.Add(n);
+
+                                    if ("Quiz".Equals(n.Name) && eventnum == 4)
+                                    {
+                                        n.vetoAgain();
+                                        eventnum = 0;
+                                    }
+
+
+                                    if (n.Veto == true)
+                                    {
+                                        if (n.Runs > 0)
+                                            vetolist.Add(n);
+                                    }
+                                    else
+                                    {
+                                        if (n.Runs > 0 )
+                                            novetolist.Add(n);
+                                    }
+                                }
+
+                                vetolist.Sort();
+                                novetolist.Sort();
+                              
+
+                                if (vetolist.Count > 0)
+                                {
+                                    ei = new EventItem(vetolist[0].Name, "random", date);
+                                    vetolist[0].noMoreVeto();
+                                }
+                                else if (novetolist.Count > 0)
+                                {
+                                    ei = new EventItem(novetolist[0].Name, "random", date);
+                                    novetolist[0].decRuns();
+                                    if (eventnum < 4)
+                                        eventnum++;
                                 }
                                 else
                                 {
-                                    if (n.Runs > 0)
-                                        novetolist.Add(n);
+                                    ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
                                 }
-                            }
-
-                            vetolist.Sort();
-                            novetolist.Sort();
-                            Console.WriteLine("num" + eventnum);
-                            
-                            if (vetolist.Count > 0)
-                            {
-                                ei = new EventItem(vetolist[0].Name, "random", date);
-                                vetolist[0].noMoreVeto();
-                            }
-                            else if (novetolist.Count > 0)
-                            {
-                                ei = new EventItem(novetolist[0].Name, "random", date);
-                                novetolist[0].decRuns();
-                                if (eventnum < 4)
-                                    eventnum++;
                             }
                             else
                             {
                                 ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
                             }
-                        }
-                        else
-                        {
-                            ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
-                        }
-                        
+
+        
                     }
 
-                   // ei = new EventItem("Nerdy", "random", date);
-                    //ei = new EventItem("Talespin", "random", date);
-                    //ei = new EventItem("ChipDale", "random", date);
-                    //ei = new EventItem("Trex", "random", date);
+                    num++;
+                    if (num == 3)
+                    {
+                        num = 0;
+                    }
 
-                   // ei = new EventItem("Sailormoon", "random", date);
-                   // ei = new EventItem("GhostBusters", "random", date);
-                    //ei = new EventItem("Zelda", "random", date);
-                    //ei = new EventItem("Tardis", "random", date);
-                    //ei = new EventItem("Fuck", "random", date);
-                    //ei = new EventItem("SilverFang", "random", date);
-                    ei = new EventItem("MoraT", "random", date);
-
-                    star = !star;
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
                 }

@@ -199,8 +199,10 @@ namespace OpenGL
             if (LastDate != Date)
             {
                 showGanon = false;
-               // LastDate = Date;
+                oldTicks = -0;
+                
             }
+            
             updateImages();
             Play(Date);
             bakground.Draw(Date, Chess.ChessColor.Triforce);

@@ -133,6 +133,8 @@ namespace OpenGL
 
             GL.End();
 
+
+            ///////////blixt och dunder
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, lightning);
             GL.Enable(EnableCap.Blend);
@@ -194,6 +196,7 @@ namespace OpenGL
         {
             ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 
+            //ändra x och y varsin
             if (this.oldTicks != 0)
             {
                 if ((this.ticks - this.oldTicks) > 500)
