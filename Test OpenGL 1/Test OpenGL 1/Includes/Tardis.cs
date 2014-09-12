@@ -27,6 +27,10 @@ namespace OpenGL
         private long tick;
         private float z1;
         private float z2;
+        private float lightningx;
+        private float lightningy;
+        private List<float> xlist;
+        private List<float> ylist;
 
         /// <summary>
         /// Constructor for Tardis effect
@@ -50,6 +54,10 @@ namespace OpenGL
             this.oldTicks = 0;
             this.z1 = 0.3f;
             this.z2 = 0.5f;
+            this.lightningx = 0.0f;
+            this.lightningy = 0.0f;
+            xlist = new List<float>(new float[] { 0.2f, 0.4f, 0.6f, 0.8f,1.0f,1.2f });
+            ylist = new List<float>(new float[] { 0.1f, 0.2f, 0.3f, 0.4f });
         }
 
         /// <summary>
@@ -145,10 +153,10 @@ namespace OpenGL
 
             // x y z
             // alla i mitten Y-led  alla till vänster x-led
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.5f, -0.50f, z1); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.0f, -0.50f, z1); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.0f, 0.0f, z1);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.5f, 0.0f, z1); // top left 
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.5f + lightningx, -0.50f - lightningy, z1); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.0f - lightningx, -0.50f - lightningy, z1); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.0f - lightningx, 0.0f + lightningy, z1);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.5f + lightningx, 0.0f + lightningy, z1); // top left 
 
             GL.End();
 
@@ -162,10 +170,10 @@ namespace OpenGL
 
             // x y z
             // alla i mitten Y-led  alla till vänster x-led
-            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.5f, -0.50f, z2); // bottom left  
-            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.0f, -0.50f, z2); // bottom right 
-            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.0f, 1.0f, z2);// top right
-            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.5f, 1.0f, z2); // top left 
+            GL.TexCoord2(0.0, 1.0); GL.Vertex3(1.5f + lightningx, -0.50f - lightningy, z2); // bottom left  
+            GL.TexCoord2(1.0, 1.0); GL.Vertex3(-1.0f - lightningx, -0.50f - lightningy, z2); // bottom right 
+            GL.TexCoord2(1.0, 0.0); GL.Vertex3(-1.0f - lightningx, 1.0f + lightningy, z2);// top right
+            GL.TexCoord2(0.0, 0.0); GL.Vertex3(1.5f + lightningx, 1.0f + lightningy, z2); // top left 
 
 
 
@@ -208,6 +216,8 @@ namespace OpenGL
                     else
                     {
                         this.z1 = 0.5f;
+                        this.lightningx = xlist[Util.Rnd.Next(0, 5)];
+                        this.lightningy = xlist[Util.Rnd.Next(0, 5)];
                     }
 
                     if (this.z2 == 0.5f)
@@ -217,6 +227,8 @@ namespace OpenGL
                     else
                     {
                         this.z2 = 0.5f;
+                        this.lightningx = xlist[Util.Rnd.Next(0, 5)];
+                        this.lightningy = xlist[Util.Rnd.Next(0, 5)];
                     }
 
 

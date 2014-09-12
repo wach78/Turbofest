@@ -369,8 +369,8 @@ namespace OpenGL.Event
 
                     if (num == 0 || num == 1)
                     {
-                        ei = new EventItem("starfield", "random", date);
-                      //  ei = new EventItem("Tardis", "random", date);
+                       // ei = new EventItem("starfield", "random", date);
+                        ei = new EventItem("Tardis", "random", date);
                     }
                     else
                     {
