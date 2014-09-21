@@ -29,6 +29,11 @@ namespace OpenGL
         /// <param name="data">Effect EventData</param>
         public Effect(object obj, UtilXML.EventData data)
         {
+            // added error handling for events that are not here
+            if (data == null)
+            {
+                throw new ArgumentNullException("Effect can not be created as there is no data for this object. This can be because this effect is missing from the file so there is no data to work with.");
+            }
             this.name = data.Name;
             this.obj = obj;
             //this.noMoreRun = false;

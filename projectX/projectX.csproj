@@ -168,7 +168,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="ClassDiagram1.cd" />
-    <None Include="DLL\COPYING-csvorbis" />
+    <None Include="DLL\COPYING-csvorbis">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -192,9 +194,7 @@
     <Content Include="DLL\Validate.dll" />
     <Content Include="Documentation\Tests.txt" />
     <Content Include="Documentation\TODO.txt" />
-    <Content Include="XMLFiles\Effects\randomeffects.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="XMLFiles\Effects\randomeffects.xml" />
     <Content Include="XMLFiles\Quiz\quiz.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
