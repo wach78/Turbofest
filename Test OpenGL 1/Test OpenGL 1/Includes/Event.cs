@@ -181,6 +181,9 @@ namespace OpenGL.Event
         Nerdy nerd;
         Trex trex;
 
+        Swine swine;
+        Tjall tjall;
+
         private EventItem eventCurrent;
         private Dictionary<string, List<objdata>> runEffectInMonth;
 
@@ -247,6 +250,8 @@ namespace OpenGL.Event
             silverFang = new SilverFang(ref sound);
             mt = new MoraT(ref sound);
 
+            swine = new Swine(ref chess, ref text);
+            tjall = new Tjall(ref chess, ref text);
 
             
 
@@ -369,8 +374,8 @@ namespace OpenGL.Event
 
                     if (num == 0 || num == 1)
                     {
-                       // ei = new EventItem("starfield", "random", date);
-                        ei = new EventItem("Tardis", "random", date);
+                        ei = new EventItem("starfield", "random", date);
+                       // ei = new EventItem("Tardis", "random", date);
                     }
                     else
                     {
@@ -535,6 +540,8 @@ namespace OpenGL.Event
                     if (fuck != null) fuck.Dispose();
                     if (silverFang != null) silverFang.Dispose();
                     if (mt != null) mt.Dispose();
+                    if (swine != null) swine.Dispose();
+                    if (tjall != null) tjall.Dispose();
                     // Main effects
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
@@ -669,6 +676,9 @@ namespace OpenGL.Event
                             case "Kräftpremiär":
                                 crayfish.Draw(nowDate);
                                 break;
+                            case "swine":
+                                swine.Draw(nowDate);
+                                break;
                             default:
                                 if (nowDate != lastDate)
                                 {
@@ -801,7 +811,7 @@ namespace OpenGL.Event
             }
             lastDate = nowDate;
         }
-        
+        /*
         private bool difFbk(string nowDate)
         {
             bool ok = false;
@@ -838,6 +848,6 @@ namespace OpenGL.Event
            
             return ok;
         }
-            
+            */
     }//class
 }//namespace

@@ -118,9 +118,11 @@
     <Compile Include="Includes\Scroller.cs" />
     <Compile Include="Includes\Self.cs" />
     <Compile Include="Includes\SilverFang.cs" />
+    <Compile Include="Includes\Swine.cs" />
     <Compile Include="Includes\Talespin.cs" />
     <Compile Include="Includes\Tardis.cs" />
     <Compile Include="Includes\TeknatStyle.cs" />
+    <Compile Include="Includes\Tjall.cs" />
     <Compile Include="Includes\Trex.cs" />
     <Compile Include="Includes\Vaffla.cs" />
     <Compile Include="Includes\Walpurgis.cs" />
@@ -151,6 +153,15 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="gfx\MoraT.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\svin1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\svin3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\svin4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ReadMe.txt" />
