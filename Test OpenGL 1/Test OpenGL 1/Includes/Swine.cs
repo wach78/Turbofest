@@ -26,18 +26,18 @@ namespace OpenGL
         /// Constructor for Swine effect
         /// </summary>
         /// <param name="chess">Chessboard</param>
-     
         /// <param name="txt">Text printer</param>
+      
         public Swine(ref Chess chess, ref Text2D txt)
         {
             disposed = false;
-            slideshowImage1 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/svin1.png");
-            slideshowImage2 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/svin3.png");
-            slideshowImage2 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/svin4.png");
-     
+            slideshowImage1 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/bildspel1.jpg");
+            slideshowImage2 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/bildspel2.jpg");
+            slideshowImage3 = Util.LoadTexture(Util.CurrentExecutionPath + "/gfx/bildspel3.jpg");
+          
+
             bakground = chess;
             text = txt;
-
             currentImage = 0;
             currentSlideShow = 0;
 
@@ -109,7 +109,6 @@ namespace OpenGL
             {
                 GL.BindTexture(TextureTarget.Texture2D, slideshowImage3);
             }
-       
 
             GL.Begin(BeginMode.Quads);
 
@@ -123,6 +122,11 @@ namespace OpenGL
 
         }
 
+        
+
+        /// <summary>
+        /// Change showing image
+        /// </summary>
         public void updateImages()
         {
             ticks = System.DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
@@ -164,10 +168,11 @@ namespace OpenGL
                 currentSlideShow = 0;
             }
 
+          
             bakground.Draw(Date, Chess.ChessColor.BlackPurple);
-            text.Draw("Svinphesten", Text2D.FontName.CandyPurple, new OpenTK.Vector3(0.9f, 0.2f, 1.0f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 1.5f);
+            text.Draw("TekNat Style", Text2D.FontName.CandyPurple, new OpenTK.Vector3(0.9f, 0.2f, 1.0f), new OpenTK.Vector2(0.10f, 0.10f), new OpenTK.Vector2(0.0f, 0.0f), 1.5f);
             updateImages();
             DrawImage();
         }
-    }
-}
+    }//class
+}//namespace

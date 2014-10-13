@@ -117,7 +117,7 @@ namespace OpenGL
             }
 
             GL.Begin(BeginMode.Quads);
-
+        
             GL.TexCoord2(0.0f + (currentImage * 0.25f), 1.0f); GL.Vertex3(1.0f, -1.25f, 1.0f); // bottom left // x y z alla i mitten Y-led 
             GL.TexCoord2(0.25f + (currentImage * 0.25f), 1.0f); GL.Vertex3(-1.0f, -1.25f, 1.0f); // bottom right // alla till vänster x-led
             GL.TexCoord2(0.25f + (currentImage * 0.25f), 0.0f); GL.Vertex3(-1.0f, 0.0f, 1.0f);// top right
