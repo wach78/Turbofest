@@ -375,7 +375,7 @@ namespace OpenGL.Event
                     if (num == 0 || num == 1)
                     {
                         ei = new EventItem("starfield", "random", date);
-                       // ei = new EventItem("Tardis", "random", date);
+                        //ei = new EventItem("swine", "effect", date);
                     }
                     else
                     {
@@ -726,7 +726,6 @@ namespace OpenGL.Event
                                 break;
                             case "Hajk":                       
                                     hajk.Draw(nowDate);
-
                                 break;
                             case "starfield":
                                 sf.Draw(nowDate);
@@ -743,7 +742,6 @@ namespace OpenGL.Event
                             case "Talespin":
                                 talepsin.Draw(nowDate);
                                 break;
-
                             case "ChipDale":
                                 cd.Draw(nowDate);
                                 break;
@@ -753,7 +751,6 @@ namespace OpenGL.Event
                             case "Trex":
                                 trex.Draw(nowDate);
                                 break;
-
                             case "Sailormoon":
                                 sailormoon.Draw(nowDate);
                                 break;
@@ -769,7 +766,6 @@ namespace OpenGL.Event
                             case "Fuck":
                                 fuck.Draw(nowDate);
                                 break;
-
                             case "SilverFang":
                                 silverFang.Draw(nowDate);
                                 break;
