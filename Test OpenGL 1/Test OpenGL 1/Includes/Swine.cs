@@ -166,6 +166,8 @@ namespace OpenGL
             {
                 currentImage = 0;
                 currentSlideShow = 0;
+                LastDate = Date;
+                oldTicks = 0;
             }
 
           
