@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectX", "projectX\ProjectX.csproj", "{8718B7BA-177E-4364-B90B-E29F10943BFC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8AEFEE3A-28D8-4A81-A48E-BD3A812523F8} = {8AEFEE3A-28D8-4A81-A48E-BD3A812523F8}
@@ -8,6 +10,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectX", "projectX\Projec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenGL", "Test OpenGL 1\Test OpenGL 1\OpenGL.csproj", "{8AEFEE3A-28D8-4A81-A48E-BD3A812523F8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{508E3B4E-E181-4202-B26D-CF24FCAB555F} = {508E3B4E-E181-4202-B26D-CF24FCAB555F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validate", "MonthValidate\MonthValidate\Validate.csproj", "{508E3B4E-E181-4202-B26D-CF24FCAB555F}"
 EndProject

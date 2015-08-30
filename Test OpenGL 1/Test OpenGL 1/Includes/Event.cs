@@ -184,6 +184,12 @@ namespace OpenGL.Event
         Swine swine;
         Tjall tjall;
 
+        Ronja ronja;
+        Emil emil;
+        Djungelboken djungelboken;
+        Fabbe fabbe;
+        Drink drink;
+
         private EventItem eventCurrent;
         private Dictionary<string, List<objdata>> runEffectInMonth;
 
@@ -253,7 +259,11 @@ namespace OpenGL.Event
             swine = new Swine(ref chess, ref text);
             tjall = new Tjall(ref chess, ref text);
 
-            
+            ronja = new Ronja(ref sound);
+            emil = new Emil(ref sound);
+            djungelboken = new Djungelboken(ref sound);
+            fabbe = new Fabbe(ref sound);
+            drink = new Drink(ref sound);
 
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
             //randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "BB", "GummiBears", "TeknatStyle", "Matrix"});
@@ -281,14 +291,19 @@ namespace OpenGL.Event
                 {"Talespin",new Effect(q, ed.Find(e => e.Name == "Talespin"))},
                 {"ChipDale",new Effect(q, ed.Find(e => e.Name == "ChipDale"))},
                 {"Nerdy",new Effect(q, ed.Find(e => e.Name == "Nerdy"))},
-                {"Trex",new Effect(q, ed.Find(e => e.Name == "Trex"))},
+              /*  {"Trex",new Effect(q, ed.Find(e => e.Name == "Trex"))},*/
                 {"Sailormoon",new Effect(q, ed.Find(e => e.Name == "Sailormoon"))},
                 {"GhostBusters",new Effect(q, ed.Find(e => e.Name == "GhostBusters"))},
                 {"Zelda",new Effect(q, ed.Find(e => e.Name == "Zelda"))},
                 {"Tardis",new Effect(q, ed.Find(e => e.Name == "Tardis"))},
                 {"Fuck",new Effect(q, ed.Find(e => e.Name == "Fuck"))},
                 {"SilverFang",new Effect(q, ed.Find(e => e.Name == "SilverFang"))},
-                {"MoraT",new Effect(q, ed.Find(e => e.Name == "MoraT"))}
+                {"MoraT",new Effect(q, ed.Find(e => e.Name == "MoraT"))},
+                {"Ronja",new Effect(q, ed.Find(e => e.Name == "Ronja"))},
+                {"Emil",new Effect(q, ed.Find(e => e.Name == "Emil"))},
+                {"Djungelboken",new Effect(q, ed.Find(e => e.Name == "Djungelboken"))},
+                {"Fabbe",new Effect(q, ed.Find(e => e.Name == "Fabbe"))},
+                {"Drink",new Effect(q, ed.Find(e => e.Name == "Drink"))}
             };
 
             runEffectInMonth = new Dictionary<string, List<objdata>>();
@@ -456,15 +471,17 @@ namespace OpenGL.Event
                                 ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
                             }
 
-        
-                    }
+                           
 
+
+                    }
+                            
                     num++;
                     if (num == 3)
                     {
                         num = 0;
                     }
-
+                    ei = new EventItem("Drink", "random", date);
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
                 }
@@ -541,10 +558,18 @@ namespace OpenGL.Event
                     if (mt != null) mt.Dispose();
                     if (swine != null) swine.Dispose();
                     if (tjall != null) tjall.Dispose();
+                    if (ronja != null) ronja.Dispose();
+                    if (emil != null) ronja.Dispose();
+                    if (djungelboken != null) djungelboken.Dispose();
+                    if (fabbe != null) fabbe.Dispose();
+                    if (drink != null) drink.Dispose();
                     // Main effects
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
                     if (chess != null) chess.Dispose(); // 7 texturer
+
+
+
                 }
                 // free native resources if there are any.
                 disposed = true;
@@ -678,6 +703,7 @@ namespace OpenGL.Event
                             case "swine":
                                 swine.Draw(nowDate);
                                 break;
+                          
                             default:
                                 if (nowDate != lastDate)
                                 {
@@ -771,6 +797,23 @@ namespace OpenGL.Event
                             case "MoraT":
                                 mt.Draw(nowDate);
                                 break;
+                            case "Ronja":
+                                ronja.Draw(nowDate);
+                                break;
+                            case "Emil":
+                                emil.Draw(nowDate);
+                                break;
+                            case "Djungelboken":
+                                djungelboken.Draw(nowDate);
+                                break;
+
+                            case "Fabbe":
+                                fabbe.Draw(nowDate);
+                                break;
+                            case "Drink":
+                                drink.Draw(nowDate);
+                                break;
+
                             default:
                                 if (nowDate != lastDate)
                                 {

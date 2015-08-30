@@ -51,13 +51,16 @@ namespace projectX
 
                 DataSet dsParticipant = new DataSet("participant");
                 dsParticipant.ReadXml(xmlFile);
+             //  check dataset  0 rows 
+
                 dataGridView1.DataSource = dsParticipant;
-                dataGridView1.DataMember = "participant";
+                // dont work if 0 rows
+               dataGridView1.DataMember = "participant";
             }
 
-            catch (Exception )
+            catch (Exception ex)
             {
-               // MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString());
             }
 
             finally

@@ -11,6 +11,9 @@ using wach.Validate;
 using System.Diagnostics;
 using System.Xml;
 using System.Media;
+using OpenTK.Graphics.OpenGL;
+using OpenTK;
+
 
 namespace projectX
 {

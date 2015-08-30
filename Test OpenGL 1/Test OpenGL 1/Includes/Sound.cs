@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OpenTK.Audio;
-using OpenTK.Audio.OpenAL;
+//using OpenTK.Audio.OpenAL;
 using System.Threading;
 using csogg;
 using csvorbis;
