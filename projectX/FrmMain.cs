@@ -84,7 +84,10 @@ namespace projectX
             lViewParty.MultiSelect = false;
             fileName = "";
 
-            FrmAdmin.Res = "800x600" + "@" + OpenTK.DisplayDevice.AvailableDisplays[0].RefreshRate; // this buggs out on mono with changing to fullscreen
+            //TODO: make init create all directories and files needed to start the graphics program so no crashes occure...
+
+            // TODO: Fix so that we can select what screen it should show on
+            FrmAdmin.Res = "800x600" + "@" + OpenTK.DisplayDevice.GetDisplay(OpenTK.DisplayIndex.Default).RefreshRate; //OpenTK.DisplayDevice.AvailableDisplays[0].RefreshRate; // this buggs out on mono with changing to fullscreen
         
            
         }//init

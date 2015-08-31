@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
 
 namespace OpenGL.Event
@@ -271,9 +268,10 @@ namespace OpenGL.Event
             //new stuff
              List<UtilXML.EventData> ed = UtilXML.Loadeffectdata();
 
+            // TODO: Make a clean list with all events allowed to be used implement so that it is actaully usable instead of a switch at the bottom of this file.
             Dictionary<string, Effect> effects = new Dictionary<string, Effect>()
             {
-                {"SuneAnimation", new Effect(sune,ed.Find(e => e.Name == "SuneAnimation"))},
+                {"SuneAnimation", new Effect(sune, ed.Find(e => e.Name == "SuneAnimation"))},
                 {"Dif",new Effect(dif, ed.Find(e => e.Name == "Dif"))},
                 {"Fbk",new Effect(fbk, ed.Find(e => e.Name == "Fbk"))},
                 {"TurboLogo",new Effect(tl, ed.Find(e => e.Name == "TurboLogo"))},
@@ -288,22 +286,22 @@ namespace OpenGL.Event
                 {"TeknatStyle",new Effect(ts, ed.Find(e => e.Name == "TeknatStyle"))},
                 {"Matrix",new Effect(m, ed.Find(e => e.Name == "Matrix"))},
                 {"Quiz",new Effect(q, ed.Find(e => e.Name == "Quiz"))},
-                {"Talespin",new Effect(q, ed.Find(e => e.Name == "Talespin"))},
-                {"ChipDale",new Effect(q, ed.Find(e => e.Name == "ChipDale"))},
-                {"Nerdy",new Effect(q, ed.Find(e => e.Name == "Nerdy"))},
-              /*  {"Trex",new Effect(q, ed.Find(e => e.Name == "Trex"))},*/
-                {"Sailormoon",new Effect(q, ed.Find(e => e.Name == "Sailormoon"))},
-                {"GhostBusters",new Effect(q, ed.Find(e => e.Name == "GhostBusters"))},
-                {"Zelda",new Effect(q, ed.Find(e => e.Name == "Zelda"))},
-                {"Tardis",new Effect(q, ed.Find(e => e.Name == "Tardis"))},
-                {"Fuck",new Effect(q, ed.Find(e => e.Name == "Fuck"))},
-                {"SilverFang",new Effect(q, ed.Find(e => e.Name == "SilverFang"))},
-                {"MoraT",new Effect(q, ed.Find(e => e.Name == "MoraT"))},
-                {"Ronja",new Effect(q, ed.Find(e => e.Name == "Ronja"))},
-                {"Emil",new Effect(q, ed.Find(e => e.Name == "Emil"))},
-                {"Djungelboken",new Effect(q, ed.Find(e => e.Name == "Djungelboken"))},
-                {"Fabbe",new Effect(q, ed.Find(e => e.Name == "Fabbe"))},
-                {"Drink",new Effect(q, ed.Find(e => e.Name == "Drink"))}
+                {"Talespin",new Effect(talepsin, ed.Find(e => e.Name == "Talespin"))},
+                {"ChipDale",new Effect(cd, ed.Find(e => e.Name == "ChipDale"))},
+                {"Nerdy",new Effect(nerd, ed.Find(e => e.Name == "Nerdy"))},
+              /*  {"Trex",new Effect(trex, ed.Find(e => e.Name == "Trex"))},*/
+                {"Sailormoon",new Effect(sailormoon, ed.Find(e => e.Name == "Sailormoon"))},
+                {"GhostBusters",new Effect(gb, ed.Find(e => e.Name == "GhostBusters"))},
+                {"Zelda",new Effect(zelda, ed.Find(e => e.Name == "Zelda"))},
+                {"Tardis",new Effect(tardis, ed.Find(e => e.Name == "Tardis"))},
+                {"Fuck",new Effect(fuck, ed.Find(e => e.Name == "Fuck"))},
+                {"SilverFang",new Effect(silverFang, ed.Find(e => e.Name == "SilverFang"))},
+                {"MoraT",new Effect(mt, ed.Find(e => e.Name == "MoraT"))},
+                {"Ronja",new Effect(ronja, ed.Find(e => e.Name == "Ronja"))},
+                {"Emil",new Effect(emil, ed.Find(e => e.Name == "Emil"))},
+                {"Djungelboken",new Effect(djungelboken, ed.Find(e => e.Name == "Djungelboken"))},
+                {"Fabbe",new Effect(fabbe, ed.Find(e => e.Name == "Fabbe"))},
+                {"Drink",new Effect(drink, ed.Find(e => e.Name == "Drink"))}
             };
 
             runEffectInMonth = new Dictionary<string, List<objdata>>();
@@ -395,85 +393,80 @@ namespace OpenGL.Event
                     {
                         //ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
 
-                       
-                            string month = "";
-                            if (dt != null)
-                                month = dt.Month.ToString();
+                        string month = "";
+                        if (dt != null)
+                            month = dt.Month.ToString();
 
-                            switch (month)
+                        switch (month)
+                        {
+                            case "1": month = "jan"; break;
+                            case "2": month = "feb"; break;
+                            case "3": month = "mar"; break;
+                            case "4": month = "apr"; break;
+                            case "5": month = "maj"; break;
+                            case "6": month = "jun"; break;
+                            case "7": month = "jul"; break;
+                            case "8": month = "aug"; break;
+                            case "9": month = "sep"; break;
+                            case "10": month = "okt"; break;
+                            case "11": month = "nov"; break;
+                            case "12": month = "dec"; break;
+                        }//switch
+
+                        if (runEffectInMonth.ContainsKey(month))
+                        {
+                            List<objdata> mobj = runEffectInMonth[month];
+
+                            List<objdata> vetolist = new List<objdata>();
+                            List<objdata> novetolist = new List<objdata>();
+
+                            foreach (objdata n in mobj)
                             {
-                                case "1": month = "jan"; break;
-                                case "2": month = "feb"; break;
-                                case "3": month = "mar"; break;
-                                case "4": month = "apr"; break;
-                                case "5": month = "maj"; break;
-                                case "6": month = "jun"; break;
-                                case "7": month = "jul"; break;
-                                case "8": month = "aug"; break;
-                                case "9": month = "sep"; break;
-                                case "10": month = "okt"; break;
-                                case "11": month = "nov"; break;
-                                case "12": month = "dec"; break;
-                            }//switch
 
-                            if (runEffectInMonth.ContainsKey(month))
-                            {
-                                List<objdata> mobj = runEffectInMonth[month];
-
-                                List<objdata> vetolist = new List<objdata>();
-                                List<objdata> novetolist = new List<objdata>();
-
-                                foreach (objdata n in mobj)
+                                if ("Quiz".Equals(n.Name) && eventnum == 4)
                                 {
-
-                                    if ("Quiz".Equals(n.Name) && eventnum == 4)
-                                    {
-                                        n.vetoAgain();
-                                        eventnum = 0;
-                                    }
-
-
-                                    if (n.Veto == true)
-                                    {
-                                        if (n.Runs > 0)
-                                            vetolist.Add(n);
-                                    }
-                                    else
-                                    {
-                                        if (n.Runs > 0 )
-                                            novetolist.Add(n);
-                                    }
+                                    n.vetoAgain();
+                                    eventnum = 0;
                                 }
 
-                                vetolist.Sort();
-                                novetolist.Sort();
-                              
 
-                                if (vetolist.Count > 0)
+                                if (n.Veto == true)
                                 {
-                                    ei = new EventItem(vetolist[0].Name, "random", date);
-                                    vetolist[0].noMoreVeto();
-                                }
-                                else if (novetolist.Count > 0)
-                                {
-                                    ei = new EventItem(novetolist[0].Name, "random", date);
-                                    novetolist[0].decRuns();
-                                    if (eventnum < 4)
-                                        eventnum++;
+                                    if (n.Runs > 0)
+                                        vetolist.Add(n);
                                 }
                                 else
                                 {
-                                    ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
+                                    if (n.Runs > 0)
+                                        novetolist.Add(n);
                                 }
+                            }
+
+                            vetolist.Sort();
+                            novetolist.Sort();
+
+
+                            if (vetolist.Count > 0)
+                            {
+                                ei = new EventItem(vetolist[0].Name, "random", date);
+                                vetolist[0].noMoreVeto();
+                            }
+                            else if (novetolist.Count > 0)
+                            {
+                                ei = new EventItem(novetolist[0].Name, "random", date);
+                                novetolist[0].decRuns();
+                                if (eventnum < 4)
+                                    eventnum++;
                             }
                             else
                             {
                                 ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
                             }
-
-                           
-
-
+                        }
+                        else
+                        {
+                            ei = new EventItem(randomEvent[Util.Rnd.Next(1, randomEvent.Count)], "random", date);
+                        }
                     }
                             
                     num++;
@@ -481,7 +474,7 @@ namespace OpenGL.Event
                     {
                         num = 0;
                     }
-                    ei = new EventItem("Drink", "random", date);
+                    //ei = new EventItem("Drink", "random", date); // this is for debuging new events
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
                 }
@@ -504,6 +497,7 @@ namespace OpenGL.Event
             System.GC.SuppressFinalize(this);
         }
 
+        // TODO: Dispose of all events and graphics, sound for does events in a safe way
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -559,7 +553,7 @@ namespace OpenGL.Event
                     if (swine != null) swine.Dispose();
                     if (tjall != null) tjall.Dispose();
                     if (ronja != null) ronja.Dispose();
-                    if (emil != null) ronja.Dispose();
+                    if (emil != null) emil.Dispose();
                     if (djungelboken != null) djungelboken.Dispose();
                     if (fabbe != null) fabbe.Dispose();
                     if (drink != null) drink.Dispose();
@@ -581,7 +575,7 @@ namespace OpenGL.Event
         /// <summary>
         /// Event listener on new date and this is to be done...
         /// </summary>
-        public void clock_NewDate()
+        public void clock_NewDate() // TODO: clock_NewDate, Check this so we do not crash in unlucky states
         {
             lastDate = nowDate;
             nowDate = clock.CurrentClock().ToShortDateString(); // change to dtNew?
@@ -610,8 +604,13 @@ namespace OpenGL.Event
                         }
                     }
                 }
+
+                if (LastEvent == null) // TODO: if there have not been a event this helps it not to bug out but why does it go here....
+                {
+                    sound.StopSound();
+                }
                 // Double events with sound buggs this out...
-                if ((eventCurrent.Name != "starfield" || eventCurrent.Type == "effect" || eventCurrent.Type == "birthday" ||
+                else if ((eventCurrent.Name != "starfield" || eventCurrent.Type == "effect" || eventCurrent.Type == "birthday" ||
                     eventCurrent.Type == "text" || eventCurrent.Type == "outro") || 
                     (LastEvent.Type == "random" && eventCurrent.Type == "random" && eventCurrent.Name != "starfield")) // birth day or special day too....
                 {
@@ -621,7 +620,7 @@ namespace OpenGL.Event
             }  
             else // safty if moved to event trigger...
             {
-                eventCurrent = null; // this might be bugging stuff out if we are unlucky
+                eventCurrent = null; // TODO: this might be bugging stuff out if we are unlucky
             }
 
             System.Diagnostics.Debug.WriteLine("Date updated in events.");

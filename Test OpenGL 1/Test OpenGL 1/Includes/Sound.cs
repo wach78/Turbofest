@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OpenTK.Audio;
-//using OpenTK.Audio.OpenAL;
+using OpenTK.Audio.OpenAL;
 using System.Threading;
 using csogg;
 using csvorbis;
@@ -797,7 +797,8 @@ namespace OpenGL
             output2.Seek(0, SeekOrigin.Begin);
             output2.Read(data2, 0, data2.Length);
             output2.Close();
-            output2.Dispose();
+            //output2.Dispose();
+            output2 = null;
             //
             #region csogg and stuff, commented
             // borrow from csogg and csvorbis...

@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-//using OpenTK.Audio;
-using OpenTK.Audio.OpenAL;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
+
+#pragma warning disable CS0618 // Type or member is obsolete, or use the suppress field in project properties...
 
 namespace OpenGL
 {

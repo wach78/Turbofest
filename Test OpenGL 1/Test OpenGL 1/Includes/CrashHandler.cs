@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.IO;
 using System.Windows.Forms;
@@ -38,10 +34,10 @@ namespace OpenGL
                 FileName = Path.GetDirectoryName(Application.ExecutablePath) + "/Crash.xml";
                 CrashFile = System.IO.File.Open(FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
             }
-            catch (Exception ex)
+            catch (Exception) // ex
             {
                 
-                throw ex;
+                throw ; // ex
             }
         }
 
@@ -162,9 +158,9 @@ namespace OpenGL
                     CrashFile.Flush(true);
                     clock = double.Parse(xn2b.Value);
                 }
-                catch (Exception ex) // all else ...
+                catch (Exception) // ex,  all else ...
                 {
-                    throw ex;
+                    throw ; // ex
                 }
                 if (clock != 0.0)
                 {
@@ -204,9 +200,9 @@ namespace OpenGL
                 CrashFile.Close();
                 File.Delete(FileName);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw ;
             }
             finally
             {

@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//using System.Drawing.Imaging;
-
 using OpenTK;
-//using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace OpenGL
@@ -30,7 +22,7 @@ namespace OpenGL
         private CrashHandler CrashH;
         private int[] Resolution;
 
-        // OpenGL version after 3.0 needs there own matrix libs so we need to create them if we run over 3.0!!! if ser major and minor to 0 we can get around it?!
+        // OpenGL version after 3.0 needs there own matrix libs so we need to create them if we run over 3.0!!! if set major and minor to 0 we can get around it?!
         /// <summary>
         /// Constructor method for a GLWindow
         /// </summary>
@@ -39,14 +31,14 @@ namespace OpenGL
         /// <param name="runtime"></param>
         /// <param name="res">Resolution?</param>
         /// <param name="Crash">Crash handler</param>
-        public GLWindow(System.Xml.Linq.XDocument Events, string SpringOrFall, string runtime, int[] res, ref CrashHandler Crash) : base(res[0], res[1], new OpenTK.Graphics.GraphicsMode(/*new OpenTK.Graphics.ColorFormat(32), 24, 8, 0*/)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
+        public GLWindow(System.Xml.Linq.XDocument Events, string SpringOrFall, string runtime, int[] res, ref CrashHandler Crash) : base(res[0], res[1], new OpenTK.Graphics.GraphicsMode(/*new OpenTK.Graphics.ColorFormat(32), 24, 8, 0*/)/*OpenTK.Graphics.GraphicsMode.Default*/, TITLE, GameWindowFlags.Default, DisplayDevice.Default, 0, 0, OpenTK.Graphics.GraphicsContextFlags.Debug | OpenTK.Graphics.GraphicsContextFlags.Default) 
         {
-            this.WindowBorder = OpenTK.WindowBorder.Fixed;
+            this.WindowBorder = WindowBorder.Fixed;
             Util.SpringOrFall = SpringOrFall;
 #if !DEBUG
             //OpenTK.DisplayDevice.Default.ChangeResolution(this.Width, this.Height, OpenTK.DisplayDevice.AvailableDisplays[0].BitsPerPixel, OpenTK.DisplayDevice.AvailableDisplays[0].RefreshRate);
-            WindowState = OpenTK.WindowState.Fullscreen;
-            WindowBorder = OpenTK.WindowBorder.Hidden;
+            WindowState = WindowState.Fullscreen;
+            WindowBorder = WindowBorder.Hidden;
             Util.Fullscreen = true;
             System.Windows.Forms.Cursor.Hide();
 
@@ -61,7 +53,10 @@ namespace OpenGL
             }*/
 
             System.Diagnostics.Debug.WriteLine("Currently used textures: " + Util.CurrentUsedTextures);
-            Keyboard.KeyDown += OnKeyboardKeyDown;
+            
+            //Keyboard.KeyDown += OnKeyboardKeyDown; // this is depricated...
+            this.KeyDown += OnKeyboardKeyDown;
+
             Closing += OnClosing;
 
             //blnPointDraw = false;
@@ -162,11 +157,14 @@ namespace OpenGL
             {
                 Util.Fullscreen = false;
                 System.Windows.Forms.Cursor.Show();
+
                 //OpenTK.DisplayDevice.Default.RestoreResolution();
-                foreach (var item in OpenTK.DisplayDevice.AvailableDisplays)
+                /*foreach (var item in OpenTK.DisplayDevice.AvailableDisplays)
                 {
                     item.RestoreResolution();
-                }
+                }*/
+                
+                DisplayDevice.GetDisplay(DisplayIndex.Default).RestoreResolution();
                 //OpenTK.DisplayDevice.AvailableDisplays[0].RestoreResolution();
                 WindowState = OpenTK.WindowState.Normal;
                 WindowBorder = OpenTK.WindowBorder.Fixed;
@@ -348,9 +346,10 @@ namespace OpenGL
                 if (Util.Fullscreen)
                 {
                     System.Windows.Forms.Cursor.Show();
-                    OpenTK.DisplayDevice.Default.RestoreResolution();
-                    WindowState = OpenTK.WindowState.Normal;
-                    WindowBorder = OpenTK.WindowBorder.Fixed;
+                    DisplayDevice.Default.RestoreResolution();
+                    //DisplayDevice.GetDisplay(DisplayIndex.Default).RestoreResolution();
+                    WindowState = WindowState.Normal;
+                    WindowBorder = WindowBorder.Fixed;
                     //GL.Viewport(this.ClientRectangle);
                     System.Diagnostics.Debug.WriteLine("Going to window");
                 }
@@ -358,10 +357,11 @@ namespace OpenGL
                 {
                     System.Windows.Forms.Cursor.Hide();
                     //OpenTK.DisplayDevice.Default.ChangeResolution(dev.Width, dev.Height, dev.BitsPerPixel, dev.RefreshRate);
-                    OpenTK.DisplayDevice.Default.ChangeResolution(Resolution[0], Resolution[1], Screen.PrimaryScreen.BitsPerPixel/*OpenTK.DisplayDevice.Default.BitsPerPixel*/, Resolution[2]);
+                    DisplayDevice.Default.ChangeResolution(Resolution[0], Resolution[1], Screen.PrimaryScreen.BitsPerPixel/*OpenTK.DisplayDevice.Default.BitsPerPixel*/, Resolution[2]);
+                    //DisplayDevice.GetDisplay(DisplayIndex.Default).ChangeResolution(Resolution[0], Resolution[1], DisplayDevice.GetDisplay(DisplayIndex.Default).BitsPerPixel/*Screen.PrimaryScreen.BitsPerPixel*/, Resolution[2]);
                     //OpenTK.DisplayDevice.Default.ChangeResolution(OpenTK.DisplayDevice.Default.AvailableResolutions.Last());
-                    WindowState = OpenTK.WindowState.Fullscreen;
-                    WindowBorder = OpenTK.WindowBorder.Hidden;
+                    WindowState = WindowState.Fullscreen;
+                    WindowBorder = WindowBorder.Hidden;
                     System.Diagnostics.Debug.WriteLine("Going to fullscreen");
                 }
                 Util.Fullscreen = !Util.Fullscreen;
@@ -375,13 +375,13 @@ namespace OpenGL
             {
                 if (VSync == VSyncMode.Off)
                 {
-                    VSync = OpenTK.VSyncMode.On;
+                    VSync = VSyncMode.On;
                     this.TargetRenderFrequency = 60.0; // forcing to update at 60 hz, change this to the selected refresh rate.....
                     this.TargetUpdateFrequency = 60.0;
                 }
                 else
                 {
-                    VSync = OpenTK.VSyncMode.Off;
+                    VSync = VSyncMode.Off;
                     this.TargetRenderFrequency = 0.0;
                     this.TargetUpdateFrequency = 0.0;
                 }
