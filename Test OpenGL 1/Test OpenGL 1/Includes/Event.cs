@@ -474,7 +474,7 @@ namespace OpenGL.Event
                     {
                         num = 0;
                     }
-                    //ei = new EventItem("Drink", "random", date); // this is for debuging new events
+                    ei = new EventItem("Drink", "random", date); // this is for debuging new events
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
                 }

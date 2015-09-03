@@ -23,12 +23,14 @@ namespace projectX
         private string[] participantData;
         private int m_lngPrintingPage;
         private int m_lngPrintingRow;
+        private int numberOfTables;
 
         public FrmParticipants(ref PrintDocument pd)
         {
             InitializeComponent();
             m_lngPrintingPage = 1;
             m_lngPrintingRow = 0;
+            numberOfTables = 0;
 
             path = XmlHandler.fixPath(FrmMain.FileName.ToString());
             participantData = new string[6];
@@ -50,12 +52,14 @@ namespace projectX
                 xmlFile = XmlReader.Create(path, new XmlReaderSettings());
 
                 DataSet dsParticipant = new DataSet("participant");
-                dsParticipant.ReadXml(xmlFile);
-             //  check dataset  0 rows 
-
+                dsParticipant.ReadXml(xmlFile,);
+                //  check dataset  0 rows 
                 dataGridView1.DataSource = dsParticipant;
-                // dont work if 0 rows
-               dataGridView1.DataMember = "participant";
+                this.numberOfTables = dsParticipant.Tables.Count;
+                MessageBox.Show(this.numberOfTables.ToString());
+                if (this.numberOfTables > 4)
+                    dataGridView1.DataMember = "participant";
+              
             }
 
             catch (Exception ex)
@@ -96,34 +100,40 @@ namespace projectX
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            Logic logic = new Logic();
-            
-            logic.delParticpant(path,dataGridView1.CurrentRow);
-            updateGridView();
+            if (this.numberOfTables > 4)
+            {
+                Logic logic = new Logic();
+
+                logic.delParticpant(path, dataGridView1.CurrentRow);
+                updateGridView();
+            }
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            participantData[0] = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-            participantData[1] = dataGridView1.CurrentRow.Cells[1].Value.ToString();
-            participantData[2] = dataGridView1.CurrentRow.Cells[2].Value.ToString();
-            participantData[3] = dataGridView1.CurrentRow.Cells[3].Value.ToString();
-            participantData[4] = dataGridView1.CurrentRow.Cells[4].Value.ToString();
-            participantData[5] = dataGridView1.CurrentRow.Cells[5].Value.ToString();
-
-            FrmAddParticipants add = new FrmAddParticipants(participantData);
-
-            DialogResult resultat = add.ShowDialog();
-
-            if (resultat == System.Windows.Forms.DialogResult.OK)
+            if (this.numberOfTables > 4)
             {
-                Logic logic = new Logic();
-                logic.updateParticpant(path,dataGridView1.CurrentRow, add.Data);
-                updateGridView();
-            }
-            else if (resultat == System.Windows.Forms.DialogResult.Cancel)
-                add.Dispose();
+                participantData[0] = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                participantData[1] = dataGridView1.CurrentRow.Cells[1].Value.ToString();
+                participantData[2] = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+                participantData[3] = dataGridView1.CurrentRow.Cells[3].Value.ToString();
+                participantData[4] = dataGridView1.CurrentRow.Cells[4].Value.ToString();
+                participantData[5] = dataGridView1.CurrentRow.Cells[5].Value.ToString();
 
+                FrmAddParticipants add = new FrmAddParticipants(participantData);
+
+                DialogResult resultat = add.ShowDialog();
+
+                if (resultat == System.Windows.Forms.DialogResult.OK)
+                {
+                    Logic logic = new Logic();
+                    logic.updateParticpant(path, dataGridView1.CurrentRow, add.Data);
+                    updateGridView();
+                }
+                else if (resultat == System.Windows.Forms.DialogResult.Cancel)
+                    add.Dispose();
+            }
+        
         }//dataGridView1_RowEnter
 
         private void btnPrintParticipants_Click(object sender, EventArgs e)
