@@ -73,7 +73,11 @@ namespace OpenGL
         {
             string path = Util.CurrentExecutionPath + "/XMLFiles/Quiz/quiz.xml";
 
-
+            // Quick and dirty to show that we are missing files!
+            if (!System.IO.File.Exists(path))
+            {
+                throw new Exception("Missing XMLFiles/Quiz/quiz.xml!");
+            }
             System.Xml.Linq.XDocument xDoc = System.Xml.Linq.XDocument.Load(path);
 
             var quotes = (

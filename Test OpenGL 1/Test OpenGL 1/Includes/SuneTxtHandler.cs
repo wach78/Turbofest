@@ -90,7 +90,12 @@ namespace OpenGL
         public static void readFromXml()
         {
             string path = Util.CurrentExecutionPath + "/XMLFiles/Sune/sune.xml" ;
-            
+
+            // Quick and dirty to show that we are missing files!
+            if (!System.IO.File.Exists(path))
+            {
+                throw new Exception("Missing XMLFiles/Sune/sune.xml!");
+            }
 
             System.Xml.Linq.XDocument xDoc = System.Xml.Linq.XDocument.Load(path);
          

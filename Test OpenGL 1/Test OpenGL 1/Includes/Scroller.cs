@@ -125,6 +125,12 @@ namespace OpenGL
         {
             string path = Util.CurrentExecutionPath + "/XMLFiles/Scrollers/Scrollers.xml";
 
+            // Quick and dirty to show that we are missing files!
+            if (!System.IO.File.Exists(path))
+            {
+                throw new Exception("Missing XMLFiles/Scrollers/Scrollers.xml!");
+            }
+
             System.Xml.Linq.XDocument xDoc = System.Xml.Linq.XDocument.Load(path);
 
             var quotes = (

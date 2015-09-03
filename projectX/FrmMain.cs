@@ -194,6 +194,12 @@ namespace projectX
         private void btnStart_Click(object sender, EventArgs e)
         {
             XmlHandler xmlStuff = new XmlHandler(fileName, "XDoc");
+            // TODO: make this auto create on startup?
+            if (!File.Exists( XmlHandler.fixPath("randomeffects" + SpringOrFall + ".xml", "eff")) )
+            {
+                MessageBox.Show("Missing file, randomeffects" + SpringOrFall + ".xml! You have to create it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return ;
+            }
             if (gw != null)
             {
                 gw.Dispose();
