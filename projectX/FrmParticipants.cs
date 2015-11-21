@@ -52,11 +52,11 @@ namespace projectX
                 xmlFile = XmlReader.Create(path, new XmlReaderSettings());
 
                 DataSet dsParticipant = new DataSet("participant");
-                dsParticipant.ReadXml(xmlFile,);
+                dsParticipant.ReadXml(xmlFile);
                 //  check dataset  0 rows 
                 dataGridView1.DataSource = dsParticipant;
                 this.numberOfTables = dsParticipant.Tables.Count;
-                MessageBox.Show(this.numberOfTables.ToString());
+               // MessageBox.Show(this.numberOfTables.ToString());
                 if (this.numberOfTables > 4)
                     dataGridView1.DataMember = "participant";
               

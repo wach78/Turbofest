@@ -116,6 +116,7 @@
     <Compile Include="Includes\Emil.cs" />
     <Compile Include="Includes\Fabbe.cs" />
     <Compile Include="Includes\FireWorks.cs" />
+    <Compile Include="Includes\Frozen.cs" />
     <Compile Include="Includes\Fuck.cs" />
     <Compile Include="Includes\GhostBusters.cs" />
     <Compile Include="Includes\Gummi.cs" />
@@ -186,6 +187,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\fabbe.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\frozen.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gfx\Ibeer.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gfx\Loka.bmp">
@@ -531,6 +538,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\fabbe.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Samples\Frozen.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\Fuck.ogg">

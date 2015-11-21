@@ -186,6 +186,7 @@ namespace OpenGL.Event
         Djungelboken djungelboken;
         Fabbe fabbe;
         Drink drink;
+        Frozen frozen;
 
         private EventItem eventCurrent;
         private Dictionary<string, List<objdata>> runEffectInMonth;
@@ -261,6 +262,7 @@ namespace OpenGL.Event
             djungelboken = new Djungelboken(ref sound);
             fabbe = new Fabbe(ref sound);
             drink = new Drink(ref sound);
+            frozen = new Frozen(ref sound);
 
             eventCurrent = null; // event item for events to be triggerd in clock_NewDate
             //randomEvent = new List<string>(new string[] { "starfield", "SuneAnimation", "TurboLogo", "Datasmurf", "WinLinux", "Scroller", "BB", "GummiBears", "TeknatStyle", "Matrix"});
@@ -301,7 +303,8 @@ namespace OpenGL.Event
                 {"Emil",new Effect(emil, ed.Find(e => e.Name == "Emil"))},
                 {"Djungelboken",new Effect(djungelboken, ed.Find(e => e.Name == "Djungelboken"))},
                 {"Fabbe",new Effect(fabbe, ed.Find(e => e.Name == "Fabbe"))},
-                {"Drink",new Effect(drink, ed.Find(e => e.Name == "Drink"))}
+                {"Drink",new Effect(drink, ed.Find(e => e.Name == "Drink"))},
+                {"Frozen",new Effect(drink, ed.Find(e => e.Name == "Frozen"))}
             };
 
             runEffectInMonth = new Dictionary<string, List<objdata>>();
@@ -474,7 +477,7 @@ namespace OpenGL.Event
                     {
                         num = 0;
                     }
-                    ei = new EventItem("Drink", "random", date); // this is for debuging new events
+                    ei = new EventItem("Self", "random", date); // this is for debuging new events
                     events.Add(date, new List<EventItem>());
                     events[date].Add(ei);
                 }
@@ -557,6 +560,7 @@ namespace OpenGL.Event
                     if (djungelboken != null) djungelboken.Dispose();
                     if (fabbe != null) fabbe.Dispose();
                     if (drink != null) drink.Dispose();
+                    if (frozen != null) chess.Dispose(); 
                     // Main effects
                     if (sf != null) sf.Dispose(); // 0 texturer
                     if (text != null) text.Dispose(); // 9 texturer
@@ -811,6 +815,9 @@ namespace OpenGL.Event
                                 break;
                             case "Drink":
                                 drink.Draw(nowDate);
+                                break;
+                            case "Frozen":
+                                frozen.Draw(nowDate);
                                 break;
 
                             default:

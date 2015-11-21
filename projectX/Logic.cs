@@ -411,8 +411,7 @@ namespace projectX
                 date = new DateTime(year, 8, 8);
                 xmlStuff2.writeFeastToXmlFile("Kräftpremiär", getShortDate(date), "Effect");
 
-               // date = new DateTime(year, 9, 18);
-                date = new DateTime(year, 3, 18);
+                date = new DateTime(year, 9, 18);
                 xmlStuff2.writeFeastToXmlFile("swine", getShortDate(date), "Effect");
 
             }
